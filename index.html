@@ -160,146 +160,161 @@
         </div>
     </div>
 
-    <script>
-        window.onload = function() {
-            if (typeof data !== 'undefined') {
-                updateApp();
-                setInterval(updateApp, 1000);
-            }
-        };
-
-        function drawTideGraph(percent, isDescending) {
-            const canvas = document.getElementById('tideCanvasLarge');
-            if(!canvas) return;
-            const ctx = canvas.getContext('2d');
-            canvas.width = canvas.offsetWidth;
-            canvas.height = 80;
-            const w = canvas.width;
-            const h = canvas.height;
-            ctx.clearRect(0, 0, w, h);
-            ctx.beginPath(); ctx.strokeStyle = '#cbd5e1'; ctx.setLineDash([5, 5]);
-            ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.stroke(); ctx.setLineDash([]);
-            ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 3;
-            for (let x = 0; x <= w; x++) {
-                let ratio = x / w;
-                let y = isDescending ? 15 + ((Math.cos(ratio * Math.PI) + 1) / 2) * 50 : 15 + ((Math.cos((ratio + 1) * Math.PI) + 1) / 2) * 50;
-                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-            const dotX = (percent / 100) * w;
-            const dotY = isDescending ? 15 + ((Math.cos((percent/100) * Math.PI) + 1) / 2) * 50 : 15 + ((Math.cos(((percent/100) + 1) * Math.PI) + 1) / 2) * 50;
-            ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 5, 0, Math.PI * 2); ctx.fill();
-            ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+<script>
+    window.onload = function() {
+        if (typeof data !== 'undefined') {
+            updateApp();
+            setInterval(updateApp, 1000);
         }
+    };
 
-        function updateApp() {
-            const now = new Date();
-            // L'heure locale française convertie proprement au format YYYY-MM-DD
-            const tzoffset = now.getTimezoneOffset() * 60000;
-            const localISOTime = (new Date(now - tzoffset)).toISOString().slice(0, -1);
-            const dateStr = localISOTime.split('T')[0];
-            
-            document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
-            
-            if (typeof data === 'undefined' || data.length === 0) return;
-            const dayData = data.find(d => d.date === dateStr);
-            if (!dayData) return;
-
-            // --- GESTION DES PORTES ---
-            let activePorte = null;
-            let nextPorte = dayData.portes[0];
-            
-            for (let p of dayData.portes) {
-                const sO = new Date(dateStr + "T" + p.open);
-                const sC = new Date(dateStr + "T" + p.close);
-                if (now >= sO && now <= sC) { activePorte = p; break; }
-                if (now < sO) { nextPorte = p; break; }
-            }
-
-            const wrapper = document.getElementById('progress-wrapper');
-            const pbContainer = document.getElementById('progress-container');
-            const pb = document.getElementById('progress-bar');
-            wrapper.style.display = "block";
-
-            if (activePorte) {
-                const sO = new Date(dateStr + "T" + activePorte.open);
-                const sC = new Date(dateStr + "T" + activePorte.close);
-                const diffMs = sC - now;
-                const percent = ((now - sO) / (sC - sO)) * 100;
-                const h = Math.floor(diffMs / 3600000);
-                const m = Math.floor((diffMs % 3600000) / 60000);
-                
-                document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
-                pb.style.width = percent + "%";
-                
-                let circleClass = "open"; 
-                let statusText = "OUVERTE"; 
-                let labelText = "PORTE";
-                
-                pbContainer.className = "progress-container";
-                
-                // TEXTES D'ALERTE RESTAURÉS !
-                if (diffMs < 25 * 60 * 1000) { 
-                    pbContainer.classList.add("danger"); 
-                    circleClass = "danger"; 
-                    statusText = "IMMINENTE"; 
-                    labelText = "FERMETURE"; 
-                }
-                else if (percent > 85) { 
-                    pbContainer.classList.add("warning"); 
-                    circleClass = "warning"; 
-                    statusText = "PRÉVENTION"; 
-                    labelText = "FERMETURE"; 
-                }
-                
-                document.getElementById('status-text').innerText = statusText;
-                document.querySelector('.status-label').innerText = labelText;
-                document.getElementById('status-box').className = "status-box " + circleClass;
-                document.getElementById('open-time').innerText = activePorte.open;
-                document.getElementById('close-time').innerText = activePorte.close;
+    function drawTideGraph(percent, isDescending) {
+        const canvas = document.getElementById('tideCanvasLarge');
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth;
+        canvas.height = 80;
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        
+        ctx.beginPath(); ctx.strokeStyle = '#cbd5e1'; ctx.setLineDash([5, 5]);
+        ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.stroke(); ctx.setLineDash([]);
+        
+        ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 3;
+        for (let x = 0; x <= w; x++) {
+            let ratio = x / w;
+            let y;
+            if (isDescending) {
+                // Courbe qui DESCEND (de PM vers BM)
+                y = 15 + ((Math.cos(ratio * Math.PI) + 1) / 2) * 50;
             } else {
-                const sO = new Date(dateStr + "T" + nextPorte.open);
-                const diffMs = sO - now;
-                document.getElementById('time-left').innerText = "Ouverture dans " + Math.floor(diffMs/3600000) + "h" + (Math.floor((diffMs%3600000)/60000) < 10 ? "0" : "") + Math.floor((diffMs%3600000)/60000);
-                pbContainer.className = "progress-container waiting";
-                pb.style.width = "100%";
-                
-                document.getElementById('status-text').innerText = "FERMÉE";
-                document.querySelector('.status-label').innerText = "PORTE";
-                document.getElementById('status-box').className = "status-box closed";
-                
-                document.getElementById('open-time').innerText = nextPorte.open;
-                document.getElementById('close-time').innerText = nextPorte.close;
+                // Courbe qui MONTE (de BM vers PM)
+                y = 15 + ((Math.cos((ratio + 1) * Math.PI) + 1) / 2) * 50;
             }
-
-            // --- GESTION MARÉE ---
-            const tides = [
-                { time: dayData.bm1, h: dayData.bm1_h, type: "BM", label: "Basse Mer", c: dayData.coeff1 },
-                { time: dayData.pm1, h: dayData.pm1_h, type: "PM", label: "Pleine Mer", c: dayData.coeff1 },
-                { time: dayData.bm2, h: dayData.bm2_h, type: "BM", label: "Basse Mer", c: dayData.coeff2 },
-                { time: dayData.pm2, h: dayData.pm2_h, type: "PM", label: "Pleine Mer", c: dayData.coeff2 }
-            ].filter(t => t.time && t.time !== "--:--");
-
-            let prev = tides[0], next = tides[1];
-            for (let i = 0; i < tides.length - 1; i++) {
-                const t1 = new Date(dateStr + "T" + tides[i].time);
-                const t2 = new Date(dateStr + "T" + tides[i+1].time);
-                if (now >= t1 && now <= t2) { prev = tides[i]; next = tides[i+1]; break; }
-            }
-
-            const t1 = new Date(dateStr + "T" + prev.time);
-            const t2 = new Date(dateStr + "T" + next.time);
-            const tidePercent = ((now - t1) / (t2 - t1)) * 100;
-            const isDescending = (prev.type === "PM");
-
-            document.getElementById('coeff-display').innerText = prev.c || next.c || "--";
-            document.getElementById('tide-left-label').innerText = prev.label;
-            document.getElementById('tide-right-label').innerText = next.label;
-            document.getElementById('val-left').innerText = prev.time + " (" + prev.h + "m)";
-            document.getElementById('val-right').innerText = next.time + " (" + next.h + "m)";
-            
-            drawTideGraph(tidePercent, isDescending);
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
-    </script>
+        ctx.stroke();
+
+        const dotX = (percent / 100) * w;
+        const dotY = isDescending ? 
+            15 + ((Math.cos((percent/100) * Math.PI) + 1) / 2) * 50 : 
+            15 + ((Math.cos(((percent/100) + 1) * Math.PI) + 1) / 2) * 50;
+
+        ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 5, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+    }
+
+    function updateApp() {
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const localISOTime = (new Date(now - tzoffset)).toISOString().slice(0, -1);
+        const dateStr = localISOTime.split('T')[0];
+        
+        document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
+        
+        if (typeof data === 'undefined' || data.length === 0) return;
+        const dayData = data.find(d => d.date === dateStr);
+        if (!dayData) return;
+
+        let activePorte = null;
+        let nextPorte = null;
+        let lastPorteClose = null;
+
+        // On cherche la porte active et la fermeture précédente pour la barre de progression
+        for (let i = 0; i < dayData.portes.length; i++) {
+            let p = dayData.portes[i];
+            const sO = new Date(dateStr + "T" + p.open);
+            const sC = new Date(dateStr + "T" + p.close);
+            
+            if (now >= sO && now <= sC) {
+                activePorte = p;
+                break;
+            }
+            if (now < sO) {
+                nextPorte = p;
+                // On récupère la fermeture de la porte précédente (soit aujourd'hui, soit hier)
+                if (i > 0) {
+                    lastPorteClose = new Date(dateStr + "T" + dayData.portes[i-1].close);
+                } else {
+                    lastPorteClose = new Date(sO.getTime() - (7 * 3600 * 1000)); // Estimation 7h si 1er créneau
+                }
+                break;
+            }
+        }
+
+        const wrapper = document.getElementById('progress-wrapper');
+        const pbContainer = document.getElementById('progress-container');
+        const pb = document.getElementById('progress-bar');
+        wrapper.style.display = "block";
+
+        if (activePorte) {
+            const sO = new Date(dateStr + "T" + activePorte.open);
+            const sC = new Date(dateStr + "T" + activePorte.close);
+            const diffMs = sC - now;
+            const percent = ((now - sO) / (sC - sO)) * 100;
+            const h = Math.floor(diffMs / 3600000);
+            const m = Math.floor((diffMs % 3600000) / 60000);
+            
+            document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
+            pb.style.width = percent + "%";
+            pbContainer.className = "progress-container";
+            
+            let circleClass = "open"; let statusText = "OUVERTE"; let labelText = "PORTE";
+            if (diffMs < 25 * 60 * 1000) { pbContainer.classList.add("danger"); circleClass = "danger"; statusText = "IMMINENTE"; labelText = "FERMETURE"; }
+            else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; statusText = "PRÉVENTION"; labelText = "FERMETURE"; }
+            
+            document.getElementById('status-text').innerText = statusText;
+            document.querySelector('.status-label').innerText = labelText;
+            document.getElementById('status-box').className = "status-box " + circleClass;
+            document.getElementById('open-time').innerText = activePorte.open;
+            document.getElementById('close-time').innerText = activePorte.close;
+        } else if (nextPorte) {
+            const sO = new Date(dateStr + "T" + nextPorte.open);
+            const diffMs = sO - now;
+            const totalWait = sO - lastPorteClose;
+            const elapsedWait = now - lastPorteClose;
+            let waitPercent = Math.max(0, Math.min(100, (elapsedWait / totalWait) * 100));
+
+            document.getElementById('time-left').innerText = "Ouverture dans " + Math.floor(diffMs/3600000) + "h" + (Math.floor((diffMs%3600000)/60000) < 10 ? "0" : "") + Math.floor((diffMs%3600000)/60000);
+            pbContainer.className = "progress-container waiting";
+            pb.style.width = waitPercent + "%";
+            
+            document.getElementById('status-text').innerText = "FERMÉE";
+            document.querySelector('.status-label').innerText = "PORTE";
+            document.getElementById('status-box').className = "status-box closed";
+            document.getElementById('open-time').innerText = nextPorte.open;
+            document.getElementById('close-time').innerText = nextPorte.close;
+        }
+
+        // --- MARÉE ---
+        const tides = [
+            { time: dayData.bm1, h: dayData.bm1_h, type: "BM", label: "Basse Mer", c: dayData.coeff1 },
+            { time: dayData.pm1, h: dayData.pm1_h, type: "PM", label: "Pleine Mer", c: dayData.coeff1 },
+            { time: dayData.bm2, h: dayData.bm2_h, type: "BM", label: "Basse Mer", c: dayData.coeff2 },
+            { time: dayData.pm2, h: dayData.pm2_h, type: "PM", label: "Pleine Mer", c: dayData.coeff2 }
+        ].filter(t => t.time && t.time !== "--:--");
+
+        let prev = tides[0], next = tides[1];
+        for (let i = 0; i < tides.length - 1; i++) {
+            const t1 = new Date(dateStr + "T" + tides[i].time);
+            const t2 = new Date(dateStr + "T" + tides[i+1].time);
+            if (now >= t1 && now <= t2) { prev = tides[i]; next = tides[i+1]; break; }
+        }
+
+        const t1 = new Date(dateStr + "T" + prev.time);
+        const t2 = new Date(dateStr + "T" + next.time);
+        const tidePercent = ((now - t1) / (t2 - t1)) * 100;
+        const isDescending = (prev.type === "PM"); // Si on part d'une PM, on DESCEND.
+
+        document.getElementById('coeff-display').innerText = prev.c || next.c || "--";
+        document.getElementById('tide-left-label').innerText = prev.label;
+        document.getElementById('tide-right-label').innerText = next.label;
+        document.getElementById('val-left').innerText = prev.time + " (" + prev.h + "m)";
+        document.getElementById('val-right').innerText = next.time + " (" + next.h + "m)";
+        
+        drawTideGraph(tidePercent, isDescending);
+    }
+</script>
 </body>
 </html>
