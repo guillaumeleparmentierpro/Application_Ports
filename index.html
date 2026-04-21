@@ -35,19 +35,23 @@
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px; }
         .date-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; color: #475569; }
         
-        .btn-action { 
+.btn-action { 
     text-decoration: none; 
-    background: #ffffff; 
-    border: 1px solid #cbd5e1; 
+    background: var(--marine-blue); /* Bleu foncé */
+    color: #ffffff; /* Police blanche */
+    border: none; 
     border-radius: 8px; 
-    padding: 6px 14px; /* On donne un peu d'air sur les côtés */
-    color: var(--text-main); 
+    padding: 8px 16px;
     font-family: 'Montserrat', sans-serif; 
     font-weight: 700; 
     font-size: 0.65rem; 
     display: inline-flex; 
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Un léger relief pour inviter au clic */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15); /* Ombre un peu plus marquée */
+    transition: transform 0.1s;
+}
+        .btn-action:active {
+    transform: scale(0.95); /* Petit effet de clic sur téléphone */
 }
         .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
 
