@@ -4,121 +4,272 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light">
-    <title>Port de Barneville-Carteret Live</title>
+    <title>Planning - Barneville-Carteret</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
     <style>
         :root {
-            /* On force les couleurs même si le système demande du sombre */
             color-scheme: light;
-            --primary-bg: #f1f5f9;
+            --primary-bg: #f8fafc;
             --card-bg: #ffffff;
             --marine-blue: #1e3a8a;
             --text-main: #1e293b;
-            --port-green: #8dbb53;
-            --port-red: #f06449;
+            --border-color: #e2e8f0;
+            --matin-bg: #eff6ff; /* Bleu très clair pour le matin */
+            --soir-bg: #fffbeb;   /* Jaune très clair pour le soir */
+            --weekend-color: #fef2f2;
         }
 
-        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .app-container { max-width: 400px; width: 100%; display: flex; flex-direction: column; gap: 10px; }
-        
-        .module { background: var(--card-bg); border-radius: 16px; padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-
-        /* Nav */
-        .top-nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 5px; }
-        .btn-back { 
-            text-decoration: none; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; 
-            padding: 6px 12px; color: var(--text-main); font-weight: 700; font-size: 0.7rem; 
-            display: inline-flex; align-items: center; gap: 5px;
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--primary-bg); 
+            margin: 0; 
+            padding: 0; 
+            color: var(--text-main);
         }
 
-        .module-header { font-size: 0.85rem; color: var(--text-main); font-weight: 700; margin-bottom: 12px; text-align: center; }
+        /* En-tête de la page */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
 
-        /* STYLE TABLEAU PRO (Inspiré de ta capture) */
-        .planning-table { width: 100%; border-collapse: collapse; font-size: 0.52rem; table-layout: fixed; }
-        .planning-table th { background: #f8fafc; color: var(--text-main); font-weight: 700; padding: 4px 1px; border: 1px solid #e2e8f0; text-align: center; }
-        .planning-table td { border: 1px solid #f1f5f9; padding: 6px 1px; text-align: center; color: var(--text-main); }
-        
-        .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin: 0 auto; }
-        .dot-green { background-color: var(--port-green); }
-        .dot-red { background-color: var(--port-red); }
-        
-        /* Mise en valeur des week-ends */
-        .weekend-row { background-color: #f1f5f9 !important; font-weight: 700; }
-        .small-date { font-size: 0.45rem; display: block; font-weight: 400; color: #64748b; }
-        .meteo-cell { font-size: 0.75rem; }
+        .btn-back {
+            text-decoration: none;
+            background: var(--marine-blue);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
 
-        .disclaimer { font-size: 0.55rem; color: #64748b; padding: 10px; text-align: justify; line-height: 1.4; }
+        .page-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        /* Conteneur du tableau avec scroll horizontal */
+        .table-container {
+            width: 100%;
+            overflow-x: auto; /* Active le scroll sur le côté */
+            -webkit-overflow-scrolling: touch; /* Scroll fluide sur iPhone */
+            padding-bottom: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: max-content; /* Le tableau prend la place de son contenu, forçant le scroll */
+            min-width: 100%;
+            background: var(--card-bg);
+        }
+
+        th, td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            white-space: nowrap; /* Empêche le texte de passer à la ligne */
+        }
+
+        /* En-têtes principaux (Matin / Soir) */
+        th.group-header {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 12px;
+        }
+        
+        .matin-group { background-color: var(--matin-bg); }
+        .soir-group { background-color: var(--soir-bg); }
+
+        /* En-têtes secondaires (Porte, PM, Coeff...) */
+        th.sub-header {
+            font-size: 0.65rem;
+            color: #64748b;
+            font-weight: 600;
+            background: #f1f5f9;
+        }
+
+        /* Colonne de gauche Fixe (Sticky) */
+        .sticky-col {
+            position: sticky;
+            left: 0;
+            background: var(--card-bg);
+            z-index: 5;
+            border-right: 2px solid var(--marine-blue); /* Ligne forte pour montrer la séparation */
+            font-weight: 700;
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        /* En-tête de la colonne fixe */
+        th.sticky-col {
+            z-index: 6; /* Doit être au-dessus du reste */
+            background: var(--card-bg);
+        }
+
+        /* Lignes du week-end */
+        tr.weekend td:not(.sticky-col) {
+            background-color: var(--weekend-color);
+        }
+        tr.weekend td.sticky-col {
+            background-color: #fee2e2; /* Rouge très clair pour la date collante */
+            color: #991b1b;
+        }
+
+        .data-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        
+        .data-main { font-weight: 700; font-size: 0.8rem; }
+        .data-sub { font-size: 0.65rem; color: #64748b; }
+        
+        .coeff-badge {
+            background: var(--marine-blue);
+            color: white;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        /* Indicateur de scroll (petit texte d'aide) */
+        .scroll-hint {
+            text-align: center;
+            font-size: 0.65rem;
+            color: #64748b;
+            padding: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <div class="top-nav">
-            <a href="index.html" class="btn-back">⬅ ACCUEIL DIRECT</a>
-            <div style="font-size: 0.65rem; font-weight: 700; color: #64748b;">PLANNING ANNUEL</div>
-        </div>
-
-        <div class="module" style="padding: 10px 5px;">
-            <div class="module-header">Horaires Officiels du Port</div>
-            <table class="planning-table">
-                <thead>
-                    <tr>
-                        <th rowspan="2" style="width:14%">DATE</th>
-                        <th colspan="4" style="color:var(--port-green)">OUV <span style="color:#000">&</span> <span style="color:var(--port-red)">FERM</span></th>
-                        <th colspan="3">Matin</th>
-                        <th colspan="3">Soir</th>
-                        <th rowspan="2" style="width:8%">MET</th>
-                    </tr>
-                    <tr>
-                        <th><div class="dot dot-green"></div></th>
-                        <th><div class="dot dot-red"></div></th>
-                        <th><div class="dot dot-green"></div></th>
-                        <th><div class="dot dot-red"></div></th>
-                        <th>PM</th><th>H.</th><th>C.</th>
-                        <th>PM</th><th>H.</th><th>C.</th>
-                    </tr>
-                </thead>
-                <tbody id="planning-body">
-                    </tbody>
-            </table>
-        </div>
-
-        <div class="disclaimer">
-            * Les horaires de porte sont fournis à titre indicatif selon les données officielles du port. La météo (pression atmosphérique et vent) peut impacter ces horaires de +/- 30 minutes. L'indice météo est fourni pour les 7 prochains jours.
-        </div>
+    <div class="header">
+        <a href="index.html" class="btn-back">◀ ACCUEIL</a>
+        <h1 class="page-title">Horaires & Marées</h1>
     </div>
 
-<script>
-    function generateTable() {
-        const tbody = document.getElementById('planning-body');
-        if (typeof data === 'undefined') return;
-        tbody.innerHTML = "";
-        
-        data.forEach(jour => {
-            const d = new Date(jour.date);
-            const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
-            const dayLabel = d.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase();
-            const dayNum = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
-            
-            const p1 = jour.portes[0] || {open:"-", close:"-"};
-            const p2 = jour.portes[1] || {open:"-", close:"-"};
-            
-            const diff = (d - new Date()) / (1000*60*60*24);
-            let meteo = (diff >= -1 && diff <= 7) ? "☀️" : "";
+    <div class="scroll-hint">👉 Glissez le tableau vers la gauche pour voir le SOIR</div>
 
-            const row = `<tr class="${isWeekend ? 'weekend-row' : ''}">
-                <td>${dayLabel}<span class="small-date">${dayNum}</span></td>
-                <td>${p1.open}</td><td>${p1.close}</td>
-                <td>${p2.open}</td><td>${p2.close}</td>
-                <td>${jour.pm1}</td><td>${jour.pm1_h}</td><td>${jour.coeff1}</td>
-                <td>${jour.pm2}</td><td>${jour.pm2_h}</td><td>${jour.coeff2}</td>
-                <td class="meteo-cell">${meteo}</td>
-            </tr>`;
-            tbody.innerHTML += row;
-        });
-    }
-    generateTable();
-</script>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="sticky-col" rowspan="2">Date</th>
+                    <th class="group-header matin-group" colspan="4">☀️ MATIN</th>
+                    <th class="group-header soir-group" colspan="4">🌙 SOIR</th>
+                </tr>
+                <tr>
+                    <th class="sub-header">Porte<br>(Ouv - Ferm)</th>
+                    <th class="sub-header">Basse Mer</th>
+                    <th class="sub-header">Pleine Mer</th>
+                    <th class="sub-header">Coeff</th>
+                    <th class="sub-header">Porte<br>(Ouv - Ferm)</th>
+                    <th class="sub-header">Basse Mer</th>
+                    <th class="sub-header">Pleine Mer</th>
+                    <th class="sub-header">Coeff</th>
+                </tr>
+            </thead>
+            <tbody id="planning-body">
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        function generateTable() {
+            const tbody = document.getElementById('planning-body');
+            if (typeof data === 'undefined' && typeof dataMai === 'undefined') return;
+
+            // Astuce pour l'instant : on fusionne tes variables data (Avril) et dataMai (Mai) si elles existent.
+            let allData = [];
+            if (typeof data !== 'undefined') allData = allData.concat(data);
+            if (typeof dataMai !== 'undefined') allData = allData.concat(dataMai);
+
+            tbody.innerHTML = "";
+            
+            allData.forEach(jour => {
+                const d = new Date(jour.date);
+                const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
+                
+                // Formatage de la date (ex: Sam 21 Avr)
+                const dayLabel = d.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase();
+                const dayNum = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
+                const fullDateHtml = `<div class="data-stack"><span class="data-main">${dayLabel}</span><span class="data-sub">${dayNum}</span></div>`;
+                
+                // Sécurisation des données
+                const p1 = jour.portes && jour.portes[0] ? jour.portes[0] : {open:"--:--", close:"--:--"};
+                const p2 = jour.portes && jour.portes[1] ? jour.portes[1] : {open:"--:--", close:"--:--"};
+
+                const safeVal = (v) => (!v || v === "--:--" || v === "-") ? "--" : v;
+
+                const row = `<tr class="${isWeekend ? 'weekend' : ''}">
+                    <td class="sticky-col">${fullDateHtml}</td>
+                    
+                    <td class="matin-group">
+                        <div class="data-stack">
+                            <span class="data-main" style="color: #067a5c;">${safeVal(p1.open)}</span>
+                            <span class="data-main" style="color: #991b1b;">${safeVal(p1.close)}</span>
+                        </div>
+                    </td>
+                    <td class="matin-group">
+                        <div class="data-stack">
+                            <span class="data-main">${safeVal(jour.bm1)}</span>
+                            <span class="data-sub">${safeVal(jour.bm1_h)}m</span>
+                        </div>
+                    </td>
+                    <td class="matin-group">
+                        <div class="data-stack">
+                            <span class="data-main">${safeVal(jour.pm1)}</span>
+                            <span class="data-sub">${safeVal(jour.pm1_h)}m</span>
+                        </div>
+                    </td>
+                    <td class="matin-group">
+                        <span class="${jour.coeff1 && jour.coeff1 !== '-' ? 'coeff-badge' : ''}">${safeVal(jour.coeff1)}</span>
+                    </td>
+
+                    <td class="soir-group">
+                        <div class="data-stack">
+                            <span class="data-main" style="color: #067a5c;">${safeVal(p2.open)}</span>
+                            <span class="data-main" style="color: #991b1b;">${safeVal(p2.close)}</span>
+                        </div>
+                    </td>
+                    <td class="soir-group">
+                        <div class="data-stack">
+                            <span class="data-main">${safeVal(jour.bm2)}</span>
+                            <span class="data-sub">${safeVal(jour.bm2_h)}m</span>
+                        </div>
+                    </td>
+                    <td class="soir-group">
+                        <div class="data-stack">
+                            <span class="data-main">${safeVal(jour.pm2)}</span>
+                            <span class="data-sub">${safeVal(jour.pm2_h)}m</span>
+                        </div>
+                    </td>
+                    <td class="soir-group">
+                        <span class="${jour.coeff2 && jour.coeff2 !== '-' ? 'coeff-badge' : ''}">${safeVal(jour.coeff2)}</span>
+                    </td>
+                </tr>`;
+                
+                tbody.innerHTML += row;
+            });
+        }
+        
+        window.onload = generateTable;
+    </script>
 </body>
 </html>
