@@ -36,6 +36,7 @@
         .btn-action { text-decoration: none; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 4px 10px; color: var(--text-main); font-weight: 700; font-size: 0.65rem; display: inline-flex; align-items: center; }
         .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
 
+        /* ROND DE STATUT */
         .status-box { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
         .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
         .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
@@ -47,34 +48,47 @@
         .status-value { font-size: 1.1rem; font-weight: 700; }
         .status-label { font-size: 0.55rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
         
+        /* BARRE DE PROGRESSION DYNAMIQUE */
         .progress-wrapper { margin: 10px 0; display: none; }
-        .progress-container { width: 100%; height: 34px; border-radius: 17px; overflow: hidden; position: relative; }
+        .progress-container { width: 100%; height: 34px; border-radius: 17px; overflow: hidden; position: relative; background: var(--open-light); transition: background 0.5s ease; }
+        .progress-container.warning { background: var(--warning-color); }
+        .progress-container.danger { background: var(--danger-color); }
         .progress-container.waiting { background: #cbd5e1; } 
-        .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear; }
+        
+        .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear, background 0.5s ease; }
+        .progress-container.warning .progress-bar { background: var(--warning-dark); }
+        .progress-container.danger .progress-bar { background: var(--danger-dark); animation: blink 1s infinite; }
         .progress-container.waiting .progress-bar { background: var(--marine-blue); }
-        .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); }
+        
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none; }
 
-        /* CRÉNEAUX FORCÉS SUR UNE SEULE LIGNE */
-        .slot-line-container { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; flex-wrap: nowrap; }
-        .slot-title { font-size: 0.65rem; font-weight: 700; white-space: nowrap; margin-right: 5px; }
-        .slot-pills { display: flex; gap: 4px; flex-wrap: nowrap; }
-        .slot-badge { padding: 3px 5px; border-radius: 6px; display: flex; align-items: center; gap: 3px; color: white; white-space: nowrap; }
-        .slot-badge span { font-size: 0.5rem; text-transform: uppercase; font-weight: 600; opacity: 0.9; }
+        /* CRÉNEAUX SUR UNE LIGNE */
+        .slot-line-container { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; }
+        .slot-title { font-size: 0.65rem; font-weight: 700; }
+        .slot-pills { display: flex; gap: 4px; }
+        .slot-badge { padding: 3px 5px; border-radius: 6px; display: flex; align-items: center; gap: 3px; color: white; }
+        .slot-badge span { font-size: 0.45rem; text-transform: uppercase; font-weight: 600; }
         .slot-badge b { font-size: 0.7rem; font-weight: 700; }
         .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
         .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
 
+        /* MODULE MARÉE AJUSTÉ */
         .tide-full-module { 
             background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; 
-            padding: 15px 10px; margin: 0 12px; 
+            padding: 15px 10px; margin: 0 20px; 
             box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
         }
-        .tide-header-info { width: 100%; display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 700; font-size: 0.65rem; color: var(--marine-blue); }
+        .tide-header-info { width: 100%; display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 700; font-size: 0.6rem; color: var(--marine-blue); }
         #tideCanvasLarge { width: 100%; height: 80px; }
         .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
         .tide-label { font-size: 0.5rem; color: #64748b; text-transform: uppercase; display: block; }
 
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 120px; border: 1px solid #e2e8f0; }
+        
+        /* PUBLICITÉ */
+        .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
+        
         .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-weight: 500; }
     </style>
 </head>
@@ -103,7 +117,7 @@
                 </div>
             </div>
             <div class="slot-line-container">
-                <div class="slot-title">Créneaux :</div>
+                <div class="slot-title">Créneaux officiels :</div>
                 <div class="slot-pills">
                     <div class="slot-badge badge-open"><span>OUV.</span><b id="open-time">--:--</b></div>
                     <div class="slot-badge badge-close"><span>FERM.</span><b id="close-time">--:--</b></div>
@@ -132,6 +146,11 @@
             <div class="weather-iframe-box">
                 <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&overlay=wind&product=ecmwf&marker=true&metricWind=kt" frameborder="0"></iframe>
             </div>
+        </div>
+
+        <div class="module ad-module">
+            📢 PUBLICITÉ<br>
+            <span style="font-size: 0.6rem; font-weight: 400;">Réservez cet espace pour votre commerce</span>
         </div>
 
         <div class="disclaimer">
@@ -185,6 +204,7 @@
                     const wrapper = document.getElementById('progress-wrapper');
                     const pbContainer = document.getElementById('progress-container');
                     const pb = document.getElementById('progress-bar');
+                    
                     if (now >= sO) {
                         wrapper.style.display = "block";
                         const diffMs = sC - now;
@@ -193,32 +213,36 @@
                         const m = Math.floor((diffMs % 3600000) / 60000);
                         document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
                         pb.style.width = percent + "%";
+                        
                         let circleClass = "open"; let statusText = "OUVERTE"; let labelText = "PORTE";
-                        if (diffMs < 25 * 60 * 1000) { pbContainer.className = "progress-container danger"; circleClass = "danger"; statusText = "IMMINENTE"; labelText = "FERMETURE"; }
-                        else if (percent > 85) { pbContainer.className = "progress-container warning"; circleClass = "warning"; statusText = "PRÉVENTION"; labelText = "FERMETURE"; }
-                        else { pbContainer.className = "progress-container"; }
+                        pbContainer.className = "progress-container";
+                        
+                        if (diffMs < 25 * 60 * 1000) { pbContainer.classList.add("danger"); circleClass = "danger"; statusText = "IMMINENTE"; labelText = "FERMETURE"; }
+                        else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; statusText = "PRÉVENTION"; labelText = "FERMETURE"; }
+                        
                         document.getElementById('status-text').innerText = statusText;
                         document.querySelector('.status-label').innerText = labelText;
                         document.getElementById('status-box').className = "status-box " + circleClass;
                     } else {
                         wrapper.style.display = "block";
-                        // CALCUL CORRIGÉ DE LA BARRE D'ATTENTE
                         let lastClose = (i > 0) ? new Date(data[i-1].date + "T" + data[i-1].close) : new Date(sO.getTime() - (7 * 3600 * 1000));
                         const diffMs = sO - now;
                         const elapsedMs = now - lastClose;
                         const totalClosedMs = sO - lastClose;
-                        let percent = (elapsedMs / totalClosedMs) * 100;
-                        // Sécurité pour ne pas dépasser 100% ou 0%
-                        percent = Math.max(0, Math.min(100, percent));
+                        let waitPercent = Math.max(0, Math.min(100, (elapsedMs / totalClosedMs) * 100));
                         
                         document.getElementById('time-left').innerText = "Ouverture dans " + Math.floor(diffMs/3600000) + "h" + (Math.floor((diffMs%3600000)/60000) < 10 ? "0" : "") + Math.floor((diffMs%3600000)/60000);
                         pbContainer.className = "progress-container waiting";
-                        pb.style.width = percent + "%"; // LA PROGRESSION EST RESTAURÉE
+                        pb.style.width = waitPercent + "%";
                         document.getElementById('status-text').innerText = "FERMÉE";
                         document.querySelector('.status-label').innerText = "PORTE";
                         document.getElementById('status-box').className = "status-box closed";
                     }
 
+                    document.getElementById('open-time').innerText = currentItem.open;
+                    document.getElementById('close-time').innerText = currentItem.close;
+                    document.getElementById('coeff-display').innerText = currentItem.coeff;
+                    
                     const tPM = new Date(currentItem.date + "T" + currentItem.pm);
                     const tBM = new Date(currentItem.date + "T" + currentItem.bm);
                     let isDescending = tPM < tBM;
@@ -226,7 +250,6 @@
                     let endT = isDescending ? tBM : tPM;
                     let tidePercent = Math.max(0, Math.min(100, ((now - startT) / (endT - startT)) * 100));
 
-                    document.getElementById('coeff-display').innerText = currentItem.coeff;
                     document.getElementById('tide-left-label').innerText = isDescending ? "Pleine Mer" : "Basse Mer";
                     document.getElementById('tide-right-label').innerText = isDescending ? "Basse Mer" : "Pleine Mer";
                     document.getElementById('label-left').innerText = isDescending ? "Matin" : "Après-midi";
@@ -234,9 +257,6 @@
                     document.getElementById('label-right').innerText = isDescending ? "Après-midi" : "Soir";
                     document.getElementById('val-right').innerText = (isDescending ? currentItem.bm : currentItem.pm) + " (" + (isDescending ? currentItem.bm_h : currentItem.pm_h) + "m)";
                     
-                    document.getElementById('open-time').innerText = currentItem.open;
-                    document.getElementById('close-time').innerText = currentItem.close;
-
                     drawTideGraph(tidePercent, isDescending);
                     break;
                 }
