@@ -16,101 +16,88 @@
             --closed-color: #ef4444;
             --marine-blue: #1e3a8a;
             --text-main: #1e293b;
+            --tide-light-blue: #eff6ff;
         }
 
         body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
+        
+        .app-container { max-width: 400px; width: 100%; display: flex; flex-direction: column; gap: 10px; }
+        
+        /* CORRECTION : On redonne aux "pages" les espacements des modules */
+        #page-home, #page-planning { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+        #page-planning { display: none; } /* Caché par défaut */
 
-        .app-container {
-            max-width: 400px; width: 100%; display: flex; flex-direction: column; gap: 10px; 
-        }
-
-        .module { 
-            background: var(--card-bg); border-radius: 16px; padding: 12px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03); position: relative;
-        }
-
-        .module-header {
-            font-size: 0.85rem; color: var(--text-main); 
-            font-weight: 700; margin-bottom: 12px;
-            display: flex; justify-content: flex-start; align-items: center;
-        }
-
+        .module { background: var(--card-bg); border-radius: 16px; padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); position: relative; }
+        
+        /* Navigation */
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px; }
+        .nav-buttons { display: flex; gap: 8px; }
         .date-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; color: #475569; }
-        .menu-btn {
+        
+        .btn-action {
             background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;
             padding: 4px 10px; cursor: pointer; color: var(--text-main);
             font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.65rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
+        .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
 
+        /* Styles Accueil */
+        .module-header { font-size: 0.85rem; color: var(--text-main); font-weight: 700; margin-bottom: 12px; }
         h1 { color: var(--text-main); font-size: 1.05rem; margin: 0 0 12px 0; font-weight: 700; text-align: center; }
         h1 sup { color: #b03a2e; font-size: 0.7rem; }
-
-        .status-box {
-            width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 10px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: white; transition: all 0.5s ease; box-sizing: border-box;
-        }
+        
+        .status-box { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; box-sizing: border-box; }
         .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
         .status-box.closed { background: var(--closed-color); border: 5px solid #991b1b; }
-
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-
+        
         .status-label { font-size: 0.55rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
         .status-value { font-size: 1.1rem; font-weight: 700; }
-
+        
         .progress-wrapper { margin: 10px 0; display: none; }
-        .progress-container {
-            width: 100%; background: var(--open-light); 
-            height: 34px; border-radius: 17px; overflow: hidden; position: relative;
-        }
+        .progress-container { width: 100%; background: var(--open-light); height: 34px; border-radius: 17px; overflow: hidden; position: relative; }
         .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear; }
         .progress-bar.warning { background: var(--warning-color); }
         .progress-bar.danger { background: var(--danger-color); animation: blink 1s infinite; }
         
-        .progress-text {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none;
+        /* CORRECTION : Le texte "temps restant" est de nouveau ancré en haut à gauche (top:0; left:0) pour être visible */
+        .progress-text { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 0.85rem; font-weight: 700; color: white; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none; 
         }
-
-        /* Section créneaux optimisée en ligne */
-        .slot-line-container { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 8px 10px; background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9;
-        }
+        
+        .slot-line-container { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; }
         .slot-title { font-size: 0.7rem; font-weight: 700; color: var(--text-main); }
         .slot-pills { display: flex; gap: 6px; }
         .slot-badge { padding: 3px 6px; border-radius: 6px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
         .slot-badge span { font-size: 0.5rem; text-transform: uppercase; opacity: 0.9; font-weight: 400; }
         .slot-badge b { font-size: 0.75rem; }
-        
         .badge-open { background: var(--open-light); color: white; border: 1px solid var(--open-dark); }
         .badge-close { background: var(--closed-color); color: white; border: 1px solid #991b1b; }
-
-        .tide-container {
-            display: flex; align-items: center; justify-content: space-between; padding-right: 15px;
-        }
+        
+        .tide-container { display: flex; align-items: center; gap: 15px; }
+        .tide-graph-box { width: 85px; height: 55px; background: var(--tide-light-blue); border-radius: 12px; display: flex; justify-content: center; align-items: center; border: 1px solid #dbeafe; }
+        .tide-graph { width: 70px; height: 45px; } 
+        #tideCanvas { width: 100%; height: 100%; display: block; }
         .tide-data { display: flex; flex-direction: column; text-align: left; font-size: 0.75rem; flex: 1; }
         .tide-row { margin-bottom: 4px; }
         .tide-row strong { color: var(--marine-blue); display: inline-block; width: 45px; font-size: 0.7rem; }
         .tide-row span { font-weight: 700; font-size: 0.8rem; color: var(--text-main); }
-
-        .tide-graph-box { width: 80px; display: flex; justify-content: center; align-items: center; }
-        .tide-graph { width: 65px; height: 45px; } 
-        #tideCanvas { width: 100%; height: 100%; display: block; }
-
+        
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 120px; border: 1px solid #e2e8f0; }
+        .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
+        .disclaimer { font-size: 0.55rem; color: #64748b; padding: 0 5px; line-height: 1.4; text-align: justify; margin-top: 5px; }
 
-        .ad-module {
-            border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; 
-            font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600;
-        }
-
-        .disclaimer { 
-            font-size: 0.55rem; color: #64748b; padding: 0 5px; 
-            line-height: 1.4; text-align: justify; margin-top: 5px;
-        }
+        /* Styles Spécifiques au Planning */
+        .planning-list { display: flex; flex-direction: column; gap: 8px; }
+        .planning-day { display: flex; flex-direction: column; gap: 5px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
+        .day-title { font-weight: 700; font-size: 0.85rem; color: var(--marine-blue); text-transform: capitalize; }
+        .day-slots { display: flex; gap: 10px; font-size: 0.75rem; }
+        .mini-slot { background: #f8fafc; padding: 4px 8px; border-radius: 6px; border: 1px solid #e2e8f0; }
+        .mini-coeff { font-weight: 700; color: #64748b; margin-left: auto; font-size: 0.7rem; }
     </style>
 </head>
 <body>
@@ -119,113 +106,144 @@
         
         <div class="top-nav">
             <div class="date-badge" id="current-date">-- --</div>
-            <button class="menu-btn">MENU ☰</button>
+            <div class="nav-buttons">
+                <button class="btn-action btn-planning" id="btn-planning" onclick="togglePage('planning')">PLANNING 📅</button>
+                <button class="btn-action" onclick="togglePage('home')" id="btn-home" style="display:none;">ACCUEIL 🏠</button>
+                <button class="btn-action">MENU ☰</button>
+            </div>
         </div>
 
-        <div class="module">
-            <h1>Port de Barneville-Carteret<sup>*</sup></h1>
-
-            <div id="status-box" class="status-box closed">
-                <span class="status-label">Porte</span>
-                <span class="status-value" id="status-text">--</span>
-            </div>
-
-            <div class="progress-wrapper" id="progress-wrapper">
-                <div class="progress-container">
-                    <div class="progress-bar" id="progress-bar"></div>
-                    <div class="progress-text" id="time-left">--</div>
+        <div id="page-home">
+            <div class="module">
+                <h1>Port de Barneville-Carteret<sup>*</sup></h1>
+                <div id="status-box" class="status-box closed">
+                    <span class="status-label">Porte</span>
+                    <span class="status-value" id="status-text">--</span>
                 </div>
-            </div>
-
-            <div class="slot-line-container">
-                <div class="slot-title">Créneaux officiels :</div>
-                <div class="slot-pills">
-                    <div class="slot-badge badge-open">
-                        <span>OUV.</span>
-                        <b id="open-time">--:--</b>
+                <div class="progress-wrapper" id="progress-wrapper">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                        <div class="progress-text" id="time-left">--</div>
                     </div>
-                    <div class="slot-badge badge-close">
-                        <span>FERM.</span>
-                        <b id="close-time">--:--</b>
+                </div>
+                <div class="slot-line-container">
+                    <div class="slot-title">Créneaux officiels :</div>
+                    <div class="slot-pills">
+                        <div class="slot-badge badge-open"><span>OUV.</span><b id="open-time">--:--</b></div>
+                        <div class="slot-badge badge-close"><span>FERM.</span><b id="close-time">--:--</b></div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="module">
-            <div class="module-header">Informations marée</div>
-            <div class="tide-container">
-                <div class="tide-data">
-                    <div class="tide-row"><strong>COEFF</strong> <span id="coeff-display">--</span></div>
-                    <div class="tide-row"><strong>PM</strong> <span id="pm-display">--:-- (-- m)</span></div>
-                    <div class="tide-row"><strong>BM</strong> <span id="bm-display">--:-- (-- m)</span></div>
-                </div>
-                <div class="tide-graph-box">
-                    <div class="tide-graph">
-                        <canvas id="tideCanvas"></canvas>
+            <div class="module">
+                <div class="module-header">Informations marée</div>
+                <div class="tide-container">
+                    <div class="tide-graph-box"><div class="tide-graph"><canvas id="tideCanvas"></canvas></div></div>
+                    <div class="tide-data">
+                        <div class="tide-row"><strong>COEFF</strong> <span id="coeff-display">--</span></div>
+                        <div class="tide-row"><strong>PM</strong> <span id="pm-display">--:-- (-- m)</span></div>
+                        <div class="tide-row"><strong>BM</strong> <span id="bm-display">--:-- (-- m)</span></div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="module">
-            <div class="module-header">Conditions météo</div>
-            <div class="weather-iframe-box">
-                <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&level=surface&overlay=wind&product=ecmwf&marker=true&calendar=now&type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C" frameborder="0"></iframe>
+            <div class="module">
+                <div class="module-header">Conditions météo</div>
+                <div class="weather-iframe-box">
+                    <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&level=surface&overlay=wind&product=ecmwf&marker=true&calendar=now&type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C" frameborder="0"></iframe>
+                </div>
             </div>
         </div>
 
-        <div class="module ad-module">
-            📢 PUBLICITÉ<br>
-            <span style="font-size: 0.6rem; font-weight: 400;">Réservez cet espace pour votre commerce</span>
+        <div id="page-planning">
+            <div class="module">
+                <div class="module-header">Prévisions sur 7 jours</div>
+                <div class="planning-list" id="planning-list">
+                    </div>
+            </div>
+            <div class="module">
+                <div class="module-header">Météo prévue</div>
+                <div class="weather-iframe-box">
+                    <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&level=surface&overlay=wind&product=ecmwf&marker=true&calendar=now&type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C" frameborder="0"></iframe>
+                </div>
+            </div>
         </div>
 
+        <div class="module ad-module">📢 PUBLICITÉ : Votre commerce ici</div>
         <div class="disclaimer">
             * Les horaires peuvent varier selon la météo (+/- 30 min). Temps de chenalage estimé : 10 min. Le capitaine est seul responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
-
     </div>
 
     <script>
         const data = [
             { date: "2026-04-21", open: "06:25", close: "11:51", coeff: "82", pm: "09:08", pm_h: "10.2", bm: "15:30", bm_h: "2.1" },
             { date: "2026-04-21", open: "18:46", close: "23:59", coeff: "85", pm: "21:30", pm_h: "10.5", bm: "03:45", bm_h: "1.8" },
-            { date: "2026-04-22", open: "07:00", close: "12:27", coeff: "88", pm: "09:45", pm_h: "10.8", bm: "16:15", bm_h: "1.5" }
+            { date: "2026-04-22", open: "07:00", close: "12:27", coeff: "88", pm: "09:45", pm_h: "10.8", bm: "16:15", bm_h: "1.5" },
+            { date: "2026-04-23", open: "07:45", close: "13:10", coeff: "90", pm: "10:30", pm_h: "11.0", bm: "17:00", bm_h: "1.2" }
         ];
+
+        function togglePage(page) {
+            if (page === 'planning') {
+                document.getElementById('page-home').style.display = 'none';
+                document.getElementById('page-planning').style.display = 'flex';
+                document.getElementById('btn-planning').style.display = 'none';
+                document.getElementById('btn-home').style.display = 'block';
+                generatePlanning();
+            } else {
+                document.getElementById('page-home').style.display = 'flex';
+                document.getElementById('page-planning').style.display = 'none';
+                document.getElementById('btn-planning').style.display = 'block';
+                document.getElementById('btn-home').style.display = 'none';
+                updateApp(); // Force la mise à jour du graphique en revenant
+            }
+        }
+
+        function generatePlanning() {
+            const list = document.getElementById('planning-list');
+            list.innerHTML = "";
+            const days = {};
+            data.forEach(item => {
+                if (!days[item.date]) days[item.date] = [];
+                days[item.date].push(item);
+            });
+
+            for (let date in days) {
+                const dayData = new Date(date);
+                const dayLabel = dayData.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'short' });
+                let html = `<div class="planning-day"><div class="day-title">${dayLabel}</div><div class="day-slots">`;
+                days[date].forEach(slot => {
+                    html += `<div class="mini-slot"><b>${slot.open}</b> - <b>${slot.close}</b></div>`;
+                });
+                html += `<div class="mini-coeff">Coeff ${days[date][0].coeff}</div></div></div>`;
+                list.innerHTML += html;
+            }
+        }
 
         function drawTideGraph(percent) {
             const canvas = document.getElementById('tideCanvas');
+            if(!canvas || canvas.offsetParent === null) return; // Stoppe si la page est cachée
             canvas.width = canvas.parentElement.clientWidth;
             canvas.height = canvas.parentElement.clientHeight;
             const ctx = canvas.getContext('2d');
-            const w = canvas.width;
-            const h = canvas.height;
+            const w = canvas.width; const h = canvas.height;
             ctx.clearRect(0, 0, w, h);
-            ctx.beginPath();
-            ctx.strokeStyle = '#1e3a8a';
-            ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 2.5;
             for (let x = 0; x <= w; x++) {
                 const y = h - 4 - (Math.sin((x / w) * Math.PI) * (h - 8));
-                if (x === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
+                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
             }
             ctx.stroke();
             const dotX = (percent / 100) * w;
             const dotY = h - 4 - (Math.sin((dotX / w) * Math.PI) * (h - 8));
-            ctx.beginPath();
-            ctx.fillStyle = '#ef4444';
-            ctx.arc(dotX, dotY, 3.5, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.strokeStyle = 'white';
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
+            ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 3.5, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
         }
 
         function updateApp() {
             const now = new Date();
             document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
-            let currentItem = data[0]; 
-            let found = false;
+            let currentItem = data[0]; let found = false;
             const wrapper = document.getElementById('progress-wrapper');
             for (let item of data) {
                 const sO = new Date(item.date + "T" + item.open);
@@ -235,16 +253,13 @@
                     currentItem = item;
                     wrapper.style.display = "block";
                     const diffMs = sC - now;
-                    const totalMs = sC - sO;
-                    const percent = ((now - sO) / totalMs) * 100;
+                    const percent = ((now - sO) / (sC - sO)) * 100;
                     const h = Math.floor(diffMs / 3600000);
                     const m = Math.floor((diffMs % 3600000) / 60000);
                     document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
                     const pb = document.getElementById('progress-bar');
                     pb.style.width = percent + "%";
-                    pb.className = "progress-bar";
-                    if (diffMs < 25 * 60 * 1000) pb.classList.add("danger");
-                    else if (percent > 85) pb.classList.add("warning");
+                    pb.className = "progress-bar" + (diffMs < 25 * 60 * 1000 ? " danger" : percent > 85 ? " warning" : "");
                     drawTideGraph(percent);
                     found = true; break;
                 } else if (now < sO) {
@@ -255,7 +270,6 @@
                     found = true; break;
                 }
             }
-            if (!found) { updateUI("INDISP.", "closed"); wrapper.style.display = "none"; }
             document.getElementById('open-time').innerText = currentItem.open;
             document.getElementById('close-time').innerText = currentItem.close;
             document.getElementById('coeff-display').innerText = currentItem.coeff || "--";
