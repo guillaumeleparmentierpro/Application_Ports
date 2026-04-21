@@ -27,6 +27,10 @@
         
         .module { background: var(--card-bg); border-radius: 16px; padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); position: relative; }
         
+        /* Titre sorti du module */
+        .main-title { color: var(--text-main); font-size: 1.05rem; margin: 5px 0 10px 0; font-weight: 700; text-align: center; }
+        .main-title sup { color: #b03a2e; font-size: 0.7rem; }
+
         /* Nav */
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px; }
         .nav-buttons { display: flex; gap: 8px; }
@@ -39,11 +43,6 @@
         }
         .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
 
-        /* Styles Accueil */
-        .module-header { font-size: 0.85rem; color: var(--text-main); font-weight: 700; margin-bottom: 12px; }
-        h1 { color: var(--text-main); font-size: 1.05rem; margin: 0 0 12px 0; font-weight: 700; text-align: center; }
-        h1 sup { color: #b03a2e; font-size: 0.7rem; }
-        
         .status-box { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
         .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
         .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
@@ -55,18 +54,15 @@
         .status-value { font-size: 1.1rem; font-weight: 700; }
         .status-label { font-size: 0.55rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
         
-        /* BARRE DE PROGRESSION - OUVERTURE & ATTENTE */
         .progress-wrapper { margin: 10px 0; display: none; }
         .progress-container { width: 100%; background: var(--open-light); height: 34px; border-radius: 17px; overflow: hidden; position: relative; transition: background 0.5s ease; }
         .progress-container.warning { background: var(--warning-color); }
         .progress-container.danger { background: var(--danger-color); }
-        /* Style d'attente (porte fermée) */
         .progress-container.waiting { background: #cbd5e1; } 
         
         .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear, background 0.5s ease; }
         .progress-container.warning .progress-bar { background: var(--warning-dark); }
         .progress-container.danger .progress-bar { background: var(--danger-dark); animation: blink 1s infinite; }
-        /* Remplissage d'attente */
         .progress-container.waiting .progress-bar { background: var(--marine-blue); animation: none; }
         
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
@@ -82,15 +78,18 @@
         .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
         .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
 
-        .tide-container { display: flex; align-items: center; justify-content: center; gap: 15px; }
+        /* Marée Accueil - Centrage complet */
+        .tide-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 0 auto; }
         .tide-graph-box { width: 85px; height: 55px; background: var(--tide-light-blue); border-radius: 12px; display: flex; justify-content: center; align-items: center; border: 1px solid #dbeafe; }
         #tideCanvas { width: 70px; height: 45px; }
-        .tide-data { display: flex; flex-direction: column; text-align: left; font-size: 0.75rem; }
+        .tide-data { display: flex; flex-direction: column; text-align: left; font-size: 0.75rem; min-width: 130px; }
         .tide-row strong { color: var(--marine-blue); width: 45px; font-size: 0.7rem; display: inline-block; }
         .tide-row span { font-weight: 700; font-size: 0.8rem; color: var(--text-main); }
         
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 120px; border: 1px solid #e2e8f0; }
         .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
+        
+        /* Disclaimer avec l'astérisque de référence */
         .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; line-height: 1.4; text-align: center; margin-top: 5px; font-weight: 500; }
     </style>
 </head>
@@ -105,8 +104,9 @@
             </div>
         </div>
 
+        <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
+
         <div class="module">
-            <h1>Port de Barneville-Carteret<sup>*</sup></h1>
             <div id="status-box" class="status-box closed">
                 <span class="status-label">Porte</span>
                 <span class="status-value" id="status-text">--</span>
@@ -129,7 +129,7 @@
         </div>
 
         <div class="module">
-            <div class="module-header">Informations marée</div>
+            <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; color: var(--text-main);">Informations marée</div>
             <div class="tide-container">
                 <div class="tide-graph-box"><canvas id="tideCanvas"></canvas></div>
                 <div class="tide-data">
@@ -141,15 +141,16 @@
         </div>
 
         <div class="module">
-            <div class="module-header">Conditions météo</div>
+            <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; color: var(--text-main);">Conditions météo</div>
             <div class="weather-iframe-box">
                 <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&overlay=wind&product=ecmwf&marker=true&metricWind=kt" frameborder="0"></iframe>
             </div>
         </div>
 
         <div class="module ad-module">📢 PUBLICITÉ : Votre commerce ici</div>
+        
         <div class="disclaimer">
-            <strong>Attention :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
+            * <strong>Attention :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
     </div>
 
@@ -158,8 +159,6 @@
             if (typeof data !== 'undefined') {
                 updateApp();
                 setInterval(updateApp, 1000);
-            } else {
-                console.error("Le fichier donnees.js n'a pas pu être chargé.");
             }
         };
 
@@ -170,13 +169,17 @@
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, 70, 45);
             ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 2.5;
+            
+            // Dessin de la courbe sinusoïdale descendante (du haut vers le bas)
             for (let x = 0; x <= 70; x++) {
-                const y = 41 - (Math.sin((x / 70) * Math.PI) * 37);
+                const y = 8 + ((Math.cos((x / 70) * Math.PI) + 1) / 2) * 30;
                 if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
             }
             ctx.stroke();
+
+            // Point actuel
             const dotX = (percent / 100) * 70;
-            const dotY = 41 - (Math.sin((dotX / 70) * Math.PI) * 37);
+            const dotY = 8 + ((Math.cos((dotX / 70) * Math.PI) + 1) / 2) * 30;
             ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 3.5, 0, Math.PI * 2); ctx.fill();
             ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
         }
@@ -199,80 +202,45 @@
                 const sC = new Date(item.date + "T" + item.close);
                 
                 if (now >= sO && now <= sC) {
-                    // --- SCÉNARIO : PORTE OUVERTE ---
-                    currentItem = item; 
-                    wrapper.style.display = "block";
-                    
+                    currentItem = item; wrapper.style.display = "block";
                     const diffMs = sC - now;
                     const percent = ((now - sO) / (sC - sO)) * 100;
                     const h = Math.floor(diffMs / 3600000);
                     const m = Math.floor((diffMs % 3600000) / 60000);
-                    
                     document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
                     pb.style.width = percent + "%";
-                    
                     pbContainer.className = "progress-container";
                     let circleClass = "open";
-                    
-                    if (diffMs < 25 * 60 * 1000) { 
-                        pbContainer.classList.add("danger"); circleClass = "danger"; 
-                    } else if (percent > 85) { 
-                        pbContainer.classList.add("warning"); circleClass = "warning"; 
-                    }
-                    
+                    if (diffMs < 25 * 60 * 1000) { pbContainer.classList.add("danger"); circleClass = "danger"; }
+                    else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; }
                     document.getElementById('status-text').innerText = "OUVERTE";
                     document.getElementById('status-box').className = "status-box " + circleClass;
                     
+                    // Marée : Point haut vers point bas
                     drawTideGraph(percent); 
-                    found = true; 
-                    break;
-                    
+                    found = true; break;
                 } else if (now < sO) {
-                    // --- SCÉNARIO : PORTE FERMÉE (En attente de la prochaine ouverture) ---
-                    currentItem = item; 
-                    wrapper.style.display = "block"; // Affiche la barre
-                    
-                    // Calcul du temps total de fermeture (pour le pourcentage)
-                    let lastClose;
-                    if (i > 0) {
-                        lastClose = new Date(data[i-1].date + "T" + data[i-1].close);
-                    } else {
-                        // Cas de sécurité si c'est la 1ère donnée : on estime 7h de fermeture moyenne
-                        lastClose = new Date(sO.getTime() - (7 * 3600 * 1000));
-                    }
-                    
-                    const totalClosedMs = sO - lastClose;
+                    currentItem = item; wrapper.style.display = "block";
+                    let lastClose = (i > 0) ? new Date(data[i-1].date + "T" + data[i-1].close) : new Date(sO.getTime() - (7 * 3600 * 1000));
+                    const diffMs = sO - now;
                     const elapsedMs = now - lastClose;
-                    const diffMs = sO - now; // Temps avant l'ouverture
-                    
+                    const totalClosedMs = sO - lastClose;
                     let percent = (elapsedMs / totalClosedMs) * 100;
-                    if (percent < 0) percent = 0;
-                    if (percent > 100) percent = 100;
-                    
                     const h = Math.floor(diffMs / 3600000);
                     const m = Math.floor((diffMs % 3600000) / 60000);
-                    
                     document.getElementById('time-left').innerText = "Ouverture dans " + h + "h" + (m < 10 ? "0" : "") + m;
                     pb.style.width = percent + "%";
-                    
-                    // Classe "waiting" pour activer les couleurs bleues
                     pbContainer.className = "progress-container waiting";
-                    
                     document.getElementById('status-text').innerText = "FERMÉE";
                     document.getElementById('status-box').className = "status-box closed";
                     
-                    drawTideGraph(0); 
-                    found = true; 
-                    break;
+                    // Marée : Point actuel sur la descente
+                    drawTideGraph(percent); 
+                    found = true; break;
                 }
             }
             
-            if (!found) {
-                document.getElementById('status-text').innerText = "INDISP.";
-                document.getElementById('status-box').className = "status-box closed";
-                wrapper.style.display = "none";
-            }
-            
+            // Mise à jour des datas Marée (Dernière PM et Prochaine BM)
             document.getElementById('open-time').innerText = currentItem.open;
             document.getElementById('close-time').innerText = currentItem.close;
             document.getElementById('coeff-display').innerText = currentItem.coeff;
