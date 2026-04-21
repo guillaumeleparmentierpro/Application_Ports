@@ -99,7 +99,37 @@
             font-weight: 600;
             background: #f1f5f9;
         }
+/* Mise en avant d'aujourd'hui */
+.today-row { 
+    background-color: #fef9c3 !important; /* Jaune très clair */
+}
 
+.today-row .sticky-col {
+    background-color: #fef9c3 !important;
+    border-left: 5px solid var(--marine-blue) !important;
+}
+
+/* Grandes Marées (Coeff >= 90) */
+.high-tide-text { 
+    color: #ef4444 !important; /* Texte rouge */
+}
+
+.coeff-badge.high { 
+    background: #ef4444 !important; /* Badge rouge */
+}
+
+/* Style pour la porte sur une seule ligne */
+.porte-line {
+    font-weight: 700;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.sep { 
+    color: #cbd5e1; 
+    margin: 0 3px; 
+    font-weight: 400; 
+}
         /* Colonne de gauche Fixe (Sticky) */
         .sticky-col {
             position: sticky;
@@ -199,77 +229,86 @@
     <script>
 function generateTable() {
     const tbody = document.getElementById('planning-body');
+    // Récupération de la date du jour au format YYYY-MM-DD
+    const today = new Date().toISOString().split('T')[0];
+    
     if (typeof data === 'undefined') return;
-
     tbody.innerHTML = "";
     
     data.forEach(jour => {
+        const isToday = (jour.date === today);
         const d = new Date(jour.date);
         const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
+        
         const dayLabel = d.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase();
         const dayNum = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
         
         const p1 = jour.portes && jour.portes[0] ? jour.portes[0] : {open:"--", close:"--"};
         const p2 = jour.portes && jour.portes[1] ? jour.portes[1] : {open:"--", close:"--"};
 
-        // Détection Grande Marée (seuil à 90)
+        // Seuils pour les grandes marées
         const isHigh1 = parseInt(jour.coeff1) >= 90;
         const isHigh2 = parseInt(jour.coeff2) >= 90;
 
-        const row = `<tr class="${isWeekend ? 'weekend' : ''}">
-            <td class="sticky-col">
-                <div class="data-stack"><span class="data-main">${dayLabel}</span><span class="data-sub">${dayNum}</span></div>
-            </td>
-            
-            <td class="matin-group">
-                <div class="porte-line">
-                    <span style="color: #067a5c;">${p1.open}</span>
-                    <span class="sep">|</span>
-                    <span style="color: #991b1b;">${p1.close}</span>
-                </div>
-            </td>
-            <td class="matin-group ${isHigh1 ? 'high-tide-text' : ''}">
-                <div class="data-stack">
-                    <span class="data-main">${jour.pm1}</span>
-                    <span class="data-sub">${jour.pm1_h}m</span>
-                </div>
-            </td>
-            <td class="matin-group">
-                <div class="data-stack">
-                    <span class="data-main">${jour.bm1}</span>
-                    <span class="data-sub">${jour.bm1_h}m</span>
-                </div>
-            </td>
-            <td class="matin-group">
-                <span class="coeff-badge ${isHigh1 ? 'high' : ''}">${jour.coeff1 || '--'}</span>
-            </td>
+        const row = `
+            <tr class="${isWeekend ? 'weekend' : ''} ${isToday ? 'today-row' : ''}" ${isToday ? 'id="today-marker"' : ''}>
+                <td class="sticky-col">
+                    <div class="data-stack"><span class="data-main">${dayLabel}</span><span class="data-sub">${dayNum}</span></div>
+                </td>
+                
+                <td class="matin-group">
+                    <div class="porte-line">
+                        <span style="color: #067a5c;">${p1.open}</span> <span class="sep">|</span> <span style="color: #991b1b;">${p1.close}</span>
+                    </div>
+                </td>
+                <td class="matin-group ${isHigh1 ? 'high-tide-text' : ''}">
+                    <div class="data-stack">
+                        <span class="data-main">${jour.pm1 || '--'}</span>
+                        <span class="data-sub">${jour.pm1_h ? jour.pm1_h + 'm' : '-'}</span>
+                    </div>
+                </td>
+                <td class="matin-group">
+                    <div class="data-stack">
+                        <span class="data-main">${jour.bm1 || '--'}</span>
+                        <span class="data-sub">${jour.bm1_h ? jour.bm1_h + 'm' : '-'}</span>
+                    </div>
+                </td>
+                <td class="matin-group">
+                    <span class="coeff-badge ${isHigh1 ? 'high' : ''}">${jour.coeff1 || '--'}</span>
+                </td>
 
-            <td class="soir-group">
-                <div class="porte-line">
-                    <span style="color: #067a5c;">${p2.open}</span>
-                    <span class="sep">|</span>
-                    <span style="color: #991b1b;">${p2.close}</span>
-                </div>
-            </td>
-            <td class="soir-group ${isHigh2 ? 'high-tide-text' : ''}">
-                <div class="data-stack">
-                    <span class="data-main">${jour.pm2}</span>
-                    <span class="data-sub">${jour.pm2_h}m</span>
-                </div>
-            </td>
-            <td class="soir-group">
-                <div class="data-stack">
-                    <span class="data-main">${jour.bm2}</span>
-                    <span class="data-sub">${jour.bm2_h}m</span>
-                </div>
-            </td>
-            <td class="soir-group">
-                <span class="coeff-badge ${isHigh2 ? 'high' : ''}">${jour.coeff2 || '--'}</span>
-            </td>
-        </tr>`;
+                <td class="soir-group">
+                    <div class="porte-line">
+                        <span style="color: #067a5c;">${p2.open}</span> <span class="sep">|</span> <span style="color: #991b1b;">${p2.close}</span>
+                    </div>
+                </td>
+                <td class="soir-group ${isHigh2 ? 'high-tide-text' : ''}">
+                    <div class="data-stack">
+                        <span class="data-main">${jour.pm2 || '--'}</span>
+                        <span class="data-sub">${jour.pm2_h ? jour.pm2_h + 'm' : '-'}</span>
+                    </div>
+                </td>
+                <td class="soir-group">
+                    <div class="data-stack">
+                        <span class="data-main">${jour.bm2 || '--'}</span>
+                        <span class="data-sub">${jour.bm2_h ? jour.bm2_h + 'm' : '-'}</span>
+                    </div>
+                </td>
+                <td class="soir-group">
+                    <span class="coeff-badge ${isHigh2 ? 'high' : ''}">${jour.coeff2 || '--'}</span>
+                </td>
+            </tr>`;
         
         tbody.innerHTML += row;
     });
+
+    // Centrage automatique sur la ligne du jour
+    setTimeout(() => {
+        const todayEl = document.getElementById('today-marker');
+        if (todayEl) {
+            todayEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 300);
 }
         
         window.onload = generateTable;
