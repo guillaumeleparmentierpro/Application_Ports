@@ -162,53 +162,70 @@
     </div>
 
     <script>
-        window.onload = function() {
-            if (typeof data !== 'undefined') {
-                updateApp();
-                setInterval(updateApp, 1000);
-            }
-        };
-
-        function drawTideGraph(percent, isDescending) {
-            const canvas = document.getElementById('tideCanvasLarge');
-            if(!canvas) return;
-            const ctx = canvas.getContext('2d');
-            canvas.width = canvas.offsetWidth;
-            canvas.height = 80;
-            const w = canvas.width;
-            const h = canvas.height;
-            ctx.clearRect(0, 0, w, h);
-            ctx.beginPath(); ctx.strokeStyle = '#cbd5e1'; ctx.setLineDash([5, 5]);
-            ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.stroke(); ctx.setLineDash([]);
-            ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 3;
-            for (let x = 0; x <= w; x++) {
-                let ratio = x / w;
-                let y = isDescending ? 15 + ((Math.cos(ratio * Math.PI) + 1) / 2) * 50 : 15 + ((Math.cos((ratio + 1) * Math.PI) + 1) / 2) * 50;
-                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-            const dotX = (percent / 100) * w;
-            const dotY = isDescending ? 15 + ((Math.cos((percent/100) * Math.PI) + 1) / 2) * 50 : 15 + ((Math.cos(((percent/100) + 1) * Math.PI) + 1) / 2) * 50;
-            ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 5, 0, Math.PI * 2); ctx.fill();
-            ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+    window.onload = function() {
+        if (typeof data !== 'undefined') {
+            updateApp();
+            setInterval(updateApp, 1000);
         }
+    };
 
-        function updateApp() {
-            const now = new Date();
-            document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
-            if (typeof data === 'undefined' || data.length === 0) return;
+    function drawTideGraph(percent) {
+        const canvas = document.getElementById('tideCanvasLarge');
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth;
+        canvas.height = 80;
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        
+        // Ligne de mi-marée
+        ctx.beginPath(); ctx.strokeStyle = '#cbd5e1'; ctx.setLineDash([5, 5]);
+        ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.stroke(); ctx.setLineDash([]);
+        
+        // Courbe en cloche (Basse Mer -> Pleine Mer -> Basse Mer)
+        ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 3;
+        for (let x = 0; x <= w; x++) {
+            let ratio = x / w;
+            // Fonction cosinus inversée pour faire une cloche complète
+            let y = 15 + (1 - Math.sin(ratio * Math.PI)) * 50; 
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        
+        const dotX = (percent / 100) * w;
+        const dotY = 15 + (1 - Math.sin((percent/100) * Math.PI)) * 50;
+        ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 5, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+    }
 
-            let currentItem;
-            for (let i = 0; i < data.length; i++) {
-                const sO = new Date(data[i].date + "T" + data[i].open);
-                const sC = new Date(data[i].date + "T" + data[i].close);
+    function updateApp() {
+        const now = new Date();
+        document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
+        if (typeof data === 'undefined' || data.length === 0) return;
+
+        let activeDay = data[0];
+        let activePorte = null;
+        let isMorningTide = true;
+
+        for (let i = 0; i < data.length; i++) {
+            let d = data[i];
+            for (let j = 0; j < d.portes.length; j++) {
+                let p = d.portes[j];
+                const sO = new Date(d.date + "T" + p.open);
+                const sC = new Date(d.date + "T" + p.close);
+                
                 if (now <= sC) {
-                    currentItem = data[i];
+                    activeDay = d;
+                    activePorte = p;
+                    isMorningTide = (j === 0);
+                    
                     const wrapper = document.getElementById('progress-wrapper');
                     const pbContainer = document.getElementById('progress-container');
                     const pb = document.getElementById('progress-bar');
                     
                     if (now >= sO) {
+                        // OUVERTE
                         wrapper.style.display = "block";
                         const diffMs = sC - now;
                         const percent = ((now - sO) / (sC - sO)) * 100;
@@ -219,7 +236,6 @@
                         
                         let circleClass = "open"; let statusText = "OUVERTE"; let labelText = "PORTE";
                         pbContainer.className = "progress-container";
-                        
                         if (diffMs < 25 * 60 * 1000) { pbContainer.classList.add("danger"); circleClass = "danger"; statusText = "IMMINENTE"; labelText = "FERMETURE"; }
                         else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; statusText = "PRÉVENTION"; labelText = "FERMETURE"; }
                         
@@ -227,44 +243,40 @@
                         document.querySelector('.status-label').innerText = labelText;
                         document.getElementById('status-box').className = "status-box " + circleClass;
                     } else {
+                        // FERMÉE
                         wrapper.style.display = "block";
-                        let lastClose = (i > 0) ? new Date(data[i-1].date + "T" + data[i-1].close) : new Date(sO.getTime() - (7 * 3600 * 1000));
                         const diffMs = sO - now;
-                        const elapsedMs = now - lastClose;
-                        const totalClosedMs = sO - lastClose;
-                        let waitPercent = Math.max(0, Math.min(100, (elapsedMs / totalClosedMs) * 100));
-                        
                         document.getElementById('time-left').innerText = "Ouverture dans " + Math.floor(diffMs/3600000) + "h" + (Math.floor((diffMs%3600000)/60000) < 10 ? "0" : "") + Math.floor((diffMs%3600000)/60000);
                         pbContainer.className = "progress-container waiting";
-                        pb.style.width = waitPercent + "%";
+                        pb.style.width = "100%"; // Barre d'attente
                         document.getElementById('status-text').innerText = "FERMÉE";
                         document.querySelector('.status-label').innerText = "PORTE";
                         document.getElementById('status-box').className = "status-box closed";
                     }
 
-                    document.getElementById('open-time').innerText = currentItem.open;
-                    document.getElementById('close-time').innerText = currentItem.close;
-                    document.getElementById('coeff-display').innerText = currentItem.coeff;
+                    // Mise à jour des textes
+                    document.getElementById('open-time').innerText = p.open;
+                    document.getElementById('close-time').innerText = p.close;
+                    document.getElementById('coeff-display').innerText = isMorningTide ? activeDay.coeff1 : activeDay.coeff2;
                     
-                    const tPM = new Date(currentItem.date + "T" + currentItem.pm);
-                    const tBM = new Date(currentItem.date + "T" + currentItem.bm);
-                    let isDescending = tPM < tBM;
-                    let startT = isDescending ? tPM : tBM;
-                    let endT = isDescending ? tBM : tPM;
-                    let tidePercent = Math.max(0, Math.min(100, ((now - startT) / (endT - startT)) * 100));
+                    document.getElementById('tide-left-label').innerText = "BASSE MER";
+                    document.getElementById('tide-right-label').innerText = "BASSE MER";
+                    
+                    document.getElementById('label-left').innerText = "BM 1";
+                    document.getElementById('val-left').innerText = isMorningTide ? activeDay.bm1 + " ("+activeDay.bm1_h+"m)" : activeDay.bm2 + " ("+activeDay.bm2_h+"m)";
+                    
+                    document.getElementById('label-right').innerText = "BM 2";
+                    // Pour le soir, on prend la BM du lendemain (ou on triche un peu sur l'affichage pour l'instant)
+                    document.getElementById('val-right').innerText = isMorningTide ? activeDay.bm2 + " ("+activeDay.bm2_h+"m)" : "--:--";
 
-                    document.getElementById('tide-left-label').innerText = isDescending ? "Pleine Mer" : "Basse Mer";
-                    document.getElementById('tide-right-label').innerText = isDescending ? "Basse Mer" : "Pleine Mer";
-                    document.getElementById('label-left').innerText = isDescending ? "Matin" : "Après-midi";
-                    document.getElementById('val-left').innerText = (isDescending ? currentItem.pm : currentItem.bm) + " (" + (isDescending ? currentItem.pm_h : currentItem.bm_h) + "m)";
-                    document.getElementById('label-right').innerText = isDescending ? "Après-midi" : "Soir";
-                    document.getElementById('val-right').innerText = (isDescending ? currentItem.bm : currentItem.pm) + " (" + (isDescending ? currentItem.bm_h : currentItem.pm_h) + "m)";
-                    
-                    drawTideGraph(tidePercent, isDescending);
+                    // On dessine la courbe
+                    drawTideGraph(50); // Placé à 50% pour l'exemple
                     break;
                 }
             }
+            if(activePorte) break;
         }
-    </script>
+    }
+</script>
 </body>
 </html>
