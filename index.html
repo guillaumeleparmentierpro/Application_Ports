@@ -27,20 +27,13 @@
         
         .module { background: var(--card-bg); border-radius: 16px; padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); position: relative; }
         
-        /* Titre sorti du module */
         .main-title { color: var(--text-main); font-size: 1.05rem; margin: 5px 0 10px 0; font-weight: 700; text-align: center; }
         .main-title sup { color: #b03a2e; font-size: 0.7rem; }
 
-        /* Nav */
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px; }
-        .nav-buttons { display: flex; gap: 8px; }
         .date-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; color: #475569; }
         
-        .btn-action { 
-            text-decoration: none; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; 
-            padding: 4px 10px; cursor: pointer; color: var(--text-main); font-family: 'Montserrat', sans-serif; 
-            font-weight: 700; font-size: 0.65rem; display: inline-flex; align-items: center;
-        }
+        .btn-action { text-decoration: none; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 4px 10px; color: var(--text-main); font-weight: 700; font-size: 0.65rem; display: inline-flex; align-items: center; }
         .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
 
         .status-box { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
@@ -55,42 +48,30 @@
         .status-label { font-size: 0.55rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
         
         .progress-wrapper { margin: 10px 0; display: none; }
-        .progress-container { width: 100%; background: var(--open-light); height: 34px; border-radius: 17px; overflow: hidden; position: relative; transition: background 0.5s ease; }
-        .progress-container.warning { background: var(--warning-color); }
-        .progress-container.danger { background: var(--danger-color); }
+        .progress-container { width: 100%; height: 34px; border-radius: 17px; overflow: hidden; position: relative; }
         .progress-container.waiting { background: #cbd5e1; } 
-        
-        .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear, background 0.5s ease; }
-        .progress-container.warning .progress-bar { background: var(--warning-dark); }
-        .progress-container.danger .progress-bar { background: var(--danger-dark); animation: blink 1s infinite; }
-        .progress-container.waiting .progress-bar { background: var(--marine-blue); animation: none; }
-        
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-        
-        .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none; }
-        
+        .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear; }
+        .progress-container.waiting .progress-bar { background: var(--marine-blue); }
+        .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); }
+
         .slot-line-container { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; }
         .slot-title { font-size: 0.7rem; font-weight: 700; }
-        .slot-pills { display: flex; gap: 6px; }
         .slot-badge { padding: 3px 6px; border-radius: 6px; display: flex; align-items: center; gap: 4px; color: white; }
-        .slot-badge span { font-size: 0.5rem; text-transform: uppercase; font-weight: 600; opacity: 0.9; }
-        .slot-badge b { font-size: 0.75rem; font-weight: 700; }
-        .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
-        .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
+        .slot-badge b { font-size: 0.75rem; }
 
-        /* Marée Accueil - Centrage complet */
-        .tide-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 0 auto; }
-        .tide-graph-box { width: 85px; height: 55px; background: var(--tide-light-blue); border-radius: 12px; display: flex; justify-content: center; align-items: center; border: 1px solid #dbeafe; }
-        #tideCanvas { width: 70px; height: 45px; }
-        .tide-data { display: flex; flex-direction: column; text-align: left; font-size: 0.75rem; min-width: 130px; }
-        .tide-row strong { color: var(--marine-blue); width: 45px; font-size: 0.7rem; display: inline-block; }
-        .tide-row span { font-weight: 700; font-size: 0.8rem; color: var(--text-main); }
-        
+        /* NOUVEAU MODULE MARÉE TOUT-EN-UN */
+        .tide-full-module { 
+            background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; 
+            padding: 15px 10px; margin: 0 auto; width: 100%; box-sizing: border-box;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .tide-header-info { width: 100%; display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 700; font-size: 0.75rem; color: var(--marine-blue); }
+        #tideCanvasLarge { width: 100%; height: 80px; }
+        .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.8rem; color: var(--text-main); margin-top: 5px; }
+        .tide-label { font-size: 0.55rem; color: #64748b; text-transform: uppercase; display: block; }
+
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 120px; border: 1px solid #e2e8f0; }
-        .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
-        
-        /* Disclaimer avec l'astérisque de référence */
-        .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; line-height: 1.4; text-align: center; margin-top: 5px; font-weight: 500; }
+        .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-weight: 500; }
     </style>
 </head>
 <body>
@@ -111,31 +92,33 @@
                 <span class="status-label">Porte</span>
                 <span class="status-value" id="status-text">--</span>
             </div>
-            
             <div class="progress-wrapper" id="progress-wrapper">
                 <div class="progress-container" id="progress-container">
                     <div class="progress-bar" id="progress-bar"></div>
                     <div class="progress-text" id="time-left">--</div>
                 </div>
             </div>
-
             <div class="slot-line-container">
                 <div class="slot-title">Créneaux officiels :</div>
                 <div class="slot-pills">
-                    <div class="slot-badge badge-open"><span>OUV.</span><b id="open-time">--:--</b></div>
-                    <div class="slot-badge badge-close"><span>FERM.</span><b id="close-time">--:--</b></div>
+                    <div class="slot-badge badge-open"><b>OUV.</b> <b id="open-time">--:--</b></div>
+                    <div class="slot-badge badge-close"><b>FERM.</b> <b id="close-time">--:--</b></div>
                 </div>
             </div>
         </div>
 
         <div class="module">
             <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; color: var(--text-main);">Informations marée</div>
-            <div class="tide-container">
-                <div class="tide-graph-box"><canvas id="tideCanvas"></canvas></div>
-                <div class="tide-data">
-                    <div class="tide-row"><strong>COEFF</strong> <span id="coeff-display">--</span></div>
-                    <div class="tide-row"><strong>PM</strong> <span id="pm-display">--:-- (-- m)</span></div>
-                    <div class="tide-row"><strong>BM</strong> <span id="bm-display">--:-- (-- m)</span></div>
+            <div class="tide-full-module">
+                <div class="tide-header-info">
+                    <div id="tide-left-label">--</div>
+                    <div>COEFF <span id="coeff-display">--</span></div>
+                    <div id="tide-right-label">--</div>
+                </div>
+                <canvas id="tideCanvasLarge"></canvas>
+                <div class="tide-footer-info">
+                    <div id="tide-left-data"><span class="tide-label" id="label-left">--</span><span id="val-left">--</span></div>
+                    <div id="tide-right-data" style="text-align: right;"><span class="tide-label" id="label-right">--</span><span id="val-right">--</span></div>
                 </div>
             </div>
         </div>
@@ -147,8 +130,6 @@
             </div>
         </div>
 
-        <div class="module ad-module">📢 PUBLICITÉ : Votre commerce ici</div>
-        
         <div class="disclaimer">
             * <strong>Attention :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
@@ -162,26 +143,54 @@
             }
         };
 
-        function drawTideGraph(percent) {
-            const canvas = document.getElementById('tideCanvas');
+        function drawTideGraph(percent, isDescending) {
+            const canvas = document.getElementById('tideCanvasLarge');
             if(!canvas) return;
-            canvas.width = 70; canvas.height = 45;
             const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, 70, 45);
-            ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 2.5;
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 80;
+            const w = canvas.width;
+            const h = canvas.height;
+
+            ctx.clearRect(0, 0, w, h);
             
-            // Dessin de la courbe sinusoïdale descendante (du haut vers le bas)
-            for (let x = 0; x <= 70; x++) {
-                const y = 8 + ((Math.cos((x / 70) * Math.PI) + 1) / 2) * 30;
+            // Ligne de base
+            ctx.beginPath();
+            ctx.strokeStyle = '#cbd5e1';
+            ctx.setLineDash([5, 5]);
+            ctx.moveTo(0, h/2); ctx.lineTo(w, h/2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Courbe
+            ctx.beginPath();
+            ctx.strokeStyle = '#1e3a8a';
+            ctx.lineWidth = 3;
+            for (let x = 0; x <= w; x++) {
+                let ratio = x / w;
+                let y;
+                if (isDescending) {
+                    y = 15 + ((Math.cos(ratio * Math.PI) + 1) / 2) * 50;
+                } else {
+                    y = 15 + ((Math.cos((ratio + 1) * Math.PI) + 1) / 2) * 50;
+                }
                 if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
             }
             ctx.stroke();
 
             // Point actuel
-            const dotX = (percent / 100) * 70;
-            const dotY = 8 + ((Math.cos((dotX / 70) * Math.PI) + 1) / 2) * 30;
-            ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 3.5, 0, Math.PI * 2); ctx.fill();
-            ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
+            const dotX = (percent / 100) * w;
+            const dotY = isDescending ? 
+                15 + ((Math.cos((percent/100) * Math.PI) + 1) / 2) * 50 :
+                15 + ((Math.cos(((percent/100) + 1) * Math.PI) + 1) / 2) * 50;
+
+            ctx.beginPath();
+            ctx.fillStyle = '#ef4444';
+            ctx.arc(dotX, dotY, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+            ctx.stroke();
         }
 
         function updateApp() {
@@ -190,87 +199,93 @@
             
             if (typeof data === 'undefined' || data.length === 0) return;
 
-            let currentItem = data[0]; 
+            let currentItem; 
             let found = false;
-            const wrapper = document.getElementById('progress-wrapper');
-            const pbContainer = document.getElementById('progress-container');
-            const pb = document.getElementById('progress-bar');
             
+            // On cherche le créneau actuel ou suivant
             for (let i = 0; i < data.length; i++) {
-                let item = data[i];
-                const sO = new Date(item.date + "T" + item.open);
-                const sC = new Date(item.date + "T" + item.close);
+                const sO = new Date(data[i].date + "T" + data[i].open);
+                const sC = new Date(data[i].date + "T" + data[i].close);
                 
-                if (now >= sO && now <= sC) {
-                    currentItem = item; wrapper.style.display = "block";
-                    const diffMs = sC - now;
-                    const percent = ((now - sO) / (sC - sO)) * 100;
-                    const h = Math.floor(diffMs / 3600000);
-                    const m = Math.floor((diffMs % 3600000) / 60000);
+                if (now <= sC) {
+                    currentItem = data[i];
                     
-                    document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
-                    pb.style.width = percent + "%";
-                    pbContainer.className = "progress-container";
+                    const wrapper = document.getElementById('progress-wrapper');
+                    const pbContainer = document.getElementById('progress-container');
+                    const pb = document.getElementById('progress-bar');
                     
-                    let circleClass = "open";
-                    let statusMainText = "OUVERTE";
-                    let statusLabelText = "PORTE";
-                    
-                    // --- LOGIQUE D'ALERTE TEXTUELLE ---
-                    if (diffMs < 25 * 60 * 1000) { 
-                        pbContainer.classList.add("danger"); 
-                        circleClass = "danger";
-                        statusMainText = "IMMINENTE";
-                        statusLabelText = "FERMETURE";
-                    } else if (percent > 85) { 
-                        pbContainer.classList.add("warning"); 
-                        circleClass = "warning";
-                        statusMainText = "PRÉVENTION";
-                        statusLabelText = "FERMETURE";
+                    if (now >= sO) {
+                        // OUVERT
+                        wrapper.style.display = "block";
+                        const diffMs = sC - now;
+                        const percent = ((now - sO) / (sC - sO)) * 100;
+                        const h = Math.floor(diffMs / 3600000);
+                        const m = Math.floor((diffMs % 3600000) / 60000);
+                        
+                        document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
+                        pb.style.width = percent + "%";
+                        
+                        let circleClass = "open";
+                        let statusText = "OUVERTE";
+                        let labelText = "PORTE";
+
+                        if (diffMs < 25 * 60 * 1000) { 
+                            pbContainer.className = "progress-container danger"; circleClass = "danger"; 
+                            statusText = "IMMINENTE"; labelText = "FERMETURE";
+                        } else if (percent > 85) { 
+                            pbContainer.className = "progress-container warning"; circleClass = "warning";
+                            statusText = "PRÉVENTION"; labelText = "FERMETURE";
+                        } else {
+                            pbContainer.className = "progress-container";
+                        }
+                        
+                        document.getElementById('status-text').innerText = statusText;
+                        document.querySelector('.status-label').innerText = labelText;
+                        document.getElementById('status-box').className = "status-box " + circleClass;
+                    } else {
+                        // FERMÉ
+                        wrapper.style.display = "block";
+                        const diffMs = sO - now;
+                        document.getElementById('time-left').innerText = "Ouverture dans " + Math.floor(diffMs/3600000) + "h" + (Math.floor((diffMs%3600000)/60000) < 10 ? "0" : "") + Math.floor((diffMs%3600000)/60000);
+                        pbContainer.className = "progress-container waiting";
+                        pb.style.width = "100%"; // Simplement plein pour l'attente ou calculé
+                        document.getElementById('status-text').innerText = "FERMÉE";
+                        document.querySelector('.status-label').innerText = "PORTE";
+                        document.getElementById('status-box').className = "status-box closed";
                     }
+
+                    // --- LOGIQUE MARÉE INTÉGRÉE ---
+                    const tPM = new Date(currentItem.date + "T" + currentItem.pm);
+                    const tBM = new Date(currentItem.date + "T" + currentItem.bm);
+                    let isDescending = tPM < tBM;
                     
-                    document.getElementById('status-text').innerText = statusMainText;
-                    document.querySelector('.status-label').innerText = statusLabelText;
-                    document.getElementById('status-box').className = "status-box " + circleClass;
+                    let startT = isDescending ? tPM : tBM;
+                    let endT = isDescending ? tBM : tPM;
                     
-                    drawTideGraph(percent); 
-                    found = true; break;
-                } else if (now < sO) {
-                    currentItem = item; wrapper.style.display = "block";
-                    let lastClose = (i > 0) ? new Date(data[i-1].date + "T" + data[i-1].close) : new Date(sO.getTime() - (7 * 3600 * 1000));
-                    const diffMs = sO - now;
-                    const elapsedMs = now - lastClose;
-                    const totalClosedMs = sO - lastClose;
-                    let percent = (elapsedMs / totalClosedMs) * 100;
-                    const h = Math.floor(diffMs / 3600000);
-                    const m = Math.floor((diffMs % 3600000) / 60000);
+                    // Sécurité : si on a dépassé la BM, il faudrait chercher la PM suivante, 
+                    // mais ici on reste sur le couple du créneau actuel pour la simplicité.
+                    let totalPeriod = endT - startT;
+                    let elapsed = now - startT;
+                    let tidePercent = Math.max(0, Math.min(100, (elapsed / totalPeriod) * 100));
+
+                    document.getElementById('coeff-display').innerText = currentItem.coeff;
+                    document.getElementById('tide-left-label').innerText = isDescending ? "PLEINE MER" : "BASSE MER";
+                    document.getElementById('tide-right-label').innerText = isDescending ? "BASSE MER" : "PLEINE MER";
                     
-                    document.getElementById('time-left').innerText = "Ouverture dans " + h + "h" + (m < 10 ? "0" : "") + m;
-                    pb.style.width = percent + "%";
-                    pbContainer.className = "progress-container waiting";
+                    document.getElementById('label-left').innerText = isDescending ? "MATIN" : "APRÈS-MIDI";
+                    document.getElementById('val-left').innerText = (isDescending ? currentItem.pm : currentItem.bm) + " (" + (isDescending ? currentItem.pm_h : currentItem.bm_h) + "m)";
                     
-                    document.getElementById('status-text').innerText = "FERMÉE";
-                    document.querySelector('.status-label').innerText = "PORTE";
-                    document.getElementById('status-box').className = "status-box closed";
+                    document.getElementById('label-right').innerText = isDescending ? "APRÈS-MIDI" : "SOIR";
+                    document.getElementById('val-right').innerText = (isDescending ? currentItem.bm : currentItem.pm) + " (" + (isDescending ? currentItem.bm_h : currentItem.pm_h) + "m)";
+
+                    drawTideGraph(tidePercent, isDescending);
                     
-                    drawTideGraph(percent); 
+                    document.getElementById('open-time').innerText = currentItem.open;
+                    document.getElementById('close-time').innerText = currentItem.close;
+                    
                     found = true; break;
                 }
             }
-            // ... reste du code (maj PM/BM)
-            document.getElementById('open-time').innerText = currentItem.open;
-            document.getElementById('close-time').innerText = currentItem.close;
-            document.getElementById('coeff-display').innerText = currentItem.coeff;
-            document.getElementById('pm-display').innerText = currentItem.pm + " (" + currentItem.pm_h + "m)";
-            document.getElementById('bm-display').innerText = currentItem.bm + " (" + currentItem.bm_h + "m)";
-        }
-            
-            // Mise à jour des datas Marée (Dernière PM et Prochaine BM)
-            document.getElementById('open-time').innerText = currentItem.open;
-            document.getElementById('close-time').innerText = currentItem.close;
-            document.getElementById('coeff-display').innerText = currentItem.coeff;
-            document.getElementById('pm-display').innerText = currentItem.pm + " (" + currentItem.pm_h + "m)";
-            document.getElementById('bm-display').innerText = currentItem.bm + " (" + currentItem.bm_h + "m)";
         }
     </script>
 </body>
