@@ -154,7 +154,17 @@
             animation: pulse 2s infinite;
         }
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+/* Couleur pour les grandes marées (Coeff >= 90) */
+.high-tide-text { color: #ef4444 !important; } /* Rouge vif */
+.coeff-badge.high { background: #ef4444 !important; } 
 
+/* Ajustement pour la porte sur une seule ligne */
+.porte-line {
+    font-weight: 700;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+.sep { color: #cbd5e1; margin: 0 3px; font-weight: 400; }
     </style>
 </head>
 <body>
@@ -168,106 +178,99 @@
 
     <div class="table-container">
         <table>
-            <thead>
-                <tr>
-                    <th class="sticky-col" rowspan="2">Date</th>
-                    <th class="group-header matin-group" colspan="4">☀️ MATIN</th>
-                    <th class="group-header soir-group" colspan="4">🌙 SOIR</th>
-                </tr>
-                <tr>
-                    <th class="sub-header">Porte<br>(Ouv - Ferm)</th>
-                    <th class="sub-header">Basse Mer</th>
-                    <th class="sub-header">Pleine Mer</th>
-                    <th class="sub-header">Coeff</th>
-                    <th class="sub-header">Porte<br>(Ouv - Ferm)</th>
-                    <th class="sub-header">Basse Mer</th>
-                    <th class="sub-header">Pleine Mer</th>
-                    <th class="sub-header">Coeff</th>
-                </tr>
-            </thead>
+<thead>
+    <tr>
+        <th class="sticky-col" rowspan="2">Date</th>
+        <th class="group-header matin-group" colspan="4">☀️ MATIN</th>
+        <th class="group-header soir-group" colspan="4">🌙 SOIR</th>
+    </tr>
+    <tr>
+        <th class="sub-header">Porte (Ouv | Ferm)</th>
+        <th class="sub-header">Pleine Mer</th> <th class="sub-header">Basse Mer</th>  <th class="sub-header">Coeff</th>
+        <th class="sub-header">Porte (Ouv | Ferm)</th>
+        <th class="sub-header">Pleine Mer</th> <th class="sub-header">Basse Mer</th>  <th class="sub-header">Coeff</th>
+    </tr>
+</thead>
             <tbody id="planning-body">
                 </tbody>
         </table>
     </div>
 
     <script>
-        function generateTable() {
-            const tbody = document.getElementById('planning-body');
-            if (typeof data === 'undefined' && typeof dataMai === 'undefined') return;
+function generateTable() {
+    const tbody = document.getElementById('planning-body');
+    if (typeof data === 'undefined') return;
 
-            // Astuce pour l'instant : on fusionne tes variables data (Avril) et dataMai (Mai) si elles existent.
-            let allData = [];
-            if (typeof data !== 'undefined') allData = allData.concat(data);
-            if (typeof dataMai !== 'undefined') allData = allData.concat(dataMai);
+    tbody.innerHTML = "";
+    
+    data.forEach(jour => {
+        const d = new Date(jour.date);
+        const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
+        const dayLabel = d.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase();
+        const dayNum = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
+        
+        const p1 = jour.portes && jour.portes[0] ? jour.portes[0] : {open:"--", close:"--"};
+        const p2 = jour.portes && jour.portes[1] ? jour.portes[1] : {open:"--", close:"--"};
 
-            tbody.innerHTML = "";
+        // Détection Grande Marée (seuil à 90)
+        const isHigh1 = parseInt(jour.coeff1) >= 90;
+        const isHigh2 = parseInt(jour.coeff2) >= 90;
+
+        const row = `<tr class="${isWeekend ? 'weekend' : ''}">
+            <td class="sticky-col">
+                <div class="data-stack"><span class="data-main">${dayLabel}</span><span class="data-sub">${dayNum}</span></div>
+            </td>
             
-            allData.forEach(jour => {
-                const d = new Date(jour.date);
-                const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
-                
-                // Formatage de la date (ex: Sam 21 Avr)
-                const dayLabel = d.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase();
-                const dayNum = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
-                const fullDateHtml = `<div class="data-stack"><span class="data-main">${dayLabel}</span><span class="data-sub">${dayNum}</span></div>`;
-                
-                // Sécurisation des données
-                const p1 = jour.portes && jour.portes[0] ? jour.portes[0] : {open:"--:--", close:"--:--"};
-                const p2 = jour.portes && jour.portes[1] ? jour.portes[1] : {open:"--:--", close:"--:--"};
+            <td class="matin-group">
+                <div class="porte-line">
+                    <span style="color: #067a5c;">${p1.open}</span>
+                    <span class="sep">|</span>
+                    <span style="color: #991b1b;">${p1.close}</span>
+                </div>
+            </td>
+            <td class="matin-group ${isHigh1 ? 'high-tide-text' : ''}">
+                <div class="data-stack">
+                    <span class="data-main">${jour.pm1}</span>
+                    <span class="data-sub">${jour.pm1_h}m</span>
+                </div>
+            </td>
+            <td class="matin-group">
+                <div class="data-stack">
+                    <span class="data-main">${jour.bm1}</span>
+                    <span class="data-sub">${jour.bm1_h}m</span>
+                </div>
+            </td>
+            <td class="matin-group">
+                <span class="coeff-badge ${isHigh1 ? 'high' : ''}">${jour.coeff1 || '--'}</span>
+            </td>
 
-                const safeVal = (v) => (!v || v === "--:--" || v === "-") ? "--" : v;
-
-                const row = `<tr class="${isWeekend ? 'weekend' : ''}">
-                    <td class="sticky-col">${fullDateHtml}</td>
-                    
-                    <td class="matin-group">
-                        <div class="data-stack">
-                            <span class="data-main" style="color: #067a5c;">${safeVal(p1.open)}</span>
-                            <span class="data-main" style="color: #991b1b;">${safeVal(p1.close)}</span>
-                        </div>
-                    </td>
-                    <td class="matin-group">
-                        <div class="data-stack">
-                            <span class="data-main">${safeVal(jour.bm1)}</span>
-                            <span class="data-sub">${safeVal(jour.bm1_h)}m</span>
-                        </div>
-                    </td>
-                    <td class="matin-group">
-                        <div class="data-stack">
-                            <span class="data-main">${safeVal(jour.pm1)}</span>
-                            <span class="data-sub">${safeVal(jour.pm1_h)}m</span>
-                        </div>
-                    </td>
-                    <td class="matin-group">
-                        <span class="${jour.coeff1 && jour.coeff1 !== '-' ? 'coeff-badge' : ''}">${safeVal(jour.coeff1)}</span>
-                    </td>
-
-                    <td class="soir-group">
-                        <div class="data-stack">
-                            <span class="data-main" style="color: #067a5c;">${safeVal(p2.open)}</span>
-                            <span class="data-main" style="color: #991b1b;">${safeVal(p2.close)}</span>
-                        </div>
-                    </td>
-                    <td class="soir-group">
-                        <div class="data-stack">
-                            <span class="data-main">${safeVal(jour.bm2)}</span>
-                            <span class="data-sub">${safeVal(jour.bm2_h)}m</span>
-                        </div>
-                    </td>
-                    <td class="soir-group">
-                        <div class="data-stack">
-                            <span class="data-main">${safeVal(jour.pm2)}</span>
-                            <span class="data-sub">${safeVal(jour.pm2_h)}m</span>
-                        </div>
-                    </td>
-                    <td class="soir-group">
-                        <span class="${jour.coeff2 && jour.coeff2 !== '-' ? 'coeff-badge' : ''}">${safeVal(jour.coeff2)}</span>
-                    </td>
-                </tr>`;
-                
-                tbody.innerHTML += row;
-            });
-        }
+            <td class="soir-group">
+                <div class="porte-line">
+                    <span style="color: #067a5c;">${p2.open}</span>
+                    <span class="sep">|</span>
+                    <span style="color: #991b1b;">${p2.close}</span>
+                </div>
+            </td>
+            <td class="soir-group ${isHigh2 ? 'high-tide-text' : ''}">
+                <div class="data-stack">
+                    <span class="data-main">${jour.pm2}</span>
+                    <span class="data-sub">${jour.pm2_h}m</span>
+                </div>
+            </td>
+            <td class="soir-group">
+                <div class="data-stack">
+                    <span class="data-main">${jour.bm2}</span>
+                    <span class="data-sub">${jour.bm2_h}m</span>
+                </div>
+            </td>
+            <td class="soir-group">
+                <span class="coeff-badge ${isHigh2 ? 'high' : ''}">${jour.coeff2 || '--'}</span>
+            </td>
+        </tr>`;
+        
+        tbody.innerHTML += row;
+    });
+}
         
         window.onload = generateTable;
     </script>
