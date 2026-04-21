@@ -7,195 +7,139 @@
     <title>Planning - Barneville-Carteret</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
-    <style>
-        :root {
-            color-scheme: light;
-            --primary-bg: #f8fafc;
-            --card-bg: #ffffff;
-            --marine-blue: #1e3a8a;
-            --text-main: #1e293b;
-            --border-color: #e2e8f0;
-            --matin-bg: #eff6ff; /* Bleu très clair pour le matin */
-            --soir-bg: #fffbeb;   /* Jaune très clair pour le soir */
-            --weekend-color: #fef2f2;
-        }
+<style>
+    :root {
+        color-scheme: light;
+        --primary-bg: #f8fafc;
+        --card-bg: #ffffff;
+        --marine-blue: #1e3a8a;
+        --text-main: #1e293b;
+        --border-color: #e2e8f0;
+        --matin-bg: #eff6ff;
+        --soir-bg: #fffbeb;
+        --weekend-color: #fef2f2;
+    }
 
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            background: var(--primary-bg); 
-            margin: 0; 
-            padding: 0; 
-            color: var(--text-main);
-        }
+    body { 
+        font-family: 'Montserrat', sans-serif; 
+        background: var(--primary-bg); 
+        margin: 0; 
+        padding: 0; 
+        color: var(--text-main);
+    }
 
-        /* En-tête de la page */
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--card-bg);
-            padding: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
+    /* 1. L'en-tête de la page (Bouton Accueil + Titre) */
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--card-bg);
+        padding: 12px 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        position: sticky; /* Reste fixe en haut */
+        top: 0;
+        z-index: 100; /* Toujours au-dessus de tout */
+        height: 50px; /* Hauteur fixe pour faciliter les calculs */
+        box-sizing: border-box;
+    }
 
-        .btn-back {
-            text-decoration: none;
-            background: var(--marine-blue);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
+    .btn-back {
+        text-decoration: none;
+        background: var(--marine-blue);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
 
-        .page-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin: 0;
-        }
+    .page-title { font-size: 0.95rem; font-weight: 700; margin: 0; }
 
-        /* Conteneur du tableau avec scroll horizontal */
-        .table-container {
-            width: 100%;
-            overflow-x: auto; /* Active le scroll sur le côté */
-            -webkit-overflow-scrolling: touch; /* Scroll fluide sur iPhone */
-            padding-bottom: 20px;
-        }
+    /* 2. Le conteneur du tableau */
+    .table-container {
+        width: 100%;
+        overflow-x: auto; /* Scroll horizontal */
+        overflow-y: visible; /* Laisse le sticky vertical fonctionner */
+        -webkit-overflow-scrolling: touch;
+    }
 
-        table {
-            border-collapse: collapse;
-            width: max-content; /* Le tableau prend la place de son contenu, forçant le scroll */
-            min-width: 100%;
-            background: var(--card-bg);
-        }
+    table {
+        border-collapse: collapse;
+        width: max-content;
+        min-width: 100%;
+        background: var(--card-bg);
+    }
 
-        th, td {
-            padding: 10px 8px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-            border-right: 1px solid var(--border-color);
-            font-size: 0.75rem;
-            white-space: nowrap; /* Empêche le texte de passer à la ligne */
-        }
+    /* 3. FIXATION DES TITRES (Sticky Vertical) */
+    
+    /* Tous les titres du tableau */
+    thead th {
+        position: sticky;
+        background: #f1f5f9;
+        z-index: 10;
+        border-bottom: 1px solid var(--border-color);
+        border-right: 1px solid var(--border-color);
+        padding: 10px 8px;
+    }
 
-        /* En-têtes principaux (Matin / Soir) */
-        th.group-header {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 12px;
-        }
-        
-        .matin-group { background-color: var(--matin-bg); }
-        .soir-group { background-color: var(--soir-bg); }
+    /* Ligne 1 (MATIN / SOIR) : Se colle juste sous le header (50px) */
+    thead tr:nth-child(1) th {
+        top: 50px; 
+        z-index: 20;
+    }
 
-        /* En-têtes secondaires (Porte, PM, Coeff...) */
-        th.sub-header {
-            font-size: 0.65rem;
-            color: #64748b;
-            font-weight: 600;
-            background: #f1f5f9;
-        }
-/* Mise en avant d'aujourd'hui */
-.today-row { 
-    background-color: #fef9c3 !important; /* Jaune très clair */
-}
+    /* Ligne 2 (Porte, PM, BM...) : Se colle sous la ligne 1 */
+    thead tr:nth-child(2) th {
+        top: 92px; /* 50px (header) + environ 42px (ligne 1) */
+        z-index: 20;
+    }
 
-.today-row .sticky-col {
-    background-color: #fef9c3 !important;
-    border-left: 5px solid var(--marine-blue) !important;
-}
+    /* 4. FIXATION DE LA COLONNE DATE (Sticky Horizontal + Vertical) */
+    .sticky-col {
+        position: sticky;
+        left: 0;
+        background: var(--card-bg) !important;
+        z-index: 30 !important; /* Priorité maximale */
+        border-right: 2px solid var(--marine-blue) !important;
+    }
 
-/* Grandes Marées (Coeff >= 90) */
-.high-tide-text { 
-    color: #ef4444 !important; /* Texte rouge */
-}
+    /* La cellule "Date" en haut à gauche doit rester fixe dans les DEUX sens */
+    thead th.sticky-col {
+        top: 50px !important;
+        z-index: 40 !important;
+    }
 
-.coeff-badge.high { 
-    background: #ef4444 !important; /* Badge rouge */
-}
+    /* Reste du style des cellules */
+    td {
+        padding: 10px 8px;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+        border-right: 1px solid var(--border-color);
+        font-size: 0.75rem;
+        white-space: nowrap;
+    }
 
-/* Style pour la porte sur une seule ligne */
-.porte-line {
-    font-weight: 700;
-    font-size: 0.8rem;
-    white-space: nowrap;
-}
+    .group-header { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; }
+    .matin-group { background-color: var(--matin-bg) !important; }
+    .soir-group { background-color: var(--soir-bg) !important; }
+    .sub-header { font-size: 0.6rem; color: #64748b; font-weight: 700; }
 
-.sep { 
-    color: #cbd5e1; 
-    margin: 0 3px; 
-    font-weight: 400; 
-}
-        /* Colonne de gauche Fixe (Sticky) */
-        .sticky-col {
-            position: sticky;
-            left: 0;
-            background: var(--card-bg);
-            z-index: 5;
-            border-right: 2px solid var(--marine-blue); /* Ligne forte pour montrer la séparation */
-            font-weight: 700;
-            text-align: left;
-            padding-left: 15px;
-        }
-
-        /* En-tête de la colonne fixe */
-        th.sticky-col {
-            z-index: 6; /* Doit être au-dessus du reste */
-            background: var(--card-bg);
-        }
-
-        /* Lignes du week-end */
-        tr.weekend td:not(.sticky-col) {
-            background-color: var(--weekend-color);
-        }
-        tr.weekend td.sticky-col {
-            background-color: #fee2e2; /* Rouge très clair pour la date collante */
-            color: #991b1b;
-        }
-
-        .data-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-        
-        .data-main { font-weight: 700; font-size: 0.8rem; }
-        .data-sub { font-size: 0.65rem; color: #64748b; }
-        
-        .coeff-badge {
-            background: var(--marine-blue);
-            color: white;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-weight: 700;
-            display: inline-block;
-        }
-
-        /* Indicateur de scroll (petit texte d'aide) */
-        .scroll-hint {
-            text-align: center;
-            font-size: 0.65rem;
-            color: #64748b;
-            padding: 10px;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-/* Couleur pour les grandes marées (Coeff >= 90) */
-.high-tide-text { color: #ef4444 !important; } /* Rouge vif */
-.coeff-badge.high { background: #ef4444 !important; } 
-
-/* Ajustement pour la porte sur une seule ligne */
-.porte-line {
-    font-weight: 700;
-    font-size: 0.8rem;
-    white-space: nowrap;
-}
-.sep { color: #cbd5e1; margin: 0 3px; font-weight: 400; }
-    </style>
+    /* Mise en avant d'aujourd'hui */
+    .today-row { background-color: #fef9c3 !important; }
+    .today-row .sticky-col { background-color: #fef9c3 !important; border-left: 5px solid var(--marine-blue) !important; }
+    
+    /* Week-end et alertes */
+    tr.weekend td:not(.sticky-col) { background-color: var(--weekend-color); }
+    .high-tide-text { color: #ef4444 !important; font-weight: 700; }
+    .coeff-badge { background: var(--marine-blue); color: white; padding: 3px 6px; border-radius: 4px; font-weight: 700; }
+    .coeff-badge.high { background: #ef4444 !important; }
+    
+    .porte-line { font-weight: 700; font-size: 0.8rem; }
+    .sep { color: #cbd5e1; margin: 0 3px; }
+    .data-stack { display: flex; flex-direction: column; }
+    .data-main { font-weight: 700; }
+    .data-sub { font-size: 0.65rem; color: #64748b; }
+</style>
 </head>
 <body>
 
@@ -210,17 +154,10 @@
         <table>
 <thead>
     <tr>
-        <th class="sticky-col" rowspan="2">Date</th>
-        <th class="group-header matin-group" colspan="4">☀️ MATIN</th>
+        <th class="sticky-col" rowspan="2">Date</th> <th class="group-header matin-group" colspan="4">☀️ MATIN</th>
         <th class="group-header soir-group" colspan="4">🌙 SOIR</th>
     </tr>
-    <tr>
-        <th class="sub-header">Porte (Ouv | Ferm)</th>
-        <th class="sub-header">Pleine Mer</th> <th class="sub-header">Basse Mer</th>  <th class="sub-header">Coeff</th>
-        <th class="sub-header">Porte (Ouv | Ferm)</th>
-        <th class="sub-header">Pleine Mer</th> <th class="sub-header">Basse Mer</th>  <th class="sub-header">Coeff</th>
-    </tr>
-</thead>
+    </thead>
             <tbody id="planning-body">
                 </tbody>
         </table>
