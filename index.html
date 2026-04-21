@@ -5,37 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Port de Barneville-Carteret Live</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="donnees.js"></script>
     <style>
         :root {
             --primary-bg: #f1f5f9;
             --card-bg: #ffffff;
             --open-light: #10b981;
             --open-dark: #067a5c;
-            --warning-color: #fbbf24; /* Orange clair */
-            --warning-dark: #d97706;  /* Orange foncé */
-            --danger-color: #ef4444;  /* Rouge clair */
-            --danger-dark: #991b1b;   /* Rouge foncé */
+            --warning-color: #fbbf24;
+            --warning-dark: #d97706;
+            --danger-color: #ef4444;
+            --danger-dark: #991b1b;
             --closed-color: #ef4444;
             --marine-blue: #1e3a8a;
             --text-main: #1e293b;
             --tide-light-blue: #eff6ff;
-            --port-green: #8dbb53;
-            --port-red: #f06449;
         }
 
         body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
         .app-container { max-width: 400px; width: 100%; display: flex; flex-direction: column; gap: 10px; }
         
-        #page-home, #page-planning { display: flex; flex-direction: column; gap: 10px; width: 100%; }
-        #page-planning { display: none; }
-
         .module { background: var(--card-bg); border-radius: 16px; padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); position: relative; }
         
         /* Nav */
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px; }
         .nav-buttons { display: flex; gap: 8px; }
         .date-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; color: #475569; }
-        .btn-action { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 4px 10px; cursor: pointer; color: var(--text-main); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.65rem; }
+        
+        /* Style des liens-boutons */
+        .btn-action { 
+            text-decoration: none; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; 
+            padding: 4px 10px; cursor: pointer; color: var(--text-main); font-family: 'Montserrat', sans-serif; 
+            font-weight: 700; font-size: 0.65rem; display: inline-flex; align-items: center;
+        }
         .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
 
         /* Styles Accueil */
@@ -43,7 +45,6 @@
         h1 { color: var(--text-main); font-size: 1.05rem; margin: 0 0 12px 0; font-weight: 700; text-align: center; }
         h1 sup { color: #b03a2e; font-size: 0.7rem; }
         
-        /* ROND STATUT ET COULEURS DYNAMIQUES */
         .status-box { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
         .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
         .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
@@ -55,14 +56,11 @@
         .status-value { font-size: 1.1rem; font-weight: 700; }
         .status-label { font-size: 0.55rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
         
-        /* BARRE DE PROGRESSION COHÉRENTE */
         .progress-wrapper { margin: 10px 0; display: none; }
-        /* Le fond de la barre (Temps restant) */
         .progress-container { width: 100%; background: var(--open-light); height: 34px; border-radius: 17px; overflow: hidden; position: relative; transition: background 0.5s ease; }
         .progress-container.warning { background: var(--warning-color); }
         .progress-container.danger { background: var(--danger-color); }
         
-        /* Le remplissage de la barre (Temps écoulé) */
         .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear, background 0.5s ease; }
         .progress-container.warning .progress-bar { background: var(--warning-dark); }
         .progress-container.danger .progress-bar { background: var(--danger-dark); animation: blink 1s infinite; }
@@ -71,7 +69,6 @@
         
         .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none; }
         
-        /* Créneaux Accueil */
         .slot-line-container { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; }
         .slot-title { font-size: 0.7rem; font-weight: 700; }
         .slot-pills { display: flex; gap: 6px; }
@@ -81,7 +78,6 @@
         .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
         .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
 
-        /* Marée Accueil */
         .tide-container { display: flex; align-items: center; justify-content: center; gap: 15px; }
         .tide-graph-box { width: 85px; height: 55px; background: var(--tide-light-blue); border-radius: 12px; display: flex; justify-content: center; align-items: center; border: 1px solid #dbeafe; }
         #tideCanvas { width: 70px; height: 45px; }
@@ -90,20 +86,7 @@
         .tide-row span { font-weight: 700; font-size: 0.8rem; color: var(--text-main); }
         
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 120px; border: 1px solid #e2e8f0; }
-
-        /* PLANNING (TABLEAU PRO) */
-        .planning-table { width: 100%; border-collapse: collapse; font-size: 0.52rem; table-layout: fixed; }
-        .planning-table th { background: #f8fafc; color: var(--text-main); font-weight: 700; padding: 4px 1px; border: 1px solid #e2e8f0; text-align: center; }
-        .planning-table td { border: 1px solid #f1f5f9; padding: 5px 1px; text-align: center; color: var(--text-main); }
-        .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin: 0 auto; }
-        .dot-green { background-color: var(--port-green); }
-        .dot-red { background-color: var(--port-red); }
-        .weekend-row { background-color: #f1f5f9 !important; font-weight: 700; }
-        .meteo-cell { font-size: 0.7rem; }
-        .small-date { font-size: 0.45rem; display: block; font-weight: 400; color: #64748b; }
-
-        .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; }
-        
+        .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
         .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; line-height: 1.4; text-align: center; margin-top: 5px; font-weight: 500; }
     </style>
 </head>
@@ -113,149 +96,63 @@
         <div class="top-nav">
             <div class="date-badge" id="current-date">-- --</div>
             <div class="nav-buttons">
-                <button class="btn-action btn-planning" id="btn-planning" onclick="togglePage('planning')">PLANNING 📅</button>
-                <button class="btn-action" onclick="togglePage('home')" id="btn-home" style="display:none;">ACCUEIL 🏠</button>
+                <a href="planning.html" class="btn-action btn-planning">PLANNING 📅</a>
                 <button class="btn-action">MENU ☰</button>
             </div>
         </div>
 
-        <div id="page-home">
-            <div class="module">
-                <h1>Port de Barneville-Carteret<sup>*</sup></h1>
-                <div id="status-box" class="status-box closed">
-                    <span class="status-label">Porte</span>
-                    <span class="status-value" id="status-text">--</span>
-                </div>
-                <div class="progress-wrapper" id="progress-wrapper">
-                    <div class="progress-container" id="progress-container">
-                        <div class="progress-bar" id="progress-bar"></div>
-                        <div class="progress-text" id="time-left">--</div>
-                    </div>
-                </div>
-                <div class="slot-line-container">
-                    <div class="slot-title">Créneaux officiels :</div>
-                    <div class="slot-pills">
-                        <div class="slot-badge badge-open"><span>OUV.</span><b id="open-time">--:--</b></div>
-                        <div class="slot-badge badge-close"><span>FERM.</span><b id="close-time">--:--</b></div>
-                    </div>
+        <div class="module">
+            <h1>Port de Barneville-Carteret<sup>*</sup></h1>
+            <div id="status-box" class="status-box closed">
+                <span class="status-label">Porte</span>
+                <span class="status-value" id="status-text">--</span>
+            </div>
+            <div class="progress-wrapper" id="progress-wrapper">
+                <div class="progress-container" id="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                    <div class="progress-text" id="time-left">--</div>
                 </div>
             </div>
-            <div class="module">
-                <div class="module-header">Informations marée</div>
-                <div class="tide-container">
-                    <div class="tide-graph-box"><canvas id="tideCanvas"></canvas></div>
-                    <div class="tide-data">
-                        <div class="tide-row"><strong>COEFF</strong> <span id="coeff-display">--</span></div>
-                        <div class="tide-row"><strong>PM</strong> <span id="pm-display">--:-- (-- m)</span></div>
-                        <div class="tide-row"><strong>BM</strong> <span id="bm-display">--:-- (-- m)</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="module">
-                <div class="module-header">Conditions météo</div>
-                <div class="weather-iframe-box">
-                    <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&overlay=wind&product=ecmwf&marker=true&metricWind=kt" frameborder="0"></iframe>
+            <div class="slot-line-container">
+                <div class="slot-title">Créneaux officiels :</div>
+                <div class="slot-pills">
+                    <div class="slot-badge badge-open"><span>OUV.</span><b id="open-time">--:--</b></div>
+                    <div class="slot-badge badge-close"><span>FERM.</span><b id="close-time">--:--</b></div>
                 </div>
             </div>
         </div>
 
-        <div id="page-planning">
-            <div class="module" style="padding: 10px 5px;">
-                <div class="module-header">Planning Annuel Officiel</div>
-                <table class="planning-table">
-                    <thead>
-                        <tr>
-                            <th rowspan="2" style="width:14%">DATE</th>
-                            <th colspan="4" style="color:var(--port-green)">OUV <span style="color:#000">&</span> <span style="color:var(--port-red)">FERM</span></th>
-                            <th colspan="3">Matin</th>
-                            <th colspan="3">Soir</th>
-                            <th rowspan="2" style="width:8%">MET</th>
-                        </tr>
-                        <tr>
-                            <th><div class="dot dot-green"></div></th>
-                            <th><div class="dot dot-red"></div></th>
-                            <th><div class="dot dot-green"></div></th>
-                            <th><div class="dot dot-red"></div></th>
-                            <th>PM</th><th>H.</th><th>C.</th>
-                            <th>PM</th><th>H.</th><th>C.</th>
-                        </tr>
-                    </thead>
-                    <tbody id="planning-body">
-                        </tbody>
-                </table>
+        <div class="module">
+            <div class="module-header">Informations marée</div>
+            <div class="tide-container">
+                <div class="tide-graph-box"><canvas id="tideCanvas"></canvas></div>
+                <div class="tide-data">
+                    <div class="tide-row"><strong>COEFF</strong> <span id="coeff-display">--</span></div>
+                    <div class="tide-row"><strong>PM</strong> <span id="pm-display">--:-- (-- m)</span></div>
+                    <div class="tide-row"><strong>BM</strong> <span id="bm-display">--:-- (-- m)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="module">
+            <div class="module-header">Conditions météo</div>
+            <div class="weather-iframe-box">
+                <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&overlay=wind&product=ecmwf&marker=true&metricWind=kt" frameborder="0"></iframe>
             </div>
         </div>
 
         <div class="module ad-module">📢 PUBLICITÉ : Votre commerce ici</div>
-        
         <div class="disclaimer">
             <strong>Attention :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
     </div>
 
     <script>
-        // DONNÉES TESTS (Test d'alerte Orange en cours selon l'heure)
-        const data = [
-            { date: "2026-04-21", open: "06:25", close: "11:51", coeff: "82", pm: "09:08", pm_h: "10.2", bm: "15:30", bm_h: "2.1" },
-            { date: "2026-04-21", open: "18:46", close: "23:59", coeff: "85", pm: "21:30", pm_h: "10.5", bm: "03:45", bm_h: "1.8" },
-            { date: "2026-04-22", open: "07:00", close: "12:27", coeff: "88", pm: "09:45", pm_h: "10.8", bm: "16:15", bm_h: "1.5" },
-            { date: "2026-04-22", open: "19:25", close: "00:45", coeff: "90", pm: "22:10", pm_h: "10.9", bm: "04:30", bm_h: "1.6" },
-            { date: "2026-04-25", open: "08:30", close: "13:45", coeff: "70", pm: "11:00", pm_h: "9.5", bm: "18:00", bm_h: "2.5" },
-            { date: "2026-04-26", open: "09:15", close: "14:30", coeff: "65", pm: "11:45", pm_h: "9.2", bm: "18:45", bm_h: "2.8" }
-        ];
-
-        function togglePage(page) {
-            if (page === 'planning') {
-                document.getElementById('page-home').style.display = 'none';
-                document.getElementById('page-planning').style.display = 'flex';
-                document.getElementById('btn-planning').style.display = 'none';
-                document.getElementById('btn-home').style.display = 'block';
-                generatePlanningTable();
-            } else {
-                document.getElementById('page-home').style.display = 'flex';
-                document.getElementById('page-planning').style.display = 'none';
-                document.getElementById('btn-planning').style.display = 'block';
-                document.getElementById('btn-home').style.display = 'none';
-                updateApp();
-            }
-        }
-
-        function generatePlanningTable() {
-            const tbody = document.getElementById('planning-body');
-            tbody.innerHTML = "";
-            const days = {};
-            data.forEach(item => {
-                if (!days[item.date]) days[item.date] = [];
-                days[item.date].push(item);
-            });
-
-            for (let date in days) {
-                const d = new Date(date);
-                const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
-                const dayLabel = d.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase();
-                const dayNum = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
-                
-                const m1 = days[date][0] || {open:"-", close:"-", pm:"-", pm_h:"-", coeff:"-"};
-                const m2 = days[date][1] || {open:"-", close:"-", pm:"-", pm_h:"-", coeff:"-"};
-
-                const diff = (d - new Date()) / (1000*60*60*24);
-                let meteo = (diff >= -1 && diff <= 7) ? "☀️" : "";
-
-                const row = `<tr class="${isWeekend ? 'weekend-row' : ''}">
-                    <td>${dayLabel}<span class="small-date">${dayNum}</span></td>
-                    <td>${m1.open}</td><td>${m1.close}</td>
-                    <td>${m2.open}</td><td>${m2.close}</td>
-                    <td>${m1.pm}</td><td>${m1.pm_h}</td><td>${m1.coeff}</td>
-                    <td>${m2.pm}</td><td>${m2.pm_h}</td><td>${m2.coeff}</td>
-                    <td class="meteo-cell">${meteo}</td>
-                </tr>`;
-                tbody.innerHTML += row;
-            }
-        }
+        // LE SCRIPT EST PLUS COURT CAR LA VARIABLE "data" EST DANS DONNEES.JS
 
         function drawTideGraph(percent) {
             const canvas = document.getElementById('tideCanvas');
-            if(!canvas || canvas.offsetParent === null) return;
+            if(!canvas) return;
             canvas.width = 70; canvas.height = 45;
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, 70, 45);
@@ -274,42 +171,32 @@
         function updateApp() {
             const now = new Date();
             document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
+            
+            // On vérifie si "data" existe bien (chargé depuis donnees.js)
+            if (typeof data === 'undefined') return;
+
             let currentItem = data[0]; let found = false;
             const wrapper = document.getElementById('progress-wrapper');
+            
             for (let item of data) {
                 const sO = new Date(item.date + "T" + item.open);
                 const sC = new Date(item.date + "T" + item.close);
                 if (now >= sO && now <= sC) {
                     currentItem = item; wrapper.style.display = "block";
-                    
                     const diffMs = sC - now;
                     const percent = ((now - sO) / (sC - sO)) * 100;
                     const h = Math.floor(diffMs / 3600000);
                     const m = Math.floor((diffMs % 3600000) / 60000);
-                    
                     document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
-                    
                     const pbContainer = document.getElementById('progress-container');
                     const pb = document.getElementById('progress-bar');
-                    
                     pb.style.width = percent + "%";
-                    
-                    // Réinitialisation des classes d'alerte
                     pbContainer.className = "progress-container";
                     let circleClass = "open";
-                    
-                    // Application des couleurs de la barre ET du rond
-                    if (diffMs < 25 * 60 * 1000) {
-                        pbContainer.classList.add("danger");
-                        circleClass = "danger";
-                    } else if (percent > 85) {
-                        pbContainer.classList.add("warning");
-                        circleClass = "warning";
-                    }
-                    
+                    if (diffMs < 25 * 60 * 1000) { pbContainer.classList.add("danger"); circleClass = "danger"; }
+                    else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; }
                     document.getElementById('status-text').innerText = "OUVERTE";
                     document.getElementById('status-box').className = "status-box " + circleClass;
-                    
                     drawTideGraph(percent); found = true; break;
                 } else if (now < sO) {
                     document.getElementById('status-text').innerText = "FERMÉE";
@@ -317,11 +204,6 @@
                     currentItem = item; wrapper.style.display = "none";
                     drawTideGraph(0); found = true; break;
                 }
-            }
-            if(!found) {
-                document.getElementById('status-text').innerText = "INDISP.";
-                document.getElementById('status-box').className = "status-box closed";
-                wrapper.style.display = "none";
             }
             document.getElementById('open-time').innerText = currentItem.open;
             document.getElementById('close-time').innerText = currentItem.close;
