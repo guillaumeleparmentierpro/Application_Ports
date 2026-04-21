@@ -51,26 +51,49 @@
     border-right: 1px solid #e2e8f0;
 }
         
-        .main-title { color: var(--text-main); font-size: 1.05rem; margin: 5px 0 10px 0; font-weight: 700; text-align: center; }
+/* Centrage du titre principal */
+.main-title {
+    text-align: center; /* Remis au centre */
+    font-size: 1.1rem;
+    margin: 10px 0 20px 0;
+    width: 100%;
+}
         .main-title sup { color: #b03a2e; font-size: 0.7rem; }
 
-        .top-nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px; }
-        .date-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; color: #475569; }
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px; /* Espace réduit entre les éléments */
+    margin-bottom: 15px;
+    width: 100%;
+}
+.date-badge {
+    background: white;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.6rem; /* Taille réduite */
+    border: 1px solid #e2e8f0;
+    white-space: nowrap; /* Empêche le retour à la ligne */
+    flex-shrink: 1;
+}
         
+/* Boutons plus compacts */
 .btn-action { 
     text-decoration: none; 
-    background: var(--marine-blue); /* Bleu foncé */
-    color: #ffffff; /* Police blanche */
+    background: var(--marine-blue);
+    color: #ffffff;
     border: none; 
     border-radius: 8px; 
-    padding: 8px 16px;
+    padding: 6px 8px; /* Moins de rembourrage */
     font-family: 'Montserrat', sans-serif; 
     font-weight: 700; 
-    font-size: 0.65rem; 
+    font-size: 0.55rem; /* Taille réduite pour tout faire tenir */
     display: inline-flex; 
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.15); /* Ombre un peu plus marquée */
-    transition: transform 0.1s;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
         .btn-action:active {
     transform: scale(0.95); /* Petit effet de clic sur téléphone */
@@ -134,30 +157,28 @@
     </style>
 </head>
 <body>
-    <div class="app-container">
+<div class="app-container">
 
-        <div class="top-nav" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <div class="date-badge" id="current-date" style="background: white; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; border: 1px solid #e2e8f0;">
-                -- --
-            </div>
-            
-            <div class="nav-buttons" style="display: flex; gap: 10px;">
-                <a href="planning.html" class="btn-action">HORAIRES & MARÉES 📅</a>
-                <a href="partage.html" class="btn-action">
-                    PARTAGER
-                    <svg style="margin-left: 6px;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="18" cy="5" r="3"></circle>
-                        <circle cx="6" cy="12" r="3"></circle>
-                        <circle cx="18" cy="19" r="3"></circle>
-                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                    </svg>
-                </a>
-            </div>
+    <div class="top-nav">
+        <div class="date-badge" id="current-date">-- --</div>
+        
+        <div class="nav-buttons" style="display: flex; gap: 5px;">
+            <a href="planning.html" class="btn-action">HORAIRES & MARÉES 📅</a>
+            <a href="partage.html" class="btn-action">
+                PARTAGER
+                <svg style="margin-left: 4px;" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+            </a>
         </div>
+    </div>
 
-        <h1 class="main-title" style="text-align: right; font-size: 1rem; margin: 0 0 10px 0;">Port de Barneville-Carteret<sup style="color:#b03a2e">*</sup></h1>
-
+    <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
+        
         <div class="module">
             <div id="status-box" class="status-box closed">
                 <span class="status-label">Porte</span>
