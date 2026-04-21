@@ -32,7 +32,6 @@
         .nav-buttons { display: flex; gap: 8px; }
         .date-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; color: #475569; }
         
-        /* Style des liens-boutons */
         .btn-action { 
             text-decoration: none; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; 
             padding: 4px 10px; cursor: pointer; color: var(--text-main); font-family: 'Montserrat', sans-serif; 
@@ -56,14 +55,19 @@
         .status-value { font-size: 1.1rem; font-weight: 700; }
         .status-label { font-size: 0.55rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
         
+        /* BARRE DE PROGRESSION - OUVERTURE & ATTENTE */
         .progress-wrapper { margin: 10px 0; display: none; }
         .progress-container { width: 100%; background: var(--open-light); height: 34px; border-radius: 17px; overflow: hidden; position: relative; transition: background 0.5s ease; }
         .progress-container.warning { background: var(--warning-color); }
         .progress-container.danger { background: var(--danger-color); }
+        /* Style d'attente (porte fermée) */
+        .progress-container.waiting { background: #cbd5e1; } 
         
         .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear, background 0.5s ease; }
         .progress-container.warning .progress-bar { background: var(--warning-dark); }
         .progress-container.danger .progress-bar { background: var(--danger-dark); animation: blink 1s infinite; }
+        /* Remplissage d'attente */
+        .progress-container.waiting .progress-bar { background: var(--marine-blue); animation: none; }
         
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
         
@@ -107,12 +111,14 @@
                 <span class="status-label">Porte</span>
                 <span class="status-value" id="status-text">--</span>
             </div>
+            
             <div class="progress-wrapper" id="progress-wrapper">
                 <div class="progress-container" id="progress-container">
                     <div class="progress-bar" id="progress-bar"></div>
                     <div class="progress-text" id="time-left">--</div>
                 </div>
             </div>
+
             <div class="slot-line-container">
                 <div class="slot-title">Créneaux officiels :</div>
                 <div class="slot-pills">
@@ -146,80 +152,133 @@
             <strong>Attention :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
     </div>
-<script>
-    // Ajout d'une sécurité pour attendre que le fichier donnees.js soit bien là
-    window.onload = function() {
-        if (typeof data !== 'undefined') {
-            updateApp();
-            setInterval(updateApp, 1000);
-        } else {
-            console.error("Le fichier donnees.js n'est pas détecté.");
-        }
-    };
 
-    function drawTideGraph(percent) {
-        const canvas = document.getElementById('tideCanvas');
-        if(!canvas) return;
-        canvas.width = 70; canvas.height = 45;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, 70, 45);
-        ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 2.5;
-        for (let x = 0; x <= 70; x++) {
-            const y = 41 - (Math.sin((x / 70) * Math.PI) * 37);
-            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-        const dotX = (percent / 100) * 70;
-        const dotY = 41 - (Math.sin((dotX / 70) * Math.PI) * 37);
-        ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 3.5, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
-    }
-
-    function updateApp() {
-        const now = new Date();
-        document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
-        
-        if (typeof data === 'undefined' || data.length === 0) return;
-
-        let currentItem = data[0]; 
-        let found = false;
-        const wrapper = document.getElementById('progress-wrapper');
-        
-        // Trier les données par date/heure pour être sûr de trouver la bonne
-        for (let item of data) {
-            const sO = new Date(item.date + "T" + item.open);
-            const sC = new Date(item.date + "T" + item.close);
-            
-            if (now >= sO && now <= sC) {
-                currentItem = item; wrapper.style.display = "block";
-                const diffMs = sC - now;
-                const percent = ((now - sO) / (sC - sO)) * 100;
-                const h = Math.floor(diffMs / 3600000);
-                const m = Math.floor((diffMs % 3600000) / 60000);
-                document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
-                const pbContainer = document.getElementById('progress-container');
-                const pb = document.getElementById('progress-bar');
-                pb.style.width = percent + "%";
-                pbContainer.className = "progress-container";
-                let circleClass = "open";
-                if (diffMs < 25 * 60 * 1000) { pbContainer.classList.add("danger"); circleClass = "danger"; }
-                else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; }
-                document.getElementById('status-text').innerText = "OUVERTE";
-                document.getElementById('status-box').className = "status-box " + circleClass;
-                drawTideGraph(percent); found = true; break;
-            } else if (now < sO) {
-                document.getElementById('status-text').innerText = "FERMÉE";
-                document.getElementById('status-box').className = "status-box closed";
-                currentItem = item; wrapper.style.display = "none";
-                drawTideGraph(0); found = true; break;
+    <script>
+        window.onload = function() {
+            if (typeof data !== 'undefined') {
+                updateApp();
+                setInterval(updateApp, 1000);
+            } else {
+                console.error("Le fichier donnees.js n'a pas pu être chargé.");
             }
+        };
+
+        function drawTideGraph(percent) {
+            const canvas = document.getElementById('tideCanvas');
+            if(!canvas) return;
+            canvas.width = 70; canvas.height = 45;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, 70, 45);
+            ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 2.5;
+            for (let x = 0; x <= 70; x++) {
+                const y = 41 - (Math.sin((x / 70) * Math.PI) * 37);
+                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            const dotX = (percent / 100) * 70;
+            const dotY = 41 - (Math.sin((dotX / 70) * Math.PI) * 37);
+            ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 3.5, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
         }
-        document.getElementById('open-time').innerText = currentItem.open;
-        document.getElementById('close-time').innerText = currentItem.close;
-        document.getElementById('coeff-display').innerText = currentItem.coeff;
-        document.getElementById('pm-display').innerText = currentItem.pm + " (" + currentItem.pm_h + "m)";
-        document.getElementById('bm-display').innerText = currentItem.bm + " (" + currentItem.bm_h + "m)";
-    }
-</script>
+
+        function updateApp() {
+            const now = new Date();
+            document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
+            
+            if (typeof data === 'undefined' || data.length === 0) return;
+
+            let currentItem = data[0]; 
+            let found = false;
+            const wrapper = document.getElementById('progress-wrapper');
+            const pbContainer = document.getElementById('progress-container');
+            const pb = document.getElementById('progress-bar');
+            
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                const sO = new Date(item.date + "T" + item.open);
+                const sC = new Date(item.date + "T" + item.close);
+                
+                if (now >= sO && now <= sC) {
+                    // --- SCÉNARIO : PORTE OUVERTE ---
+                    currentItem = item; 
+                    wrapper.style.display = "block";
+                    
+                    const diffMs = sC - now;
+                    const percent = ((now - sO) / (sC - sO)) * 100;
+                    const h = Math.floor(diffMs / 3600000);
+                    const m = Math.floor((diffMs % 3600000) / 60000);
+                    
+                    document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
+                    pb.style.width = percent + "%";
+                    
+                    pbContainer.className = "progress-container";
+                    let circleClass = "open";
+                    
+                    if (diffMs < 25 * 60 * 1000) { 
+                        pbContainer.classList.add("danger"); circleClass = "danger"; 
+                    } else if (percent > 85) { 
+                        pbContainer.classList.add("warning"); circleClass = "warning"; 
+                    }
+                    
+                    document.getElementById('status-text').innerText = "OUVERTE";
+                    document.getElementById('status-box').className = "status-box " + circleClass;
+                    
+                    drawTideGraph(percent); 
+                    found = true; 
+                    break;
+                    
+                } else if (now < sO) {
+                    // --- SCÉNARIO : PORTE FERMÉE (En attente de la prochaine ouverture) ---
+                    currentItem = item; 
+                    wrapper.style.display = "block"; // Affiche la barre
+                    
+                    // Calcul du temps total de fermeture (pour le pourcentage)
+                    let lastClose;
+                    if (i > 0) {
+                        lastClose = new Date(data[i-1].date + "T" + data[i-1].close);
+                    } else {
+                        // Cas de sécurité si c'est la 1ère donnée : on estime 7h de fermeture moyenne
+                        lastClose = new Date(sO.getTime() - (7 * 3600 * 1000));
+                    }
+                    
+                    const totalClosedMs = sO - lastClose;
+                    const elapsedMs = now - lastClose;
+                    const diffMs = sO - now; // Temps avant l'ouverture
+                    
+                    let percent = (elapsedMs / totalClosedMs) * 100;
+                    if (percent < 0) percent = 0;
+                    if (percent > 100) percent = 100;
+                    
+                    const h = Math.floor(diffMs / 3600000);
+                    const m = Math.floor((diffMs % 3600000) / 60000);
+                    
+                    document.getElementById('time-left').innerText = "Ouverture dans " + h + "h" + (m < 10 ? "0" : "") + m;
+                    pb.style.width = percent + "%";
+                    
+                    // Classe "waiting" pour activer les couleurs bleues
+                    pbContainer.className = "progress-container waiting";
+                    
+                    document.getElementById('status-text').innerText = "FERMÉE";
+                    document.getElementById('status-box').className = "status-box closed";
+                    
+                    drawTideGraph(0); 
+                    found = true; 
+                    break;
+                }
+            }
+            
+            if (!found) {
+                document.getElementById('status-text').innerText = "INDISP.";
+                document.getElementById('status-box').className = "status-box closed";
+                wrapper.style.display = "none";
+            }
+            
+            document.getElementById('open-time').innerText = currentItem.open;
+            document.getElementById('close-time').innerText = currentItem.close;
+            document.getElementById('coeff-display').innerText = currentItem.coeff;
+            document.getElementById('pm-display').innerText = currentItem.pm + " (" + currentItem.pm_h + "m)";
+            document.getElementById('bm-display').innerText = currentItem.bm + " (" + currentItem.bm_h + "m)";
+        }
+    </script>
 </body>
 </html>
