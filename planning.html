@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planning - Barneville-Carteret</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="donnees.js"></script>
+    <style>
+        :root {
+            --primary-bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --marine-blue: #1e3a8a;
+            --text-main: #1e293b;
+            --port-green: #8dbb53;
+            --port-red: #f06449;
+        }
 
+        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
+        .app-container { max-width: 400px; width: 100%; display: flex; flex-direction: column; gap: 10px; }
+        
+        .module { background: var(--card-bg); border-radius: 16px; padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+
+        /* Nav */
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 5px; }
+        .btn-back { 
+            text-decoration: none; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; 
+            padding: 6px 12px; color: var(--text-main); font-weight: 700; font-size: 0.7rem; 
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+
+        .module-header { font-size: 0.85rem; color: var(--text-main); font-weight: 700; margin-bottom: 12px; text-align: center; }
+
+        /* STYLE TABLEAU PRO (Inspiré de ta capture) */
+        .planning-table { width: 100%; border-collapse: collapse; font-size: 0.52rem; table-layout: fixed; }
+        .planning-table th { background: #f8fafc; color: var(--text-main); font-weight: 700; padding: 4px 1px; border: 1px solid #e2e8f0; text-align: center; }
+        .planning-table td { border: 1px solid #f1f5f9; padding: 6px 1px; text-align: center; color: var(--text-main); }
+        
+        .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin: 0 auto; }
+        .dot-green { background-color: var(--port-green); }
+        .dot-red { background-color: var(--port-red); }
+        
+        /* Mise en valeur des week-ends */
+        .weekend-row { background-color: #f1f5f9 !important; font-weight: 700; }
+        .small-date { font-size: 0.45rem; display: block; font-weight: 400; color: #64748b; }
+        .meteo-cell { font-size: 0.75rem; }
+
+        .disclaimer { font-size: 0.55rem; color: #64748b; padding: 10px; text-align: justify; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="top-nav">
+            <a href="index.html" class="btn-back">⬅ ACCUEIL DIRECT</a>
+            <div style="font-size: 0.65rem; font-weight: 700; color: #64748b;">PLANNING ANNUEL</div>
+        </div>
+
+        <div class="module" style="padding: 10px 5px;">
+            <div class="module-header">Horaires Officiels du Port</div>
+            <table class="planning-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="width:14%">DATE</th>
+                        <th colspan="4" style="color:var(--port-green)">OUV <span style="color:#000">&</span> <span style="color:var(--port-red)">FERM</span></th>
+                        <th colspan="3">Matin</th>
+                        <th colspan="3">Soir</th>
+                        <th rowspan="2" style="width:8%">MET</th>
+                    </tr>
+                    <tr>
+                        <th><div class="dot dot-green"></div></th>
+                        <th><div class="dot dot-red"></div></th>
+                        <th><div class="dot dot-green"></div></th>
+                        <th><div class="dot dot-red"></div></th>
+                        <th>PM</th><th>H.</th><th>C.</th>
+                        <th>PM</th><th>H.</th><th>C.</th>
+                    </tr>
+                </thead>
+                <tbody id="planning-body">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="disclaimer">
+            * Les horaires de porte sont fournis à titre indicatif selon les données officielles du port. La météo (pression atmosphérique et vent) peut impacter ces horaires de +/- 30 minutes. L'indice météo est fourni pour les 7 prochains jours.
+        </div>
+    </div>
+
+    <script>
+        function generateTable() {
+            const tbody = document.getElementById('planning-body');
+            if (typeof data === 'undefined') return;
+
+            tbody.innerHTML = "";
+            
+            // On regroupe les créneaux par date
+            const days = {};
+            data.forEach(item => {
+                if (!days[item.date]) days[item.date] = [];
+                days[item.date].push(item);
+            });
+
+            for (let date in days) {
+                const d = new Date(date);
+                const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
+                const dayLabel = d.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase();
+                const dayNum = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
+                
+                // On cherche le créneau du matin (<13h) et celui du soir (>=13h)
+                const m1 = days[date].find(s => parseInt(s.open.split(':')[0]) < 13) || {open:"-", close:"-", pm:"-", pm_h:"-", coeff:"-"};
+                const m2 = days[date].find(s => parseInt(s.open.split(':')[0]) >= 13) || {open:"-", close:"-", pm:"-", pm_h:"-", coeff:"-"};
+
+                // Indice météo pour les 7 prochains jours
+                const diff = (d - new Date()) / (1000*60*60*24);
+                let meteo = (diff >= -1 && diff <= 7) ? "☀️" : "";
+
+                const row = `<tr class="${isWeekend ? 'weekend-row' : ''}">
+                    <td>${dayLabel}<span class="small-date">${dayNum}</span></td>
+                    <td>${m1.open}</td><td>${m1.close}</td>
+                    <td>${m2.open}</td><td>${m2.close}</td>
+                    <td>${m1.pm}</td><td>${m1.pm_h}</td><td>${m1.coeff}</td>
+                    <td>${m2.pm}</td><td>${m2.pm_h}</td><td>${m2.coeff}</td>
+                    <td class="meteo-cell">${meteo}</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            }
+        }
+
+        // Lancement immédiat
+        generateTable();
+    </script>
+</body>
+</html>
