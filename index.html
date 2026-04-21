@@ -109,18 +109,14 @@
 </head>
 <body>
 
-<div class="top-nav">
-    <div class="date-badge" id="current-date">
-        -- --
-    </div>
-    
-    <div class="nav-buttons">
-        <a href="planning.html" class="btn-action btn-planning">
-            HORAIRES & MARÉES 📅
-        </a>
-    </div>
-</div>
-   
+    <div class="app-container">
+        
+        <div class="top-nav">
+            <div class="date-badge" id="current-date">-- --</div>
+            <div class="nav-buttons">
+                <a href="planning.html" class="btn-action btn-planning">HORAIRES & MARÉES 📅</a>
+            </div>
+        </div>
 
         <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
 
@@ -129,12 +125,14 @@
                 <span class="status-label">Porte</span>
                 <span class="status-value" id="status-text">--</span>
             </div>
+            
             <div class="progress-wrapper" id="progress-wrapper">
                 <div class="progress-container" id="progress-container">
                     <div class="progress-bar" id="progress-bar"></div>
                     <div class="progress-text" id="time-left">--</div>
                 </div>
             </div>
+
             <div class="slot-line-container">
                 <div class="slot-title">Créneaux officiels :</div>
                 <div class="slot-pills">
@@ -175,6 +173,7 @@
         <div class="disclaimer">
             * <strong>Attention :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
+
     </div>
 <script>
     window.onload = function() {
