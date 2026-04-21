@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Port de Barneville-Carteret Live</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-bg: #f8fafc;
+            --primary-bg: #f1f5f9;
             --card-bg: #ffffff;
             --open-light: #10b981;
             --open-dark: #067a5c;
@@ -18,141 +18,165 @@
             --text-main: #1e293b;
         }
 
-        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 15px; display: flex; justify-content: center; }
+        /* Réduction globale du padding du body pour gagner de la place */
+        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
 
-        .card { 
-            background: var(--card-bg); border-radius: 24px; padding: 20px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 400px; width: 100%;
-            text-align: center; position: relative;
+        .app-container {
+            max-width: 400px; width: 100%; display: flex; flex-direction: column; 
+            gap: 10px; /* Moins d'espace entre les modules */
         }
 
-        .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .date-badge { background: #f1f5f9; padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; color: #64748b; }
+        .module { 
+            background: var(--card-bg); border-radius: 16px; padding: 12px; /* Padding réduit */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); position: relative;
+        }
 
+        /* Titres des modules : Centrés, sans icône, couleur unifiée */
+        .module-header {
+            font-size: 0.7rem; color: var(--text-main); text-transform: uppercase; 
+            letter-spacing: 1px; font-weight: 700; margin-bottom: 10px;
+            display: flex; justify-content: center; /* Centrage horizontal */
+            align-items: center; text-align: center;
+        }
+
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px; }
+        .date-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; color: #475569; }
         .menu-btn {
-            background: #e2e8f0; border: none; border-radius: 8px;
-            padding: 6px 12px; cursor: pointer; color: var(--text-main);
-            font-family: 'Montserrat', sans-serif; font-weight: bold; font-size: 0.7rem;
-            display: flex; align-items: center; gap: 5px;
+            background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px;
+            padding: 4px 10px; cursor: pointer; color: var(--text-main);
+            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.65rem;
         }
 
-        h2 { color: var(--text-main); font-size: 1.2rem; margin: 5px 0 15px 0; font-weight: 700; }
+        h1 { color: var(--text-main); font-size: 1.05rem; margin: 0 0 12px 0; font-weight: 700; text-align: center; }
+        h1 sup { color: #b03a2e; font-size: 0.7rem; }
 
+        /* Le Rond : Réduit pour le Pixel 6A */
         .status-box {
-            width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 15px;
+            width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 10px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             color: white; transition: all 0.5s ease; box-sizing: border-box;
         }
-        .status-box.open { 
-            background: var(--open-light); border: 7px solid var(--open-dark); 
-            animation: pulse 2s infinite;
-        }
-        .status-box.closed { background: var(--closed-color); border: 7px solid #991b1b; }
+        .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
+        .status-box.closed { background: var(--closed-color); border: 5px solid #991b1b; }
 
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
 
-        .status-label { font-size: 0.65rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
-        .status-value { font-size: 1.4rem; font-weight: 700; }
+        .status-label { font-size: 0.55rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
+        .status-value { font-size: 1.1rem; font-weight: 700; }
 
-        .progress-wrapper { margin: 15px 0; display: none; }
+        /* Barre de progression avec texte PARFAITEMENT centré */
+        .progress-wrapper { margin: 10px 0; display: none; }
         .progress-container {
-            width: 100%; background: var(--open-light); height: 24px; border-radius: 12px; 
-            overflow: hidden; position: relative;
+            width: 100%; background: var(--open-light); height: 22px; border-radius: 11px; overflow: hidden; position: relative;
         }
         .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear; }
         .progress-bar.warning { background: var(--warning-color); }
         .progress-bar.danger { background: var(--danger-color); animation: blink 1s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
+        /* Centrage absolu au milieu du conteneur parent */
         .progress-text {
-            position: absolute; width: 100%; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 0.7rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none;
         }
 
-        /* Conteneur Marée */
-        .tide-container {
-            display: flex; align-items: center; justify-content: center; gap: 20px;
-            background: #fdfdfd; border: 1px solid #eef2f6; border-radius: 16px;
-            margin: 15px auto; padding: 12px; width: fit-content;
-        }
-        .tide-graph { width: 65px; height: 50px; }
-        #tideCanvas { width: 100%; height: 100%; display: block; }
-        
-        .tide-data { display: flex; flex-direction: column; text-align: left; font-size: 0.7rem; color: var(--text-main); }
-        .tide-row { margin-bottom: 4px; }
-        .tide-row strong { color: var(--marine-blue); display: inline-block; width: 45px; }
-
-        /* Météo Windy Officiel */
-        .weather-container {
-            margin-top: 15px; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0;
-            background: #fff; height: 150px;
-        }
-
-        .ad-space {
-            margin: 15px 0; padding: 12px; border: 2px dashed #cbd5e1;
-            border-radius: 16px; background: #fdfdfd; color: #64748b; font-size: 0.75rem;
-        }
+        #next-event { font-weight: 700; font-size: 0.8rem; color: var(--text-main); text-align: center; margin-bottom: 10px; }
 
         .draft-container { 
-            background: #f8fafc; padding: 8px; border-radius: 12px; border: 1px solid #f1f5f9; font-size: 0.75rem;
+            background: #f8fafc; padding: 6px; border-radius: 10px; border: 1px solid #f1f5f9; 
+            font-size: 0.65rem; display: flex; justify-content: center; align-items: center; gap: 8px;
         }
-        input[type="number"] { border: 1px solid #cbd5e1; border-radius: 5px; width: 40px; text-align: center; font-weight: bold; }
+        input[type="number"] { border: 1px solid #cbd5e1; border-radius: 4px; width: 40px; padding: 2px; text-align: center; font-weight: bold; font-size: 0.7rem; }
+
+        /* Module Marée réduit */
+        .tide-container {
+            display: flex; align-items: center; justify-content: center; gap: 20px;
+        }
+        .tide-graph { width: 55px; height: 40px; } /* Graphique ajusté */
+        #tideCanvas { width: 100%; height: 100%; display: block; }
+        .tide-data { display: flex; flex-direction: column; text-align: left; font-size: 0.65rem; color: var(--text-main); }
+        .tide-row { margin-bottom: 2px; }
+        .tide-row strong { color: var(--marine-blue); display: inline-block; width: 40px; }
+
+        /* Module Météo optimisé en hauteur */
+        .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 120px; border: 1px solid #e2e8f0; }
+
+        /* Module Publicité réduit */
+        .ad-module {
+            border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; 
+            font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600;
+        }
 
         .disclaimer { 
-            font-size: 0.65rem; color: #b03a2e; margin-top: 20px; padding: 10px; 
-            border-top: 1px solid #f1f5f9; line-height: 1.4; text-align: center; font-weight: 500;
+            font-size: 0.55rem; color: #64748b; padding: 0 5px; 
+            line-height: 1.4; text-align: justify; margin-top: 5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <div class="top-header">
+    <div class="app-container">
+        
+        <div class="top-nav">
             <div class="date-badge" id="current-date">-- --</div>
             <button class="menu-btn">MENU ☰</button>
         </div>
 
-        <h2>Port de Barneville-Carteret</h2>
+        <div class="module">
+            <h1>Port de Barneville-Carteret<sup>*</sup></h1>
 
-        <div id="status-box" class="status-box closed">
-            <span class="status-label">Porte</span>
-            <span class="status-value" id="status-text">--</span>
-        </div>
+            <div id="status-box" class="status-box closed">
+                <span class="status-label">Porte</span>
+                <span class="status-value" id="status-text">--</span>
+            </div>
 
-        <div class="progress-wrapper" id="progress-wrapper">
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-                <div class="progress-text" id="time-left">--</div>
+            <div class="progress-wrapper" id="progress-wrapper">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                    <div class="progress-text" id="time-left">--</div>
+                </div>
+            </div>
+
+            <div id="next-event">Calcul...</div>
+
+            <div class="draft-container">
+                <span>Tirant d'eau : </span>
+                <input type="number" id="draft" value="0" min="0" step="0.1" onchange="updateApp()"> 
+                <span>mètres</span>
             </div>
         </div>
 
-        <div id="next-event" style="font-weight: bold; font-size: 0.9rem; color: var(--text-main);">Calcul...</div>
-
-        <div class="tide-container">
-            <div class="tide-graph">
-                <canvas id="tideCanvas"></canvas>
-            </div>
-            <div class="tide-data">
-                <div class="tide-row"><strong>COEFF</strong> <span id="coeff-display">--</span></div>
-                <div class="tide-row"><strong>PM</strong> <span id="pm-display">--:-- (-- m)</span></div>
-                <div class="tide-row"><strong>BM</strong> <span id="bm-display">--:-- (-- m)</span></div>
+        <div class="module">
+            <div class="module-header">Informations Marée</div>
+            <div class="tide-container">
+                <div class="tide-graph">
+                    <canvas id="tideCanvas"></canvas>
+                </div>
+                <div class="tide-data">
+                    <div class="tide-row"><strong>COEFF</strong> <span id="coeff-display">--</span></div>
+                    <div class="tide-row"><strong>PM</strong> <span id="pm-display">--:-- (-- m)</span></div>
+                    <div class="tide-row"><strong>BM</strong> <span id="bm-display">--:-- (-- m)</span></div>
+                </div>
             </div>
         </div>
 
-        <div class="weather-container">
-            <iframe width="100%" height="150" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&level=surface&overlay=wind&product=ecmwf&marker=true&calendar=now&type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C" frameborder="0"></iframe>
+        <div class="module">
+            <div class="module-header">Conditions Météo</div>
+            <div class="weather-iframe-box">
+                <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&level=surface&overlay=wind&product=ecmwf&marker=true&calendar=now&type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C" frameborder="0"></iframe>
+            </div>
         </div>
 
-        <div class="ad-space">📢 PUBLICITÉ : Votre commerce ici</div>
-
-        <div class="draft-container">
-            <span>Réglage tirant d'eau : </span>
-            <input type="number" id="draft" value="0" min="0" step="0.1" onchange="updateApp()"> m
+        <div class="module ad-module">
+            📢 PUBLICITÉ<br>
+            <span style="font-size: 0.6rem; font-weight: 400;">Réservez cet espace pour votre commerce</span>
         </div>
 
         <div class="disclaimer">
-            <strong>Attention :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
+            * Les horaires peuvent varier selon la météo (+/- 30 min). Temps de chenalage estimé : 10 min. Le capitaine est seul responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
+
     </div>
 
     <script>
@@ -174,23 +198,20 @@
 
             ctx.beginPath();
             ctx.strokeStyle = '#1e3a8a';
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 2.5;
             for (let x = 0; x <= w; x++) {
-                // CORRECTION MATHÉMATIQUE (L'axe Y est inversé, on soustrait au lieu d'additionner)
-                // Cela crée une "cloche" (arche) où le milieu du créneau correspond à la pleine mer.
-                const y = h - 5 - (Math.sin((x / w) * Math.PI) * (h - 10));
+                const y = h - 4 - (Math.sin((x / w) * Math.PI) * (h - 8));
                 if (x === 0) ctx.moveTo(x, y);
                 else ctx.lineTo(x, y);
             }
             ctx.stroke();
 
-            // Position de la bulle rouge
             const dotX = (percent / 100) * w;
-            const dotY = h - 5 - (Math.sin((dotX / w) * Math.PI) * (h - 10));
+            const dotY = h - 4 - (Math.sin((dotX / w) * Math.PI) * (h - 8));
             
             ctx.beginPath();
             ctx.fillStyle = '#ef4444';
-            ctx.arc(dotX, dotY, 4, 0, Math.PI * 2);
+            ctx.arc(dotX, dotY, 3.5, 0, Math.PI * 2);
             ctx.fill();
             ctx.strokeStyle = 'white';
             ctx.lineWidth = 1.5;
