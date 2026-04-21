@@ -179,7 +179,7 @@
     window.onload = function() {
         if (typeof data !== 'undefined') {
             updateApp();
-            setInterval(updateApp, 1000);
+            setInterval(updateApp, 1000); // Mise à jour toutes les secondes
         }
     };
 
@@ -193,28 +193,26 @@
         const h = canvas.height;
         ctx.clearRect(0, 0, w, h);
         
+        // Ligne pointillée
         ctx.beginPath(); ctx.strokeStyle = '#cbd5e1'; ctx.setLineDash([5, 5]);
         ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.stroke(); ctx.setLineDash([]);
         
+        // Courbe de marée
         ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 3;
         for (let x = 0; x <= w; x++) {
             let ratio = x / w;
-            let y;
-            if (isDescending) {
-                // Courbe qui DESCEND (de PM vers BM)
-                y = 15 + ((Math.cos(ratio * Math.PI) + 1) / 2) * 50;
-            } else {
-                // Courbe qui MONTE (de BM vers PM)
-                y = 15 + ((Math.cos((ratio + 1) * Math.PI) + 1) / 2) * 50;
-            }
+            let y = isDescending ? 
+                15 + ((1 - Math.cos(ratio * Math.PI)) / 2) * 50 : 
+                15 + ((Math.cos(ratio * Math.PI) + 1) / 2) * 50;
             if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
         ctx.stroke();
 
+        // Point rouge
         const dotX = (percent / 100) * w;
         const dotY = isDescending ? 
-            15 + ((Math.cos((percent/100) * Math.PI) + 1) / 2) * 50 : 
-            15 + ((Math.cos(((percent/100) + 1) * Math.PI) + 1) / 2) * 50;
+            15 + ((1 - Math.cos((percent/100) * Math.PI)) / 2) * 50 : 
+            15 + ((Math.cos((percent/100) * Math.PI) + 1) / 2) * 50;
 
         ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 5, 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
@@ -229,31 +227,62 @@
         document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
         
         if (typeof data === 'undefined' || data.length === 0) return;
-        const dayData = data.find(d => d.date === dateStr);
-        if (!dayData) return;
 
+        // --- CORRECTION DU BUG DE MINUIT ---
+        // On récupère hier, aujourd'hui et demain pour faire une chronologie parfaite
+        const yesterdayStr = new Date(now.getTime() - 86400000 - tzoffset).toISOString().split('T')[0];
+        const tomorrowStr = new Date(now.getTime() + 86400000 - tzoffset).toISOString().split('T')[0];
+
+        let allPortes = [];
+        let allTides = [];
+
+        [yesterdayStr, dateStr, tomorrowStr].forEach(ds => {
+            let dData = data.find(d => d.date === ds);
+            if(dData) {
+                // Création de la chronologie des portes
+                if(dData.portes) {
+                    dData.portes.forEach(p => {
+                        if(p.open !== "--" && p.open !== "--:--" && p.close !== "--" && p.close !== "--:--") {
+                            let sO = new Date(ds + "T" + p.open);
+                            let sC = new Date(ds + "T" + p.close);
+                            // Si fermeture < ouverture, c'est que ça ferme le lendemain matin !
+                            if (sC < sO) sC.setDate(sC.getDate() + 1);
+                            allPortes.push({ sO: sO, sC: sC, openStr: p.open, closeStr: p.close });
+                        }
+                    });
+                }
+                // Création de la chronologie des marées
+                [
+                    { time: dData.bm1, h: dData.bm1_h, type: "BM", label: "Basse Mer", c: dData.coeff1 },
+                    { time: dData.pm1, h: dData.pm1_h, type: "PM", label: "Pleine Mer", c: dData.coeff1 },
+                    { time: dData.bm2, h: dData.bm2_h, type: "BM", label: "Basse Mer", c: dData.coeff2 },
+                    { time: dData.pm2, h: dData.pm2_h, type: "PM", label: "Pleine Mer", c: dData.coeff2 }
+                ].forEach(t => {
+                    if (t.time && t.time !== "--:--" && t.time !== "--") {
+                        allTides.push({ ...t, dateObj: new Date(ds + "T" + t.time) });
+                    }
+                });
+            }
+        });
+
+        // On trie les marées par ordre chronologique pour éviter tout problème
+        allTides.sort((a, b) => a.dateObj - b.dateObj);
+
+        // --- GESTION DES PORTES ---
         let activePorte = null;
         let nextPorte = null;
         let lastPorteClose = null;
 
-        // On cherche la porte active et la fermeture précédente pour la barre de progression
-        for (let i = 0; i < dayData.portes.length; i++) {
-            let p = dayData.portes[i];
-            const sO = new Date(dateStr + "T" + p.open);
-            const sC = new Date(dateStr + "T" + p.close);
-            
-            if (now >= sO && now <= sC) {
+        for (let i = 0; i < allPortes.length; i++) {
+            let p = allPortes[i];
+            if (now >= p.sO && now <= p.sC) {
                 activePorte = p;
                 break;
             }
-            if (now < sO) {
+            if (now < p.sO) {
                 nextPorte = p;
-                // On récupère la fermeture de la porte précédente (soit aujourd'hui, soit hier)
-                if (i > 0) {
-                    lastPorteClose = new Date(dateStr + "T" + dayData.portes[i-1].close);
-                } else {
-                    lastPorteClose = new Date(sO.getTime() - (7 * 3600 * 1000)); // Estimation 7h si 1er créneau
-                }
+                if (i > 0) lastPorteClose = allPortes[i-1].sC;
+                else lastPorteClose = new Date(p.sO.getTime() - (7 * 3600000));
                 break;
             }
         }
@@ -264,10 +293,8 @@
         wrapper.style.display = "block";
 
         if (activePorte) {
-            const sO = new Date(dateStr + "T" + activePorte.open);
-            const sC = new Date(dateStr + "T" + activePorte.close);
-            const diffMs = sC - now;
-            const percent = ((now - sO) / (sC - sO)) * 100;
+            const diffMs = activePorte.sC - now;
+            const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
             const h = Math.floor(diffMs / 3600000);
             const m = Math.floor((diffMs % 3600000) / 60000);
             
@@ -282,12 +309,11 @@
             document.getElementById('status-text').innerText = statusText;
             document.querySelector('.status-label').innerText = labelText;
             document.getElementById('status-box').className = "status-box " + circleClass;
-            document.getElementById('open-time').innerText = activePorte.open;
-            document.getElementById('close-time').innerText = activePorte.close;
+            document.getElementById('open-time').innerText = activePorte.openStr;
+            document.getElementById('close-time').innerText = activePorte.closeStr;
         } else if (nextPorte) {
-            const sO = new Date(dateStr + "T" + nextPorte.open);
-            const diffMs = sO - now;
-            const totalWait = sO - lastPorteClose;
+            const diffMs = nextPorte.sO - now;
+            const totalWait = nextPorte.sO - lastPorteClose;
             const elapsedWait = now - lastPorteClose;
             let waitPercent = Math.max(0, Math.min(100, (elapsedWait / totalWait) * 100));
 
@@ -298,37 +324,35 @@
             document.getElementById('status-text').innerText = "FERMÉE";
             document.querySelector('.status-label').innerText = "PORTE";
             document.getElementById('status-box').className = "status-box closed";
-            document.getElementById('open-time').innerText = nextPorte.open;
-            document.getElementById('close-time').innerText = nextPorte.close;
+            document.getElementById('open-time').innerText = nextPorte.openStr;
+            document.getElementById('close-time').innerText = nextPorte.closeStr;
         }
 
-        // --- MARÉE ---
-        const tides = [
-            { time: dayData.bm1, h: dayData.bm1_h, type: "BM", label: "Basse Mer", c: dayData.coeff1 },
-            { time: dayData.pm1, h: dayData.pm1_h, type: "PM", label: "Pleine Mer", c: dayData.coeff1 },
-            { time: dayData.bm2, h: dayData.bm2_h, type: "BM", label: "Basse Mer", c: dayData.coeff2 },
-            { time: dayData.pm2, h: dayData.pm2_h, type: "PM", label: "Pleine Mer", c: dayData.coeff2 }
-        ].filter(t => t.time && t.time !== "--:--");
-
-        let prev = tides[0], next = tides[1];
-        for (let i = 0; i < tides.length - 1; i++) {
-            const t1 = new Date(dateStr + "T" + tides[i].time);
-            const t2 = new Date(dateStr + "T" + tides[i+1].time);
-            if (now >= t1 && now <= t2) { prev = tides[i]; next = tides[i+1]; break; }
+        // --- GESTION DES MARÉES ---
+        let prevTide = allTides[0], nextTide = allTides[1];
+        for (let i = 0; i < allTides.length - 1; i++) {
+            if (now >= allTides[i].dateObj && now <= allTides[i+1].dateObj) {
+                prevTide = allTides[i];
+                nextTide = allTides[i+1];
+                break;
+            }
         }
 
-        const t1 = new Date(dateStr + "T" + prev.time);
-        const t2 = new Date(dateStr + "T" + next.time);
-        const tidePercent = ((now - t1) / (t2 - t1)) * 100;
-        const isDescending = (prev.type === "PM"); // Si on part d'une PM, on DESCEND.
+        if (prevTide && nextTide) {
+            const tidePercent = ((now - prevTide.dateObj) / (nextTide.dateObj - prevTide.dateObj)) * 100;
+            const isDescending = (prevTide.type === "PM");
 
-        document.getElementById('coeff-display').innerText = prev.c || next.c || "--";
-        document.getElementById('tide-left-label').innerText = prev.label;
-        document.getElementById('tide-right-label').innerText = next.label;
-        document.getElementById('val-left').innerText = prev.time + " (" + prev.h + "m)";
-        document.getElementById('val-right').innerText = next.time + " (" + next.h + "m)";
-        
-        drawTideGraph(tidePercent, isDescending);
+            // Nettoyage des coefficients
+            let coeffText = prevTide.c && prevTide.c !== "-" ? prevTide.c : (nextTide.c && nextTide.c !== "-" ? nextTide.c : "--");
+            
+            document.getElementById('coeff-display').innerText = coeffText;
+            document.getElementById('tide-left-label').innerText = prevTide.label;
+            document.getElementById('tide-right-label').innerText = nextTide.label;
+            document.getElementById('val-left').innerText = prevTide.time + " (" + prevTide.h + "m)";
+            document.getElementById('val-right').innerText = nextTide.time + " (" + nextTide.h + "m)";
+            
+            drawTideGraph(tidePercent, isDescending);
+        }
     }
 </script>
 </body>
