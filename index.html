@@ -3,104 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Porte de Carteret Live</title>
+    <title>Port de Barneville-Carteret Live</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-bg: #f8fafc;
             --card-bg: #ffffff;
             --open-light: #10b981;
-            --open-dark: #065f46; /* Vert plus foncé pour le cercle ext et la barre */
+            --open-dark: #067a5c;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
             --closed-color: #ef4444;
+            --marine-blue: #1e3a8a;
             --text-main: #1e293b;
         }
 
-        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 20px; display: flex; justify-content: center; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 15px; display: flex; justify-content: center; }
 
         .card { 
-            background: var(--card-bg); border-radius: 24px; padding: 24px; 
+            background: var(--card-bg); border-radius: 24px; padding: 20px; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 400px; width: 100%;
             text-align: center; position: relative;
         }
 
-        /* Bouton Menu en haut à droite */
+        .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .date-badge { background: #f1f5f9; padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; color: #64748b; }
+
         .menu-btn {
-            position: absolute; top: 20px; right: 20px;
             background: #e2e8f0; border: none; border-radius: 8px;
-            padding: 8px; cursor: pointer; color: var(--text-main);
+            padding: 6px 12px; cursor: pointer; color: var(--text-main);
+            font-family: 'Montserrat', sans-serif; font-weight: bold; font-size: 0.7rem;
+            display: flex; align-items: center; gap: 5px;
         }
 
-        h2 { color: var(--text-main); font-size: 1.4rem; margin: 10px 0 5px 0; }
-        .date-badge { display: inline-block; background: #f1f5f9; padding: 5px 15px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; color: #64748b; }
+        h2 { color: var(--text-main); font-size: 1.2rem; margin: 5px 0 15px 0; font-weight: 700; }
 
-        /* Tirant d'eau */
-        .draft-container { background: #f8fafc; padding: 12px; border-radius: 16px; margin: 20px 0; border: 1px solid #f1f5f9; }
-        input[type="number"] { border: 2px solid #cbd5e1; border-radius: 8px; padding: 5px; width: 50px; text-align: center; font-weight: bold; }
-
-        /* L'indicateur avec double cercle */
         .status-box {
-            width: 180px; height: 180px; border-radius: 50%; margin: 0 auto 20px;
+            width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 15px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: white; transition: all 0.5s ease;
-            box-sizing: border-box;
+            color: white; transition: all 0.5s ease; box-sizing: border-box;
         }
-
-        /* Le cercle extérieur épais de 2mm (~8px) */
         .status-box.open { 
-            background: var(--open-light); 
-            border: 8px solid var(--open-dark); 
-            box-shadow: 0 0 25px rgba(16, 185, 129, 0.3);
+            background: var(--open-light); border: 7px solid var(--open-dark); 
             animation: pulse 2s infinite;
         }
-        .status-box.closed { background: var(--closed-color); border: 8px solid #991b1b; }
+        .status-box.closed { background: var(--closed-color); border: 7px solid #991b1b; }
 
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
 
-        .status-label { font-size: 0.7rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
-        .status-value { font-size: 1.7rem; font-weight: 700; }
+        .status-label { font-size: 0.65rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
+        .status-value { font-size: 1.4rem; font-weight: 700; }
 
-        /* Barre de progression avec texte intégré */
-        .progress-wrapper { margin: 20px 0; display: none; }
+        .progress-wrapper { margin: 15px 0; display: none; }
         .progress-container {
-            width: 100%; background: #e2e8f0; height: 24px; border-radius: 12px;
+            width: 100%; background: var(--open-light); height: 24px; border-radius: 12px; 
             overflow: hidden; position: relative;
         }
-        .progress-bar { 
-            height: 100%; background: var(--open-dark); width: 0%; 
-            transition: width 1s linear; display: flex; align-items: center; justify-content: center;
-        }
+        .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear; }
+        .progress-bar.warning { background: var(--warning-color); }
+        .progress-bar.danger { background: var(--danger-color); animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
         .progress-text {
-            position: absolute; width: 100%; text-align: center;
-            font-size: 0.75rem; font-weight: bold; color: white; pointer-events: none;
+            position: absolute; width: 100%; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 0.7rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
         }
 
-        .info-text { font-weight: bold; font-size: 1.1rem; color: var(--text-main); }
+        /* Conteneur Marée */
+        .tide-container {
+            display: flex; align-items: center; justify-content: center; gap: 20px;
+            background: #fdfdfd; border: 1px solid #eef2f6; border-radius: 16px;
+            margin: 15px auto; padding: 12px; width: fit-content;
+        }
+        .tide-graph { width: 65px; height: 50px; }
+        #tideCanvas { width: 100%; height: 100%; display: block; }
+        
+        .tide-data { display: flex; flex-direction: column; text-align: left; font-size: 0.7rem; color: var(--text-main); }
+        .tide-row { margin-bottom: 4px; }
+        .tide-row strong { color: var(--marine-blue); display: inline-block; width: 45px; }
 
-        /* Espace Publicitaire */
+        /* Météo Windy Officiel */
+        .weather-container {
+            margin-top: 15px; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0;
+            background: #fff; height: 150px;
+        }
+
         .ad-space {
-            margin-top: 25px; padding: 15px; border: 2px dashed #cbd5e1;
-            border-radius: 16px; background: #fdfdfd; color: #64748b;
-            font-size: 0.85rem; font-weight: 600;
+            margin: 15px 0; padding: 12px; border: 2px dashed #cbd5e1;
+            border-radius: 16px; background: #fdfdfd; color: #64748b; font-size: 0.75rem;
         }
+
+        .draft-container { 
+            background: #f8fafc; padding: 8px; border-radius: 12px; border: 1px solid #f1f5f9; font-size: 0.75rem;
+        }
+        input[type="number"] { border: 1px solid #cbd5e1; border-radius: 5px; width: 40px; text-align: center; font-weight: bold; }
 
         .disclaimer { 
-            font-size: 0.65rem; color: #94a3b8; margin-top: 25px; padding-top: 15px; 
-            border-top: 1px solid #f1f5f9; line-height: 1.4; text-align: justify;
+            font-size: 0.65rem; color: #b03a2e; margin-top: 20px; padding: 10px; 
+            border-top: 1px solid #f1f5f9; line-height: 1.4; text-align: center; font-weight: 500;
         }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <button class="menu-btn">☰</button>
-        <div class="date-badge" id="current-date">-- --</div>
-        <h2>Porte de Carteret</h2>
-        
-        <div class="draft-container">
-            <span style="font-size: 0.85rem;">Mon tirant d'eau : </span>
-            <input type="number" id="draft" value="0" min="0" step="0.1" onchange="updateApp()"> 
-            <span style="font-weight: bold;">m</span>
+        <div class="top-header">
+            <div class="date-badge" id="current-date">-- --</div>
+            <button class="menu-btn">MENU ☰</button>
         </div>
+
+        <h2>Port de Barneville-Carteret</h2>
 
         <div id="status-box" class="status-box closed">
             <span class="status-label">Porte</span>
@@ -114,25 +126,76 @@
             </div>
         </div>
 
-        <div class="info-text" id="next-event">Calcul...</div>
-        <div id="details" style="font-size: 0.85rem; color: #64748b; margin-top: 5px;"></div>
+        <div id="next-event" style="font-weight: bold; font-size: 0.9rem; color: var(--text-main);">Calcul...</div>
 
-        <div class="ad-space">
-            📢 PUBLICITÉ<br>
-            <span style="font-size: 0.75rem; font-weight: 400;">Votre commerce local ici</span>
+        <div class="tide-container">
+            <div class="tide-graph">
+                <canvas id="tideCanvas"></canvas>
+            </div>
+            <div class="tide-data">
+                <div class="tide-row"><strong>COEFF</strong> <span id="coeff-display">--</span></div>
+                <div class="tide-row"><strong>PM</strong> <span id="pm-display">--:-- (-- m)</span></div>
+                <div class="tide-row"><strong>BM</strong> <span id="bm-display">--:-- (-- m)</span></div>
+            </div>
+        </div>
+
+        <div class="weather-container">
+            <iframe width="100%" height="150" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&level=surface&overlay=wind&product=ecmwf&marker=true&calendar=now&type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C" frameborder="0"></iframe>
+        </div>
+
+        <div class="ad-space">📢 PUBLICITÉ : Votre commerce ici</div>
+
+        <div class="draft-container">
+            <span>Réglage tirant d'eau : </span>
+            <input type="number" id="draft" value="0" min="0" step="0.1" onchange="updateApp()"> m
         </div>
 
         <div class="disclaimer">
-            <strong>ATTENTION :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
+            <strong>Attention :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
     </div>
 
     <script>
         const data = [
-            { date: "2026-04-21", open: "06:25", close: "11:51" },
-            { date: "2026-04-21", open: "18:46", close: "23:59" },
-            { date: "2026-04-22", open: "07:00", close: "12:27" }
+            { date: "2026-04-21", open: "06:25", close: "11:51", coeff: "82", pm: "09:08", pm_h: "10.2", bm: "15:30", bm_h: "2.1" },
+            { date: "2026-04-21", open: "18:46", close: "23:59", coeff: "85", pm: "21:30", pm_h: "10.5", bm: "03:45", bm_h: "1.8" },
+            { date: "2026-04-22", open: "07:00", close: "12:27", coeff: "88", pm: "09:45", pm_h: "10.8", bm: "16:15", bm_h: "1.5" }
         ];
+
+        function drawTideGraph(percent) {
+            const canvas = document.getElementById('tideCanvas');
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#1e3a8a';
+            ctx.lineWidth = 3;
+            for (let x = 0; x <= w; x++) {
+                // CORRECTION MATHÉMATIQUE (L'axe Y est inversé, on soustrait au lieu d'additionner)
+                // Cela crée une "cloche" (arche) où le milieu du créneau correspond à la pleine mer.
+                const y = h - 5 - (Math.sin((x / w) * Math.PI) * (h - 10));
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Position de la bulle rouge
+            const dotX = (percent / 100) * w;
+            const dotY = h - 5 - (Math.sin((dotX / w) * Math.PI) * (h - 10));
+            
+            ctx.beginPath();
+            ctx.fillStyle = '#ef4444';
+            ctx.arc(dotX, dotY, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
 
         function updateApp() {
             const now = new Date();
@@ -141,6 +204,7 @@
             const draft = parseFloat(document.getElementById('draft').value) || 0;
             const draftMs = draft * 60 * 60 * 1000; 
 
+            let currentItem = data[0]; 
             let found = false;
             const wrapper = document.getElementById('progress-wrapper');
 
@@ -151,26 +215,35 @@
                 const sC = new Date(c.getTime() - draftMs);
 
                 if (now >= sO && now <= sC) {
-                    updateUI("OUVERT", "open", "Fermeture prévue à " + item.close);
-                    
-                    // Calcul temps restant
+                    updateUI("OUVERTE", "open", "Fermeture à " + item.close);
+                    currentItem = item;
                     wrapper.style.display = "block";
+                    
                     const diffMs = sC - now;
-                    const hours = Math.floor(diffMs / (1000 * 60 * 60));
-                    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                    const totalMs = sC - sO;
+                    const percent = ((now - sO) / totalMs) * 100;
                     
-                    document.getElementById('time-left').innerText = hours + "h" + (minutes < 10 ? "0" : "") + minutes + " avant fermeture";
+                    const h = Math.floor(diffMs / 3600000);
+                    const m = Math.floor((diffMs % 3600000) / 60000);
+                    document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
                     
-                    const total = sC - sO;
-                    const percent = ((now - sO) / total) * 100;
-                    document.getElementById('progress-bar').style.width = percent + "%";
+                    const pb = document.getElementById('progress-bar');
+                    pb.style.width = percent + "%";
                     
-                    document.getElementById('details').innerText = "Créneau officiel : " + item.open + " - " + item.close;
+                    pb.className = "progress-bar";
+                    if (diffMs < 25 * 60 * 1000) {
+                        pb.classList.add("danger");
+                    } else if (percent > 85) {
+                        pb.classList.add("warning");
+                    }
+                    
+                    drawTideGraph(percent);
                     found = true; break;
                 } else if (now < sO) {
-                    updateUI("FERMÉ", "closed", "Ouverture à " + sO.toLocaleTimeString([], {hour: '2h-digit', minute:'2h-digit'}));
+                    updateUI("FERMÉE", "closed", "Ouverture à " + sO.toLocaleTimeString([], {hour:'2h-digit', minute:'2h-digit'}));
+                    currentItem = item;
                     wrapper.style.display = "none";
-                    document.getElementById('details').innerText = "Calculé pour " + draft + "m de tirant d'eau";
+                    drawTideGraph(0);
                     found = true; break;
                 }
             }
@@ -179,12 +252,15 @@
                 updateUI("INDISP.", "closed", "Plus de créneau ce jour");
                 wrapper.style.display = "none";
             }
+
+            document.getElementById('coeff-display').innerText = currentItem.coeff || "--";
+            document.getElementById('pm-display').innerText = (currentItem.pm || "--:--") + " (" + (currentItem.pm_h || "-") + "m)";
+            document.getElementById('bm-display').innerText = (currentItem.bm || "--:--") + " (" + (currentItem.bm_h || "-") + "m)";
         }
 
         function updateUI(status, className, next) {
-            const box = document.getElementById('status-box');
             document.getElementById('status-text').innerText = status;
-            box.className = "status-box " + className;
+            document.getElementById('status-box').className = "status-box " + className;
             document.getElementById('next-event').innerText = next;
         }
 
