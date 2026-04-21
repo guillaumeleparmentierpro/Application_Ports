@@ -18,31 +18,27 @@
             --text-main: #1e293b;
         }
 
-        /* Réduction globale du padding du body pour gagner de la place */
         body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
 
         .app-container {
-            max-width: 400px; width: 100%; display: flex; flex-direction: column; 
-            gap: 10px; /* Moins d'espace entre les modules */
+            max-width: 400px; width: 100%; display: flex; flex-direction: column; gap: 10px; 
         }
 
         .module { 
-            background: var(--card-bg); border-radius: 16px; padding: 12px; /* Padding réduit */
+            background: var(--card-bg); border-radius: 16px; padding: 12px; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.03); position: relative;
         }
 
-        /* Titres des modules : Centrés, sans icône, couleur unifiée */
         .module-header {
-            font-size: 0.7rem; color: var(--text-main); text-transform: uppercase; 
-            letter-spacing: 1px; font-weight: 700; margin-bottom: 10px;
-            display: flex; justify-content: center; /* Centrage horizontal */
-            align-items: center; text-align: center;
+            font-size: 0.85rem; color: var(--text-main); 
+            font-weight: 700; margin-bottom: 12px;
+            display: flex; justify-content: flex-start; align-items: center;
         }
 
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 2px; }
         .date-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; color: #475569; }
         .menu-btn {
-            background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px;
+            background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;
             padding: 4px 10px; cursor: pointer; color: var(--text-main);
             font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.65rem;
         }
@@ -50,7 +46,6 @@
         h1 { color: var(--text-main); font-size: 1.05rem; margin: 0 0 12px 0; font-weight: 700; text-align: center; }
         h1 sup { color: #b03a2e; font-size: 0.7rem; }
 
-        /* Le Rond : Réduit pour le Pixel 6A */
         .status-box {
             width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 10px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -64,45 +59,49 @@
         .status-label { font-size: 0.55rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
         .status-value { font-size: 1.1rem; font-weight: 700; }
 
-        /* Barre de progression avec texte PARFAITEMENT centré */
         .progress-wrapper { margin: 10px 0; display: none; }
         .progress-container {
-            width: 100%; background: var(--open-light); height: 22px; border-radius: 11px; overflow: hidden; position: relative;
+            width: 100%; background: var(--open-light); 
+            height: 34px; border-radius: 17px; overflow: hidden; position: relative;
         }
         .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear; }
         .progress-bar.warning { background: var(--warning-color); }
         .progress-bar.danger { background: var(--danger-color); animation: blink 1s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-
-        /* Centrage absolu au milieu du conteneur parent */
+        
         .progress-text {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.65rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none;
+            font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none;
         }
 
-        #next-event { font-weight: 700; font-size: 0.8rem; color: var(--text-main); text-align: center; margin-bottom: 10px; }
-
-        .draft-container { 
-            background: #f8fafc; padding: 6px; border-radius: 10px; border: 1px solid #f1f5f9; 
-            font-size: 0.65rem; display: flex; justify-content: center; align-items: center; gap: 8px;
+        /* Section créneaux optimisée en ligne */
+        .slot-line-container { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 8px 10px; background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9;
         }
-        input[type="number"] { border: 1px solid #cbd5e1; border-radius: 4px; width: 40px; padding: 2px; text-align: center; font-weight: bold; font-size: 0.7rem; }
+        .slot-title { font-size: 0.7rem; font-weight: 700; color: var(--text-main); }
+        .slot-pills { display: flex; gap: 6px; }
+        .slot-badge { padding: 3px 6px; border-radius: 6px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+        .slot-badge span { font-size: 0.5rem; text-transform: uppercase; opacity: 0.9; font-weight: 400; }
+        .slot-badge b { font-size: 0.75rem; }
+        
+        .badge-open { background: var(--open-light); color: white; border: 1px solid var(--open-dark); }
+        .badge-close { background: var(--closed-color); color: white; border: 1px solid #991b1b; }
 
-        /* Module Marée réduit */
         .tide-container {
-            display: flex; align-items: center; justify-content: center; gap: 20px;
+            display: flex; align-items: center; justify-content: space-between; padding-right: 15px;
         }
-        .tide-graph { width: 55px; height: 40px; } /* Graphique ajusté */
-        #tideCanvas { width: 100%; height: 100%; display: block; }
-        .tide-data { display: flex; flex-direction: column; text-align: left; font-size: 0.65rem; color: var(--text-main); }
-        .tide-row { margin-bottom: 2px; }
-        .tide-row strong { color: var(--marine-blue); display: inline-block; width: 40px; }
+        .tide-data { display: flex; flex-direction: column; text-align: left; font-size: 0.75rem; flex: 1; }
+        .tide-row { margin-bottom: 4px; }
+        .tide-row strong { color: var(--marine-blue); display: inline-block; width: 45px; font-size: 0.7rem; }
+        .tide-row span { font-weight: 700; font-size: 0.8rem; color: var(--text-main); }
 
-        /* Module Météo optimisé en hauteur */
+        .tide-graph-box { width: 80px; display: flex; justify-content: center; align-items: center; }
+        .tide-graph { width: 65px; height: 45px; } 
+        #tideCanvas { width: 100%; height: 100%; display: block; }
+
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 120px; border: 1px solid #e2e8f0; }
 
-        /* Module Publicité réduit */
         .ad-module {
             border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; 
             font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600;
@@ -138,31 +137,39 @@
                 </div>
             </div>
 
-            <div id="next-event">Calcul...</div>
-
-            <div class="draft-container">
-                <span>Tirant d'eau : </span>
-                <input type="number" id="draft" value="0" min="0" step="0.1" onchange="updateApp()"> 
-                <span>mètres</span>
+            <div class="slot-line-container">
+                <div class="slot-title">Créneaux officiels :</div>
+                <div class="slot-pills">
+                    <div class="slot-badge badge-open">
+                        <span>OUV.</span>
+                        <b id="open-time">--:--</b>
+                    </div>
+                    <div class="slot-badge badge-close">
+                        <span>FERM.</span>
+                        <b id="close-time">--:--</b>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="module">
-            <div class="module-header">Informations Marée</div>
+            <div class="module-header">Informations marée</div>
             <div class="tide-container">
-                <div class="tide-graph">
-                    <canvas id="tideCanvas"></canvas>
-                </div>
                 <div class="tide-data">
                     <div class="tide-row"><strong>COEFF</strong> <span id="coeff-display">--</span></div>
                     <div class="tide-row"><strong>PM</strong> <span id="pm-display">--:-- (-- m)</span></div>
                     <div class="tide-row"><strong>BM</strong> <span id="bm-display">--:-- (-- m)</span></div>
                 </div>
+                <div class="tide-graph-box">
+                    <div class="tide-graph">
+                        <canvas id="tideCanvas"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="module">
-            <div class="module-header">Conditions Météo</div>
+            <div class="module-header">Conditions météo</div>
             <div class="weather-iframe-box">
                 <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&level=surface&overlay=wind&product=ecmwf&marker=true&calendar=now&type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C" frameborder="0"></iframe>
             </div>
@@ -190,12 +197,10 @@
             const canvas = document.getElementById('tideCanvas');
             canvas.width = canvas.parentElement.clientWidth;
             canvas.height = canvas.parentElement.clientHeight;
-            
             const ctx = canvas.getContext('2d');
             const w = canvas.width;
             const h = canvas.height;
             ctx.clearRect(0, 0, w, h);
-
             ctx.beginPath();
             ctx.strokeStyle = '#1e3a8a';
             ctx.lineWidth = 2.5;
@@ -205,10 +210,8 @@
                 else ctx.lineTo(x, y);
             }
             ctx.stroke();
-
             const dotX = (percent / 100) * w;
             const dotY = h - 4 - (Math.sin((dotX / w) * Math.PI) * (h - 8));
-            
             ctx.beginPath();
             ctx.fillStyle = '#ef4444';
             ctx.arc(dotX, dotY, 3.5, 0, Math.PI * 2);
@@ -221,68 +224,48 @@
         function updateApp() {
             const now = new Date();
             document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
-            
-            const draft = parseFloat(document.getElementById('draft').value) || 0;
-            const draftMs = draft * 60 * 60 * 1000; 
-
             let currentItem = data[0]; 
             let found = false;
             const wrapper = document.getElementById('progress-wrapper');
-
             for (let item of data) {
-                const o = new Date(item.date + "T" + item.open);
-                const c = new Date(item.date + "T" + item.close);
-                const sO = new Date(o.getTime() + draftMs);
-                const sC = new Date(c.getTime() - draftMs);
-
+                const sO = new Date(item.date + "T" + item.open);
+                const sC = new Date(item.date + "T" + item.close);
                 if (now >= sO && now <= sC) {
-                    updateUI("OUVERTE", "open", "Fermeture à " + item.close);
+                    updateUI("OUVERTE", "open");
                     currentItem = item;
                     wrapper.style.display = "block";
-                    
                     const diffMs = sC - now;
                     const totalMs = sC - sO;
                     const percent = ((now - sO) / totalMs) * 100;
-                    
                     const h = Math.floor(diffMs / 3600000);
                     const m = Math.floor((diffMs % 3600000) / 60000);
                     document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
-                    
                     const pb = document.getElementById('progress-bar');
                     pb.style.width = percent + "%";
-                    
                     pb.className = "progress-bar";
-                    if (diffMs < 25 * 60 * 1000) {
-                        pb.classList.add("danger");
-                    } else if (percent > 85) {
-                        pb.classList.add("warning");
-                    }
-                    
+                    if (diffMs < 25 * 60 * 1000) pb.classList.add("danger");
+                    else if (percent > 85) pb.classList.add("warning");
                     drawTideGraph(percent);
                     found = true; break;
                 } else if (now < sO) {
-                    updateUI("FERMÉE", "closed", "Ouverture à " + sO.toLocaleTimeString([], {hour:'2h-digit', minute:'2h-digit'}));
+                    updateUI("FERMÉE", "closed");
                     currentItem = item;
                     wrapper.style.display = "none";
                     drawTideGraph(0);
                     found = true; break;
                 }
             }
-
-            if (!found) {
-                updateUI("INDISP.", "closed", "Plus de créneau ce jour");
-                wrapper.style.display = "none";
-            }
-
+            if (!found) { updateUI("INDISP.", "closed"); wrapper.style.display = "none"; }
+            document.getElementById('open-time').innerText = currentItem.open;
+            document.getElementById('close-time').innerText = currentItem.close;
             document.getElementById('coeff-display').innerText = currentItem.coeff || "--";
             document.getElementById('pm-display').innerText = (currentItem.pm || "--:--") + " (" + (currentItem.pm_h || "-") + "m)";
             document.getElementById('bm-display').innerText = (currentItem.bm || "--:--") + " (" + (currentItem.bm_h || "-") + "m)";
         }
 
-        function updateUI(status, className, next) {
+        function updateUI(status, className) {
             document.getElementById('status-text').innerText = status;
             document.getElementById('status-box').className = "status-box " + className;
-            document.getElementById('next-event').innerText = next;
         }
 
         setInterval(updateApp, 1000);
