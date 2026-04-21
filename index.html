@@ -146,74 +146,80 @@
             <strong>Attention :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
     </div>
-
-    <script>
-        // LE SCRIPT EST PLUS COURT CAR LA VARIABLE "data" EST DANS DONNEES.JS
-
-        function drawTideGraph(percent) {
-            const canvas = document.getElementById('tideCanvas');
-            if(!canvas) return;
-            canvas.width = 70; canvas.height = 45;
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, 70, 45);
-            ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 2.5;
-            for (let x = 0; x <= 70; x++) {
-                const y = 41 - (Math.sin((x / 70) * Math.PI) * 37);
-                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-            const dotX = (percent / 100) * 70;
-            const dotY = 41 - (Math.sin((dotX / 70) * Math.PI) * 37);
-            ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 3.5, 0, Math.PI * 2); ctx.fill();
-            ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
+<script>
+    // Ajout d'une sécurité pour attendre que le fichier donnees.js soit bien là
+    window.onload = function() {
+        if (typeof data !== 'undefined') {
+            updateApp();
+            setInterval(updateApp, 1000);
+        } else {
+            console.error("Le fichier donnees.js n'est pas détecté.");
         }
+    };
 
-        function updateApp() {
-            const now = new Date();
-            document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
-            
-            // On vérifie si "data" existe bien (chargé depuis donnees.js)
-            if (typeof data === 'undefined') return;
-
-            let currentItem = data[0]; let found = false;
-            const wrapper = document.getElementById('progress-wrapper');
-            
-            for (let item of data) {
-                const sO = new Date(item.date + "T" + item.open);
-                const sC = new Date(item.date + "T" + item.close);
-                if (now >= sO && now <= sC) {
-                    currentItem = item; wrapper.style.display = "block";
-                    const diffMs = sC - now;
-                    const percent = ((now - sO) / (sC - sO)) * 100;
-                    const h = Math.floor(diffMs / 3600000);
-                    const m = Math.floor((diffMs % 3600000) / 60000);
-                    document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
-                    const pbContainer = document.getElementById('progress-container');
-                    const pb = document.getElementById('progress-bar');
-                    pb.style.width = percent + "%";
-                    pbContainer.className = "progress-container";
-                    let circleClass = "open";
-                    if (diffMs < 25 * 60 * 1000) { pbContainer.classList.add("danger"); circleClass = "danger"; }
-                    else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; }
-                    document.getElementById('status-text').innerText = "OUVERTE";
-                    document.getElementById('status-box').className = "status-box " + circleClass;
-                    drawTideGraph(percent); found = true; break;
-                } else if (now < sO) {
-                    document.getElementById('status-text').innerText = "FERMÉE";
-                    document.getElementById('status-box').className = "status-box closed";
-                    currentItem = item; wrapper.style.display = "none";
-                    drawTideGraph(0); found = true; break;
-                }
-            }
-            document.getElementById('open-time').innerText = currentItem.open;
-            document.getElementById('close-time').innerText = currentItem.close;
-            document.getElementById('coeff-display').innerText = currentItem.coeff;
-            document.getElementById('pm-display').innerText = currentItem.pm + " (" + currentItem.pm_h + "m)";
-            document.getElementById('bm-display').innerText = currentItem.bm + " (" + currentItem.bm_h + "m)";
+    function drawTideGraph(percent) {
+        const canvas = document.getElementById('tideCanvas');
+        if(!canvas) return;
+        canvas.width = 70; canvas.height = 45;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, 70, 45);
+        ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 2.5;
+        for (let x = 0; x <= 70; x++) {
+            const y = 41 - (Math.sin((x / 70) * Math.PI) * 37);
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
+        ctx.stroke();
+        const dotX = (percent / 100) * 70;
+        const dotY = 41 - (Math.sin((dotX / 70) * Math.PI) * 37);
+        ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 3.5, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5; ctx.stroke();
+    }
 
-        setInterval(updateApp, 1000);
-        updateApp();
-    </script>
+    function updateApp() {
+        const now = new Date();
+        document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
+        
+        if (typeof data === 'undefined' || data.length === 0) return;
+
+        let currentItem = data[0]; 
+        let found = false;
+        const wrapper = document.getElementById('progress-wrapper');
+        
+        // Trier les données par date/heure pour être sûr de trouver la bonne
+        for (let item of data) {
+            const sO = new Date(item.date + "T" + item.open);
+            const sC = new Date(item.date + "T" + item.close);
+            
+            if (now >= sO && now <= sC) {
+                currentItem = item; wrapper.style.display = "block";
+                const diffMs = sC - now;
+                const percent = ((now - sO) / (sC - sO)) * 100;
+                const h = Math.floor(diffMs / 3600000);
+                const m = Math.floor((diffMs % 3600000) / 60000);
+                document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
+                const pbContainer = document.getElementById('progress-container');
+                const pb = document.getElementById('progress-bar');
+                pb.style.width = percent + "%";
+                pbContainer.className = "progress-container";
+                let circleClass = "open";
+                if (diffMs < 25 * 60 * 1000) { pbContainer.classList.add("danger"); circleClass = "danger"; }
+                else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; }
+                document.getElementById('status-text').innerText = "OUVERTE";
+                document.getElementById('status-box').className = "status-box " + circleClass;
+                drawTideGraph(percent); found = true; break;
+            } else if (now < sO) {
+                document.getElementById('status-text').innerText = "FERMÉE";
+                document.getElementById('status-box').className = "status-box closed";
+                currentItem = item; wrapper.style.display = "none";
+                drawTideGraph(0); found = true; break;
+            }
+        }
+        document.getElementById('open-time').innerText = currentItem.open;
+        document.getElementById('close-time').innerText = currentItem.close;
+        document.getElementById('coeff-display').innerText = currentItem.coeff;
+        document.getElementById('pm-display').innerText = currentItem.pm + " (" + currentItem.pm_h + "m)";
+        document.getElementById('bm-display').innerText = currentItem.bm + " (" + currentItem.bm_h + "m)";
+    }
+</script>
 </body>
 </html>
