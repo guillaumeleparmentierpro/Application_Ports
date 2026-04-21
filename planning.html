@@ -89,48 +89,36 @@
         </div>
     </div>
 
-    <script>
-        function generateTable() {
-            const tbody = document.getElementById('planning-body');
-            if (typeof data === 'undefined') return;
-
-            tbody.innerHTML = "";
+<script>
+    function generateTable() {
+        const tbody = document.getElementById('planning-body');
+        if (typeof data === 'undefined') return;
+        tbody.innerHTML = "";
+        
+        data.forEach(jour => {
+            const d = new Date(jour.date);
+            const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
+            const dayLabel = d.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase();
+            const dayNum = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
             
-            // On regroupe les créneaux par date
-            const days = {};
-            data.forEach(item => {
-                if (!days[item.date]) days[item.date] = [];
-                days[item.date].push(item);
-            });
+            const p1 = jour.portes[0] || {open:"-", close:"-"};
+            const p2 = jour.portes[1] || {open:"-", close:"-"};
+            
+            const diff = (d - new Date()) / (1000*60*60*24);
+            let meteo = (diff >= -1 && diff <= 7) ? "☀️" : "";
 
-            for (let date in days) {
-                const d = new Date(date);
-                const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
-                const dayLabel = d.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase();
-                const dayNum = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
-                
-                // On cherche le créneau du matin (<13h) et celui du soir (>=13h)
-                const m1 = days[date].find(s => parseInt(s.open.split(':')[0]) < 13) || {open:"-", close:"-", pm:"-", pm_h:"-", coeff:"-"};
-                const m2 = days[date].find(s => parseInt(s.open.split(':')[0]) >= 13) || {open:"-", close:"-", pm:"-", pm_h:"-", coeff:"-"};
-
-                // Indice météo pour les 7 prochains jours
-                const diff = (d - new Date()) / (1000*60*60*24);
-                let meteo = (diff >= -1 && diff <= 7) ? "☀️" : "";
-
-                const row = `<tr class="${isWeekend ? 'weekend-row' : ''}">
-                    <td>${dayLabel}<span class="small-date">${dayNum}</span></td>
-                    <td>${m1.open}</td><td>${m1.close}</td>
-                    <td>${m2.open}</td><td>${m2.close}</td>
-                    <td>${m1.pm}</td><td>${m1.pm_h}</td><td>${m1.coeff}</td>
-                    <td>${m2.pm}</td><td>${m2.pm_h}</td><td>${m2.coeff}</td>
-                    <td class="meteo-cell">${meteo}</td>
-                </tr>`;
-                tbody.innerHTML += row;
-            }
-        }
-
-        // Lancement immédiat
-        generateTable();
-    </script>
+            const row = `<tr class="${isWeekend ? 'weekend-row' : ''}">
+                <td>${dayLabel}<span class="small-date">${dayNum}</span></td>
+                <td>${p1.open}</td><td>${p1.close}</td>
+                <td>${p2.open}</td><td>${p2.close}</td>
+                <td>${jour.pm1}</td><td>${jour.pm1_h}</td><td>${jour.coeff1}</td>
+                <td>${jour.pm2}</td><td>${jour.pm2_h}</td><td>${jour.coeff2}</td>
+                <td class="meteo-cell">${meteo}</td>
+            </tr>`;
+            tbody.innerHTML += row;
+        });
+    }
+    generateTable();
+</script>
 </body>
 </html>
