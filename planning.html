@@ -30,16 +30,17 @@
     }
 
     /* 1. HEADER DE PAGE (Le bandeau Accueil + Titre) */
+    /* On le force en haut avec une priorité absolue */
     .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: var(--card-bg);
+        background: white !important;
         padding: 0 15px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         position: sticky;
         top: 0;
-        z-index: 1000; /* Le plus haut de tous */
+        z-index: 9999 !important; /* Priorité maximale absolue */
         height: 60px;
         box-sizing: border-box;
     }
@@ -66,59 +67,57 @@
     }
 
     table {
-        border-collapse: collapse;
+        border-collapse: separate; /* Changé de collapse à separate pour mieux gérer le sticky */
+        border-spacing: 0;
         width: max-content;
         min-width: 100%;
         background: var(--card-bg);
     }
 
-    /* 3. FIXATION DES TITRES DE COLONNES (Sticky Vertical) */
+    /* 3. FIXATION DES TITRES DE COLONNES */
     
-    /* On force un fond opaque sur tous les titres sinon on voit le texte passer dessous */
+    /* On force un fond opaque (f1f5f9) pour ne pas voir à travers */
     thead th {
         position: sticky;
         background-color: #f1f5f9 !important;
-        z-index: 100;
+        color: var(--text-main);
         padding: 10px 8px;
         border-bottom: 1px solid var(--border-color);
         border-right: 1px solid var(--border-color);
         box-sizing: border-box;
     }
 
-    /* Ligne 1 (MATIN / SOIR) : Se colle juste sous le header (60px) */
+    /* Ligne 1 (MATIN / SOIR) : Se colle à 60px (juste sous le header) */
     thead tr:nth-child(1) th {
         top: 60px;
-        height: 45px;
-        z-index: 110;
+        z-index: 100; /* Moins que le header (9999) */
     }
 
-    /* Ligne 2 (Porte, PM, BM...) : Se colle sous la ligne 1 (60px + 45px) */
+    /* Ligne 2 (Porte, PM, BM...) : Se colle à 100px (60+40 environ) */
     thead tr:nth-child(2) th {
-        top: 105px;
-        z-index: 110;
+        top: 100px;
+        z-index: 100;
     }
 
-    /* 4. FIXATION DE LA COLONNE DATE (Sticky Horizontal + Vertical) */
+    /* 4. FIXATION DE LA COLONNE DATE (Horizontal + Vertical) */
     
     .sticky-col {
         position: sticky;
         left: 0;
-        background-color: var(--card-bg) !important;
-        z-index: 200; /* Plus haut que les autres colonnes */
+        background-color: white !important;
+        z-index: 150; /* Entre les titres et le header */
         border-right: 2px solid var(--marine-blue) !important;
-        width: 65px;
     }
 
-    /* Cas crucial : La cellule "Date" dans l'en-tête (en haut à gauche) */
+    /* La cellule d'angle "Date" en haut à gauche */
     thead th.sticky-col {
-        top: 60px !important; /* Se colle aussi verticalement sous le header */
-        z-index: 300 !important; /* Doit être au-dessus de tout le reste du tableau */
-        height: 100% !important;
+        top: 60px !important;
+        z-index: 200 !important;
     }
 
-    /* 5. DESIGN DES CELLULES DE DONNÉES */
+    /* 5. DESIGN DES CELLULES */
     td {
-        padding: 10px 8px;
+        padding: 12px 8px;
         text-align: center;
         border-bottom: 1px solid var(--border-color);
         border-right: 1px solid var(--border-color);
@@ -132,34 +131,22 @@
     .sub-header { font-size: 0.6rem; color: #64748b; font-weight: 700; }
 
     /* MISE EN AVANT AUJOURD'HUI */
-    .today-row { background-color: var(--today-bg) !important; }
-    .today-row .sticky-col { 
-        background-color: var(--today-bg) !important; 
-        border-left: 5px solid var(--marine-blue) !important; 
-    }
+    .today-row td { background-color: var(--today-bg) !important; }
+    .today-row .sticky-col { border-left: 5px solid var(--marine-blue) !important; }
 
     /* STYLE DES DONNÉES */
     .porte-line { font-weight: 700; font-size: 0.8rem; }
     .sep { color: #cbd5e1; margin: 0 3px; font-weight: 400; }
-    
     .data-stack { display: flex; flex-direction: column; }
     .data-main { font-weight: 700; font-size: 0.8rem; }
     .data-sub { font-size: 0.65rem; color: #64748b; }
 
-    /* ALERTES GRANDES MARÉES */
+    /* ALERTES */
     .high-tide-text { color: #ef4444 !important; font-weight: 700; }
-    .coeff-badge { 
-        background: var(--marine-blue); 
-        color: white; 
-        padding: 3px 6px; 
-        border-radius: 4px; 
-        font-weight: 700; 
-        display: inline-block;
-    }
+    .coeff-badge { background: var(--marine-blue); color: white; padding: 3px 6px; border-radius: 4px; font-weight: 700; display: inline-block; }
     .coeff-badge.high { background: #ef4444 !important; }
 
     .weekend td:not(.sticky-col) { background-color: var(--weekend-color); }
-    .scroll-hint { text-align: center; font-size: 0.65rem; color: #64748b; padding: 8px; }
 </style>
 </head>
 <body>
