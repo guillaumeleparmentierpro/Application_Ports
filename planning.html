@@ -18,6 +18,7 @@
         --matin-bg: #eff6ff;
         --soir-bg: #fffbeb;
         --weekend-color: #fef2f2;
+        --today-bg: #fef9c3;
     }
 
     body { 
@@ -28,18 +29,18 @@
         color: var(--text-main);
     }
 
-    /* 1. L'en-tête de la page (Bouton Accueil + Titre) */
+    /* 1. HEADER DE PAGE (Le bandeau Accueil + Titre) */
     .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         background: var(--card-bg);
-        padding: 12px 15px;
+        padding: 0 15px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        position: sticky; /* Reste fixe en haut */
+        position: sticky;
         top: 0;
-        z-index: 100; /* Toujours au-dessus de tout */
-        height: 50px; /* Hauteur fixe pour faciliter les calculs */
+        z-index: 1000; /* Le plus haut de tous */
+        height: 60px;
         box-sizing: border-box;
     }
 
@@ -54,12 +55,13 @@
     }
 
     .page-title { font-size: 0.95rem; font-weight: 700; margin: 0; }
+    .page-title sup { color: #b03a2e; font-size: 0.6rem; }
 
-    /* 2. Le conteneur du tableau */
+    /* 2. TABLEAU ET SCROLL */
     .table-container {
         width: 100%;
-        overflow-x: auto; /* Scroll horizontal */
-        overflow-y: visible; /* Laisse le sticky vertical fonctionner */
+        overflow-x: auto;
+        overflow-y: visible;
         -webkit-overflow-scrolling: touch;
     }
 
@@ -70,46 +72,51 @@
         background: var(--card-bg);
     }
 
-    /* 3. FIXATION DES TITRES (Sticky Vertical) */
+    /* 3. FIXATION DES TITRES DE COLONNES (Sticky Vertical) */
     
-    /* Tous les titres du tableau */
+    /* On force un fond opaque sur tous les titres sinon on voit le texte passer dessous */
     thead th {
         position: sticky;
-        background: #f1f5f9;
-        z-index: 10;
+        background-color: #f1f5f9 !important;
+        z-index: 100;
+        padding: 10px 8px;
         border-bottom: 1px solid var(--border-color);
         border-right: 1px solid var(--border-color);
-        padding: 10px 8px;
+        box-sizing: border-box;
     }
 
-    /* Ligne 1 (MATIN / SOIR) : Se colle juste sous le header (50px) */
+    /* Ligne 1 (MATIN / SOIR) : Se colle juste sous le header (60px) */
     thead tr:nth-child(1) th {
-        top: 50px; 
-        z-index: 20;
+        top: 60px;
+        height: 45px;
+        z-index: 110;
     }
 
-    /* Ligne 2 (Porte, PM, BM...) : Se colle sous la ligne 1 */
+    /* Ligne 2 (Porte, PM, BM...) : Se colle sous la ligne 1 (60px + 45px) */
     thead tr:nth-child(2) th {
-        top: 92px; /* 50px (header) + environ 42px (ligne 1) */
-        z-index: 20;
+        top: 105px;
+        z-index: 110;
     }
 
     /* 4. FIXATION DE LA COLONNE DATE (Sticky Horizontal + Vertical) */
+    
     .sticky-col {
         position: sticky;
         left: 0;
-        background: var(--card-bg) !important;
-        z-index: 30 !important; /* Priorité maximale */
+        background-color: var(--card-bg) !important;
+        z-index: 200; /* Plus haut que les autres colonnes */
         border-right: 2px solid var(--marine-blue) !important;
+        width: 65px;
     }
 
-    /* La cellule "Date" en haut à gauche doit rester fixe dans les DEUX sens */
+    /* Cas crucial : La cellule "Date" dans l'en-tête (en haut à gauche) */
     thead th.sticky-col {
-        top: 50px !important;
-        z-index: 40 !important;
+        top: 60px !important; /* Se colle aussi verticalement sous le header */
+        z-index: 300 !important; /* Doit être au-dessus de tout le reste du tableau */
+        height: 100% !important;
     }
 
-    /* Reste du style des cellules */
+    /* 5. DESIGN DES CELLULES DE DONNÉES */
     td {
         padding: 10px 8px;
         text-align: center;
@@ -124,21 +131,35 @@
     .soir-group { background-color: var(--soir-bg) !important; }
     .sub-header { font-size: 0.6rem; color: #64748b; font-weight: 700; }
 
-    /* Mise en avant d'aujourd'hui */
-    .today-row { background-color: #fef9c3 !important; }
-    .today-row .sticky-col { background-color: #fef9c3 !important; border-left: 5px solid var(--marine-blue) !important; }
-    
-    /* Week-end et alertes */
-    tr.weekend td:not(.sticky-col) { background-color: var(--weekend-color); }
-    .high-tide-text { color: #ef4444 !important; font-weight: 700; }
-    .coeff-badge { background: var(--marine-blue); color: white; padding: 3px 6px; border-radius: 4px; font-weight: 700; }
-    .coeff-badge.high { background: #ef4444 !important; }
-    
+    /* MISE EN AVANT AUJOURD'HUI */
+    .today-row { background-color: var(--today-bg) !important; }
+    .today-row .sticky-col { 
+        background-color: var(--today-bg) !important; 
+        border-left: 5px solid var(--marine-blue) !important; 
+    }
+
+    /* STYLE DES DONNÉES */
     .porte-line { font-weight: 700; font-size: 0.8rem; }
-    .sep { color: #cbd5e1; margin: 0 3px; }
+    .sep { color: #cbd5e1; margin: 0 3px; font-weight: 400; }
+    
     .data-stack { display: flex; flex-direction: column; }
-    .data-main { font-weight: 700; }
+    .data-main { font-weight: 700; font-size: 0.8rem; }
     .data-sub { font-size: 0.65rem; color: #64748b; }
+
+    /* ALERTES GRANDES MARÉES */
+    .high-tide-text { color: #ef4444 !important; font-weight: 700; }
+    .coeff-badge { 
+        background: var(--marine-blue); 
+        color: white; 
+        padding: 3px 6px; 
+        border-radius: 4px; 
+        font-weight: 700; 
+        display: inline-block;
+    }
+    .coeff-badge.high { background: #ef4444 !important; }
+
+    .weekend td:not(.sticky-col) { background-color: var(--weekend-color); }
+    .scroll-hint { text-align: center; font-size: 0.65rem; color: #64748b; padding: 8px; }
 </style>
 </head>
 <body>
