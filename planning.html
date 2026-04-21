@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
 <style>
-:root {
+    :root {
         color-scheme: light;
         --primary-bg: #f8fafc;
         --card-bg: #ffffff;
@@ -28,13 +28,13 @@
         margin: 0; 
         padding: 0; 
         color: var(--text-main);
-        height: 100vh; /* Prend 100% de l'écran */
+        height: 100vh; /* Prend 100% de l'écran du Pixel */
         display: flex;
         flex-direction: column;
         overflow: hidden; /* Empêche la page entière de scroller */
     }
 
-    /* Le header reste tout en haut, fixe */
+    /* Le header reste tout en haut, fixe et intouchable */
     .header {
         display: flex;
         align-items: center;
@@ -43,7 +43,7 @@
         padding: 0 15px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         height: 60px;
-        flex-shrink: 0; /* Empêche le header de s'écraser */
+        flex-shrink: 0; 
         z-index: 1000;
     }
 
@@ -51,10 +51,10 @@
     .page-title { font-size: 0.95rem; font-weight: 700; margin: 0; }
     .page-title sup { color: #b03a2e; font-size: 0.6rem; }
 
-    /* C'EST ICI LA MAGIE : Seul le container scrolle */
+    /* LE CONTENEUR DU TABLEAU : C'est lui qui scrolle maintenant */
     .table-container {
         flex-grow: 1;
-        overflow: auto; /* Scrolle en X et en Y ! */
+        overflow: auto; 
         -webkit-overflow-scrolling: touch;
         background: var(--primary-bg);
     }
@@ -67,10 +67,10 @@
         background: var(--card-bg);
     }
 
-    /* FIXATION DES TITRES (Maintenant c'est ultra simple) */
+    /* --- FIXATION DES TITRES (Sticky Vertical) --- */
     thead th {
         position: sticky;
-        background-color: #f1f5f9 !important;
+        background-color: #f1f5f9 !important; /* Fond opaque obligatoire */
         color: var(--text-main);
         padding: 10px 8px;
         border-bottom: 1px solid var(--border-color);
@@ -79,39 +79,53 @@
         z-index: 10;
     }
 
-    /* La première ligne de titres est tout en haut du container */
-    thead tr:nth-child(1) th { top: 0; height: 40px; }
+    /* Ligne 1 (MATIN / SOIR) : Tout en haut du container qui scrolle */
+    thead tr:nth-child(1) th { 
+        top: 0; 
+        height: 45px; 
+        z-index: 110; 
+    }
     
-    /* La deuxième ligne de titres est collée sous la première */
-    thead tr:nth-child(2) th { top: 40px; }
+    /* Ligne 2 (Sous-titres Porte, PM, BM, Coeff) : Collée sous la ligne 1 */
+    thead tr:nth-child(2) th { 
+        top: 45px; 
+        height: 35px;
+        z-index: 110; 
+    }
 
-    /* FIXATION DE LA COLONNE DATE */
+    /* --- FIXATION DE LA COLONNE DATE (Sticky Horizontal + Vertical) --- */
     .sticky-col {
         position: sticky;
         left: 0;
         background-color: white !important;
-        z-index: 20; /* Plus haut que les cellules normales */
+        z-index: 20;
         border-right: 2px solid var(--marine-blue) !important;
     }
 
-    /* Le Coin "Date" (doit rester par-dessus tout le monde) */
-    thead th.sticky-col { z-index: 30 !important; }
+    /* Le Coin "Date" en haut à gauche (Couvre les 2 hauteurs : 45+35=80px) */
+    thead th.sticky-col { 
+        top: 0 !important;
+        height: 80px !important;
+        z-index: 300 !important; /* Roi du tableau, passe par-dessus tout */
+    }
 
-    /* DESIGN CELLULES */
+    /* --- DESIGN DES CELLULES ET GROUPES --- */
     td { padding: 12px 8px; text-align: center; border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); font-size: 0.75rem; white-space: nowrap; }
+    
     .group-header { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; }
+    .sub-header { font-size: 0.6rem; color: #475569; font-weight: 700; text-transform: uppercase; line-height: 1.2; }
+    
     .matin-group { background-color: var(--matin-bg) !important; }
     .soir-group { background-color: var(--soir-bg) !important; }
-    .sub-header { font-size: 0.6rem; color: #64748b; font-weight: 700; }
 
-    /* CORRECTION WEEK-END ET AUJOURD'HUI */
+    /* --- WEEK-END ET AUJOURD'HUI --- */
     .today-row td { background-color: var(--today-bg) !important; }
     .today-row .sticky-col { border-left: 5px solid var(--marine-blue) !important; }
     
     .weekend td:not(.sticky-col) { background-color: var(--weekend-color) !important; }
-    .weekend .sticky-col { background-color: #fee2e2 !important; } /* Fond rouge clair pour la date */
+    .weekend .sticky-col { background-color: #fee2e2 !important; } 
 
-    /* SÉPARATEUR DE MOIS */
+    /* --- SÉPARATEUR DE MOIS --- */
     .month-separator td {
         background: var(--marine-blue) !important;
         color: white !important;
@@ -123,14 +137,16 @@
         left: 0;
         text-transform: uppercase;
         letter-spacing: 1px;
+        z-index: 15;
     }
 
-    /* DONNÉES */
+    /* --- DONNÉES ET ALERTES --- */
     .porte-line { font-weight: 700; font-size: 0.8rem; }
     .sep { color: #cbd5e1; margin: 0 3px; font-weight: 400; }
     .data-stack { display: flex; flex-direction: column; }
     .data-main { font-weight: 700; font-size: 0.8rem; }
     .data-sub { font-size: 0.65rem; color: #64748b; }
+    
     .high-tide-text { color: #ef4444 !important; font-weight: 700; }
     .coeff-badge { background: var(--marine-blue); color: white; padding: 3px 6px; border-radius: 4px; font-weight: 700; display: inline-block; }
     .coeff-badge.high { background: #ef4444 !important; }
@@ -149,10 +165,21 @@
         <table>
 <thead>
     <tr>
-        <th class="sticky-col" rowspan="2">Date</th> <th class="group-header matin-group" colspan="4">☀️ MATIN</th>
+        <th class="sticky-col" rowspan="2">Date</th>
+        <th class="group-header matin-group" colspan="4">☀️ MATIN</th>
         <th class="group-header soir-group" colspan="4">🌙 SOIR</th>
     </tr>
-    </thead>
+    <tr>
+        <th class="sub-header matin-group">Porte (Ouv | Ferm)</th>
+        <th class="sub-header matin-group">Pleine Mer</th>
+        <th class="sub-header matin-group">Basse Mer</th>
+        <th class="sub-header matin-group">Coeff</th>
+        <th class="sub-header soir-group">Porte (Ouv | Ferm)</th>
+        <th class="sub-header soir-group">Pleine Mer</th>
+        <th class="sub-header soir-group">Basse Mer</th>
+        <th class="sub-header soir-group">Coeff</th>
+    </tr>
+</thead>
             <tbody id="planning-body">
                 </tbody>
         </table>
