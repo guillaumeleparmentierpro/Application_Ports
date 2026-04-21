@@ -113,6 +113,9 @@
         .status-box { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
         .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
         .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
+        .status-box.warning .status-value {
+    font-size: 1.5rem; /* On réduit légèrement la taille juste pour cet état */
+}
         .status-box.danger { background: var(--danger-color); border: 5px solid var(--danger-dark); animation: pulse 1s infinite; }
         .status-box.closed { background: var(--closed-color); border: 5px solid var(--danger-dark); }
         
@@ -372,7 +375,7 @@
             
             let circleClass = "open"; let statusText = "OUVERTE"; let labelText = "PORTE";
             if (diffMs < 25 * 60 * 1000) { pbContainer.classList.add("danger"); circleClass = "danger"; statusText = "IMMINENTE"; labelText = "FERMETURE"; }
-            else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; statusText = "PRÉVENTION"; labelText = "FERMETURE"; }
+            else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; statusText = "PROCHAINE"; labelText = "FERMETURE"; }
             
             document.getElementById('status-text').innerText = statusText;
             document.querySelector('.status-label').innerText = labelText;
