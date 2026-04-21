@@ -207,16 +207,32 @@
                     const percent = ((now - sO) / (sC - sO)) * 100;
                     const h = Math.floor(diffMs / 3600000);
                     const m = Math.floor((diffMs % 3600000) / 60000);
+                    
                     document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + " avant fermeture";
                     pb.style.width = percent + "%";
                     pbContainer.className = "progress-container";
+                    
                     let circleClass = "open";
-                    if (diffMs < 25 * 60 * 1000) { pbContainer.classList.add("danger"); circleClass = "danger"; }
-                    else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; }
-                    document.getElementById('status-text').innerText = "OUVERTE";
+                    let statusMainText = "OUVERTE";
+                    let statusLabelText = "PORTE";
+                    
+                    // --- LOGIQUE D'ALERTE TEXTUELLE ---
+                    if (diffMs < 25 * 60 * 1000) { 
+                        pbContainer.classList.add("danger"); 
+                        circleClass = "danger";
+                        statusMainText = "IMMINENTE";
+                        statusLabelText = "FERMETURE";
+                    } else if (percent > 85) { 
+                        pbContainer.classList.add("warning"); 
+                        circleClass = "warning";
+                        statusMainText = "PRÉVENTION";
+                        statusLabelText = "FERMETURE";
+                    }
+                    
+                    document.getElementById('status-text').innerText = statusMainText;
+                    document.querySelector('.status-label').innerText = statusLabelText;
                     document.getElementById('status-box').className = "status-box " + circleClass;
                     
-                    // Marée : Point haut vers point bas
                     drawTideGraph(percent); 
                     found = true; break;
                 } else if (now < sO) {
@@ -228,17 +244,26 @@
                     let percent = (elapsedMs / totalClosedMs) * 100;
                     const h = Math.floor(diffMs / 3600000);
                     const m = Math.floor((diffMs % 3600000) / 60000);
+                    
                     document.getElementById('time-left').innerText = "Ouverture dans " + h + "h" + (m < 10 ? "0" : "") + m;
                     pb.style.width = percent + "%";
                     pbContainer.className = "progress-container waiting";
+                    
                     document.getElementById('status-text').innerText = "FERMÉE";
+                    document.querySelector('.status-label').innerText = "PORTE";
                     document.getElementById('status-box').className = "status-box closed";
                     
-                    // Marée : Point actuel sur la descente
                     drawTideGraph(percent); 
                     found = true; break;
                 }
             }
+            // ... reste du code (maj PM/BM)
+            document.getElementById('open-time').innerText = currentItem.open;
+            document.getElementById('close-time').innerText = currentItem.close;
+            document.getElementById('coeff-display').innerText = currentItem.coeff;
+            document.getElementById('pm-display').innerText = currentItem.pm + " (" + currentItem.pm_h + "m)";
+            document.getElementById('bm-display').innerText = currentItem.bm + " (" + currentItem.bm_h + "m)";
+        }
             
             // Mise à jour des datas Marée (Dernière PM et Prochaine BM)
             document.getElementById('open-time').innerText = currentItem.open;
