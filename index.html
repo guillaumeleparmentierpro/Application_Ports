@@ -9,117 +9,95 @@
         :root {
             --primary-bg: #f8fafc;
             --card-bg: #ffffff;
-            --open-color: #10b981;
+            --open-light: #10b981;
+            --open-dark: #065f46; /* Vert plus foncé pour le cercle ext et la barre */
             --closed-color: #ef4444;
             --text-main: #1e293b;
         }
 
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            background: var(--primary-bg); 
-            margin: 0; padding: 20px; 
-            display: flex; justify-content: center;
-        }
+        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 20px; display: flex; justify-content: center; }
 
         .card { 
-            background: var(--card-bg); 
-            border-radius: 24px; 
-            padding: 24px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
-            max-width: 400px; width: 100%;
-            text-align: center;
+            background: var(--card-bg); border-radius: 24px; padding: 24px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 400px; width: 100%;
+            text-align: center; position: relative;
         }
 
-        h2 { color: var(--text-main); font-size: 1.5rem; margin-bottom: 5px; }
-        
-        .date-badge {
-            display: inline-block;
-            background: #e2e8f0;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: #64748b;
-            margin-bottom: 20px;
+        /* Bouton Menu en haut à droite */
+        .menu-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: #e2e8f0; border: none; border-radius: 8px;
+            padding: 8px; cursor: pointer; color: var(--text-main);
         }
 
-        /* Tirant d'eau stylisé */
-        .draft-container {
-            background: #f1f5f9;
-            padding: 15px;
-            border-radius: 16px;
-            margin-bottom: 25px;
-        }
-        input[type="number"] {
-            border: 2px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 5px;
-            width: 60px;
-            text-align: center;
-            font-weight: bold;
-            outline: none;
-        }
+        h2 { color: var(--text-main); font-size: 1.4rem; margin: 10px 0 5px 0; }
+        .date-badge { display: inline-block; background: #f1f5f9; padding: 5px 15px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; color: #64748b; }
 
-        /* L'indicateur animé */
+        /* Tirant d'eau */
+        .draft-container { background: #f8fafc; padding: 12px; border-radius: 16px; margin: 20px 0; border: 1px solid #f1f5f9; }
+        input[type="number"] { border: 2px solid #cbd5e1; border-radius: 8px; padding: 5px; width: 50px; text-align: center; font-weight: bold; }
+
+        /* L'indicateur avec double cercle */
         .status-box {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
+            width: 180px; height: 180px; border-radius: 50%; margin: 0 auto 20px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; transition: all 0.5s ease;
+            box-sizing: border-box;
         }
 
-        .status-box.open { background: var(--open-color); box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); animation: pulse 2s infinite; }
-        .status-box.closed { background: var(--closed-color); box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
+        /* Le cercle extérieur épais de 2mm (~8px) */
+        .status-box.open { 
+            background: var(--open-light); 
+            border: 8px solid var(--open-dark); 
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.3);
+            animation: pulse 2s infinite;
         }
+        .status-box.closed { background: var(--closed-color); border: 8px solid #991b1b; }
 
-        .status-label { font-size: 0.8rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
-        .status-value { font-size: 1.8rem; font-weight: 700; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
 
-        /* Barre de progression temporelle */
+        .status-label { font-size: 0.7rem; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
+        .status-value { font-size: 1.7rem; font-weight: 700; }
+
+        /* Barre de progression avec texte intégré */
+        .progress-wrapper { margin: 20px 0; display: none; }
         .progress-container {
-            width: 100%;
-            background: #e2e8f0;
-            height: 8px;
-            border-radius: 4px;
-            margin: 20px 0;
-            overflow: hidden;
-            display: none; /* affiché seulement si ouvert */
+            width: 100%; background: #e2e8f0; height: 24px; border-radius: 12px;
+            overflow: hidden; position: relative;
         }
-        .progress-bar { height: 100%; background: var(--open-color); width: 0%; transition: width 1s linear; }
+        .progress-bar { 
+            height: 100%; background: var(--open-dark); width: 0%; 
+            transition: width 1s linear; display: flex; align-items: center; justify-content: center;
+        }
+        .progress-text {
+            position: absolute; width: 100%; text-align: center;
+            font-size: 0.75rem; font-weight: bold; color: white; pointer-events: none;
+        }
 
-        .info-text { font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; }
-        .sub-text { font-size: 0.9rem; color: #64748b; }
+        .info-text { font-weight: bold; font-size: 1.1rem; color: var(--text-main); }
+
+        /* Espace Publicitaire */
+        .ad-space {
+            margin-top: 25px; padding: 15px; border: 2px dashed #cbd5e1;
+            border-radius: 16px; background: #fdfdfd; color: #64748b;
+            font-size: 0.85rem; font-weight: 600;
+        }
 
         .disclaimer { 
-            font-size: 0.7rem; 
-            color: #94a3b8; 
-            margin-top: 30px; 
-            padding-top: 20px; 
-            border-top: 1px solid #f1f5f9;
-            line-height: 1.5;
+            font-size: 0.65rem; color: #94a3b8; margin-top: 25px; padding-top: 15px; 
+            border-top: 1px solid #f1f5f9; line-height: 1.4; text-align: justify;
         }
     </style>
 </head>
 <body>
 
     <div class="card">
+        <button class="menu-btn">☰</button>
         <div class="date-badge" id="current-date">-- --</div>
-        <h2>Port de Carteret</h2>
+        <h2>Porte de Carteret</h2>
         
         <div class="draft-container">
-            <span style="font-size: 0.9rem; font-weight: 600;">Mon tirant d'eau : </span>
+            <span style="font-size: 0.85rem;">Mon tirant d'eau : </span>
             <input type="number" id="draft" value="0" min="0" step="0.1" onchange="updateApp()"> 
             <span style="font-weight: bold;">m</span>
         </div>
@@ -129,15 +107,23 @@
             <span class="status-value" id="status-text">--</span>
         </div>
 
-        <div class="progress-container" id="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
+        <div class="progress-wrapper" id="progress-wrapper">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-text" id="time-left">--</div>
+            </div>
         </div>
 
-        <div class="info-text" id="next-event">Calcul en cours...</div>
-        <div class="sub-text" id="details">Veuillez patienter</div>
+        <div class="info-text" id="next-event">Calcul...</div>
+        <div id="details" style="font-size: 0.85rem; color: #64748b; margin-top: 5px;"></div>
+
+        <div class="ad-space">
+            📢 PUBLICITÉ<br>
+            <span style="font-size: 0.75rem; font-weight: 400;">Votre commerce local ici</span>
+        </div>
 
         <div class="disclaimer">
-            <strong>ATTENTION :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). L'éditeur décline toute responsabilité. Le capitaine reste seul responsable de sa navigation.
+            <strong>ATTENTION :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
     </div>
 
@@ -156,8 +142,7 @@
             const draftMs = draft * 60 * 60 * 1000; 
 
             let found = false;
-            const box = document.getElementById('status-box');
-            const progressContainer = document.getElementById('progress-container');
+            const wrapper = document.getElementById('progress-wrapper');
 
             for (let item of data) {
                 const o = new Date(item.date + "T" + item.open);
@@ -166,37 +151,41 @@
                 const sC = new Date(c.getTime() - draftMs);
 
                 if (now >= sO && now <= sC) {
-                    // OUVERT
-                    updateUI("OUVERT", "open", "Fermeture à " + item.close, "Créneau officiel : " + item.open + " - " + item.close);
+                    updateUI("OUVERT", "open", "Fermeture prévue à " + item.close);
                     
-                    // Calcul de la barre de progression
-                    progressContainer.style.display = "block";
+                    // Calcul temps restant
+                    wrapper.style.display = "block";
+                    const diffMs = sC - now;
+                    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+                    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                    
+                    document.getElementById('time-left').innerText = hours + "h" + (minutes < 10 ? "0" : "") + minutes + " avant fermeture";
+                    
                     const total = sC - sO;
-                    const elapsed = now - sO;
-                    const percent = (elapsed / total) * 100;
+                    const percent = ((now - sO) / total) * 100;
                     document.getElementById('progress-bar').style.width = percent + "%";
                     
+                    document.getElementById('details').innerText = "Créneau officiel : " + item.open + " - " + item.close;
                     found = true; break;
                 } else if (now < sO) {
-                    // FERMÉ (En attente du prochain)
-                    updateUI("FERMÉ", "closed", "Ouverture prévue à " + sO.toLocaleTimeString([], {hour: '2h-digit', minute:'2h-digit'}), "Tirant d'eau pris en compte ("+draft+"m)");
-                    progressContainer.style.display = "none";
+                    updateUI("FERMÉ", "closed", "Ouverture à " + sO.toLocaleTimeString([], {hour: '2h-digit', minute:'2h-digit'}));
+                    wrapper.style.display = "none";
+                    document.getElementById('details').innerText = "Calculé pour " + draft + "m de tirant d'eau";
                     found = true; break;
                 }
             }
 
             if (!found) {
-                updateUI("INDISP.", "closed", "Plus de créneau aujourd'hui", "Revenez demain pour les nouveaux horaires");
-                progressContainer.style.display = "none";
+                updateUI("INDISP.", "closed", "Plus de créneau ce jour");
+                wrapper.style.display = "none";
             }
         }
 
-        function updateUI(status, className, next, details) {
+        function updateUI(status, className, next) {
             const box = document.getElementById('status-box');
             document.getElementById('status-text').innerText = status;
             box.className = "status-box " + className;
             document.getElementById('next-event').innerText = next;
-            document.getElementById('details').innerText = details;
         }
 
         setInterval(updateApp, 1000);
