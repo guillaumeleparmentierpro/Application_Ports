@@ -311,7 +311,28 @@
             setInterval(updateApp, 1000); // Mise à jour toutes les secondes
         }
     };
+function updateSponsor() {
+        const hour = new Date().getHours();
+        const sponsorText = document.getElementById('sponsor-text');
+        if (!sponsorText) return;
 
+        // De 6h à 11h59 : Le Matin
+        if (hour >= 6 && hour < 12) {
+            sponsorText.innerHTML = "🥐 La Boulangerie du Port vous souhaite une belle matinée !";
+        } 
+        // De 12h à 17h59 : Le Midi / Après-midi
+        else if (hour >= 12 && hour < 18) {
+            sponsorText.innerHTML = "🍽️ Menu du jour au Cap ! Déjeunez face à la mer.";
+        } 
+        // De 18h à 22h59 : Le Soir
+        else if (hour >= 18 && hour < 23) {
+            sponsorText.innerHTML = "🥂 L'heure de l'apéro au Comptoir de la Presqu'île !";
+        } 
+        // La Nuit
+        else {
+            sponsorText.innerHTML = "⚓ Naviguez en toute sécurité avec la Banque Maritime.";
+        }
+    }
     function drawTideGraph(percent, isDescending) {
         const canvas = document.getElementById('tideCanvasLarge');
         if(!canvas) return;
