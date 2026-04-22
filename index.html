@@ -374,9 +374,7 @@
         }
     };
 
-<script src="lang.js"></script>
-
-        function setLanguage(lang) {
+function setLanguage(lang) {
             // Met à jour les boutons visuellement
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`btn-${lang}`);
