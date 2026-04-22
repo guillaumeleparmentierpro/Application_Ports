@@ -363,7 +363,7 @@ function updateSponsor() {
         const localISOTime = (new Date(now - tzoffset)).toISOString().slice(0, -1);
         const dateStr = localISOTime.split('T')[0];
         
-        document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
+document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
         updateSponsor();
         if (typeof data === 'undefined' || data.length === 0) return;
 
