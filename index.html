@@ -16,7 +16,41 @@
     <title>Port de Barneville-Carteret Live</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
+    
     <style>
+        /* --- BANNIÈRE SPONSOR TOP --- */
+.top-sponsor-banner {
+    background: #e0e7ff; /* Bleu marine très clair */
+    color: var(--marine-blue);
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px; /* Espace avant la navigation */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #c7d2fe;
+}
+
+.sponsor-label {
+    background: var(--marine-blue);
+    color: white;
+    font-size: 0.55rem;
+    padding: 3px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.sponsor-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1.2;
+    flex-grow: 1;
+    text-align: right;
+}
 :root {
     color-scheme: light; /* Force le navigateur à ignorer le mode sombre */
     --primary-bg: #f1f5f9;
@@ -170,6 +204,11 @@
 </head>
 <body>
 <div class="app-container">
+
+    <div class="top-sponsor-banner" id="sponsor-banner">
+        <span class="sponsor-label">Sponsor</span>
+        <span class="sponsor-text" id="sponsor-text">La Boulangerie du Port vous souhaite une belle journée ! 🥐</span>
+    </div>
 
     <div class="top-nav">
         <div class="date-badge" id="current-date">-- --</div>
