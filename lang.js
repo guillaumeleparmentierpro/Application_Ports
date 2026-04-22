@@ -5,7 +5,7 @@ const translations = {
         status_closed: "FERMÉE",
         next_open: "PROCHAINE OUVERTURE",
         next_close: "PROCHAINE FERMETURE",
-        btn_planning: "HORAIRES & MARÉES",
+        btn_planning: "PORTES & MARÉES",
         btn_security: "🆘 SÉCURITÉ ET RAPPEL",
         low_tide: "BASSE MER",
         high_tide: "PLEINE MER"
