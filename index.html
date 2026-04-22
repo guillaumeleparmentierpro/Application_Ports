@@ -117,13 +117,6 @@
     border-right: 1px solid #e2e8f0;
 }
         
-  
-.main-title sup { 
-    color: #b03a2e; 
-    font-size: 0.8rem; 
-    vertical-align: super; 
-}
-
 .top-nav {
     display: flex;
     justify-content: space-between;
@@ -156,16 +149,25 @@
     margin-bottom: 15px;
 }
 
+/* --- LE TITRE UNIVERSEL --- */
 .main-title {
-    font-size: 1.25rem; /* Ajusté pour tenir sur une ligne */
-    font-weight: 900;
+    font-size: 1.05rem; /* La taille magique pour tenir sur 1 ligne */
+    font-weight: 700; /* Même épaisseur sur toutes les pages */
     color: var(--marine-blue);
     text-align: center;
     margin: 5px 0 8px 0;
     text-transform: uppercase;
     letter-spacing: -0.5px;
     line-height: 1.1;
-    white-space: nowrap; /* Empêche le passage à la ligne */
+    white-space: nowrap; /* Force à rester sur une seule ligne */
+    width: 100%;
+    display: block; /* S'assure qu'il va bien en dessous des boutons */
+}
+
+.main-title sup { 
+    color: #b03a2e; 
+    font-size: 0.75rem; 
+    vertical-align: super; 
 }
 
 .btn-action { 
