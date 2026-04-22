@@ -9,7 +9,8 @@ const translations = {
         btn_security: "🆘 SÉCURITÉ ET RAPPEL",
         low_tide: "BASSE MER",
         high_tide: "PLEINE MER",
-        btn_share: "PARTAGER"
+        btn_share: "PARTAGER",
+        btn_partners: "PARTENAIRES"
     },
     en: {
         label_gate: "GATE",
@@ -21,6 +22,7 @@ const translations = {
         btn_security: "🆘 SAFETY & RULES",
         low_tide: "LOW TIDE",
         high_tide: "HIGH TIDE",
-        btn_share: "SHARE"
+        btn_share: "SHARE",
+        btn_partners: "PARTNERS"
     }
 };
