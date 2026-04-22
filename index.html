@@ -18,6 +18,21 @@
     <script src="donnees.js"></script>
     
     <style>
+
+        /* Le bloc qui reste figé */
+.sticky-header {
+    position: -webkit-sticky; /* Pour les anciens navigateurs mobiles */
+    position: sticky;
+    top: 0;
+    background: var(--primary-bg);
+    z-index: 1000;
+    padding: 10px 15px 5px 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Ombre pour bien voir la séparation */
+    margin-left: -15px; /* Compense le padding du conteneur si besoin */
+    margin-right: -15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
         /* --- BANNIÈRE SPONSOR TOP --- */
 .top-sponsor-banner {
     background: #e0e7ff; /* Bleu marine très clair */
@@ -97,13 +112,13 @@
         
 /* --- TITRE IMPOSANT ET COMPACT --- */
 .main-title {
-    font-size: 1.6rem; /* Plus grand */
-    font-weight: 900; /* Très épais */
+    font-size: 1.35rem; /* Un peu plus petit pour faire rentrer "Port de" */
+    font-weight: 900;
     color: var(--marine-blue);
     text-align: center;
-    margin: 5px 0 8px 0; /* Marges réduites au minimum */
+    margin: 5px 0 8px 0;
     text-transform: uppercase;
-    letter-spacing: -0.8px; /* On resserre pour le côté compact */
+    letter-spacing: -0.5px;
     line-height: 1;
 }
         
@@ -215,7 +230,7 @@
 <body>
 <div class="app-container">
 
-    <div class="sticky-header">
+<div class="sticky-header">
         
         <div class="top-sponsor-banner" id="sponsor-banner">
             <span class="sponsor-label">Sponsor</span>
@@ -236,7 +251,7 @@
             </div>
         </div>
 
-        <h1 class="main-title">Port Barneville-Carteret<sup>*</sup></h1>
+        <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
     </div>
         
         <div class="module">
