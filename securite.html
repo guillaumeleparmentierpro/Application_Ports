@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sécurité - Port de Barneville-Carteret</title>
     
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5LY18V5457');
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -12,12 +20,13 @@
             --primary-bg: #f8fafc;
             --card-bg: #ffffff;
             --marine-blue: #1e3a8a;
+            --danger-red: #b03a2e;
             --text-main: #1e293b;
             --border-color: #e2e8f0;
         }
 
         body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 0; color: var(--text-main); }
-        .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; }
+        .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; padding-bottom: 30px; }
 
         .sticky-header { position: sticky; top: 0; background: var(--primary-bg); z-index: 1000; padding: 10px 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .top-nav { display: flex; justify-content: flex-start; }
@@ -25,11 +34,19 @@
         
         .main-title { font-size: 1.1rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 15px 0; text-transform: uppercase; }
 
+        /* MODULES */
         .module { background: var(--card-bg); border-radius: 12px; padding: 15px; margin: 0 15px 15px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); }
         .rule-title { font-weight: 800; font-size: 0.85rem; color: var(--marine-blue); text-transform: uppercase; margin-bottom: 5px; display: block; }
         .rule-text { font-size: 0.8rem; line-height: 1.4; color: #475569; margin: 0; }
         
-        .emergency-num { font-size: 1.4rem; font-weight: 900; color: #b03a2e; text-align: center; display: block; margin: 10px 0; text-decoration: none; }
+        /* URGENCE */
+        .emergency-num { font-size: 1.4rem; font-weight: 900; color: var(--danger-red); text-align: center; display: block; margin: 5px 0; text-decoration: none; }
+        .phone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .phone-item { background: #f1f5f9; padding: 8px; border-radius: 8px; text-align: center; }
+        .phone-label { font-size: 0.55rem; font-weight: 700; color: #64748b; text-transform: uppercase; display: block; margin-bottom: 2px; }
+        .phone-val { font-size: 0.75rem; font-weight: 800; color: var(--marine-blue); text-decoration: none; }
+        
+        .highlight { color: var(--danger-red); font-weight: 700; }
     </style>
 </head>
 <body>
@@ -42,26 +59,63 @@
             <h1 class="main-title">Sécurité & Rappels</h1>
         </div>
 
-        <div class="module" style="border-top-color: #b03a2e; background: #fff5f5;">
-            <span class="rule-title" style="color: #b03a2e; text-align: center;">Urgence en mer</span>
+        <div class="module" style="border-top-color: var(--danger-red);">
+            <span class="rule-title" style="color: var(--danger-red); text-align: center;">Secours en mer (CROSS)</span>
             <a href="tel:196" class="emergency-num">196</a>
-            <p class="rule-text" style="text-align: center; font-weight: 600;">CROSS (ou VHF Canal 16)</p>
+            <p class="rule-text" style="text-align: center; font-weight: 700; margin-bottom: 10px;">VHF CANAL 16</p>
+            <div style="text-align: center; border-top: 1px solid #fee2e2; padding-top: 10px;">
+                <span class="phone-label">Ligne directe CROSS Manche</span>
+                <a href="tel:0233522938" class="phone-val">02 33 52 29 38</a>
+            </div>
         </div>
 
         <div class="module">
-            <span class="rule-title">Vitesse & Navigation</span>
-            <p class="rule-text">Respectez la vitesse dans le chenal et veillez à ne pas créer de remous excessifs pour les autres bateaux.</p>
+            <span class="rule-title">Autres Services</span>
+            <div class="phone-grid">
+                <div class="phone-item">
+                    <span class="phone-label">SNSM Carteret</span>
+                    <span class="phone-val">Dispo 24/24</span>
+                </div>
+                <div class="phone-item">
+                    <span class="phone-label">Sémaphore</span>
+                    <a href="tel:0233538508" class="phone-val">02 33 53 85 08</a>
+                </div>
+                <div class="phone-item">
+                    <span class="phone-label">Pompiers</span>
+                    <a href="tel:18" class="phone-val">18</a>
+                </div>
+                <div class="phone-item">
+                    <span class="phone-label">SAMU</span>
+                    <a href="tel:15" class="phone-val">15</a>
+                </div>
+            </div>
         </div>
 
         <div class="module">
-            <span class="rule-title">Équipement de sécurité</span>
-            <p class="rule-text">Vérifiez vos brassières, la validité de vos feux et votre niveau de carburant avant chaque départ.</p>
+            <span class="rule-title">Limitation de vitesse</span>
+            <p class="rule-text">
+                • <span class="highlight">3 nœuds</span> dans la zone du bassin à flot.<br>
+                • <span class="highlight">5 nœuds</span> dans la partie marnante.
+            </p>
         </div>
 
         <div class="module">
-            <span class="rule-title">Météo & Marées</span>
-            <p class="rule-text">Consultez systématiquement la météo locale avant de sortir. En cas de doute, restez au port.</p>
+            <span class="rule-title">⚠️ Courant à la porte</span>
+            <p class="rule-text">
+                À l’ouverture de la porte, un <span class="highlight">fort courant</span> peut se produire pendant 15 à 30 min (selon les coefficients). Soyez vigilant lors du passage !
+            </p>
         </div>
+
+        <div class="module">
+            <span class="rule-title">Précisions horaires</span>
+            <p class="rule-text" style="margin-bottom: 8px;">
+                Les heures sont exprimées en <span style="font-weight:700;">heure légale française</span>.
+            </p>
+            <p class="rule-text" style="font-size: 0.7rem; font-style: italic; color: #64748b;">
+                Des fluctuations de <span class="highlight">+/- 30 min</span> peuvent survenir (pression, vent, coefficients). Ces données sont indicatives et n'engagent pas la responsabilité du Port.
+            </p>
+        </div>
+
     </div>
 
 </body>
