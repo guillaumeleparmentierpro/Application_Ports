@@ -46,16 +46,16 @@
         }
 
         /* --- EN-TÊTE UNIVERSELLE --- */
-        .sticky-header {
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            background: var(--primary-bg);
-            z-index: 1000;
-            padding: 10px 15px 5px 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            margin-bottom: 15px;
-        }
+.sticky-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background: var(--primary-bg);
+    z-index: 1000;
+    padding: 10px 15px 5px 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 15px;
+}
 
         .top-nav {
             display: flex;
@@ -78,7 +78,7 @@
         }
 
 .main-title {
-    font-size: 1.35rem; 
+    font-size: 1.25rem; /* Ajusté pour tenir sur une ligne */
     font-weight: 900;
     color: var(--marine-blue);
     text-align: center;
@@ -86,8 +86,13 @@
     text-transform: uppercase;
     letter-spacing: -0.5px;
     line-height: 1.1;
+    white-space: nowrap; /* Empêche le passage à la ligne */
 }
-        .main-title sup { color: #b03a2e; font-size: 0.8rem; vertical-align: super; }
+.main-title sup { 
+    color: #b03a2e; 
+    font-size: 0.8rem; 
+    vertical-align: super; 
+}
 
         /* --- LE MODULE (Casquette bleue) --- */
         .module {
