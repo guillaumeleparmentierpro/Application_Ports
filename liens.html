@@ -2,8 +2,9 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Liens Utiles - Port de Barneville-Carteret</title>
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -11,7 +12,8 @@
       gtag('js', new Date());
       gtag('config', 'G-5LY18V5457');
     </script>
-    <title>Liens Utiles - Port de Barneville-Carteret</title>
+
+    <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -23,167 +25,125 @@
             --border-color: #e2e8f0;
         }
 
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            background: var(--primary-bg); 
-            margin: 0; padding: 0; 
-            color: var(--text-main);
-            min-height: 100vh;
-        }
+        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 0; color: var(--text-main); }
+        .app-container { width: 100%; max-width: 450px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
 
-        .app-container {
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-            padding-bottom: 30px;
-        }
+        .sticky-header { position: sticky; top: 0; background: var(--primary-bg); z-index: 1000; padding: 10px 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .top-nav { display: flex; justify-content: flex-start; }
+        .btn-action { text-decoration: none; background: var(--marine-blue); color: white !important; border-radius: 8px; padding: 6px 12px; font-weight: 700; font-size: 0.7rem; }
+        .main-title { font-size: 1.1rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 15px 0; text-transform: uppercase; }
 
-        /* --- EN-TÊTE UNIVERSELLE --- */
-        .sticky-header {
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            background: var(--primary-bg);
-            z-index: 1000;
-            padding: 10px 15px 5px 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            margin-bottom: 15px;
-        }
-
-        .top-nav { display: flex; margin-bottom: 5px; }
-
-        .btn-action { 
-            text-decoration: none; 
-            background: var(--marine-blue);
-            color: #ffffff !important;
-            border: none; border-radius: 8px; 
-            padding: 6px 10px;
-            font-weight: 700; font-size: 0.6rem; 
-            display: inline-flex; align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .main-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--marine-blue);
-            text-align: center;
-            margin: 5px 0 15px 0;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-            line-height: 1.1;
-            white-space: nowrap;
-            width: 100%;
-            display: block;
-        }
-        .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
-
-        /* --- MODULE LIEN (MODÈLE) --- */
-        .module {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 0 15px 15px 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--marine-blue);
-            border-bottom: 1px solid #e2e8f0;
-            border-left: 1px solid #e2e8f0;
-            border-right: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .link-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--marine-blue);
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .link-desc {
-            font-size: 0.75rem;
-            color: #64748b;
-            line-height: 1.4;
-            margin: 0;
-        }
-
-        .btn-link-go {
-            text-decoration: none;
-            background: #f8fafc;
-            color: var(--marine-blue);
-            border: 1px solid var(--border-color);
-            padding: 8px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-align: center;
-            margin-top: 5px;
-        }
-
-        .btn-link-go:active { background: #e2e8f0; }
-
-        .disclaimer {
-            font-size: 0.65rem; color: #64748b; text-align: center; padding: 0 15px; margin-top: 10px;
-        }
+        .module { background: var(--card-bg); border-radius: 12px; padding: 5px; margin: 0 15px 15px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); }
+        .link-item { display: flex; align-items: center; padding: 12px 10px; text-decoration: none; color: var(--text-main); border-bottom: 1px solid var(--border-color); }
+        .link-item:last-child { border-bottom: none; }
+        .link-icon { font-size: 1.2rem; margin-right: 12px; min-width: 25px; text-align: center; }
+        .link-details { display: flex; flex-direction: column; }
+        .link-name { font-weight: 700; font-size: 0.85rem; color: var(--marine-blue); }
+        .link-url { font-size: 0.7rem; color: #64748b; margin-top: 2px; }
     </style>
 </head>
 <body>
 
     <div class="app-container">
-
         <div class="sticky-header">
             <div class="top-nav">
-                <a href="index.html" class="btn-action">◀ RETOUR</a>
+                <a href="index.html" class="btn-action" data-i18n="btn_back">← RETOUR</a>
             </div>
-            <h1 class="main-title">PORT BARNEVILLE-CARTERET<sup>*</sup></h1>
-        </div>
-
-        <div style="padding: 5px 15px 15px 15px; text-align: center;">
-            <p style="font-size: 0.85rem; font-weight: 700; color: var(--marine-blue);">RESOURCES & LIENS UTILES</p>
+            <h1 class="main-title" data-i18n="links_title">LIENS UTILES</h1>
         </div>
 
         <div class="module">
-            <h2 class="link-title">📏 SHOM</h2>
-            <p class="link-desc">Référence officielle pour les prédictions de marées et la cartographie marine.</p>
-            <a href="https://maree.shom.fr/" target="_blank" class="btn-link-go">ACCÉDER AU SHOM</a>
+            <a href="https://www.vigicrues.gouv.fr" class="link-item" target="_blank">
+                <span class="link-icon">🌊</span>
+                <div class="link-details">
+                    <span class="link-name" data-i18n="links_vigicrues">Vigicrues</span>
+                    <span class="link-url">vigicrues.gouv.fr</span>
+                </div>
+            </a>
+
+            <a href="https://meteofrance.com/meteo-marine" class="link-item" target="_blank">
+                <span class="link-icon">☀️</span>
+                <div class="link-details">
+                    <span class="link-name" data-i18n="links_meteo_marine">Météo France - Marine</span>
+                    <span class="link-url">meteofrance.com</span>
+                </div>
+            </a>
+
+            <a href="https://maree.shom.fr" class="link-item" target="_blank">
+                <span class="link-icon">📅</span>
+                <div class="link-details">
+                    <span class="link-name" data-i18n="links_shom">Horaires de Marées - SHOM</span>
+                    <span class="link-url">maree.shom.fr</span>
+                </div>
+            </a>
         </div>
 
         <div class="module">
-            <h2 class="link-title">📱 Nav&Co</h2>
-            <p class="link-desc">L'application officielle pour naviguer en sécurité tout en découvrant la biodiversité marine.</p>
-            <a href="https://www.life-marha.fr/application_Nav%26Co" target="_blank" class="btn-link-go">DÉCOUVRIR NAV&CO</a>
+            <a href="https://www.prefecture-maritime.manche.gouv.fr" class="link-item" target="_blank">
+                <span class="link-icon">⚓</span>
+                <div class="link-details">
+                    <span class="link-name" data-i18n="links_prefecture">Préfecture Maritime</span>
+                    <span class="link-url">prefecture-maritime.manche.gouv.fr</span>
+                </div>
+            </a>
+
+            <a href="https://www.snsm.org/conseils/conseils-en-mer" class="link-item" target="_blank">
+                <span class="link-icon">🛡️</span>
+                <div class="link-details">
+                    <span class="link-name" data-i18n="links_snsm">Conseils aux plaisanciers</span>
+                    <span class="link-url">snsm.org</span>
+                </div>
+            </a>
         </div>
 
         <div class="module">
-            <h2 class="link-title">⚠️ Sécurité en mer</h2>
-            <p class="link-desc">Rappel officiel des règles de sécurité pour les loisirs nautiques (mer.gouv.fr).</p>
-            <a href="https://www.mer.gouv.fr/regles-de-securite-pour-les-loisirs-nautiques-en-mer" target="_blank" class="btn-link-go">LIRE LES RÈGLES</a>
-        </div>
+            <a href="https://marine.meteoconsult.fr/meteo-marine/bulletin-detaille/port-95/previsions-meteo-carteret-aujourd-hui" class="link-item" target="_blank">
+                <span class="link-icon">📡</span>
+                <div class="link-details">
+                    <span class="link-name" data-i18n="links_meteoconsult">Météoconsult - Carteret</span>
+                    <span class="link-url">meteoconsult.fr</span>
+                </div>
+            </a>
 
-        <div class="module">
-            <h2 class="link-title">🧡 SNSM Carteret</h2>
-            <p class="link-desc">Soutenez les sauveteurs en mer de la station locale et informez-vous sur le sauvetage.</p>
-            <a href="https://etablissement.snsm.org/normandie/manche/barneville-carteret/station-snsm-de-barneville-carteret-50" target="_blank" class="btn-link-go">STATION SNSM</a>
-        </div>
+            <a href="https://www.windguru.cz/48506" class="link-item" target="_blank">
+                <span class="link-icon">💨</span>
+                <div class="link-details">
+                    <span class="link-name" data-i18n="links_windguru">Windguru - Carteret</span>
+                    <span class="link-url">windguru.cz</span>
+                </div>
+            </a>
 
-        <div class="module">
-            <h2 class="link-title">☁️ Météo - Prévisions Barneville Carteret</h2>
-            <p class="link-desc">Bulletins côtiers détaillés.</p>
-            <a href="https://wisuki.com/forecast/1170/barneville" target="_blank" class="btn-link-go">CONSULTER LA MÉTÉO</a>
-        </div>
+            <a href="https://www.windy.com/49.373/-1.791?48.915,-1.791,8" class="link-item" target="_blank">
+                <span class="link-icon">🌀</span>
+                <div class="link-details">
+                    <span class="link-name" data-i18n="links_windy">WINDY - Carteret</span>
+                    <span class="link-url">windy.com</span>
+                </div>
+            </a>
 
-        <div class="disclaimer">
-            <strong style="color:#b03a2e;">* Attention :</strong> Ces liens sont externes. L'éditeur n'est pas responsable de leur contenu.
+            <a href="https://www.data-shom.fr" class="link-item" target="_blank">
+                <span class="link-icon">📊</span>
+                <div class="link-details">
+                    <span class="link-name" data-i18n="links_shom_realtime">Données en temps réel (Vent, marée)</span>
+                    <span class="link-url">data-shom.fr</span>
+                </div>
+            </a>
         </div>
-
     </div>
 
+    <script src="lang.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language.substring(0, 2);
+            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[savedLang] && translations[savedLang][key]) {
+                    el.innerHTML = translations[savedLang][key]; 
+                }
+            });
+        });
+    </script>
 </body>
 </html>
