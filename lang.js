@@ -1,5 +1,9 @@
 const translations = {
     fr: {
+        // --- COMMUN ---
+        btn_back: "← RETOUR",
+        btn_back_arrow: "◀ RETOUR",
+
         // --- PAGE ACCUEIL ---
         label_gate: "PORTE",
         status_open: "OUVERTE",
@@ -21,7 +25,6 @@ const translations = {
         tomorrow: "Demain",
 
         // --- PAGE SÉCURITÉ ---
-        btn_back: "← RETOUR",
         secu_title: "Sécurité & Rappels",
         secu_cross_title: "Secours en mer (CROSS)",
         secu_vhf: "VHF CANAL 16",
@@ -39,7 +42,6 @@ const translations = {
         secu_precision_text2: "Des fluctuations de <span class=\"highlight\">+/- 30 min</span> peuvent survenir (pression, vent, coefficients). Ces données sont indicatives et n'engagent pas la responsabilité du Port.",
 
         // --- PAGE LIENS ---
-        btn_back_arrow: "◀ RETOUR",
         links_subtitle: "RESOURCES & LIENS UTILES",
         links_shom_title: "📏 SHOM",
         links_shom_desc: "Référence officielle pour les prédictions de marées et la cartographie marine.",
@@ -56,9 +58,17 @@ const translations = {
         links_meteo_title: "☁️ Météo - Prévisions Barneville Carteret",
         links_meteo_desc: "Bulletins côtiers détaillés.",
         links_meteo_btn: "CONSULTER LA MÉTÉO",
-        links_disclaimer: "<strong style=\"color:#b03a2e;\">* Attention :</strong> Ces liens sont externes. L'éditeur n'est pas responsable de leur contenu."
+        links_disclaimer: "<strong style=\"color:#b03a2e;\">* Attention :</strong> Ces liens sont externes. L'éditeur n'est pas responsable de leur contenu.",
+
+        // --- PAGE PARTAGE ---
+        share_title: "Partagez l'application",
+        share_desc: "Faites scanner ce QR Code à un autre marin pour qu'il accède directement aux horaires du port."
     },
     en: {
+        // --- COMMUN ---
+        btn_back: "← BACK",
+        btn_back_arrow: "◀ BACK",
+
         // --- PAGE ACCUEIL ---
         label_gate: "GATE",
         status_open: "OPEN",
@@ -80,7 +90,6 @@ const translations = {
         tomorrow: "Tomorrow",
 
         // --- PAGE SÉCURITÉ ---
-        btn_back: "← BACK",
         secu_title: "Safety & Rules",
         secu_cross_title: "Sea Rescue (CROSS)",
         secu_vhf: "VHF CHANNEL 16",
@@ -98,7 +107,6 @@ const translations = {
         secu_precision_text2: "Fluctuations of <span class=\"highlight\">+/- 30 mins</span> may occur (pressure, wind, coefficients). This data is indicative and the Port assumes no liability.",
 
         // --- PAGE LIENS ---
-        btn_back_arrow: "◀ BACK",
         links_subtitle: "RESOURCES & USEFUL LINKS",
         links_shom_title: "📏 SHOM",
         links_shom_desc: "Official reference for tide predictions and marine cartography.",
@@ -115,6 +123,10 @@ const translations = {
         links_meteo_title: "☁️ Weather - Barneville Carteret Forecast",
         links_meteo_desc: "Detailed coastal weather reports.",
         links_meteo_btn: "CHECK WEATHER",
-        links_disclaimer: "<strong style=\"color:#b03a2e;\">* Warning:</strong> These are external links. The publisher is not responsible for their content."
+        links_disclaimer: "<strong style=\"color:#b03a2e;\">* Warning:</strong> These are external links. The publisher is not responsible for their content.",
+
+        // --- PAGE PARTAGE ---
+        share_title: "Share the application",
+        share_desc: "Have another sailor scan this QR Code to directly access the port schedules."
     }
 };
