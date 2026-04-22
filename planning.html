@@ -44,7 +44,7 @@
     }
 /* TITRE IMPOSANT ET UNIFORME */
 .main-title {
-    font-size: 1.35rem; 
+    font-size: 1.25rem; /* Ajusté pour tenir sur une ligne */
     font-weight: 900;
     color: var(--marine-blue);
     text-align: center;
@@ -52,8 +52,13 @@
     text-transform: uppercase;
     letter-spacing: -0.5px;
     line-height: 1.1;
+    white-space: nowrap; /* Empêche le passage à la ligne */
 }
-    
+.main-title sup { 
+    color: #b03a2e; 
+    font-size: 0.8rem; 
+    vertical-align: super; 
+}    
 /* BLOC FIGÉ EN HAUT (Commun aux 3 pages) */
 .sticky-header {
     position: -webkit-sticky;
@@ -63,7 +68,7 @@
     z-index: 1000;
     padding: 10px 15px 5px 15px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .btn-action { 
@@ -188,10 +193,13 @@
 <body>
 
 <div class="sticky-header">
-    <div class="top-nav" style="display: flex; align-items: center; margin-bottom: 5px;">
+    
+    <div class="top-nav" style="display: flex; align-items: center; justify-content: flex-start; margin-bottom: 5px;">
         <a href="index.html" class="btn-action">◀ RETOUR</a>
     </div>
-    <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
+    
+    <h1 class="main-title">PORT DE BARNEVILLE-CARTERET<sup>*</sup></h1>
+    
 </div>
 
     <div class="scroll-hint">👉 Glissez le tableau vers la gauche pour voir le SOIR</div>
