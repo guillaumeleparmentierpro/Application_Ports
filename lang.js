@@ -43,14 +43,14 @@ const translations = {
         // --- PAGE LIENS ---
         links_title: "LIENS UTILES",
         links_vigicrues: "Vigicrues",
-        links_meteo_france: "Météo France - Marine",
+        links_meteo_marine: "Météo France - Marine",
         links_shom: "Horaires de Marées - SHOM",
         links_prefecture: "Préfecture Maritime",
-        links_advice: "Conseils aux plaisanciers",
+        links_snsm: "Conseils aux plaisanciers",
         links_meteoconsult: "Météoconsult - Carteret",
         links_windguru: "Windguru - Carteret",
         links_windy: "WINDY - Carteret",
-        links_realtime: "Données en temps réel (Vent, marée)"
+        links_shom_realtime: "Données en temps réel (Vent, marée)"
     },
     en: {
         // --- COMMUN ---
@@ -96,13 +96,13 @@ const translations = {
         // --- PAGE LIENS ---
         links_title: "USEFUL LINKS",
         links_vigicrues: "Vigicrues (Tidal info)",
-        links_meteo_france: "Météo France - Marine",
+        links_meteo_marine: "Météo France - Marine",
         links_shom: "Tide Times - SHOM",
         links_prefecture: "Maritime Prefecture",
-        links_advice: "Safety tips for sailors",
+        links_snsm: "Safety tips for sailors",
         links_meteoconsult: "Météoconsult - Carteret",
         links_windguru: "Windguru - Carteret",
         links_windy: "WINDY - Carteret",
-        links_realtime: "Real-time data (Wind, tide)"
+        links_shom_realtime: "Real-time data (Wind, tide)"
     }
 };
