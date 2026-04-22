@@ -16,10 +16,10 @@
     
     <style>
         /* --- VARIABLES GLOBALES --- */
-:root {
-    color-scheme: light; /* Force le navigateur à ignorer le mode sombre */
-    --primary-bg: #f1f5f9;
-    --card-bg: #ffffff;
+        :root {
+            color-scheme: light;
+            --primary-bg: #f1f5f9;
+            --card-bg: #ffffff;
             --open-light: #10b981;
             --open-dark: #067a5c;
             --warning-color: #fbbf24;
@@ -53,16 +53,16 @@
         }
 
         /* --- EN-TÊTE UNIVERSELLE --- */
-.sticky-header {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    background: var(--primary-bg);
-    z-index: 1000;
-    padding: 10px 15px 5px 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    margin-bottom: 15px;
-}
+        .sticky-header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background: var(--primary-bg);
+            z-index: 1000;
+            padding: 10px 15px 5px 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
 
         .top-nav {
             display: flex;
@@ -84,33 +84,33 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-/* --- LE TITRE UNIVERSEL --- */
-.main-title {
-    font-size: 1.05rem; /* La taille magique pour tenir sur 1 ligne */
-    font-weight: 700; /* Même épaisseur sur toutes les pages */
-    color: var(--marine-blue);
-    text-align: center;
-    margin: 5px 0 8px 0;
-    text-transform: uppercase;
-    letter-spacing: -0.5px;
-    line-height: 1.1;
-    white-space: nowrap; /* Force à rester sur une seule ligne */
-    width: 100%;
-    display: block; /* S'assure qu'il va bien en dessous des boutons */
-}
+        /* --- LE TITRE UNIVERSEL --- */
+        .main-title {
+            font-size: 1.05rem; 
+            font-weight: 700; 
+            color: var(--marine-blue);
+            text-align: center;
+            margin: 5px 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            white-space: nowrap; 
+            width: 100%;
+            display: block; 
+        }
 
-.main-title sup { 
-    color: #b03a2e; 
-    font-size: 0.75rem; 
-    vertical-align: super; 
-}
+        .main-title sup { 
+            color: #b03a2e; 
+            font-size: 0.75rem; 
+            vertical-align: super; 
+        }
 
         /* --- LE MODULE (Casquette bleue) --- */
         .module {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 20px; /* Un peu plus d'espace intérieur pour ces pages */
-            margin: 0 15px 15px 15px; /* Marges pour ne pas toucher les bords de l'écran */
+            padding: 20px; 
+            margin: 0 15px 15px 15px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border-top: 4px solid var(--marine-blue);
             border-bottom: 1px solid #e2e8f0;
@@ -154,28 +154,42 @@
 
     <div class="app-container">
 
-<div class="sticky-header">
-    
-    <div class="top-nav" style="display: flex; margin-bottom: 5px;">
-        <a href="index.html" class="btn-action">◀ RETOUR</a>
-    </div>
-    
-    <h1 class="main-title">PORT BARNEVILLE-CARTERET<sup>*</sup></h1>
-    
-</div>
+        <div class="sticky-header">
+            
+            <div class="top-nav" style="display: flex; margin-bottom: 5px;">
+                <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
+            </div>
+            
+            <h1 class="main-title">PORT BARNEVILLE-CARTERET<sup>*</sup></h1>
+            
+        </div>
 
         <div class="module">
-            <h2 class="module-title">Partagez l'application</h2>
-            <p class="module-text">Faites scanner ce QR Code à un autre marin pour qu'il accède directement aux horaires du port.</p>
+            <h2 class="module-title" data-i18n="share_title">Partagez l'application</h2>
+            <p class="module-text" data-i18n="share_desc">Faites scanner ce QR Code à un autre marin pour qu'il accède directement aux horaires du port.</p>
             
             <div style="background: white; padding: 20px; border-radius: 15px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 10px auto;">
-    <img src="mon-qrcode.png" 
-         alt="QR Code Application" 
-         style="width: 250px; height: auto; display: block; border-radius: 10px;">
-</div>
+                <img src="mon-qrcode.png" 
+                     alt="QR Code Application" 
+                     style="width: 250px; height: auto; display: block; border-radius: 10px;">
+            </div>
         </div>
 
    </div>
 
+   <script src="lang.js"></script>
+   <script>
+       document.addEventListener('DOMContentLoaded', () => {
+           const browserLang = navigator.language.substring(0, 2);
+           const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+           
+           document.querySelectorAll('[data-i18n]').forEach(el => {
+               const key = el.getAttribute('data-i18n');
+               if (translations[savedLang] && translations[savedLang][key]) {
+                   el.innerHTML = translations[savedLang][key]; 
+               }
+           });
+       });
+   </script>
 </body>
 </html>
