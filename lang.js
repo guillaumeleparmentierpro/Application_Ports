@@ -1,7 +1,6 @@
 const translations = {
     fr: {
         // --- COMMUN ---
-        btn_back: "← RETOUR",
         btn_back_arrow: "◀ RETOUR",
 
         // --- PAGE ACCUEIL ---
@@ -66,7 +65,6 @@ const translations = {
     },
     en: {
         // --- COMMUN ---
-        btn_back: "← BACK",
         btn_back_arrow: "◀ BACK",
 
         // --- PAGE ACCUEIL ---
