@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Liens Utiles - Port de Barneville-Carteret</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --marine-blue: #1e3a8a;
+            --text-main: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--primary-bg); 
+            margin: 0; padding: 0; 
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            padding-bottom: 30px;
+        }
+
+        /* --- EN-TÊTE UNIVERSELLE --- */
+        .sticky-header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background: var(--primary-bg);
+            z-index: 1000;
+            padding: 10px 15px 5px 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
+
+        .top-nav { display: flex; margin-bottom: 5px; }
+
+        .btn-action { 
+            text-decoration: none; 
+            background: var(--marine-blue);
+            color: #ffffff !important;
+            border: none; border-radius: 8px; 
+            padding: 6px 10px;
+            font-weight: 700; font-size: 0.6rem; 
+            display: inline-flex; align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .main-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--marine-blue);
+            text-align: center;
+            margin: 5px 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            white-space: nowrap;
+            width: 100%;
+            display: block;
+        }
+        .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
+
+        /* --- MODULE LIEN (MODÈLE) --- */
+        .module {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 0 15px 15px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--marine-blue);
+            border-bottom: 1px solid #e2e8f0;
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .link-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--marine-blue);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .link-desc {
+            font-size: 0.75rem;
+            color: #64748b;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .btn-link-go {
+            text-decoration: none;
+            background: #f8fafc;
+            color: var(--marine-blue);
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .btn-link-go:active { background: #e2e8f0; }
+
+        .disclaimer {
+            font-size: 0.65rem; color: #64748b; text-align: center; padding: 0 15px; margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <div class="sticky-header">
+            <div class="top-nav">
+                <a href="index.html" class="btn-action">◀ RETOUR</a>
+            </div>
+            <h1 class="main-title">PORT DE BARNEVILLE-CARTERET<sup>*</sup></h1>
+        </div>
+
+        <div style="padding: 5px 15px 15px 15px; text-align: center;">
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--marine-blue);">RESOURCES & LIENS UTILES</p>
+        </div>
+
+        <div class="module">
+            <h2 class="link-title">📏 SHOM</h2>
+            <p class="link-desc">Référence officielle pour les prédict
