@@ -205,9 +205,9 @@
         
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
         
-        /* --- TEXTES DU ROND --- */
+/* --- TEXTES DU ROND --- */
         .status-label { 
-            font-size: 0.85rem; 
+            font-size: 0.8rem; /* Légèrement réduit (était à 0.85) */
             text-transform: uppercase; 
             font-weight: 700; 
             opacity: 0.9; 
@@ -215,16 +215,17 @@
         }
 
         .status-value { 
-            font-size: 1.6rem; 
+            font-size: 1.4rem; /* Réduit à 1.4 (était à 1.6) pour laisser de l'espace */
             font-weight: 900; 
-            line-height: 1.1; 
+            line-height: 1.1;
+            letter-spacing: -0.5px; /* Un très léger serrage pour gagner en élégance */
         }
 
-        /* --- CORRECTION MAGIQUE POUR PROCHAINE / IMMINENTE --- */
+        /* --- CORRECTION POUR LES MOTS TRÈS LONGS --- */
         .status-box.warning .status-value,
         .status-box.danger .status-value {
-            font-size: 1.2rem; /* Plus petit pour respirer */
-            letter-spacing: -1px; /* Resserré pour ne pas toucher les bords */
+            font-size: 1.15rem; /* On descend encore un peu pour PROCHAINE / IMMINENTE */
+            letter-spacing: -1px;
         }
         
         /* BARRE DE PROGRESSION DYNAMIQUE */
