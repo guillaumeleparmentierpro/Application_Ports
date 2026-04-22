@@ -148,7 +148,7 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     margin-bottom: 15px;
 }
-
+.status-box.danger { color: #b03a2e; } /* Le même rouge que ton étoile */
 /* --- LE TITRE UNIVERSEL --- */
 .main-title {
     font-size: 1.05rem; /* La taille magique pour tenir sur 1 ligne */
@@ -190,35 +190,36 @@
 }
         .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
 
-        /* ROND DE STATUT */
+/* --- ROND DE STATUT --- */
         .status-box { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
         .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
         .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
-/* Correction spécifique pour le mode "PROCHAINE" pour qu'il tienne dans le rond */
-.status-box.warning .status-value {
-    font-size: 1.4rem; /* Encore un peu plus petit uniquement pour ce mot long */
-    letter-spacing: -0.5px;
-}
         .status-box.danger { background: var(--danger-color); border: 5px solid var(--danger-dark); animation: pulse 1s infinite; }
         .status-box.closed { background: var(--closed-color); border: 5px solid var(--danger-dark); }
         
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
         
-/* --- AJUSTEMENT DES TEXTES DANS LE CERCLE --- */
+        /* --- TEXTES DU ROND --- */
+        .status-label { 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            font-weight: 700; 
+            opacity: 0.9; 
+            margin-bottom: 2px; 
+        }
 
-.status-label { 
-    font-size: 0.85rem; 
-    text-transform: uppercase; 
-    font-weight: 700; 
-    opacity: 0.9; 
-    margin-bottom: 2px; 
-}
+        .status-value { 
+            font-size: 1.6rem; 
+            font-weight: 900; 
+            line-height: 1.1; 
+        }
 
-.status-value { 
-    font-size: 1.6rem; 
-    font-weight: 900; 
-    line-height: 1.1; 
-}
+        /* --- CORRECTION MAGIQUE POUR PROCHAINE / IMMINENTE --- */
+        .status-box.warning .status-value,
+        .status-box.danger .status-value {
+            font-size: 1.2rem; /* Plus petit pour respirer */
+            letter-spacing: -1px; /* Resserré pour ne pas toucher les bords */
+        }
         
         /* BARRE DE PROGRESSION DYNAMIQUE */
         .progress-wrapper { margin: 10px 0; display: none; }
