@@ -1,70 +1,21 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-5LY18V5457');
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light">
-    <title>Partager l'application - Barneville-Carteret</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Partager - Port de Barneville-Carteret</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
     <style>
-:root {
-    --primary-bg: #f8fafc;
-    --card-bg: #ffffff;
-    --marine-blue: #1e3a8a;
-    --text-main: #1e293b;
-    --border-color: #e2e8f0;
-}
-
-/* BLOC FIGÉ EN HAUT (Commun aux 3 pages) */
-.sticky-header {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    background: var(--primary-bg);
-    z-index: 1000;
-    padding: 10px 15px 5px 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    margin-bottom: 10px;
-}
-
-/* TITRE IMPOSANT ET UNIFORME */
-.main-title {
-    font-size: 1.35rem; 
-    font-weight: 900;
-    color: var(--marine-blue);
-    text-align: center;
-    margin: 5px 0 8px 0;
-    text-transform: uppercase;
-    letter-spacing: -0.5px;
-    line-height: 1.1;
-}
-        .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-weight: 500; line-height: 1.4; }
-
-/* BOUTONS UNIFORMISÉS */
-.btn-action { 
-    text-decoration: none; 
-    background: var(--marine-blue);
-    color: #ffffff !important;
-    border: none; 
-    border-radius: 8px; 
-    padding: 6px 10px;
-    font-family: 'Montserrat', sans-serif; 
-    font-weight: 700; 
-    font-size: 0.6rem; 
-    display: inline-flex; 
-    align-items: center;
-    white-space: nowrap;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+        /* --- VARIABLES GLOBALES --- */
+        :root {
+            --primary-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --marine-blue: #1e3a8a;
+            --text-main: #1e293b;
+            --border-color: #e2e8f0;
+        }
 
         body { 
             font-family: 'Montserrat', sans-serif; 
@@ -72,38 +23,132 @@
             margin: 0; 
             padding: 0; 
             color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             min-height: 100vh;
         }
 
+        /* --- CONTENEUR PRINCIPAL --- */
+        .app-container {
+            width: 100%;
+            max-width: 450px; /* Format téléphone */
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            padding-bottom: 20px;
+        }
 
+        /* --- EN-TÊTE UNIVERSELLE --- */
+        .sticky-header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background: var(--primary-bg);
+            z-index: 1000;
+            padding: 10px 15px 5px 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
 
-        .qr-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 10px; color: var(--marine-blue); }
-        .qr-text { font-size: 0.85rem; color: #64748b; margin-bottom: 25px; line-height: 1.4; }
-        
-        /* L'image du QR Code */
-        .qr-image { width: 200px; height: 200px; margin: 0 auto; display: block; }
+        .top-nav {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .btn-action { 
+            text-decoration: none; 
+            background: var(--marine-blue);
+            color: #ffffff !important;
+            border: none; 
+            border-radius: 8px; 
+            padding: 6px 10px;
+            font-weight: 700; 
+            font-size: 0.6rem; 
+            display: inline-flex; 
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .main-title {
+            font-size: 1.35rem; 
+            font-weight: 900;
+            color: var(--marine-blue);
+            text-align: center;
+            margin: 5px 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+        .main-title sup { color: #b03a2e; font-size: 0.8rem; vertical-align: super; }
+
+        /* --- LE MODULE (Casquette bleue) --- */
+        .module {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px; /* Un peu plus d'espace intérieur pour ces pages */
+            margin: 0 15px 15px 15px; /* Marges pour ne pas toucher les bords de l'écran */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--marine-blue);
+            border-bottom: 1px solid #e2e8f0;
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .module-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--marine-blue);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .module-text {
+            font-size: 0.8rem;
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* --- CONTENU SPÉCIFIQUE (QR Code) --- */
+        .qr-image { 
+            width: 200px; 
+            height: 200px; 
+            margin: 0 auto; 
+            display: block; 
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .disclaimer {
+            font-size: 0.65rem; color: #64748b; text-align: center; padding: 0 15px; margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-<div class="sticky-header">
-    <div class="top-nav" style="display: flex; align-items: center; margin-bottom: 5px;">
-        <a href="index.html" class="btn-action">◀ RETOUR</a>
-    </div>
-    <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
-</div>
+    <div class="app-container">
 
-    <div class="qr-container">
-        <div class="qr-title">Partagez l'application</div>
-        <div class="qr-text">Faites scanner ce QR Code à un autre marin pour qu'il accède directement aux horaires du port.</div>
-        
-        <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://ton-site-web.com" alt="QR Code de l'application">
-    </div>
-        <div class="disclaimer" style="font-size:0.65rem; color:#64748b; text-align:center; padding:10px;">
-            <strong style="color:#b03a2e;">* Attention :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
+        <div class="sticky-header">
+            <div class="top-nav">
+                <a href="index.html" class="btn-action">◀ RETOUR</a>
+            </div>
+            <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
         </div>
+
+        <div class="module">
+            <h2 class="module-title">Partagez l'application</h2>
+            <p class="module-text">Faites scanner ce QR Code à un autre marin pour qu'il accède directement aux horaires du port.</p>
+            
+            <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://ton-site-web.com" alt="QR Code">
+        </div>
+
+        <div class="disclaimer">
+            * <strong style="color:#b03a2e;">Attention :</strong> L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine reste responsable de sa navigation.
+        </div>
+
+    </div>
+
 </body>
 </html>
