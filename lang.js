@@ -22,6 +22,18 @@ const translations = {
         footer_title: "Plus d'informations",
         today: "Aujourd'hui",
         tomorrow: "Demain",
+        // --- NOUVEAUTÉS PAGE INDEX ---
+        sponsor_label: "Sponsor",
+        slots_title: "Créneaux officiels :",
+        tide_title: "Informations marée",
+        weather_title: "Conditions météo",
+        index_disclaimer: "<strong style=\"color:#b03a2e;\">* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.",
+        time_before_close: " avant fermeture",
+        time_opening_in: "Ouverture dans ",
+        status_imminent: "IMMINENTE",
+        label_closing: "FERMETURE",
+        pill_open: "OUV.",
+        pill_close: "FERM.",
 
         // --- PAGE SÉCURITÉ ---
         secu_title: "Sécurité & Rappels",
@@ -86,7 +98,18 @@ const translations = {
         footer_title: "More information",
         today: "Today",
         tomorrow: "Tomorrow",
-
+// --- NOUVEAUTÉS PAGE INDEX ---
+        sponsor_label: "Sponsor",
+        slots_title: "Official slots:",
+        tide_title: "Tide information",
+        weather_title: "Weather conditions",
+        index_disclaimer: "<strong style=\"color:#b03a2e;\">* Warning:</strong> Times may vary depending on weather and tide (+/- 30 min). Approach channel time is under 10 minutes. All data on this site is indicative. The publisher declines all responsibility in the event of an error. The captain is responsible for their navigation.",
+        time_before_close: " before closing",
+        time_opening_in: "Opening in ",
+        status_imminent: "IMMINENT",
+        label_closing: "CLOSING",
+        pill_open: "OPEN",
+        pill_close: "CLOSE",
         // --- PAGE SÉCURITÉ ---
         secu_title: "Safety & Rules",
         secu_cross_title: "Sea Rescue (CROSS)",
