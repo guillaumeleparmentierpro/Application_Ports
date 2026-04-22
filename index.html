@@ -69,7 +69,29 @@
 
         body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
         .app-container { max-width: 400px; width: 100%; display: flex; flex-direction: column; gap: 10px; }
-        
+        /* --- MODULE PIED DE PAGE --- */
+.footer-module {
+    margin-top: 15px;
+    padding-top: 20px;
+    border-top: 1px dashed #cbd5e1; /* Petite ligne de séparation douce */
+    text-align: center;
+}
+
+.footer-buttons {
+    display: flex;
+    flex-direction: column; /* Empile les boutons verticalement */
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Variante du bouton pour le pied de page (plus large) */
+.btn-footer {
+    width: 100%; /* Prend toute la largeur */
+    justify-content: center; /* Centre le texte */
+    padding: 10px; /* Un peu plus haut pour le pouce */
+    font-size: 0.75rem;
+    box-sizing: border-box;
+}
 /* 1. Le grand conteneur qui force tout à s'empiler verticalement */
 .app-container {
     width: 100%;
@@ -291,7 +313,14 @@
         <div class="disclaimer" style="font-size:0.65rem; color:#64748b; text-align:center; padding:10px;">
             <strong style="color:#b03a2e;">* Attention :</strong> Les horaires peuvent varier selon la météo (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Le capitaine est responsable de sa navigation. L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
-
+<div class="footer-module">
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;">Plus d'informations</span>
+            <div class="footer-buttons">
+                <a href="sponsors.html" class="btn-action btn-footer">❤️ NOS PARTENAIRES</a>
+                <a href="liens.html" class="btn-action btn-footer">⚓ LIENS UTILES</a>
+                <a href="contact.html" class="btn-action btn-footer">✉️ NOUS CONTACTER</a>
+            </div>
+        </div>
     </div> 
     <script>
     window.onload = function() {
