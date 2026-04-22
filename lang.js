@@ -127,6 +127,18 @@ const translations = {
 
         // --- PAGE PARTAGE ---
         share_title: "Share the application",
-        share_desc: "Have another sailor scan this QR Code to directly access the port schedules."
+        share_desc: "Have another sailor scan this QR Code to directly access the port schedules.",
+        // --- PAGE CONTACT ---
+        contact_title: "Une question ou un projet ?",
+        contact_desc: "Vous êtes commerçant et souhaitez apparaître sur l'application ? Ou vous avez simplement une suggestion ? Contactez-moi directement :",
+        contact_btn_email: "📧 Par E-mail",
+        contact_footer_text: "Application développée avec passion pour les marins du Cotentin. ⚓",
+        contact_disclaimer: "<strong style=\"color:#b03a2e;\">*Attention :</strong> Pour toute urgence en mer, contactez le <strong>196</strong> ou le canal <strong>VHF 16</strong>.",
+        // --- PAGE CONTACT ---
+        contact_title: "A question or a project?",
+        contact_desc: "Are you a local business owner who wants to be featured in the app? Or do you simply have a suggestion? Contact me directly:",
+        contact_btn_email: "📧 By Email",
+        contact_footer_text: "App developed with passion for the sailors of Cotentin. ⚓",
+        contact_disclaimer: "<strong style=\"color:#b03a2e;\">*Warning:</strong> For any emergency at sea, contact <strong>196</strong> or <strong>VHF channel 16</strong>."
     }
 };
