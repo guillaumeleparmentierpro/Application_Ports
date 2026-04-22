@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sécurité - Port Barneville-Carteret</title>
+    <title>Sécurité - Port de Barneville-Carteret</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
     <script>
@@ -54,65 +54,79 @@
     <div class="app-container">
         <div class="sticky-header">
             <div class="top-nav">
-                <a href="index.html" class="btn-action">← RETOUR</a>
+                <a href="index.html" class="btn-action" data-i18n="btn_back">← RETOUR</a>
             </div>
-            <h1 class="main-title">Sécurité & Rappels</h1>
+            <h1 class="main-title" data-i18n="secu_title">Sécurité & Rappels</h1>
         </div>
 
         <div class="module" style="border-top-color: var(--danger-red);">
-            <span class="rule-title" style="color: var(--danger-red); text-align: center;">Secours en mer (CROSS)</span>
+            <span class="rule-title" style="color: var(--danger-red); text-align: center;" data-i18n="secu_cross_title">Secours en mer (CROSS)</span>
             <a href="tel:196" class="emergency-num">196</a>
-            <p class="rule-text" style="text-align: center; font-weight: 700; margin-bottom: 10px;">VHF CANAL 16</p>
+            <p class="rule-text" style="text-align: center; font-weight: 700; margin-bottom: 10px;" data-i18n="secu_vhf">VHF CANAL 16</p>
             <div style="text-align: center; border-top: 1px solid #fee2e2; padding-top: 10px;">
-                <span class="phone-label">Ligne directe CROSS Manche</span>
+                <span class="phone-label" data-i18n="secu_direct_line">Ligne directe CROSS Manche</span>
                 <a href="tel:0233522938" class="phone-val">02 33 52 29 38</a>
             </div>
         </div>
 
         <div class="module">
-            <span class="rule-title">Autres Services</span>
+            <span class="rule-title" data-i18n="secu_other_services">Autres Services</span>
             <div class="phone-grid">
                 <div class="phone-item">
-                    <span class="phone-label">Sémaphore</span>
+                    <span class="phone-label" data-i18n="secu_semaphore">Sémaphore</span>
                     <a href="tel:0233538508" class="phone-val">02 33 53 85 08</a>
                 </div>
                 <div class="phone-item">
-                    <span class="phone-label">Pompiers</span>
+                    <span class="phone-label" data-i18n="secu_fire">Pompiers</span>
                     <a href="tel:18" class="phone-val">18</a>
                 </div>
                 <div class="phone-item" style="grid-column: span 2;">
-                    <span class="phone-label">SAMU</span>
+                    <span class="phone-label" data-i18n="secu_medical">SAMU</span>
                     <a href="tel:15" class="phone-val">15</a>
                 </div>
             </div>
         </div>
 
         <div class="module">
-            <span class="rule-title">Limitation de vitesse</span>
-            <p class="rule-text">
+            <span class="rule-title" data-i18n="secu_speed_title">Limitation de vitesse</span>
+            <p class="rule-text" data-i18n="secu_speed_text">
                 • <span class="highlight">3 nœuds</span> dans la zone du bassin à flot.<br>
                 • <span class="highlight">5 nœuds</span> dans la partie marnante.
             </p>
         </div>
 
         <div class="module">
-            <span class="rule-title">⚠️ Courant à la porte</span>
-            <p class="rule-text">
+            <span class="rule-title" data-i18n="secu_current_title">⚠️ Courant à la porte</span>
+            <p class="rule-text" data-i18n="secu_current_text">
                 À l’ouverture de la porte, un <span class="highlight">fort courant</span> peut se produire pendant 15 à 30 min (selon les coefficients). Soyez vigilant lors du passage !
             </p>
         </div>
 
         <div class="module">
-            <span class="rule-title">Précisions horaires</span>
-            <p class="rule-text" style="margin-bottom: 8px;">
+            <span class="rule-title" data-i18n="secu_precision_title">Précisions horaires</span>
+            <p class="rule-text" style="margin-bottom: 8px;" data-i18n="secu_precision_text1">
                 Les heures sont exprimées en <span style="font-weight:700;">heure légale française</span>.
             </p>
-            <p class="rule-text" style="font-size: 0.7rem; font-style: italic; color: #64748b;">
-                Des fluctuations de <span class="highlight">+/- 30 min</span> peuvent survenir (pression, vent, coefficients). Ces données sont indicatives et n'engagent pas la responsabilité du Site.
+            <p class="rule-text" style="font-size: 0.7rem; font-style: italic; color: #64748b;" data-i18n="secu_precision_text2">
+                Des fluctuations de <span class="highlight">+/- 30 min</span> peuvent survenir (pression, vent, coefficients). Ces données sont indicatives et n'engagent pas la responsabilité du Port.
             </p>
         </div>
 
     </div>
 
+    <script src="lang.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language.substring(0, 2);
+            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[savedLang] && translations[savedLang][key]) {
+                    el.innerHTML = translations[savedLang][key]; 
+                }
+            });
+        });
+    </script>
 </body>
 </html>
