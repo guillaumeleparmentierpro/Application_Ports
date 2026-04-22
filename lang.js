@@ -1,8 +1,5 @@
 const translations = {
     fr: {
-        // --- COMMUN ---
-        btn_back: "← RETOUR",
-
         // --- PAGE ACCUEIL ---
         label_gate: "PORTE",
         status_open: "OUVERTE",
@@ -24,6 +21,7 @@ const translations = {
         tomorrow: "Demain",
 
         // --- PAGE SÉCURITÉ ---
+        btn_back: "← RETOUR",
         secu_title: "Sécurité & Rappels",
         secu_cross_title: "Secours en mer (CROSS)",
         secu_vhf: "VHF CANAL 16",
@@ -41,21 +39,26 @@ const translations = {
         secu_precision_text2: "Des fluctuations de <span class=\"highlight\">+/- 30 min</span> peuvent survenir (pression, vent, coefficients). Ces données sont indicatives et n'engagent pas la responsabilité du Port.",
 
         // --- PAGE LIENS ---
-        links_title: "LIENS UTILES",
-        links_vigicrues: "Vigicrues",
-        links_meteo_marine: "Météo France - Marine",
-        links_shom: "Horaires de Marées - SHOM",
-        links_prefecture: "Préfecture Maritime",
-        links_snsm: "Conseils aux plaisanciers",
-        links_meteoconsult: "Météoconsult - Carteret",
-        links_windguru: "Windguru - Carteret",
-        links_windy: "WINDY - Carteret",
-        links_shom_realtime: "Données en temps réel (Vent, marée)"
+        btn_back_arrow: "◀ RETOUR",
+        links_subtitle: "RESOURCES & LIENS UTILES",
+        links_shom_title: "📏 SHOM",
+        links_shom_desc: "Référence officielle pour les prédictions de marées et la cartographie marine.",
+        links_shom_btn: "ACCÉDER AU SHOM",
+        links_navco_title: "📱 Nav&Co",
+        links_navco_desc: "L'application officielle pour naviguer en sécurité tout en découvrant la biodiversité marine.",
+        links_navco_btn: "DÉCOUVRIR NAV&CO",
+        links_secu_title: "⚠️ Sécurité en mer",
+        links_secu_desc: "Rappel officiel des règles de sécurité pour les loisirs nautiques (mer.gouv.fr).",
+        links_secu_btn: "LIRE LES RÈGLES",
+        links_snsm_title: "🧡 SNSM Carteret",
+        links_snsm_desc: "Soutenez les sauveteurs en mer de la station locale et informez-vous sur le sauvetage.",
+        links_snsm_btn: "STATION SNSM",
+        links_meteo_title: "☁️ Météo - Prévisions Barneville Carteret",
+        links_meteo_desc: "Bulletins côtiers détaillés.",
+        links_meteo_btn: "CONSULTER LA MÉTÉO",
+        links_disclaimer: "<strong style=\"color:#b03a2e;\">* Attention :</strong> Ces liens sont externes. L'éditeur n'est pas responsable de leur contenu."
     },
     en: {
-        // --- COMMUN ---
-        btn_back: "← BACK",
-
         // --- PAGE ACCUEIL ---
         label_gate: "GATE",
         status_open: "OPEN",
@@ -77,6 +80,7 @@ const translations = {
         tomorrow: "Tomorrow",
 
         // --- PAGE SÉCURITÉ ---
+        btn_back: "← BACK",
         secu_title: "Safety & Rules",
         secu_cross_title: "Sea Rescue (CROSS)",
         secu_vhf: "VHF CHANNEL 16",
@@ -94,15 +98,23 @@ const translations = {
         secu_precision_text2: "Fluctuations of <span class=\"highlight\">+/- 30 mins</span> may occur (pressure, wind, coefficients). This data is indicative and the Port assumes no liability.",
 
         // --- PAGE LIENS ---
-        links_title: "USEFUL LINKS",
-        links_vigicrues: "Vigicrues (Tidal info)",
-        links_meteo_marine: "Météo France - Marine",
-        links_shom: "Tide Times - SHOM",
-        links_prefecture: "Maritime Prefecture",
-        links_snsm: "Safety tips for sailors",
-        links_meteoconsult: "Météoconsult - Carteret",
-        links_windguru: "Windguru - Carteret",
-        links_windy: "WINDY - Carteret",
-        links_shom_realtime: "Real-time data (Wind, tide)"
+        btn_back_arrow: "◀ BACK",
+        links_subtitle: "RESOURCES & USEFUL LINKS",
+        links_shom_title: "📏 SHOM",
+        links_shom_desc: "Official reference for tide predictions and marine cartography.",
+        links_shom_btn: "ACCESS SHOM",
+        links_navco_title: "📱 Nav&Co",
+        links_navco_desc: "The official app to navigate safely while discovering marine biodiversity.",
+        links_navco_btn: "DISCOVER NAV&CO",
+        links_secu_title: "⚠️ Sea Safety",
+        links_secu_desc: "Official safety rules for nautical activities (mer.gouv.fr).",
+        links_secu_btn: "READ THE RULES",
+        links_snsm_title: "🧡 SNSM Carteret",
+        links_snsm_desc: "Support the local sea rescue station and learn more about sea rescue.",
+        links_snsm_btn: "SNSM STATION",
+        links_meteo_title: "☁️ Weather - Barneville Carteret Forecast",
+        links_meteo_desc: "Detailed coastal weather reports.",
+        links_meteo_btn: "CHECK WEATHER",
+        links_disclaimer: "<strong style=\"color:#b03a2e;\">* Warning:</strong> These are external links. The publisher is not responsible for their content."
     }
 };
