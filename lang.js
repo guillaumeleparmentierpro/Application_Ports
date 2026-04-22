@@ -16,7 +16,7 @@ const translations = {
         status_closed: "CLOSED",
         next_open: "NEXT OPENING",
         next_close: "NEXT CLOSING",
-        btn_planning: "FULL SCHEDULE",
+        btn_planning: "GATE & TIDE",
         btn_security: "🆘 SAFETY & RULES",
         low_tide: "LOW TIDE",
         high_tide: "HIGH TIDE"
