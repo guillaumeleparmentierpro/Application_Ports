@@ -130,32 +130,46 @@
 
         <div class="sticky-header">
             <div class="top-nav">
-                <a href="index.html" class="btn-action">◀ RETOUR</a>
+                <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
             </div>
             <h1 class="main-title">PORT BARNEVILLE-CARTERET<sup>*</sup></h1>
         </div>
 
         <div class="module">
             <span class="contact-icon">✉️</span>
-            <h2 class="module-title">Une question ou un projet ?</h2>
-            <p class="module-text">Vous êtes commerçant et souhaitez apparaître sur l'application ? Ou vous avez simplement une suggestion ? Contactez-moi directement :</p>
+            <h2 class="module-title" data-i18n="contact_title">Une question ou un projet ?</h2>
+            <p class="module-text" data-i18n="contact_desc">Vous êtes commerçant et souhaitez apparaître sur l'application ? Ou vous avez simplement une suggestion ? Contactez-moi directement :</p>
             
             <a href="mailto:guillaume.leparmentier.pro@gmail.com?subject=Contact Application Port" class="btn-contact-option email">
-                <span>📧 Par E-mail</span>
+                <span data-i18n="contact_btn_email">📧 Par E-mail</span>
             </a>
         </div>
 
         <div class="module" style="padding: 15px; border-top: 4px solid #64748b;">
-            <p style="font-size: 0.75rem; color: #64748b; margin: 0;">
+            <p style="font-size: 0.75rem; color: #64748b; margin: 0;" data-i18n="contact_footer_text">
                 Application développée avec passion pour les marins du Cotentin. ⚓
             </p>
         </div>
 
-        <div class="disclaimer">
+        <div class="disclaimer" data-i18n="contact_disclaimer">
             <strong style="color:#b03a2e;">*Attention :</strong> Pour toute urgence en mer, contactez le <strong>196</strong> ou le canal <strong>VHF 16</strong>.
         </div>
 
     </div>
 
+    <script src="lang.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language.substring(0, 2);
+            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[savedLang] && translations[savedLang][key]) {
+                    el.innerHTML = translations[savedLang][key]; 
+                }
+            });
+        });
+    </script>
 </body>
 </html>
