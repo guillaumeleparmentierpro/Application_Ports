@@ -42,21 +42,45 @@
         flex-direction: column;
         overflow: hidden; /* Empêche la page entière de scroller */
     }
+/* TITRE IMPOSANT ET UNIFORME */
+.main-title {
+    font-size: 1.35rem; 
+    font-weight: 900;
+    color: var(--marine-blue);
+    text-align: center;
+    margin: 5px 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+    
+/* BLOC FIGÉ EN HAUT (Commun aux 3 pages) */
+.sticky-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background: var(--primary-bg);
+    z-index: 1000;
+    padding: 10px 15px 5px 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 10px;
+}
 
-    /* Le header reste tout en haut, fixe et intouchable */
-    .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: white;
-        padding: 0 15px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        height: 60px;
-        flex-shrink: 0; 
-        z-index: 1000;
-    }
-
-    .btn-back { text-decoration: none; background: var(--marine-blue); color: white; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; }
+.btn-action { 
+    text-decoration: none; 
+    background: var(--marine-blue);
+    color: #ffffff !important;
+    border: none; 
+    border-radius: 8px; 
+    padding: 6px 10px;
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 700; 
+    font-size: 0.6rem; 
+    display: inline-flex; 
+    align-items: center;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
     .page-title { font-size: 0.95rem; font-weight: 700; margin: 0; }
     .page-title sup { color: #b03a2e; font-size: 0.6rem; }
 
@@ -163,9 +187,11 @@
 </head>
 <body>
 
-<div class="header">
-    <a href="index.html" class="btn-back">◀ ACCUEIL</a>
-    <h1 class="page-title">Port de Barneville-Carteret<sup>*</sup></h1>
+<div class="sticky-header">
+    <div class="top-nav" style="display: flex; align-items: center; margin-bottom: 5px;">
+        <a href="index.html" class="btn-action">◀ RETOUR</a>
+    </div>
+    <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
 </div>
 
     <div class="scroll-hint">👉 Glissez le tableau vers la gauche pour voir le SOIR</div>
