@@ -19,21 +19,6 @@
     
     <style>
 
-        /* Le bloc qui reste figé */
-.sticky-header {
-    position: -webkit-sticky; /* Pour les anciens navigateurs mobiles */
-    position: sticky;
-    top: 0;
-    background: var(--primary-bg);
-    z-index: 1000;
-    padding: 10px 15px 5px 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Ombre pour bien voir la séparation */
-    margin-left: -15px; /* Compense le padding du conteneur si besoin */
-    margin-right: -15px;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-        /* --- BANNIÈRE SPONSOR TOP --- */
 .top-sponsor-banner {
     background: #e0e7ff; /* Bleu marine très clair */
     color: var(--marine-blue);
@@ -110,18 +95,7 @@
     border-right: 1px solid #e2e8f0;
 }
         
-/* --- TITRE IMPOSANT ET COMPACT --- */
-.main-title {
-    font-size: 1.35rem; /* Un peu plus petit pour faire rentrer "Port de" */
-    font-weight: 900;
-    color: var(--marine-blue);
-    text-align: center;
-    margin: 5px 0 8px 0;
-    text-transform: uppercase;
-    letter-spacing: -0.5px;
-    line-height: 1;
-}
-        
+  
         .main-title sup {
     color: #b03a2e;
     font-size: 0.8rem;
@@ -147,17 +121,40 @@
     flex-shrink: 1;
 }
         
-/* Boutons plus compacts */
+/* --- LE KIT EN-TÊTE UNIVERSEL (À remplacer dans tes 3 pages) --- */
+
+.sticky-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background: var(--primary-bg); /* S'assure que le fond cache bien ce qui scrolle dessous */
+    z-index: 1000;
+    padding: 10px 15px 5px 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 10px;
+}
+
+.main-title {
+    font-size: 1.35rem; 
+    font-weight: 900;
+    color: var(--marine-blue);
+    text-align: center;
+    margin: 5px 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
 .btn-action { 
     text-decoration: none; 
     background: var(--marine-blue);
-    color: #ffffff;
+    color: #ffffff !important;
     border: none; 
     border-radius: 8px; 
-    padding: 6px 8px; /* Moins de rembourrage */
+    padding: 6px 10px;
     font-family: 'Montserrat', sans-serif; 
     font-weight: 700; 
-    font-size: 0.55rem; /* Taille réduite pour tout faire tenir */
+    font-size: 0.6rem; 
     display: inline-flex; 
     align-items: center;
     white-space: nowrap;
@@ -231,28 +228,20 @@
 <div class="app-container">
 
 <div class="sticky-header">
-        
-        <div class="top-sponsor-banner" id="sponsor-banner">
-            <span class="sponsor-label">Sponsor</span>
-            <span class="sponsor-text" id="sponsor-text">Chargement du sponsor...</span>
-        </div>
-
-        <div class="top-nav">
-            <div class="date-badge" id="current-date">-- --</div>
-            <div class="nav-buttons" style="display: flex; gap: 5px;">
-                <a href="planning.html" class="btn-action">HORAIRES & MARÉES 📅</a>
-                <a href="partage.html" class="btn-action">
-                    PARTAGER
-                    <svg style="margin-left: 4px;" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle>
-                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                    </svg>
-                </a>
-            </div>
-        </div>
-
-        <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
+    <div class="top-sponsor-banner" id="sponsor-banner">
+        <span class="sponsor-label">Sponsor</span>
+        <span class="sponsor-text" id="sponsor-text">Chargement...</span>
     </div>
+
+    <div class="top-nav" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="date-badge" id="current-date" style="font-size: 0.6rem; font-weight: 700; border: 1px solid #e2e8f0; padding: 6px; border-radius: 8px; background: white;">-- --</div>
+        <div class="nav-buttons" style="display: flex; gap: 5px;">
+            <a href="planning.html" class="btn-action">PLANNING 📅</a>
+            <a href="partage.html" class="btn-action">PARTAGER 🔗</a>
+        </div>
+    </div>
+    <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
+</div>
         
         <div class="module">
             <div id="status-box" class="status-box closed">
