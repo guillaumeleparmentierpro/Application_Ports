@@ -301,11 +301,12 @@
             <a href="partage.html" class="btn-action">PARTAGER</a>
         </div>
     </div>
-    <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
-    <div class="lang-switch">
+        <div class="lang-switch">
     <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active">FR</span> | 
     <span onclick="setLanguage('en')" id="btn-en" class="lang-btn">EN</span>
 </div>
+    <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
+
 </div>
         
         <div class="module">
@@ -374,27 +375,7 @@
         }
     };
 
-function setLanguage(lang) {
-    // 1. Mettre à jour les boutons FR/EN
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(`btn-${lang}`).classList.add('active');
-
-    // 2. Changer tous les textes qui ont l'attribut data-i18n
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) {
-            el.innerText = translations[lang][key];
-        }
-    });
-
-    // 3. Sauvegarder le choix pour la prochaine visite
-    localStorage.setItem('preferredLang', lang);
-}
-
-// Au chargement de la page :
-const savedLang = localStorage.getItem('preferredLang') || 'fr';
-setLanguage(savedLang);
-        
+   
 function updateSponsor() {
         const hour = new Date().getHours();
         const sponsorText = document.getElementById('sponsor-text');
@@ -588,6 +569,34 @@ document.getElementById('current-date').innerText = now.toLocaleDateString('fr-F
             drawTideGraph(tidePercent, isDescending);
         }
     }
-</script>
+<script src="lang.js"></script>
+
+    <script>
+        function setLanguage(lang) {
+            // Met à jour les boutons visuellement
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-${lang}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            // Traduit tous les éléments avec data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+
+            // Sauvegarde le choix
+            localStorage.setItem('preferredLang', lang);
+        }
+
+        // LA LOGIQUE DE DÉTECTION AUTOMATIQUE (À mettre ici)
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language.substring(0, 2);
+            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+            
+            setLanguage(savedLang);
+        });
+    </script>
 </body>
 </html>
