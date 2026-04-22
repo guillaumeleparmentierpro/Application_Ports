@@ -3,79 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sécurité et Rappel - Port de Barneville-Carteret</title>
+    <title>Sécurité - Port de Barneville-Carteret</title>
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-5LY18V5457');
-    </script>
-
-    <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary-bg: #f8fafc;
+            --card-bg: #ffffff;
             --marine-blue: #1e3a8a;
-            --danger-red: #b03a2e;
             --text-main: #1e293b;
+            --border-color: #e2e8f0;
         }
+
         body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 0; color: var(--text-main); }
-        .app-container { width: 100%; max-width: 450px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+        .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; }
+
+        .sticky-header { position: sticky; top: 0; background: var(--primary-bg); z-index: 1000; padding: 10px 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .top-nav { display: flex; justify-content: flex-start; }
+        .btn-action { text-decoration: none; background: var(--marine-blue); color: white !important; border-radius: 8px; padding: 6px 12px; font-weight: 700; font-size: 0.7rem; }
         
-        .header { background: white; padding: 20px; text-align: center; border-bottom: 3px solid var(--danger-red); }
-        .btn-back { display: inline-block; margin-bottom: 10px; text-decoration: none; color: var(--marine-blue); font-weight: 700; font-size: 0.8rem; }
+        .main-title { font-size: 1.1rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 15px 0; text-transform: uppercase; }
+
+        .module { background: var(--card-bg); border-radius: 12px; padding: 15px; margin: 0 15px 15px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); }
+        .rule-title { font-weight: 800; font-size: 0.85rem; color: var(--marine-blue); text-transform: uppercase; margin-bottom: 5px; display: block; }
+        .rule-text { font-size: 0.8rem; line-height: 1.4; color: #475569; margin: 0; }
         
-        .content { padding: 20px; }
-        .emergency-box { background: #fee2e2; border: 2px solid var(--danger-red); border-radius: 12px; padding: 15px; margin-bottom: 20px; }
-        .emergency-number { display: block; font-size: 1.5rem; font-weight: 900; color: var(--danger-red); text-align: center; margin: 10px 0; }
-        
-        .rule-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; shadow: 0 2px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--marine-blue); }
-        .rule-title { font-weight: 800; font-size: 0.9rem; color: var(--marine-blue); text-transform: uppercase; margin-bottom: 8px; display: block; }
-        .rule-text { font-size: 0.85rem; line-height: 1.4; color: #475569; }
+        .emergency-num { font-size: 1.4rem; font-weight: 900; color: #b03a2e; text-align: center; display: block; margin: 10px 0; text-decoration: none; }
     </style>
 </head>
 <body>
 
     <div class="app-container">
-        <div class="header">
-            <a href="index.html" class="btn-back">← RETOUR ACCUEIL</a>
-            <h1 style="font-size: 1.2rem; margin: 0; color: var(--danger-red);">SÉCURITÉ & RAPPELS</h1>
+        <div class="sticky-header">
+            <div class="top-nav">
+                <a href="index.html" class="btn-action">← RETOUR</a>
+            </div>
+            <h1 class="main-title">Sécurité & Rappels</h1>
         </div>
 
-        <div class="content">
-            <div class="emergency-box">
-                <span class="rule-title" style="color: var(--danger-red); text-align: center;">EN CAS D'URGENCE EN MER</span>
-                <a href="tel:196" class="emergency-number">196</a>
-                <p style="font-size: 0.75rem; text-align: center; margin: 0; font-weight: 600;">CROSS (ou Canal VHF 16)</p>
-            </div>
+        <div class="module" style="border-top-color: #b03a2e; background: #fff5f5;">
+            <span class="rule-title" style="color: #b03a2e; text-align: center;">Urgence en mer</span>
+            <a href="tel:196" class="emergency-num">196</a>
+            <p class="rule-text" style="text-align: center; font-weight: 600;">CROSS (ou VHF Canal 16)</p>
+        </div>
 
-            <div class="rule-card">
-                <span class="rule-title">Vérification de la Porte</span>
-                <p class="rule-text">Ne tentez jamais le passage si le voyant est rouge ou si le tirant d'eau est insuffisant pour votre navire.</p>
-            </div>
+        <div class="module">
+            <span class="rule-title">Vitesse & Navigation</span>
+            <p class="rule-text">Respectez la vitesse dans le chenal et veillez à ne pas créer de remous excessifs pour les autres bateaux.</p>
+        </div>
 
-            <div class="rule-card">
-                <span class="rule-title">Équipement Obligatoire</span>
-                <p class="rule-text">Vérifiez vos brassières, la validité de vos feux à main et votre réserve de carburant avant chaque sortie.</p>
-            </div>
+        <div class="module">
+            <span class="rule-title">Équipement de sécurité</span>
+            <p class="rule-text">Vérifiez vos brassières, la validité de vos feux et votre niveau de carburant avant chaque départ.</p>
+        </div>
 
-            <div class="rule-card">
-                <span class="rule-title">Météo</span>
-                <p class="rule-text">Consultez systématiquement la météo locale. En cas de doute, restez au port.</p>
-            </div>
-
-            <div class="rule-card">
-                <span class="rule-title">Vitesse dans le chenal</span>
-                <p class="rule-text">Respectez la limitation de vitesse et veillez à ne pas créer de remous excessifs pour les autres usagers.</p>
-            </div>
-
-            <div style="text-align: center; margin-top: 20px;">
-                <a href="index.html" class="btn-back" style="background: var(--marine-blue); color: white; padding: 10px 20px; border-radius: 8px;">COMPRIS</a>
-            </div>
+        <div class="module">
+            <span class="rule-title">Météo & Marées</span>
+            <p class="rule-text">Consultez systématiquement la météo locale avant de sortir. En cas de doute, restez au port.</p>
         </div>
     </div>
 
