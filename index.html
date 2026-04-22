@@ -16,7 +16,7 @@
       gtag('config', 'G-5LY18V5457');
     </script>
     
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -29,43 +29,43 @@
     <script src="donnees.js"></script>
     
     <style>
+        .top-sponsor-banner {
+            background: #e0e7ff; 
+            color: var(--marine-blue);
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #c7d2fe;
+        }
 
-.top-sponsor-banner {
-    background: #e0e7ff; /* Bleu marine très clair */
-    color: var(--marine-blue);
-    padding: 8px 12px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px; /* Espace avant la navigation */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    border: 1px solid #c7d2fe;
-}
+        .sponsor-label {
+            background: var(--marine-blue);
+            color: white;
+            font-size: 0.55rem;
+            padding: 3px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
 
-.sponsor-label {
-    background: var(--marine-blue);
-    color: white;
-    font-size: 0.55rem;
-    padding: 3px 6px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    flex-shrink: 0;
-}
+        .sponsor-text {
+            font-size: 0.7rem;
+            font-weight: 600;
+            line-height: 1.2;
+            flex-grow: 1;
+            text-align: right;
+        }
 
-.sponsor-text {
-    font-size: 0.7rem;
-    font-weight: 600;
-    line-height: 1.2;
-    flex-grow: 1;
-    text-align: right;
-}
-:root {
-    color-scheme: light; /* Force le navigateur à ignorer le mode sombre */
-    --primary-bg: #f1f5f9;
-    --card-bg: #ffffff;
+        :root {
+            color-scheme: light; 
+            --primary-bg: #f1f5f9;
+            --card-bg: #ffffff;
             --open-light: #10b981;
             --open-dark: #067a5c;
             --warning-color: #fbbf24;
@@ -79,147 +79,154 @@
         }
 
         body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .app-container { max-width: 400px; width: 100%; display: flex; flex-direction: column; gap: 10px; }
+        
+        .app-container {
+            width: 100%;
+            max-width: 450px; 
+            margin: 0 auto; 
+            display: flex;
+            flex-direction: column; 
+            gap: 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            padding-top: 0 !important;
+        }
+
         /* --- MODULE PIED DE PAGE --- */
-.footer-module {
-    margin-top: 15px;
-    padding-top: 20px;
-    border-top: 1px dashed #cbd5e1; /* Petite ligne de séparation douce */
-    text-align: center;
-}
+        .footer-module {
+            margin-top: 15px;
+            padding-top: 20px;
+            border-top: 1px dashed #cbd5e1; 
+            text-align: center;
+        }
 
-.footer-buttons {
-    display: flex;
-    flex-direction: column; /* Empile les boutons verticalement */
-    gap: 10px;
-    margin-top: 15px;
-}
+        .footer-buttons {
+            display: flex;
+            flex-direction: column; 
+            gap: 10px;
+            margin-top: 15px;
+        }
 
-/* Variante du bouton pour le pied de page (plus large) */
-.btn-footer {
-    width: 100%; /* Prend toute la largeur */
-    justify-content: center; /* Centre le texte */
-    padding: 10px; /* Un peu plus haut pour le pouce */
-    font-size: 0.75rem;
-    box-sizing: border-box;
-}
-/* 1. Le grand conteneur qui force tout à s'empiler verticalement */
-.app-container {
-    width: 100%;
-    max-width: 450px; /* Garde la taille d'un téléphone même sur grand écran */
-    margin: 0 auto; /* Centre l'application */
-    display: flex;
-    flex-direction: column; /* C'EST CETTE LIGNE QUI RÉPARE TON BUG */
-    gap: 15px;
-    padding: 15px;
-    box-sizing: border-box;
-    padding-top: 0 !important;
-}
+        .btn-footer {
+            width: 100%; 
+            justify-content: center; 
+            padding: 10px; 
+            font-size: 0.75rem;
+            box-sizing: border-box;
+        }
 
-/* 2. Le nouveau design des modules avec le liseré bleu marine en haut */
-.module {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    border-top: 4px solid var(--marine-blue); /* La fameuse casquette ! */
-    border-bottom: 1px solid #e2e8f0;
-    border-left: 1px solid #e2e8f0;
-    border-right: 1px solid #e2e8f0;
-}
+        .module {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--marine-blue); 
+            border-bottom: 1px solid #e2e8f0;
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+        }
         
-.top-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px; /* Espace réduit entre les éléments */
-    margin-bottom: 15px;
-    width: 100%;
-}
-.date-badge {
-    background: white;
-    padding: 6px 8px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.6rem; /* Taille réduite */
-    border: 1px solid #e2e8f0;
-    white-space: nowrap; /* Empêche le retour à la ligne */
-    flex-shrink: 1;
-}
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 5px; 
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .date-badge {
+            background: white;
+            padding: 6px 8px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.6rem; 
+            border: 1px solid #e2e8f0;
+            white-space: nowrap; 
+            flex-shrink: 1;
+        }
         
-/* --- LE KIT EN-TÊTE UNIVERSEL (À remplacer dans tes 3 pages) --- */
+        /* --- LE KIT EN-TÊTE UNIVERSEL --- */
+        .sticky-header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background: var(--primary-bg);
+            z-index: 1000;
+            padding: 10px 15px 5px 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
 
-.sticky-header {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    background: var(--primary-bg);
-    z-index: 1000;
-    padding: 10px 15px 5px 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    margin-bottom: 15px;
-}
+        /* --- LE TITRE UNIVERSEL --- */
+        .main-title {
+            font-size: 1.05rem; 
+            font-weight: 700; 
+            color: var(--marine-blue);
+            text-align: center;
+            margin: 5px 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            white-space: nowrap; 
+            width: 100%;
+            display: block; 
+        }
 
-/* --- LE TITRE UNIVERSEL --- */
-.main-title {
-    font-size: 1.05rem; /* La taille magique pour tenir sur 1 ligne */
-    font-weight: 700; /* Même épaisseur sur toutes les pages */
-    color: var(--marine-blue);
-    text-align: center;
-    margin: 5px 0 8px 0;
-    text-transform: uppercase;
-    letter-spacing: -0.5px;
-    line-height: 1.1;
-    white-space: nowrap; /* Force à rester sur une seule ligne */
-    width: 100%;
-    display: block; /* S'assure qu'il va bien en dessous des boutons */
-}
+        .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
 
-.main-title sup { 
-    color: #b03a2e; 
-    font-size: 0.75rem; 
-    vertical-align: super; 
-}
-.lang-switch {
-    text-align: center; /* C'est cette ligne qui centre les drapeaux ! */
-    margin: 15px 0 5px 0;
-    font-size: 1.5rem; /* On agrandit un peu pour les drapeaux */
-}
+        .lang-switch {
+            text-align: center; 
+            margin: 15px 0 5px 0;
+            font-size: 1.5rem; 
+        }
 
-.lang-btn { 
-    cursor: pointer;
-    opacity: 0.3; /* Très transparent quand ce n'est pas sélectionné */
-    transition: opacity 0.3s ease, transform 0.2s ease;
-    display: inline-block;
-    vertical-align: middle;
-}
+        .lang-btn { 
+            cursor: pointer;
+            opacity: 0.3; 
+            transition: opacity 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+            vertical-align: middle;
+        }
 
-.lang-btn.active { 
-    opacity: 1; /* Pleine couleur quand c'est sélectionné */
-    transform: scale(1.15); /* Le drapeau actif grossit très légèrement */
-}
-.btn-action { 
-    text-decoration: none; 
-    background: var(--marine-blue);
-    color: #ffffff !important;
-    border: none; 
-    border-radius: 8px; 
-    padding: 6px 10px;
-    font-family: 'Montserrat', sans-serif; 
-    font-weight: 700; 
-    font-size: 0.6rem; 
-    display: inline-flex; 
-    align-items: center;
-    white-space: nowrap;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-        .btn-action:active {
-    transform: scale(0.95); /* Petit effet de clic sur téléphone */
-}
+        .lang-btn.active { 
+            opacity: 1; 
+            transform: scale(1.15); 
+        }
+
+        .btn-action { 
+            text-decoration: none; 
+            background: var(--marine-blue);
+            color: #ffffff !important;
+            border: none; 
+            border-radius: 8px; 
+            padding: 6px 10px;
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 700; 
+            font-size: 0.6rem; 
+            display: inline-flex; 
+            align-items: center;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .btn-action:active { transform: scale(0.95); }
         .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
 
-/* --- ROND DE STATUT --- */
-        .status-box { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
+        /* --- ROND DE STATUT (Modifié pour agrandir l'espace) --- */
+        .status-box { 
+            width: 130px; /* Agrandit le cercle de 110 à 130 */
+            height: 130px; 
+            border-radius: 50%; 
+            margin: 0 auto 10px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            color: white; 
+            transition: all 0.5s ease; 
+        }
+        
         .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
         .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
         .status-box.danger { background: var(--danger-color); border: 5px solid var(--danger-dark); animation: pulse 1s infinite; }
@@ -227,25 +234,24 @@
         
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
         
-/* --- TEXTES DU ROND --- */
+        /* --- TEXTES DU ROND (Ajustés) --- */
         .status-label { 
-            font-size: 0.8rem; /* Légèrement réduit (était à 0.85) */
+            font-size: 0.7rem; /* Un peu réduit */
             text-transform: uppercase; 
             font-weight: 700; 
             opacity: 0.9; 
             margin-bottom: 2px; 
         }
 
-.status-value {
-    font-size: 1.6rem; /* On réduit la taille de la police pour que ça rentre */
-    font-weight: 900;
-    margin: 5px 0;
-    letter-spacing: -0.5px; /* Resserre très légèrement les lettres entre elles */
-    line-height: 1;
-    padding: 0 10px; /* Ajoute une marge de sécurité invisible sur les côtés */
-}
+        .status-value {
+            font-size: 1.4rem; /* Légèrement réduit pour bien rentrer */
+            font-weight: 900;
+            margin: 5px 0;
+            letter-spacing: -0.5px; 
+            line-height: 1;
+            padding: 0 5px; 
+        }
 
-        /* --- CORRECTION POUR LES MOTS TRÈS LONGS --- */
         .status-box.warning .status-value,
         .status-box.danger .status-value {
             font-size: 1.15rem;
@@ -267,14 +273,13 @@
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
         .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none; }
 
-        /* CRÉNEAUX SUR UNE SEULE LIGNE + COULEURS RESTAURÉES */
+        /* CRÉNEAUX SUR UNE SEULE LIGNE */
         .slot-line-container { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; flex-wrap: nowrap; }
         .slot-title { font-size: 0.65rem; font-weight: 700; white-space: nowrap; margin-right: 5px; }
         .slot-pills { display: flex; gap: 4px; flex-wrap: nowrap; }
         .slot-badge { padding: 3px 5px; border-radius: 6px; display: flex; align-items: center; gap: 3px; color: white; white-space: nowrap; }
         .slot-badge span { font-size: 0.45rem; text-transform: uppercase; font-weight: 600; opacity: 0.9; }
         .slot-badge b { font-size: 0.7rem; font-weight: 700; }
-        /* Les vraies couleurs OUV / FERM */
         .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
         .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
 
@@ -299,86 +304,88 @@
 <body>
 <div class="app-container">
 
-<div class="sticky-header">
-    <div class="top-sponsor-banner" id="sponsor-banner">
-        <span class="sponsor-label">Sponsor</span>
-        <span class="sponsor-text" id="sponsor-text">Chargement...</span>
-    </div>
+    <div class="sticky-header">
+        <div class="top-sponsor-banner" id="sponsor-banner">
+            <span class="sponsor-label">Sponsor</span>
+            <span class="sponsor-text" id="sponsor-text">Chargement...</span>
+        </div>
 
-    <div class="top-nav" style="display: flex; justify-content: space-between; align-items: center;">
-        <div class="date-badge" id="current-date" style="font-size: 0.6rem; font-weight: 700; border: 1px solid #e2e8f0; padding: 6px; border-radius: 8px; background: white;">-- --</div>
-        <div class="nav-buttons" style="display: flex; gap: 5px;">
-            <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES & MARÉES</a>
-            <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
+        <div class="top-nav" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="date-badge" id="current-date" style="font-size: 0.6rem; font-weight: 700; border: 1px solid #e2e8f0; padding: 6px; border-radius: 8px; background: white;">-- --</div>
+            <div class="nav-buttons" style="display: flex; gap: 5px;">
+                <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES & MARÉES</a>
+                <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
+            </div>
+        </div>
+        <h1 class="main-title">Port Barneville-Carteret<sup>*</sup></h1>
+        <div class="lang-switch">
+            <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span> 
+            <span style="color: #cbd5e1; font-size: 1rem; vertical-align: middle; margin: 0 5px;">|</span> 
+            <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
         </div>
     </div>
-    <h1 class="main-title">Port Barneville-Carteret<sup>*</sup></h1>
-<div class="lang-switch">
-    <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span> 
-    <span style="color: #cbd5e1; font-size: 1rem; vertical-align: middle; margin: 0 5px;">|</span> 
-    <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
-</div>
-</div>
         
-        <div class="module">
-            <div id="status-box" class="status-box closed">
-                <span class="status-label" data-i18n="label_gate">Porte</span>
-                <span class="status-value" id="status-text">--</span>
-            </div>
-            
-            <div class="progress-wrapper" id="progress-wrapper">
-                <div class="progress-container" id="progress-container">
-                    <div class="progress-bar" id="progress-bar"></div>
-                    <div class="progress-text" id="time-left">--</div>
-                </div>
-            </div>
-
-            <div class="slot-line-container">
-                <div class="slot-title">Créneaux officiels :</div>
-                <div class="slot-pills">
-                    <div class="slot-badge badge-open"><span>OUV.</span><b id="open-time">--:--</b></div>
-                    <div class="slot-badge badge-close"><span>FERM.</span><b id="close-time">--:--</b></div>
-                </div>
+    <div class="module">
+        <div id="status-box" class="status-box closed">
+            <span class="status-label" data-i18n="label_gate">Porte</span>
+            <span class="status-value" id="status-text">--</span>
+        </div>
+        
+        <div class="progress-wrapper" id="progress-wrapper">
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-text" id="time-left">--</div>
             </div>
         </div>
 
-        <div class="module">
-            <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;">Informations marée</div>
-            <div class="tide-full-module">
-                <div class="tide-header-info">
-                    <div id="tide-left-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
-                    <div style="font-size:0.7rem; font-weight:700;">COEFF <span id="coeff-display" style="color:var(--marine-blue);">--</span></div>
-                    <div id="tide-right-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
-                </div>
-                <canvas id="tideCanvasLarge" style="width:100%; height:80px;"></canvas>
-                <div class="tide-footer-info" style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:700;">
-                    <div id="tide-left-data"><span id="val-left">--</span></div>
-                    <div id="tide-right-data"><span id="val-right">--</span></div>
-                </div>
+        <div class="slot-line-container">
+            <div class="slot-title">Créneaux officiels :</div>
+            <div class="slot-pills">
+                <div class="slot-badge badge-open"><span>OUV.</span><b id="open-time">--:--</b></div>
+                <div class="slot-badge badge-close"><span>FERM.</span><b id="close-time">--:--</b></div>
             </div>
         </div>
-
-        <div class="module">
-            <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;">Conditions météo</div>
-            <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden;">
-                <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&overlay=wind&product=ecmwf&marker=true&metricWind=kt" frameborder="0"></iframe>
-            </div>
-        </div>
-
-        <div class="disclaimer" style="font-size:0.65rem; color:#64748b; text-align:center; padding:10px;">
-            <strong style="color:#b03a2e;">* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
-        </div>
-<div class="footer-module">
-    <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;">Plus d'informations</span>
-    <div class="footer-buttons">
-        <a href="securite.html" class="btn-action btn-footer" style="background: #b03a2e;" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
-        <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES</a>
-        <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
-        <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
     </div>
-</div>
-    </div> 
-    <script>
+
+    <div class="module">
+        <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;">Informations marée</div>
+        <div class="tide-full-module">
+            <div class="tide-header-info">
+                <div id="tide-left-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
+                <div style="font-size:0.7rem; font-weight:700;">COEFF <span id="coeff-display" style="color:var(--marine-blue);">--</span></div>
+                <div id="tide-right-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
+            </div>
+            <canvas id="tideCanvasLarge" style="width:100%; height:80px;"></canvas>
+            <div class="tide-footer-info" style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:700;">
+                <div id="tide-left-data"><span id="val-left">--</span></div>
+                <div id="tide-right-data"><span id="val-right">--</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;">Conditions météo</div>
+        <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden;">
+            <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&overlay=wind&product=ecmwf&marker=true&metricWind=kt" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <div class="disclaimer" style="font-size:0.65rem; color:#64748b; text-align:center; padding:10px;">
+        <strong style="color:#b03a2e;">* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+    </div>
+
+    <div class="footer-module">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;">Plus d'informations</span>
+        <div class="footer-buttons">
+            <a href="securite.html" class="btn-action btn-footer" style="background: #b03a2e;" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
+            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES</a>
+            <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
+            <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
+        </div>
+    </div>
+</div> 
+
+<script>
     window.onload = function() {
         if (typeof data !== 'undefined') {
             updateApp();
@@ -386,7 +393,7 @@
         }
     };
      
-function updateSponsor() {
+    function updateSponsor() {
         const hour = new Date().getHours();
         const sponsorText = document.getElementById('sponsor-text');
         if (!sponsorText) return;
@@ -408,6 +415,7 @@ function updateSponsor() {
             sponsorText.innerHTML = "⚓ Naviguez en toute sécurité avec la Banque Maritime.";
         }
     }
+
     function drawTideGraph(percent, isDescending) {
         const canvas = document.getElementById('tideCanvasLarge');
         if(!canvas) return;
@@ -449,11 +457,10 @@ function updateSponsor() {
         const localISOTime = (new Date(now - tzoffset)).toISOString().slice(0, -1);
         const dateStr = localISOTime.split('T')[0];
         
-document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
+        document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
         updateSponsor();
         if (typeof data === 'undefined' || data.length === 0) return;
 
-        // --- CORRECTION DU BUG DE MINUIT ---
         // On récupère hier, aujourd'hui et demain pour faire une chronologie parfaite
         const yesterdayStr = new Date(now.getTime() - 86400000 - tzoffset).toISOString().split('T')[0];
         const tomorrowStr = new Date(now.getTime() + 86400000 - tzoffset).toISOString().split('T')[0];
@@ -517,6 +524,9 @@ document.getElementById('current-date').innerText = now.toLocaleDateString('fr-F
         const pb = document.getElementById('progress-bar');
         wrapper.style.display = "block";
 
+        // IMPORTANT : Utilisation du dictionnaire de traduction pour les textes modifiés par JS
+        const currentLang = localStorage.getItem('preferredLang') || 'fr';
+
         if (activePorte) {
             const diffMs = activePorte.sC - now;
             const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
@@ -527,9 +537,20 @@ document.getElementById('current-date').innerText = now.toLocaleDateString('fr-F
             pb.style.width = percent + "%";
             pbContainer.className = "progress-container";
             
-            let circleClass = "open"; let statusText = "OUVERTE"; let labelText = "PORTE";
-            if (diffMs < 25 * 60 * 1000) { pbContainer.classList.add("danger"); circleClass = "danger"; statusText = "IMMINENTE"; labelText = "FERMETURE"; }
-            else if (percent > 85) { pbContainer.classList.add("warning"); circleClass = "warning"; statusText = "PROCHAINE"; labelText = "FERMETURE"; }
+            let circleClass = "open"; 
+            // On utilise les traductions au lieu du texte en dur
+            let statusText = translations[currentLang]?.status_open || "OUVERTE"; 
+            let labelText = translations[currentLang]?.label_gate || "PORTE";
+            
+            if (diffMs < 25 * 60 * 1000) { 
+                pbContainer.classList.add("danger"); circleClass = "danger"; 
+                statusText = "IMMINENTE"; labelText = "FERMETURE"; 
+            }
+            else if (percent > 85) { 
+                pbContainer.classList.add("warning"); circleClass = "warning"; 
+                statusText = translations[currentLang]?.next_close || "PROCHAINE FERMETURE"; 
+                labelText = ""; 
+            }
             
             document.getElementById('status-text').innerText = statusText;
             document.querySelector('.status-label').innerText = labelText;
@@ -546,8 +567,8 @@ document.getElementById('current-date').innerText = now.toLocaleDateString('fr-F
             pbContainer.className = "progress-container waiting";
             pb.style.width = waitPercent + "%";
             
-            document.getElementById('status-text').innerText = "FERMÉE";
-            document.querySelector('.status-label').innerText = "PORTE";
+            document.getElementById('status-text').innerText = translations[currentLang]?.status_closed || "FERMÉE";
+            document.querySelector('.status-label').innerText = translations[currentLang]?.label_gate || "PORTE";
             document.getElementById('status-box').className = "status-box closed";
             document.getElementById('open-time').innerText = nextPorte.openStr;
             document.getElementById('close-time').innerText = nextPorte.closeStr;
@@ -567,47 +588,56 @@ document.getElementById('current-date').innerText = now.toLocaleDateString('fr-F
             const tidePercent = ((now - prevTide.dateObj) / (nextTide.dateObj - prevTide.dateObj)) * 100;
             const isDescending = (prevTide.type === "PM");
 
-            // Nettoyage des coefficients
             let coeffText = prevTide.c && prevTide.c !== "-" ? prevTide.c : (nextTide.c && nextTide.c !== "-" ? nextTide.c : "--");
             
             document.getElementById('coeff-display').innerText = coeffText;
-            document.getElementById('tide-left-label').innerText = prevTide.label;
-            document.getElementById('tide-right-label').innerText = nextTide.label;
+            
+            // Traduction des labels de marées
+            const leftLabelTrad = prevTide.type === "PM" ? (translations[currentLang]?.high_tide || "Pleine Mer") : (translations[currentLang]?.low_tide || "Basse Mer");
+            const rightLabelTrad = nextTide.type === "PM" ? (translations[currentLang]?.high_tide || "Pleine Mer") : (translations[currentLang]?.low_tide || "Basse Mer");
+
+            document.getElementById('tide-left-label').innerText = leftLabelTrad;
+            document.getElementById('tide-right-label').innerText = rightLabelTrad;
             document.getElementById('val-left').innerText = prevTide.time + " (" + prevTide.h + "m)";
             document.getElementById('val-right').innerText = nextTide.time + " (" + nextTide.h + "m)";
             
             drawTideGraph(tidePercent, isDescending);
         }
     }
-            </script>
+</script>
 <script src="lang.js"></script>
 
-    <script>
-        function setLanguage(lang) {
-            // Met à jour les boutons visuellement
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById(`btn-${lang}`);
-            if (activeBtn) activeBtn.classList.add('active');
+<script>
+    function setLanguage(lang) {
+        // Met à jour les boutons visuellement
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.getElementById(`btn-${lang}`);
+        if (activeBtn) activeBtn.classList.add('active');
 
-            // Traduit tous les éléments avec data-i18n
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    el.innerText = translations[lang][key];
-                }
-            });
-
-            // Sauvegarde le choix
-            localStorage.setItem('preferredLang', lang);
-        }
-
-        // LA LOGIQUE DE DÉTECTION AUTOMATIQUE (À mettre ici)
-        document.addEventListener('DOMContentLoaded', () => {
-            const browserLang = navigator.language.substring(0, 2);
-            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
-            
-            setLanguage(savedLang);
+        // Traduit tous les éléments avec data-i18n
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                el.innerText = translations[lang][key];
+            }
         });
-    </script>
+
+        // Sauvegarde le choix
+        localStorage.setItem('preferredLang', lang);
+
+        // Relance la mise à jour pour forcer la traduction du statut calculé
+        if (typeof updateApp === "function") {
+            updateApp(); 
+        }
+    }
+
+    // LA LOGIQUE DE DÉTECTION AUTOMATIQUE
+    document.addEventListener('DOMContentLoaded', () => {
+        const browserLang = navigator.language.substring(0, 2);
+        const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+        
+        setLanguage(savedLang);
+    });
+</script>
 </body>
 </html>
