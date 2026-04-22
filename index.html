@@ -375,7 +375,7 @@ function updateSponsor() {
         const dateStr = localISOTime.split('T')[0];
         
         document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
-        
+        updateSponsor();
         if (typeof data === 'undefined' || data.length === 0) return;
 
         // --- CORRECTION DU BUG DE MINUIT ---
