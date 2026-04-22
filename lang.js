@@ -8,7 +8,8 @@ const translations = {
         btn_planning: "PORTES & MARÉES",
         btn_security: "🆘 SÉCURITÉ ET RAPPEL",
         low_tide: "BASSE MER",
-        high_tide: "PLEINE MER"
+        high_tide: "PLEINE MER",
+        btn-action: "PARTAGER"
     },
     en: {
         label_gate: "GATE",
@@ -19,6 +20,7 @@ const translations = {
         btn_planning: "GATE & TIDE",
         btn_security: "🆘 SAFETY & RULES",
         low_tide: "LOW TIDE",
-        high_tide: "HIGH TIDE"
+        high_tide: "HIGH TIDE",
+        btn-action: "SHARE"
     }
 };
