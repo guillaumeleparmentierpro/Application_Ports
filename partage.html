@@ -16,12 +16,54 @@
     <title>Partager l'application - Barneville-Carteret</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-bg: #f8fafc;
-            --card-bg: #ffffff;
-            --marine-blue: #1e3a8a;
-            --text-main: #1e293b;
-        }
+:root {
+    --primary-bg: #f8fafc;
+    --card-bg: #ffffff;
+    --marine-blue: #1e3a8a;
+    --text-main: #1e293b;
+    --border-color: #e2e8f0;
+}
+
+/* BLOC FIGÉ EN HAUT (Commun aux 3 pages) */
+.sticky-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background: var(--primary-bg);
+    z-index: 1000;
+    padding: 10px 15px 5px 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 10px;
+}
+
+/* TITRE IMPOSANT ET UNIFORME */
+.main-title {
+    font-size: 1.35rem; 
+    font-weight: 900;
+    color: var(--marine-blue);
+    text-align: center;
+    margin: 5px 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
+/* BOUTONS UNIFORMISÉS */
+.btn-action { 
+    text-decoration: none; 
+    background: var(--marine-blue);
+    color: #ffffff !important;
+    border: none; 
+    border-radius: 8px; 
+    padding: 6px 10px;
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 700; 
+    font-size: 0.6rem; 
+    display: inline-flex; 
+    align-items: center;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
         body { 
             font-family: 'Montserrat', sans-serif; 
@@ -35,28 +77,7 @@
             min-height: 100vh;
         }
 
-        .header {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            background: var(--card-bg);
-            padding: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            box-sizing: border-box;
-        }
 
-        .btn-back { text-decoration: none; background: var(--marine-blue); color: white; padding: 8px 15px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; }
-
-        .qr-container {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            text-align: center;
-            margin-top: 40px;
-            width: 80%;
-            max-width: 300px;
-        }
 
         .qr-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 10px; color: var(--marine-blue); }
         .qr-text { font-size: 0.85rem; color: #64748b; margin-bottom: 25px; line-height: 1.4; }
@@ -67,9 +88,12 @@
 </head>
 <body>
 
-    <div class="header">
-        <a href="index.html" class="btn-back">◀ RETOUR</a>
+<div class="sticky-header">
+    <div class="top-nav" style="display: flex; align-items: center; margin-bottom: 5px;">
+        <a href="index.html" class="btn-action">◀ RETOUR</a>
     </div>
+    <h1 class="main-title">Port de Barneville-Carteret<sup>*</sup></h1>
+</div>
 
     <div class="qr-container">
         <div class="qr-title">Partagez l'application</div>
