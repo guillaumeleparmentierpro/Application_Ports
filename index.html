@@ -181,14 +181,23 @@
     vertical-align: super; 
 }
 .lang-switch {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--marine-blue);
-    cursor: pointer;
-    margin-bottom: 5px;
+    text-align: center; /* C'est cette ligne qui centre les drapeaux ! */
+    margin: 15px 0 5px 0;
+    font-size: 1.5rem; /* On agrandit un peu pour les drapeaux */
 }
-.lang-btn { opacity: 0.5; transition: 0.3s; }
-.lang-btn.active { opacity: 1; border-bottom: 2px solid var(--marine-blue); }
+
+.lang-btn { 
+    cursor: pointer;
+    opacity: 0.3; /* Très transparent quand ce n'est pas sélectionné */
+    transition: opacity 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.lang-btn.active { 
+    opacity: 1; /* Pleine couleur quand c'est sélectionné */
+    transform: scale(1.15); /* Le drapeau actif grossit très légèrement */
+}
 .btn-action { 
     text-decoration: none; 
     background: var(--marine-blue);
@@ -302,9 +311,10 @@
         </div>
     </div>
     <h1 class="main-title">Port Barneville-Carteret<sup>*</sup></h1>
-    <div class="lang-switch">
-    <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active">FR</span> | 
-    <span onclick="setLanguage('en')" id="btn-en" class="lang-btn">EN</span>
+<div class="lang-switch">
+    <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span> 
+    <span style="color: #cbd5e1; font-size: 1rem; vertical-align: middle; margin: 0 5px;">|</span> 
+    <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
 </div>
 </div>
         
