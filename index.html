@@ -236,12 +236,14 @@
             margin-bottom: 2px; 
         }
 
-        .status-value { 
-            font-size: 1.4rem; /* Réduit à 1.4 (était à 1.6) pour laisser de l'espace */
-            font-weight: 900; 
-            line-height: 1.1;
-            letter-spacing: -0.5px; /* Un très léger serrage pour gagner en élégance */
-        }
+.status-value {
+    font-size: 1.6rem; /* On réduit la taille de la police pour que ça rentre */
+    font-weight: 900;
+    margin: 5px 0;
+    letter-spacing: -0.5px; /* Resserre très légèrement les lettres entre elles */
+    line-height: 1;
+    padding: 0 10px; /* Ajoute une marge de sécurité invisible sur les côtés */
+}
 
         /* --- CORRECTION POUR LES MOTS TRÈS LONGS --- */
         .status-box.warning .status-value,
