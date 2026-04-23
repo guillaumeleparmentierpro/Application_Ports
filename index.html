@@ -82,7 +82,6 @@
         .slots-container { background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
         .slot-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         
-        /* CORRECTION ICI : Suppression de 'white-space: nowrap' pour autoriser le passage à la ligne */
         .slot-title { font-size: 0.6rem; font-weight: 700; color: var(--marine-blue); line-height: 1.3; margin-right: 5px; text-transform: uppercase; flex: 1; }
         .slot-title.secondary { color: #64748b; }
         
@@ -97,7 +96,10 @@
         /* MARÉES */
         .tide-full-module { background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; padding: 15px 10px; margin: 0 12px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
         .tide-header-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; font-weight: 700; color: var(--marine-blue); }
-        .tide-column { flex: 1; }
+        
+        /* CORRECTION : flex-basis pour forcer les 3 colonnes à être de largeur identique */
+        .tide-column { flex: 1; flex-basis: 33.33%; min-width: 0; } 
+        
         #tideCanvasLarge { width: 100%; height: 80px; }
         .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
         
@@ -170,7 +172,7 @@
                     <div id="tide-left-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
                 </div>
                 
-                <div class="tide-column" style="display:flex; flex-direction:column; align-items:center; justify-content:center; line-height: 1.1;">
+                <div class="tide-column" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; line-height: 1.1;">
                     <span data-i18n="coeff" style="font-size:0.6rem; font-weight:700; color:#64748b;">COEFF</span> 
                     <span id="coeff-display" style="color:var(--marine-blue); font-size: 1.4rem; font-weight: 900;">--</span>
                 </div>
