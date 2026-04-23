@@ -44,12 +44,12 @@
         /* --- CONTENEUR PRINCIPAL --- */
         .app-container {
             width: 100%;
-            max-width: 450px; /* Format téléphone */
+            max-width: 450px; 
             margin: 0 auto;
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
-            padding-bottom: 20px;
+            padding-bottom: 30px;
         }
 
         /* --- EN-TÊTE UNIVERSELLE --- */
@@ -105,7 +105,7 @@
             vertical-align: super; 
         }
 
-        /* --- LE MODULE (Casquette bleue) --- */
+        /* --- LE MODULE --- */
         .module {
             background: var(--card-bg);
             border-radius: 12px;
@@ -134,6 +134,30 @@
             margin-bottom: 20px;
         }
 
+        /* --- BOUTON DE PARTAGE NATIF --- */
+        .btn-large-share {
+            background: var(--marine-blue);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+        }
+
+        .btn-large-share:active { 
+            transform: scale(0.98); 
+        }
+
         /* --- CONTENU SPÉCIFIQUE (QR Code) --- */
         .qr-image { 
             width: 200px; 
@@ -155,16 +179,23 @@
     <div class="app-container">
 
         <div class="sticky-header">
-            
             <div class="top-nav" style="display: flex; margin-bottom: 5px;">
                 <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
             </div>
-            
             <h1 class="main-title" data-i18n="share_title">Partagez l'application</h1>
-            
         </div>
 
         <div class="module">
+            <h2 class="module-title" data-i18n="share_link_title">Envoyer le lien</h2>
+            <p class="module-text" data-i18n="share_link_desc">Envoyez l'application directement à vos amis par SMS, WhatsApp, Signal ou E-mail.</p>
+            
+            <button class="btn-large-share" onclick="shareApp()">
+                <span data-i18n="share_btn_text">📤 Partager l'application</span>
+            </button>
+        </div>
+
+        <div class="module">
+            <h2 class="module-title">QR Code</h2>
             <p class="module-text" data-i18n="share_desc">Faites scanner ce QR Code à un autre marin pour qu'il accède directement aux horaires du port.</p>
             
             <div style="background: white; padding: 20px; border-radius: 15px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 10px auto;">
@@ -178,6 +209,7 @@
 
    <script src="lang.js"></script>
    <script>
+       // Logique de traduction
        document.addEventListener('DOMContentLoaded', () => {
            const browserLang = navigator.language.substring(0, 2);
            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
@@ -189,6 +221,35 @@
                }
            });
        });
+
+       // Logique de partage natif
+       function shareApp() {
+           // On nettoie l'URL pour renvoyer vers l'accueil (index.html) et pas sur la page de partage
+           const appUrl = window.location.href.replace('partage.html', 'index.html');
+           const lang = localStorage.getItem('preferredLang') || 'fr';
+           
+           // Texte personnalisé selon la langue
+           const shareText = lang === 'en' 
+               ? "Check out the Barneville-Carteret port app! ⚓" 
+               : "Découvre l'application du port de Barneville-Carteret ! ⚓";
+
+           // Vérifie si le téléphone supporte le partage natif (iOS / Android)
+           if (navigator.share) {
+               navigator.share({
+                   title: 'Port Barneville-Carteret',
+                   text: shareText,
+                   url: appUrl
+               }).catch(err => {
+                   console.log("Partage annulé ou échoué", err);
+               });
+           } else {
+               // Si on est sur un vieil appareil ou un PC classique, on copie le lien
+               navigator.clipboard.writeText(appUrl).then(() => {
+                   const msg = (translations[lang] && translations[lang].share_copied) ? translations[lang].share_copied : "Lien copié dans le presse-papier !";
+                   alert(msg);
+               });
+           }
+       }
    </script>
 </body>
 </html>
