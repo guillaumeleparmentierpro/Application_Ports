@@ -144,14 +144,14 @@
 
         <div class="slots-container">
             <div class="slot-row">
-                <div class="slot-title" id="title-slot-1">Créneaux officiels Actuels :</div>
+                <div class="slot-title" id="title-slot-1">Créneaux officiels</div>
                 <div class="slot-pills">
                     <div class="slot-badge badge-open"><span id="label-ouv">OUV.</span><b id="open-time">--:--</b></div>
                     <div class="slot-badge badge-close"><span id="label-ferm">FERM.</span><b id="close-time">--:--</b></div>
                 </div>
             </div>
             <div class="slot-row">
-                <div class="slot-title secondary" id="title-slot-2">Créneaux officiels Prochains :</div>
+                <div class="slot-title secondary" id="title-slot-2">Prochains créneaux</div>
                 <div class="slot-pills" style="opacity: 0.85;">
                     <div class="slot-badge badge-open"><span id="label-ouv-next">OUV.</span><b id="open-time-next">--:--</b></div>
                     <div class="slot-badge badge-close"><span id="label-ferm-next">FERM.</span><b id="close-time-next">--:--</b></div>
@@ -350,8 +350,8 @@
             return baseLabel;
         }
 
-        document.getElementById('title-slot-1').innerText = formatTitle(futurePortes[0], t.slot_current || "Créneaux officiels Actuels :");
-        document.getElementById('title-slot-2').innerText = formatTitle(futurePortes[1], t.slot_next || "Créneaux officiels Prochains :");
+        document.getElementById('title-slot-1').innerText = formatTitle(futurePortes[0], t.slot_current || "Créneaux officiels");
+        document.getElementById('title-slot-2').innerText = formatTitle(futurePortes[1], t.slot_next || "Prochains créneaux");
 
         if (futurePortes[0]) {
             document.getElementById('open-time').innerText = futurePortes[0].openStr;
