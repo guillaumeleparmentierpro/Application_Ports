@@ -81,11 +81,12 @@
         /* DESIGN DOUBLE CRÉNEAU SUR 2 LIGNES AVEC TAILLE FIXE */
         .slots-container { background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
         .slot-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .slot-title { font-size: 0.6rem; font-weight: 700; color: var(--marine-blue); white-space: nowrap; margin-right: 5px; text-transform: uppercase; flex: 1; }
-        .slot-title.secondary { color: #64748b; }
-        .slot-pills { display: flex; gap: 5px; flex-shrink: 0; }
         
-        /* Taille de 72px fixée pour que tout s'aligne parfaitement verticalement */
+        /* CORRECTION ICI : Suppression de 'white-space: nowrap' pour autoriser le passage à la ligne */
+        .slot-title { font-size: 0.6rem; font-weight: 700; color: var(--marine-blue); line-height: 1.3; margin-right: 5px; text-transform: uppercase; flex: 1; }
+        .slot-title.secondary { color: #64748b; }
+        
+        .slot-pills { display: flex; gap: 5px; flex-shrink: 0; }
         .slot-badge { width: 72px; padding: 5px 0; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 3px; color: white; }
         .slot-badge span { font-size: 0.45rem; text-transform: uppercase; font-weight: 600; opacity: 0.9; }
         .slot-badge b { font-size: 0.75rem; font-weight: 700; }
@@ -93,7 +94,7 @@
         .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
         .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
         
-        /* MARÉES : ALIGNEMENT SUR 3 COLONNES DE 33% */
+        /* MARÉES */
         .tide-full-module { background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; padding: 15px 10px; margin: 0 12px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
         .tide-header-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; font-weight: 700; color: var(--marine-blue); }
         .tide-column { flex: 1; }
