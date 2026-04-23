@@ -2,19 +2,7 @@
 <html lang="fr">
 <head>
     <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1e3a8a">
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-5LY18V5457');
-</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#1e3a8a">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -22,6 +10,9 @@
       gtag('js', new Date());
       gtag('config', 'G-5LY18V5457');
     </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
     <title>Planning - Barneville-Carteret</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
@@ -39,69 +30,68 @@
         --today-bg: #fef9c3;
     }
 
-    /* On bloque le défilement de toute la page */
     body { 
         font-family: 'Montserrat', sans-serif; 
         background: var(--primary-bg); 
         margin: 0; 
         padding: 0; 
         color: var(--text-main);
-        height: 100vh; /* Prend 100% de l'écran du Pixel */
+        height: 100vh; 
         display: flex;
         flex-direction: column;
-        overflow: hidden; /* Empêche la page entière de scroller */
+        overflow: hidden; 
     }
-/* --- LE TITRE UNIVERSEL --- */
-.main-title {
-    font-size: 1.05rem; /* La taille magique pour tenir sur 1 ligne */
-    font-weight: 700; /* Même épaisseur sur toutes les pages */
-    color: var(--marine-blue);
-    text-align: center;
-    margin: 5px 0 8px 0;
-    text-transform: uppercase;
-    letter-spacing: -0.5px;
-    line-height: 1.1;
-    white-space: nowrap; /* Force à rester sur une seule ligne */
-    width: 100%;
-    display: block; /* S'assure qu'il va bien en dessous des boutons */
-}
 
-.main-title sup { 
-    color: #b03a2e; 
-    font-size: 0.75rem; 
-    vertical-align: super; 
-}
-/* BLOC FIGÉ EN HAUT (Commun aux 3 pages) */
-.sticky-header {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    background: var(--primary-bg);
-    z-index: 1000;
-    padding: 10px 15px 5px 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    margin-bottom: 15px;
-}
+    .main-title {
+        font-size: 1.05rem; 
+        font-weight: 700; 
+        color: var(--marine-blue);
+        text-align: center;
+        margin: 5px 0 8px 0;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        line-height: 1.1;
+        white-space: nowrap; 
+        width: 100%;
+        display: block; 
+    }
 
-.btn-action { 
-    text-decoration: none; 
-    background: var(--marine-blue);
-    color: #ffffff !important;
-    border: none; 
-    border-radius: 8px; 
-    padding: 6px 10px;
-    font-family: 'Montserrat', sans-serif; 
-    font-weight: 700; 
-    font-size: 0.6rem; 
-    display: inline-flex; 
-    align-items: center;
-    white-space: nowrap;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+    .main-title sup { 
+        color: #b03a2e; 
+        font-size: 0.75rem; 
+        vertical-align: super; 
+    }
+
+    .sticky-header {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        background: var(--primary-bg);
+        z-index: 1000;
+        padding: 10px 15px 5px 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        margin-bottom: 15px;
+    }
+
+    .btn-action { 
+        text-decoration: none; 
+        background: var(--marine-blue);
+        color: #ffffff !important;
+        border: none; 
+        border-radius: 8px; 
+        padding: 6px 10px;
+        font-family: 'Montserrat', sans-serif; 
+        font-weight: 700; 
+        font-size: 0.6rem; 
+        display: inline-flex; 
+        align-items: center;
+        white-space: nowrap;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
     .page-title { font-size: 0.95rem; font-weight: 700; margin: 0; }
     .page-title sup { color: #b03a2e; font-size: 0.6rem; }
 
-    /* LE CONTENEUR DU TABLEAU : C'est lui qui scrolle maintenant */
     .table-container {
         flex-grow: 1;
         overflow: auto; 
@@ -117,10 +107,9 @@
         background: var(--card-bg);
     }
 
-    /* --- FIXATION DES TITRES (Sticky Vertical) --- */
     thead th {
         position: sticky;
-        background-color: #f1f5f9 !important; /* Fond opaque obligatoire */
+        background-color: #f1f5f9 !important; 
         color: var(--text-main);
         padding: 10px 8px;
         border-bottom: 1px solid var(--border-color);
@@ -129,70 +118,53 @@
         z-index: 10;
     }
 
-    /* Ligne 1 (MATIN / SOIR) : Tout en haut du container qui scrolle */
-    thead tr:nth-child(1) th { 
-        top: 0; 
-        height: 45px; 
-        z-index: 110; 
-    }
-    
-    /* Ligne 2 (Sous-titres Porte, PM, BM, Coeff) : Collée sous la ligne 1 */
-    thead tr:nth-child(2) th { 
-        top: 45px; 
-        height: 35px;
-        z-index: 110; 
+    thead tr:nth-child(1) th { top: 0; height: 45px; z-index: 110; }
+    thead tr:nth-child(2) th { top: 45px; height: 35px; z-index: 110; }
+
+    .sticky-col {
+        position: sticky;
+        left: 0;
+        background-color: white !important;
+        z-index: 20;
+        border-right: 2px solid var(--marine-blue) !important;
+        min-width: 60px; 
     }
 
-    /* --- FIXATION DE LA COLONNE DATE (Sticky Horizontal + Vertical) --- */
-.sticky-col {
-    position: sticky;
-    left: 0;
-    background-color: white !important;
-    z-index: 20;
-    border-right: 2px solid var(--marine-blue) !important;
-    min-width: 60px; /* On lui garantit une largeur confortable */
-}
-
-    /* Le Coin "Date" en haut à gauche (Couvre les 2 hauteurs : 45+35=80px) */
     thead th.sticky-col { 
         top: 0 !important;
         height: 80px !important;
-        z-index: 300 !important; /* Roi du tableau, passe par-dessus tout */
+        z-index: 300 !important; 
     }
 
-    /* --- DESIGN DES CELLULES ET GROUPES --- */
-td { 
-    padding: 10px 4px; /* On réduit de 8px à 4px sur les côtés */
-    text-align: center; 
-    border-bottom: 1px solid var(--border-color); 
-    border-right: 1px solid var(--border-color); 
-    font-size: 0.75rem; 
-    /* white-space: nowrap;  <-- SUPPRIME OU COMMENTE CETTE LIGNE */
-}
+    td { 
+        padding: 10px 4px; 
+        text-align: center; 
+        border-bottom: 1px solid var(--border-color); 
+        border-right: 1px solid var(--border-color); 
+        font-size: 0.75rem; 
+    }
     
     .group-header { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; }
-.sub-header { 
-    font-size: 0.6rem; 
-    color: #475569; 
-    font-weight: 700; 
-    text-transform: uppercase; 
-    line-height: 1.1;
-    white-space: normal; /* Autorise le passage à la ligne */
-    max-width: 65px;    /* Force la largeur maximale pour les titres */
-    word-wrap: break-word;
-}
+    .sub-header { 
+        font-size: 0.6rem; 
+        color: #475569; 
+        font-weight: 700; 
+        text-transform: uppercase; 
+        line-height: 1.1;
+        white-space: normal; 
+        max-width: 65px;    
+        word-wrap: break-word;
+    }
     
     .matin-group { background-color: var(--matin-bg) !important; }
     .soir-group { background-color: var(--soir-bg) !important; }
 
-    /* --- WEEK-END ET AUJOURD'HUI --- */
     .today-row td { background-color: var(--today-bg) !important; }
     .today-row .sticky-col { border-left: 5px solid var(--marine-blue) !important; }
     
     .weekend td:not(.sticky-col) { background-color: var(--weekend-color) !important; }
     .weekend .sticky-col { background-color: #fee2e2 !important; } 
 
-    /* --- SÉPARATEUR DE MOIS --- */
     .month-separator td {
         background: var(--marine-blue) !important;
         color: white !important;
@@ -207,13 +179,12 @@ td {
         z-index: 15;
     }
 
-    /* --- DONNÉES ET ALERTES --- */
-.porte-line { 
-    font-weight: 700; 
-    font-size: 0.7rem; /* On descend de 0.8 à 0.7 */
-    display: block; 
-    white-space: nowrap; /* On garde l'horaire sur une ligne pour la clarté */
-}
+    .porte-line { 
+        font-weight: 700; 
+        font-size: 0.7rem; 
+        display: block; 
+        white-space: nowrap; 
+    }
     .sep { color: #cbd5e1; margin: 0 3px; font-weight: 400; }
     .data-stack { display: flex; flex-direction: column; }
     .data-main { font-weight: 700; font-size: 0.8rem; }
@@ -222,137 +193,157 @@ td {
     .high-tide-text { color: #ef4444 !important; font-weight: 700; }
     .coeff-badge { background: var(--marine-blue); color: white; padding: 3px 6px; border-radius: 4px; font-weight: 700; display: inline-block; }
     .coeff-badge.high { background: #ef4444 !important; }
+    
+    /* Indication scrollable */
+    .scroll-hint { font-size: 0.75rem; text-align: center; color: var(--marine-blue); padding: 5px 0; font-weight: 600; background: #e0e7ff; margin-bottom: 5px; }
 </style>
 </head>
 <body>
 
-<div class="sticky-header">
-    
-    <div class="top-nav" style="display: flex; margin-bottom: 5px;">
-        <a href="index.html" class="btn-action">◀ RETOUR</a>
+    <div class="sticky-header">
+        <div class="top-nav" style="display: flex; margin-bottom: 5px;">
+            <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
+        </div>
+        <h1 class="main-title">PORT BARNEVILLE-CARTERET<sup>*</sup></h1>
     </div>
-    
-    <h1 class="main-title">PORT BARNEVILLE-CARTERET<sup>*</sup></h1>
-    
-</div>
 
-    <div class="scroll-hint">👉 Glissez le tableau vers la gauche pour voir le SOIR</div>
+    <div class="scroll-hint" data-i18n="plan_scroll_hint">👉 Glissez le tableau vers la gauche pour voir le SOIR</div>
 
     <div class="table-container">
         <table>
-<thead>
-    <tr>
-        <th class="sticky-col" rowspan="2">Date</th>
-        <th class="group-header matin-group" colspan="4">☀️ MATIN</th>
-        <th class="group-header soir-group" colspan="4">🌙 SOIR</th>
-    </tr>
-    <tr>
-        <th class="sub-header matin-group">Porte (Ouv | Ferm)</th>
-        <th class="sub-header matin-group">Pleine Mer</th>
-        <th class="sub-header matin-group">Basse Mer</th>
-        <th class="sub-header matin-group">Coeff</th>
-        <th class="sub-header soir-group">Porte (Ouv | Ferm)</th>
-        <th class="sub-header soir-group">Pleine Mer</th>
-        <th class="sub-header soir-group">Basse Mer</th>
-        <th class="sub-header soir-group">Coeff</th>
-    </tr>
-</thead>
+            <thead>
+                <tr>
+                    <th class="sticky-col" rowspan="2" data-i18n="plan_date">Date</th>
+                    <th class="group-header matin-group" colspan="4" data-i18n="plan_morning">☀️ MATIN</th>
+                    <th class="group-header soir-group" colspan="4" data-i18n="plan_evening">🌙 SOIR</th>
+                </tr>
+                <tr>
+                    <th class="sub-header matin-group" data-i18n="plan_gate_col">Porte (Ouv | Ferm)</th>
+                    <th class="sub-header matin-group" data-i18n="plan_high_tide">Pleine Mer</th>
+                    <th class="sub-header matin-group" data-i18n="plan_low_tide">Basse Mer</th>
+                    <th class="sub-header matin-group" data-i18n="plan_coeff">Coeff</th>
+                    <th class="sub-header soir-group" data-i18n="plan_gate_col">Porte (Ouv | Ferm)</th>
+                    <th class="sub-header soir-group" data-i18n="plan_high_tide">Pleine Mer</th>
+                    <th class="sub-header soir-group" data-i18n="plan_low_tide">Basse Mer</th>
+                    <th class="sub-header soir-group" data-i18n="plan_coeff">Coeff</th>
+                </tr>
+            </thead>
             <tbody id="planning-body">
-                </tbody>
+            </tbody>
         </table>
     </div>
 
+    <script src="lang.js"></script>
+
     <script>
-function generateTable() {
-    const tbody = document.getElementById('planning-body');
-    const today = new Date().toISOString().split('T')[0];
-    
-    if (typeof data === 'undefined') return;
-    tbody.innerHTML = "";
-    
-    let currentMonthStr = ""; // Pour suivre le mois en cours
+    function generateTable() {
+        const tbody = document.getElementById('planning-body');
+        const today = new Date().toISOString().split('T')[0];
+        
+        if (typeof data === 'undefined') return;
+        tbody.innerHTML = "";
+        
+        let currentMonthStr = ""; 
 
-    data.forEach(jour => {
-        const d = new Date(jour.date);
-        const isToday = (jour.date === today);
-        const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
-        
-        // --- NOUVEAUTÉ : GESTION DU CHANGEMENT DE MOIS ---
-        const monthName = d.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
-        
-        if (monthName !== currentMonthStr) {
-            // C'est un nouveau mois, on insère la ligne bleue !
-            const sepRow = `
-                <tr class="month-separator">
-                    <td colspan="9">${monthName}</td>
+        // On récupère la langue pour adapter le format des dates
+        const currentLang = localStorage.getItem('preferredLang') || 'fr';
+        // 'en-GB' donne le format Européen pour l'anglais (Jour puis Mois)
+        const locale = currentLang === 'en' ? 'en-GB' : 'fr-FR';
+
+        data.forEach(jour => {
+            const d = new Date(jour.date);
+            const isToday = (jour.date === today);
+            const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
+            
+            // Le mois s'adapte automatiquement à la langue !
+            const monthName = d.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
+            
+            if (monthName !== currentMonthStr) {
+                const sepRow = `
+                    <tr class="month-separator">
+                        <td colspan="9">${monthName}</td>
+                    </tr>`;
+                tbody.innerHTML += sepRow;
+                currentMonthStr = monthName; 
+            }
+
+            // Les jours s'adaptent aussi (LUN vs MON)
+            const dayLabel = d.toLocaleDateString(locale, { weekday: 'short' }).toUpperCase();
+            const dayNum = d.toLocaleDateString(locale, { day: '2-digit', month: 'short' });
+            
+            const p1 = jour.portes && jour.portes[0] ? jour.portes[0] : {open:"--", close:"--"};
+            const p2 = jour.portes && jour.portes[1] ? jour.portes[1] : {open:"--", close:"--"};
+
+            const isHigh1 = parseInt(jour.coeff1) >= 90;
+            const isHigh2 = parseInt(jour.coeff2) >= 90;
+
+            const row = `
+                <tr class="${isWeekend ? 'weekend' : ''} ${isToday ? 'today-row' : ''}" ${isToday ? 'id="today-marker"' : ''}>
+                    <td class="sticky-col">
+                        <div class="data-stack"><span class="data-main">${dayLabel}</span><span class="data-sub">${dayNum}</span></div>
+                    </td>
+                    
+                    <td class="matin-group">
+                        <div class="porte-line">
+                            <span style="color: #067a5c;">${p1.open}</span> <span class="sep">|</span> <span style="color: #991b1b;">${p1.close}</span>
+                        </div>
+                    </td>
+                    <td class="matin-group ${isHigh1 ? 'high-tide-text' : ''}">
+                        <div class="data-stack"><span class="data-main">${jour.pm1 || '--'}</span><span class="data-sub">${jour.pm1_h ? jour.pm1_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="matin-group">
+                        <div class="data-stack"><span class="data-main">${jour.bm1 || '--'}</span><span class="data-sub">${jour.bm1_h ? jour.bm1_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="matin-group">
+                        <span class="coeff-badge ${isHigh1 ? 'high' : ''}">${jour.coeff1 || '--'}</span>
+                    </td>
+
+                    <td class="soir-group">
+                        <div class="porte-line">
+                            <span style="color: #067a5c;">${p2.open}</span> <span class="sep">|</span> <span style="color: #991b1b;">${p2.close}</span>
+                        </div>
+                    </td>
+                    <td class="soir-group ${isHigh2 ? 'high-tide-text' : ''}">
+                        <div class="data-stack"><span class="data-main">${jour.pm2 || '--'}</span><span class="data-sub">${jour.pm2_h ? jour.pm2_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="soir-group">
+                        <div class="data-stack"><span class="data-main">${jour.bm2 || '--'}</span><span class="data-sub">${jour.bm2_h ? jour.bm2_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="soir-group">
+                        <span class="coeff-badge ${isHigh2 ? 'high' : ''}">${jour.coeff2 || '--'}</span>
+                    </td>
                 </tr>`;
-            tbody.innerHTML += sepRow;
-            currentMonthStr = monthName; // On met à jour le mois en cours
-        }
-        // ---------------------------------------------------
+            
+            tbody.innerHTML += row;
+        });
 
-        const dayLabel = d.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase();
-        const dayNum = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
-        
-        const p1 = jour.portes && jour.portes[0] ? jour.portes[0] : {open:"--", close:"--"};
-        const p2 = jour.portes && jour.portes[1] ? jour.portes[1] : {open:"--", close:"--"};
+        setTimeout(() => {
+            const container = document.querySelector('.table-container');
+            const todayEl = document.getElementById('today-marker');
+            if (container && todayEl) {
+                const topPos = todayEl.offsetTop - 100;
+                container.scrollTo({ top: topPos, behavior: 'smooth' });
+            }
+        }, 300);
+    }
+    </script>
 
-        const isHigh1 = parseInt(jour.coeff1) >= 90;
-        const isHigh2 = parseInt(jour.coeff2) >= 90;
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Détection et application de la langue
+            const browserLang = navigator.language.substring(0, 2);
+            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[savedLang] && translations[savedLang][key]) {
+                    el.innerHTML = translations[savedLang][key]; 
+                }
+            });
 
-        const row = `
-            <tr class="${isWeekend ? 'weekend' : ''} ${isToday ? 'today-row' : ''}" ${isToday ? 'id="today-marker"' : ''}>
-                <td class="sticky-col">
-                    <div class="data-stack"><span class="data-main">${dayLabel}</span><span class="data-sub">${dayNum}</span></div>
-                </td>
-                
-                <td class="matin-group">
-                    <div class="porte-line">
-                        <span style="color: #067a5c;">${p1.open}</span> <span class="sep">|</span> <span style="color: #991b1b;">${p1.close}</span>
-                    </div>
-                </td>
-                <td class="matin-group ${isHigh1 ? 'high-tide-text' : ''}">
-                    <div class="data-stack"><span class="data-main">${jour.pm1 || '--'}</span><span class="data-sub">${jour.pm1_h ? jour.pm1_h + 'm' : '-'}</span></div>
-                </td>
-                <td class="matin-group">
-                    <div class="data-stack"><span class="data-main">${jour.bm1 || '--'}</span><span class="data-sub">${jour.bm1_h ? jour.bm1_h + 'm' : '-'}</span></div>
-                </td>
-                <td class="matin-group">
-                    <span class="coeff-badge ${isHigh1 ? 'high' : ''}">${jour.coeff1 || '--'}</span>
-                </td>
-
-                <td class="soir-group">
-                    <div class="porte-line">
-                        <span style="color: #067a5c;">${p2.open}</span> <span class="sep">|</span> <span style="color: #991b1b;">${p2.close}</span>
-                    </div>
-                </td>
-                <td class="soir-group ${isHigh2 ? 'high-tide-text' : ''}">
-                    <div class="data-stack"><span class="data-main">${jour.pm2 || '--'}</span><span class="data-sub">${jour.pm2_h ? jour.pm2_h + 'm' : '-'}</span></div>
-                </td>
-                <td class="soir-group">
-                    <div class="data-stack"><span class="data-main">${jour.bm2 || '--'}</span><span class="data-sub">${jour.bm2_h ? jour.bm2_h + 'm' : '-'}</span></div>
-                </td>
-                <td class="soir-group">
-                    <span class="coeff-badge ${isHigh2 ? 'high' : ''}">${jour.coeff2 || '--'}</span>
-                </td>
-            </tr>`;
-        
-        tbody.innerHTML += row;
-    });
-
-    // On scroll vers aujourd'hui, avec un petit délai pour être sûr que le tableau est dessiné
-    setTimeout(() => {
-        const container = document.querySelector('.table-container');
-        const todayEl = document.getElementById('today-marker');
-        if (container && todayEl) {
-            // On calcule la position pour ne pas être caché par les titres
-            const topPos = todayEl.offsetTop - 100;
-            container.scrollTo({ top: topPos, behavior: 'smooth' });
-        }
-    }, 300);
-}
-        
-        window.onload = generateTable;
+            // On génère le tableau APRÈS avoir récupéré la langue pour les dates
+            generateTable();
+        });
     </script>
 </body>
 </html>
