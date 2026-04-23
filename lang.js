@@ -22,6 +22,15 @@ const translations = {
         footer_title: "Plus d'informations",
         today: "Aujourd'hui",
         tomorrow: "Demain",
+        // --- PAGE PLANNING ---
+        plan_scroll_hint: "👉 Glissez le tableau vers la gauche pour voir le SOIR",
+        plan_date: "Date",
+        plan_morning: "☀️ MATIN",
+        plan_evening: "🌙 SOIR",
+        plan_gate_col: "Porte (Ouv | Ferm)",
+        plan_high_tide: "Pleine Mer",
+        plan_low_tide: "Basse Mer",
+        plan_coeff: "Coeff",
         // --- NOUVEAUTÉS PAGE INDEX ---
         sponsor_label: "Sponsor",
         slots_title: "Créneaux officiels :",
@@ -98,6 +107,15 @@ const translations = {
         footer_title: "More information",
         today: "Today",
         tomorrow: "Tomorrow",
+        // --- PAGE PLANNING ---
+        plan_scroll_hint: "👉 Swipe the table left to see the EVENING",
+        plan_date: "Date",
+        plan_morning: "☀️ MORNING",
+        plan_evening: "🌙 EVENING",
+        plan_gate_col: "Gate (Open|Close)",
+        plan_high_tide: "High Tide",
+        plan_low_tide: "Low Tide",
+        plan_coeff: "Coeff",
 // --- NOUVEAUTÉS PAGE INDEX ---
         sponsor_label: "Sponsor",
         slots_title: "Official slots:",
