@@ -78,27 +78,25 @@
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
         .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none; }
         
-        /* DESIGN DOUBLE CRÉNEAU - CENTRÉ ET TAILLE FIXE */
-        .slots-wrapper { display: flex; flex-direction: column; gap: 8px; }
-        .slot-row { display: flex; flex-direction: column; align-items: center; padding: 10px; background: #f8fafc; border-radius: 10px; border: 1px solid #f1f5f9; }
-        .slot-row.secondary { background: #fdfdfd; border: 1px dashed #cbd5e1; opacity: 0.85; }
-        .slot-title { font-size: 0.65rem; font-weight: 700; color: var(--marine-blue); margin-bottom: 8px; text-align: center; text-transform: uppercase; }
-        .slot-pills { display: flex; gap: 10px; justify-content: center; }
+        /* DESIGN DOUBLE CRÉNEAU SUR 2 LIGNES AVEC TAILLE FIXE */
+        .slots-container { background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
+        .slot-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .slot-title { font-size: 0.6rem; font-weight: 700; color: var(--marine-blue); white-space: nowrap; margin-right: 5px; text-transform: uppercase; flex: 1; }
+        .slot-title.secondary { color: #64748b; }
+        .slot-pills { display: flex; gap: 5px; flex-shrink: 0; }
         
-        /* C'est ici que la magie opère : width 100px force la même largeur partout */
-        .slot-badge { width: 100px; padding: 5px 0; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 4px; color: white; }
+        /* Taille de 72px fixée pour que tout s'aligne parfaitement verticalement */
+        .slot-badge { width: 72px; padding: 5px 0; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 3px; color: white; }
         .slot-badge span { font-size: 0.45rem; text-transform: uppercase; font-weight: 600; opacity: 0.9; }
         .slot-badge b { font-size: 0.75rem; font-weight: 700; }
+        
         .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
         .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
         
-        /* MARÉES */
+        /* MARÉES : ALIGNEMENT SUR 3 COLONNES DE 33% */
         .tide-full-module { background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; padding: 15px 10px; margin: 0 12px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
-        
-        /* Utilisation de flex pour garantir un alignement parfait sur la ligne du haut */
         .tide-header-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; font-weight: 700; color: var(--marine-blue); }
         .tide-column { flex: 1; }
-        
         #tideCanvasLarge { width: 100%; height: 80px; }
         .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
         
@@ -144,7 +142,7 @@
             </div>
         </div>
 
-        <div class="slots-wrapper">
+        <div class="slots-container">
             <div class="slot-row">
                 <div class="slot-title" id="title-slot-1">Créneaux officiels Actuels :</div>
                 <div class="slot-pills">
@@ -152,9 +150,9 @@
                     <div class="slot-badge badge-close"><span id="label-ferm">FERM.</span><b id="close-time">--:--</b></div>
                 </div>
             </div>
-            <div class="slot-row secondary">
-                <div class="slot-title" id="title-slot-2" style="color: #64748b;">Créneaux officiels Prochains :</div>
-                <div class="slot-pills">
+            <div class="slot-row">
+                <div class="slot-title secondary" id="title-slot-2">Créneaux officiels Prochains :</div>
+                <div class="slot-pills" style="opacity: 0.85;">
                     <div class="slot-badge badge-open"><span id="label-ouv-next">OUV.</span><b id="open-time-next">--:--</b></div>
                     <div class="slot-badge badge-close"><span id="label-ferm-next">FERM.</span><b id="close-time-next">--:--</b></div>
                 </div>
@@ -318,7 +316,7 @@
 
         allTides.sort((a, b) => a.dateObj - b.dateObj);
 
-        // Récupération des créneaux futurs pour les 2 lignes
+        // --- GESTION DES 2 CRÉNEAUX ---
         let futurePortes = allPortes.filter(p => p.sC > now); 
         let pastPortes = allPortes.filter(p => p.sC <= now);
         
@@ -346,7 +344,6 @@
         document.getElementById('label-ouv-next').innerText = t.pill_open || "OUV.";
         document.getElementById('label-ferm-next').innerText = t.pill_close || "FERM.";
 
-        // Titres + indication "(Demain)" si besoin
         function formatTitle(p, baseLabel) {
             if (!p) return baseLabel;
             if (p.sO.getDate() !== now.getDate()) return baseLabel + " (" + (t.tomorrow || "Demain") + ")";
@@ -372,6 +369,7 @@
             document.getElementById('close-time-next').innerText = "--:--";
         }
 
+        // --- GESTION DU ROND CENTRAL ---
         if (activePorte) {
             const diffMs = activePorte.sC - now;
             const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
@@ -414,6 +412,7 @@
             document.getElementById('status-box').className = "status-box closed";
         }
 
+        // --- GESTION DES MARÉES ---
         let prevTide = allTides[0], nextTide = allTides[1];
         for (let i = 0; i < allTides.length - 1; i++) {
             if (now >= allTides[i].dateObj && now <= allTides[i+1].dateObj) {
