@@ -7,6 +7,8 @@ const translations = {
         share_link_desc: "Envoyez l'application directement à vos amis par SMS, WhatsApp, Signal ou E-mail.",
         share_btn_text: "📤 Partager l'application",
         share_copied: "Lien copié dans le presse-papier !",
+        slot_current: "Créneaux officiels Actuels :",
+        slot_next: "Créneaux officiels Prochains :",
         // --- PAGE ACCUEIL ---
         label_gate: "PORTE",
         status_open: "OUVERTE",
@@ -96,6 +98,8 @@ const translations = {
         share_link_desc: "Send the app directly to your friends via SMS, WhatsApp, Signal, or Email.",
         share_btn_text: "📤 Share the app",
         share_copied: "Link copied to clipboard!",
+        slot_current: "Current Official Slots:",
+        slot_next: "Next Official Slots:",
         // --- PAGE ACCUEIL ---
         label_gate: "GATE",
         status_open: "OPEN",
