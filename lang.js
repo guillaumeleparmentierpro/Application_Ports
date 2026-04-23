@@ -2,7 +2,11 @@ const translations = {
     fr: {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
-
+// --- NOUVEAUTÉS PAGE PARTAGE ---
+        share_link_title: "Envoyer le lien",
+        share_link_desc: "Envoyez l'application directement à vos amis par SMS, WhatsApp, Signal ou E-mail.",
+        share_btn_text: "📤 Partager l'application",
+        share_copied: "Lien copié dans le presse-papier !",
         // --- PAGE ACCUEIL ---
         label_gate: "PORTE",
         status_open: "OUVERTE",
@@ -87,7 +91,11 @@ const translations = {
     en: {
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
-
+// --- NOUVEAUTÉS PAGE PARTAGE ---
+        share_link_title: "Send the link",
+        share_link_desc: "Send the app directly to your friends via SMS, WhatsApp, Signal, or Email.",
+        share_btn_text: "📤 Share the app",
+        share_copied: "Link copied to clipboard!",
         // --- PAGE ACCUEIL ---
         label_gate: "GATE",
         status_open: "OPEN",
