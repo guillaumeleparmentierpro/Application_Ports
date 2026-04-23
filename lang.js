@@ -7,8 +7,8 @@ const translations = {
         share_link_desc: "Envoyez l'application directement à vos amis par SMS, WhatsApp, Signal ou E-mail.",
         share_btn_text: "📤 Partager l'application",
         share_copied: "Lien copié dans le presse-papier !",
-        slot_current: "Prochains créneaux",
-        slot_next: "Créneaux officiels Prochains :",
+        slot_current: "Créneaux officiels",
+        slot_next: "Prochains créneaux",
         // --- PAGE ACCUEIL ---
         label_gate: "PORTE",
         status_open: "OUVERTE",
