@@ -176,12 +176,12 @@
             font-weight: 700;
             text-align: center;
             transition: background 0.2s;
-            flex: 1; 
-            min-width: 100px; /* Force le passage à la ligne si l'écran est tout petit */
+            flex: 1 1 calc(50% - 4px); /* Permet d'avoir 2 boutons par ligne joliment répartis */
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 5px;
+            box-sizing: border-box;
         }
 
         .btn-partner-link:active { background: #e2e8f0; transform: scale(0.98); }
@@ -216,6 +216,7 @@
             <div class="partner-actions">
                 <a href="tel:0233942579" class="btn-partner-link">📞 APPELER</a>
                 <a href="https://www.google.com/maps/search/?api=1&query=23+place+de+l'église,+50270+Barneville-Carteret" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/lOrCoiffureBarneville/?locale=fr_FR" target="_blank" class="btn-partner-link" style="flex-basis: 100%;">🌐 SITE WEB</a>
             </div>
         </div>
 
@@ -234,6 +235,7 @@
                 <a href="tel:0233031852" class="btn-partner-link">📞 APPELER</a>
                 <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link">✉️ E-MAIL</a>
                 <a href="https://www.google.com/maps/search/?api=1&query=La+Cambuse+Barneville-Carteret" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/profile.php?id=100063477759757&sk=directory_contact_info" target="_blank" class="btn-partner-link">🌐 SITE WEB</a>
             </div>
         </div>
 
@@ -246,7 +248,7 @@
                 </div>
             </div>
             <div class="partner-actions">
-                <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue);">NOUS CONTACTER</a>
+                <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); flex-basis: 100%;">NOUS CONTACTER</a>
             </div>
         </div>
 
