@@ -229,28 +229,17 @@ function updateSponsor() {
         const sponsorText = document.getElementById('sponsor-text');
         if (!sponsorText) return;
 
-        // --- CRÉNEAUX SPÉCIFIQUES ---
-        
         if (hour === 9) {
-            // Créneau 09h00 - 09h59 : L'Or Coiffure
-            sponsorText.innerHTML = "✂️ L'Or Coiffure - 23 pl. de l'Église 📞 02 33 94 25 79";
+            // L'Or Coiffure devient cliquable
+            sponsorText.innerHTML = '<a href="tel:0233942579" style="text-decoration:none; color:inherit;">✂️ L\'Or Coiffure - 23 pl. de l\'Église 📞 02 33 94 25 79</a>';
         } 
         else if (hour === 11) {
-            // Créneau 11h00 - 11h59 : La Cambuse
-            sponsorText.innerHTML = "🍽️ La Cambuse - Traiteur salé & sucré 📞 02 33 03 18 52";
+            // La Cambuse devient cliquable pour réserver un plat
+            sponsorText.innerHTML = '<a href="tel:0233031852" style="text-decoration:none; color:inherit;">🍽️ La Cambuse - Traiteur salé & sucré 📞 02 33 03 18 52</a>';
         } 
-        
-        // --- MESSAGES PAR DÉFAUT (Pour remplir les trous) ---
         else {
-            if (hour >= 6 && hour < 12) {
-                sponsorText.innerHTML = "🥐 La Boulangerie du Port vous souhaite une belle matinée !";
-            } else if (hour >= 12 && hour < 15) {
-                sponsorText.innerHTML = "🍽️ Un petit creux ? Découvrez les restaurants du port.";
-            } else if (hour >= 18 && hour < 23) {
-                sponsorText.innerHTML = "🥂 L'heure de l'apéro au Comptoir de la Presqu'île !";
-            } else {
-                sponsorText.innerHTML = "⚓ Naviguez en toute sécurité avec la Banque Maritime.";
-            }
+            // Pour les messages par défaut, on laisse le texte simple (ou on peut mettre ton numéro !)
+            sponsorText.innerHTML = "⚓ Votre publicité ici ! Contactez-nous.";
         }
     }
 
