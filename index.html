@@ -224,22 +224,33 @@
         }
     };
      
-    function updateSponsor() {
+function updateSponsor() {
         const hour = new Date().getHours();
         const sponsorText = document.getElementById('sponsor-text');
         if (!sponsorText) return;
-        const currentLang = localStorage.getItem('preferredLang') || 'fr';
 
-        if (currentLang === 'en') {
-            if (hour >= 6 && hour < 12) sponsorText.innerHTML = "🥐 La Boulangerie du Port wishes you a good morning!";
-            else if (hour >= 12 && hour < 18) sponsorText.innerHTML = "🍽️ Today's special at Le Cap! Lunch by the sea.";
-            else if (hour >= 18 && hour < 23) sponsorText.innerHTML = "🥂 Happy hour at Comptoir de la Presqu'île!";
-            else sponsorText.innerHTML = "⚓ Sail safely with Banque Maritime.";
-        } else {
-            if (hour >= 6 && hour < 12) sponsorText.innerHTML = "🥐 La Boulangerie du Port vous souhaite une belle matinée !";
-            else if (hour >= 12 && hour < 18) sponsorText.innerHTML = "🍽️ Menu du jour au Cap ! Déjeunez face à la mer.";
-            else if (hour >= 18 && hour < 23) sponsorText.innerHTML = "🥂 L'heure de l'apéro au Comptoir de la Presqu'île !";
-            else sponsorText.innerHTML = "⚓ Naviguez en toute sécurité avec la Banque Maritime.";
+        // --- CRÉNEAUX SPÉCIFIQUES ---
+        
+        if (hour === 9) {
+            // Créneau 09h00 - 09h59 : L'Or Coiffure
+            sponsorText.innerHTML = "✂️ L'Or Coiffure - 23 pl. de l'Église 📞 02 33 94 25 79";
+        } 
+        else if (hour === 11) {
+            // Créneau 11h00 - 11h59 : La Cambuse
+            sponsorText.innerHTML = "🍽️ La Cambuse - Traiteur salé & sucré 📞 02 33 03 18 52";
+        } 
+        
+        // --- MESSAGES PAR DÉFAUT (Pour remplir les trous) ---
+        else {
+            if (hour >= 6 && hour < 12) {
+                sponsorText.innerHTML = "🥐 La Boulangerie du Port vous souhaite une belle matinée !";
+            } else if (hour >= 12 && hour < 15) {
+                sponsorText.innerHTML = "🍽️ Un petit creux ? Découvrez les restaurants du port.";
+            } else if (hour >= 18 && hour < 23) {
+                sponsorText.innerHTML = "🥂 L'heure de l'apéro au Comptoir de la Presqu'île !";
+            } else {
+                sponsorText.innerHTML = "⚓ Naviguez en toute sécurité avec la Banque Maritime.";
+            }
         }
     }
 
