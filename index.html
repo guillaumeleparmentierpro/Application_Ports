@@ -233,13 +233,22 @@ function updateSponsor() {
         const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
 
         if (hour === 9) {
-            sponsorText.innerHTML = `<a href="tel:0233942579" style="${linkStyle}">✂️ L'Or Coiffure - 23 pl. de l'Église 📞 02 33 94 25 79</a>`;
+            // Renvoie vers la page partenaires, pile sur le bloc L'Or Coiffure
+            sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">✂️ L'Or Coiffure - 23 pl. de l'Église</a>`;
         } 
+        else if (hour === 10) {
+            // Renvoie vers Carteret Marine
+            sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">🛥️ Carteret Marine - Achat & Rénovation1</a>`;
+        }
         else if (hour === 11) {
-            sponsorText.innerHTML = `<a href="tel:0233031852" style="${linkStyle}">🍽️ La Cambuse - Traiteur salé & sucré 📞 02 33 03 18 52</a>`;
+            // Renvoie vers La Cambuse
+            sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">🍽️ La Cambuse - Traiteur salé & sucré</a>`;
         } 
+        else if (hour === 14) {
+            // Renvoie vers Esprit Marin
+            sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">🛍️ Esprit Marin - Concept store & Déco</a>`;
+        }
         else {
-            // Message par défaut cliquable vers la page de contact
             sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">⚓ Votre publicité ici ! Cliquez pour nous contacter.</a>`;
         }
     }
