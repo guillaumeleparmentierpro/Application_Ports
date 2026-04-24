@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5LY18V5457');
+    </script>
+    <title>Partenaires - Port de Barneville-Carteret</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --marine-blue: #1e3a8a;
+            --text-main: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--primary-bg); 
+            margin: 0; padding: 0; 
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            padding-bottom: 30px;
+        }
+
+        /* --- EN-TÊTE UNIFORMISÉE --- */
+        .sticky-header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background: var(--primary-bg);
+            z-index: 1000;
+            padding: 10px 15px 5px 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
+
+        .top-nav { display: flex; margin-bottom: 5px; }
+
+        .btn-action { 
+            text-decoration: none; 
+            background: var(--marine-blue);
+            color: #ffffff !important;
+            border: none; border-radius: 8px; 
+            padding: 6px 10px;
+            font-weight: 700; font-size: 0.6rem; 
+            display: inline-flex; align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .main-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--marine-blue);
+            text-align: center;
+            margin: 5px 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            white-space: nowrap;
+            width: 100%;
+            display: block;
+        }
+        .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
+
+        /* --- MODULE PARTENAIRE --- */
+        .module {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 0 15px 15px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--marine-blue);
+            border-bottom: 1px solid #e2e8f0;
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .partner-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .partner-logo {
+            width: 60px;
+            height: 60px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            overflow: hidden; /* Masque ce qui dépasse pour garder les coins arrondis */
+            border: 1px solid #e2e8f0;
+        }
+
+        .partner-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ajuste l'image pour remplir le carré parfaitement */
+        }
+
+        .partner-info {
+            text-align: left;
+            flex: 1;
+        }
+
+        .partner-name {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--marine-blue);
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .partner-desc {
+            font-size: 0.75rem;
+            color: #64748b;
+            line-height: 1.4;
+            margin: 4px 0 0 0;
+            font-weight: 500;
+        }
+
+        .partner-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .btn-partner-link {
+            text-decoration: none;
+            background: #f8fafc;
+            color: var(--marine-blue);
+            border: 1px solid var(--border-color);
+            padding: 10px 8px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-align: center;
+            transition: background 0.2s;
+            flex: 1; /* Permet aux boutons de prendre la même largeur */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-partner-link:active { background: #e2e8f0; transform: scale(0.98); }
+
+        .disclaimer {
+            font-size: 0.65rem; color: #64748b; text-align: center; padding: 0 15px; margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <div class="sticky-header">
+            <div class="top-nav">
+                <a href="index.html" class="btn-action">◀ RETOUR</a>
+            </div>
+            <h1 class="main-title">NOS PARTENAIRES LOCAUX<sup>*</sup></h1>
+        </div>
+
+        <div class="module">
+            <div class="partner-header">
+                <div class="partner-logo">
+                    <img src="32675144_2006782986316247_3310271581543989248_n.jpg" alt="Logo L'Or Coiffure">
+                </div>
+                <div class="partner-info">
+                    <h2 class="partner-name">L'Or Coiffure</h2>
+                    <p class="partner-desc">Salon de coiffure.<br>23 place de l'église, 50270 Barneville-Carteret.</p>
+                </div>
+            </div>
+            <a href="tel:0233942579" class="btn-partner-link">📞 APPELER LE SALON</a>
+        </div>
+
+        <div class="module">
+            <div class="partner-header">
+                <div class="partner-logo">
+                    <img src="image_9419fb.png" alt="Logo La Cambuse">
+                </div>
+                <div class="partner-info">
+                    <h2 class="partner-name">La Cambuse</h2>
+                    <p class="partner-desc">Boutique traiteur salé et sucré. Plats à emporter sur le port.</p>
+                </div>
+            </div>
+            <div class="partner-actions">
+                <a href="tel:0233031852" class="btn-partner-link">📞 APPELER</a>
+                <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link">✉️ E-MAIL</a>
+            </div>
+        </div>
+
+        <div class="module" style="background: #eff6ff; border-top-color: #3b82f6;">
+            <div class="partner-header">
+                <div class="partner-logo" style="background: white; border: none;">🤝</div>
+                <div class="partner-info">
+                    <h2 class="partner-name">Devenez Partenaire</h2>
+                    <p class="partner-desc">Soutenez l'application et affichez votre enseigne auprès des marins du port.</p>
+                </div>
+            </div>
+            <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue);">NOUS CONTACTER</a>
+        </div>
+
+        <div class="disclaimer">
+            <strong style="color:#b03a2e;">*Attention :</strong> L'éditeur décline toute responsabilité en cas d'erreur.
+        </div>
+
+    </div>
+
+</body>
+</html>
