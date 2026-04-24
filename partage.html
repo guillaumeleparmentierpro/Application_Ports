@@ -30,6 +30,7 @@
             --marine-blue: #1e3a8a;
             --text-main: #1e293b;
             --tide-light-blue: #eff6ff;
+            --border-color: #e2e8f0;
         }
 
         body { 
@@ -158,6 +159,39 @@
             transform: scale(0.98); 
         }
 
+        /* --- DESIGN DU GUIDE D'INSTALLATION --- */
+        .install-box {
+            text-align: left;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 12px;
+        }
+
+        .install-title {
+            font-size: 0.9rem;
+            color: var(--marine-blue);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .install-list {
+            font-size: 0.75rem;
+            color: #64748b;
+            padding-left: 20px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .install-list b {
+            color: var(--text-main);
+        }
+
         /* --- CONTENU SPÉCIFIQUE (QR Code) --- */
         .qr-image { 
             width: 200px; 
@@ -192,6 +226,31 @@
             <button class="btn-large-share" onclick="shareApp()">
                 <span data-i18n="share_btn_text">📤 Partager l'application</span>
             </button>
+        </div>
+
+        <div class="module">
+            <h2 class="module-title">Installer sur l'écran d'accueil</h2>
+            <p class="module-text">Ajoutez un raccourci sur votre téléphone pour y accéder en un clic, comme une vraie application !</p>
+            
+            <div class="install-box">
+                <h3 class="install-title">🍎 Sur iPhone (iOS)</h3>
+                <ol class="install-list">
+                    <li>Ouvrez ce site avec l'application <b>Safari</b>.</li>
+                    <li>Appuyez sur l'icône <b>Partage</b> <span style="font-size: 0.9em;">(le carré avec une flèche vers le haut)</span> en bas de l'écran.</li>
+                    <li>Faites défiler et choisissez <b>"Sur l'écran d'accueil"</b> <span style="font-size: 0.9em;">(le carré avec un +)</span>.</li>
+                    <li>Appuyez sur <b>Ajouter</b> en haut à droite.</li>
+                </ol>
+            </div>
+
+            <div class="install-box" style="margin-bottom: 0;">
+                <h3 class="install-title">🤖 Sur Android</h3>
+                <ol class="install-list">
+                    <li>Ouvrez ce site avec l'application <b>Chrome</b>.</li>
+                    <li>Appuyez sur le <b>Menu</b> <span style="font-size: 0.9em;">(les 3 petits points verticaux)</span> en haut à droite.</li>
+                    <li>Choisissez <b>"Ajouter à l'écran d'accueil"</b> ou <b>"Installer l'application"</b>.</li>
+                    <li>Appuyez sur <b>Ajouter</b>.</li>
+                </ol>
+            </div>
         </div>
 
         <div class="module">
