@@ -239,8 +239,8 @@ function updateSponsor() {
             sponsorText.innerHTML = `<a href="tel:0233031852" style="${linkStyle}">🍽️ La Cambuse - Traiteur salé & sucré 📞 02 33 03 18 52</a>`;
         } 
         else {
-            // Message par défaut quand il n'y a pas de sponsor payant
-            sponsorText.innerHTML = "⚓ Votre publicité ici ! Contactez-nous.";
+            // Message par défaut cliquable vers la page de contact
+            sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">⚓ Votre publicité ici ! Cliquez pour nous contacter.</a>`;
         }
     }
 
