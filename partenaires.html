@@ -11,29 +11,41 @@
       gtag('js', new Date());
       gtag('config', 'G-5LY18V5457');
     </script>
-    <title>Partenaires - Port de Barneville-Carteret</title>
+    <title>Partager</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
+        /* --- VARIABLES GLOBALES --- */
         :root {
-            --primary-bg: #f8fafc;
+            color-scheme: light;
+            --primary-bg: #f1f5f9;
             --card-bg: #ffffff;
+            --open-light: #10b981;
+            --open-dark: #067a5c;
+            --warning-color: #fbbf24;
+            --warning-dark: #d97706;
+            --danger-color: #ef4444;
+            --danger-dark: #991b1b;
+            --closed-color: #ef4444;
             --marine-blue: #1e3a8a;
             --text-main: #1e293b;
+            --tide-light-blue: #eff6ff;
             --border-color: #e2e8f0;
         }
 
         body { 
             font-family: 'Montserrat', sans-serif; 
             background: var(--primary-bg); 
-            margin: 0; padding: 0; 
+            margin: 0; 
+            padding: 0; 
             color: var(--text-main);
             min-height: 100vh;
         }
 
+        /* --- CONTENEUR PRINCIPAL --- */
         .app-container {
             width: 100%;
-            max-width: 450px;
+            max-width: 450px; 
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -41,7 +53,7 @@
             padding-bottom: 30px;
         }
 
-        /* --- EN-TÊTE UNIFORMISÉE --- */
+        /* --- EN-TÊTE UNIVERSELLE --- */
         .sticky-header {
             position: -webkit-sticky;
             position: sticky;
@@ -53,138 +65,143 @@
             margin-bottom: 15px;
         }
 
-        .top-nav { display: flex; margin-bottom: 5px; }
+        .top-nav {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
 
         .btn-action { 
             text-decoration: none; 
             background: var(--marine-blue);
             color: #ffffff !important;
-            border: none; border-radius: 8px; 
+            border: none; 
+            border-radius: 8px; 
             padding: 6px 10px;
-            font-weight: 700; font-size: 0.6rem; 
-            display: inline-flex; align-items: center;
+            font-weight: 700; 
+            font-size: 0.6rem; 
+            display: inline-flex; 
+            align-items: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
+        /* --- LE TITRE UNIVERSEL --- */
         .main-title {
-            font-size: 1.05rem;
-            font-weight: 700;
+            font-size: 1.05rem; 
+            font-weight: 700; 
             color: var(--marine-blue);
             text-align: center;
-            margin: 5px 0 15px 0;
+            margin: 5px 0 8px 0;
             text-transform: uppercase;
             letter-spacing: -0.5px;
             line-height: 1.1;
-            white-space: nowrap;
+            white-space: nowrap; 
             width: 100%;
-            display: block;
+            display: block; 
         }
-        .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
 
-        /* --- MODULE PARTENAIRE --- */
+        .main-title sup { 
+            color: #b03a2e; 
+            font-size: 0.75rem; 
+            vertical-align: super; 
+        }
+
+        /* --- LE MODULE --- */
         .module {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 15px;
-            margin: 0 15px 15px 15px;
+            padding: 20px; 
+            margin: 0 15px 15px 15px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border-top: 4px solid var(--marine-blue);
             border-bottom: 1px solid #e2e8f0;
             border-left: 1px solid #e2e8f0;
             border-right: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            text-align: center;
         }
 
-        .partner-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .module-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--marine-blue);
+            margin-top: 0;
+            margin-bottom: 10px;
         }
 
-        .partner-logo {
-            width: 60px;
-            height: 60px;
-            background: #ffffff; /* Fond blanc pour les logos transparents */
+        .module-text {
+            font-size: 0.8rem;
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* --- BOUTON DE PARTAGE NATIF --- */
+        .btn-large-share {
+            background: var(--marine-blue);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
             border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-            overflow: hidden; 
-            border: 1px solid #e2e8f0;
-            padding: 2px; /* Un peu d'air autour du logo */
-            box-sizing: border-box;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
         }
 
-        .partner-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* SOLUTION POUR LE RECTANGLE : Ne rogne pas l'image */
+        .btn-large-share:active { 
+            transform: scale(0.98); 
         }
 
-        .partner-info {
+        /* --- DESIGN DU GUIDE D'INSTALLATION --- */
+        .install-box {
             text-align: left;
-            flex: 1;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 12px;
         }
 
-        .partner-name {
-            font-size: 0.95rem;
-            font-weight: 800;
+        .install-title {
+            font-size: 0.9rem;
             color: var(--marine-blue);
-            margin: 0;
-            letter-spacing: -0.5px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .partner-desc {
+        .install-list {
             font-size: 0.75rem;
             color: #64748b;
-            line-height: 1.4;
-            margin: 4px 0 0 0;
-            font-weight: 500;
+            padding-left: 20px;
+            margin: 0;
+            line-height: 1.6;
         }
 
-        .sponsor-time {
-            display: inline-block;
-            background: #e0e7ff;
-            color: var(--marine-blue);
-            font-size: 0.6rem;
-            font-weight: 700;
-            padding: 3px 6px;
-            border-radius: 4px;
-            margin-top: 6px;
-            border: 1px solid #c7d2fe;
+        .install-list b {
+            color: var(--text-main);
         }
 
-        .partner-actions {
-            display: flex;
-            flex-wrap: wrap; /* Permet aux boutons de passer à la ligne si pas assez de place */
-            gap: 8px;
-            width: 100%;
-        }
-
-        .btn-partner-link {
-            text-decoration: none;
-            background: #f8fafc;
-            color: var(--marine-blue);
+        /* --- CONTENU SPÉCIFIQUE (QR Code) --- */
+        .qr-image { 
+            width: 200px; 
+            height: 200px; 
+            margin: 0 auto; 
+            display: block; 
             border: 1px solid var(--border-color);
-            padding: 10px 8px;
             border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-align: center;
-            transition: background 0.2s;
-            flex: 1 1 calc(50% - 4px); /* Permet d'avoir 2 boutons par ligne joliment répartis */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            box-sizing: border-box;
+            padding: 5px;
         }
-
-        .btn-partner-link:active { background: #e2e8f0; transform: scale(0.98); }
 
         .disclaimer {
             font-size: 0.65rem; color: #64748b; text-align: center; padding: 0 15px; margin-top: 10px;
@@ -196,99 +213,102 @@
     <div class="app-container">
 
         <div class="sticky-header">
-            <div class="top-nav">
-                <a href="index.html" class="btn-action">◀ RETOUR</a>
+            <div class="top-nav" style="display: flex; margin-bottom: 5px;">
+                <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
             </div>
-            <h1 class="main-title">NOS PARTENAIRES LOCAUX<sup>*</sup></h1>
+            <h1 class="main-title" data-i18n="share_title">Partagez l'application</h1>
         </div>
 
-        <div class="module" id="or-coiffure">
-            <div class="partner-header">
-                <div class="partner-logo">
-                    <img src="lorcoiffure.jpg" alt="Logo L'Or Coiffure">
-                </div>
-                <div class="partner-info">
-                    <h2 class="partner-name">L'Or Coiffure</h2>
-                    <p class="partner-desc">Salon de coiffure.</p>
-                    <div class="sponsor-time">⏱️ Sponsor de 09h00 à 10h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233942579" class="btn-partner-link">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=23+place+de+l'église,+50270+Barneville-Carteret" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/lOrCoiffureBarneville/?locale=fr_FR" target="_blank" class="btn-partner-link" style="flex-basis: 100%;">🌐 SITE WEB</a>
-            </div>
+        <div class="module">
+            <h2 class="module-title" data-i18n="share_link_title">Envoyer le lien</h2>
+            <p class="module-text" data-i18n="share_link_desc">Envoyez l'application directement à vos amis par SMS, WhatsApp, Signal ou E-mail.</p>
+            
+            <button class="btn-large-share" onclick="shareApp()">
+                <span data-i18n="share_btn_text">📤 Partager l'application</span>
+            </button>
         </div>
 
-        <div class="module" id="carteret-marine">
-            <div class="partner-header">
-                <div class="partner-logo">
-                    <img src="carteretmarine.png" alt="Logo Carteret Marine">
-                </div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Carteret Marine</h2>
-                    <p class="partner-desc">Accompagnement, rénovation, achat et accessoires nautiques.</p>
-                    <div class="sponsor-time">⏱️ Sponsor de 10h00 à 11h00</div>
-                </div>
+        <div class="module">
+            <h2 class="module-title" data-i18n="install_title">Installer sur l'écran d'accueil</h2>
+            <p class="module-text" data-i18n="install_desc">Ajoutez un raccourci sur votre téléphone pour y accéder en un clic, comme une vraie application !</p>
+            
+            <div class="install-box">
+                <h3 class="install-title" data-i18n="install_ios_title">🍎 Sur iPhone (iOS)</h3>
+                <ol class="install-list">
+                    <li data-i18n="install_ios_step1">Ouvrez ce site avec l'application <b>Safari</b>.</li>
+                    <li data-i18n="install_ios_step2">Appuyez sur l'icône <b>Partage</b> <span style="font-size: 0.9em;">(le carré avec une flèche vers le haut)</span> en bas de l'écran.</li>
+                    <li data-i18n="install_ios_step3">Faites défiler et choisissez <b>"Sur l'écran d'accueil"</b> <span style="font-size: 0.9em;">(le carré avec un +)</span>.</li>
+                    <li data-i18n="install_ios_step4">Appuyez sur <b>Ajouter</b> en haut à droite.</li>
+                </ol>
             </div>
-            <div class="partner-actions">
-                <a href="tel:0233012001" class="btn-partner-link">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=carteret+marine" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
-                <a href="http://www.carteret-marine.fr/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;">🌐 SITE WEB</a>
-            </div>
-        </div>
 
-        <div class="module" id="la-cambuse">
-            <div class="partner-header">
-                <div class="partner-logo">
-                    <img src="lacambuse.png" alt="Logo La Cambuse">
-                </div>
-                <div class="partner-info">
-                    <h2 class="partner-name">La Cambuse</h2>
-                    <p class="partner-desc">Boutique traiteur salé et sucré.</p>
-                    <div class="sponsor-time">⏱️ Sponsor de 11h00 à 12h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233031852" class="btn-partner-link">📞 APPELER</a>
-                <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=La+Cambuse+Barneville-Carteret" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/profile.php?id=100063477759757&sk=directory_contact_info" target="_blank" class="btn-partner-link">🌐 SITE WEB</a>
+            <div class="install-box" style="margin-bottom: 0;">
+                <h3 class="install-title" data-i18n="install_android_title">🤖 Sur Android</h3>
+                <ol class="install-list">
+                    <li data-i18n="install_android_step1">Ouvrez ce site avec l'application <b>Chrome</b>.</li>
+                    <li data-i18n="install_android_step2">Appuyez sur le <b>Menu</b> <span style="font-size: 0.9em;">(les 3 petits points verticaux)</span> en haut à droite.</li>
+                    <li data-i18n="install_android_step3">Choisissez <b>"Ajouter à l'écran d'accueil"</b> ou <b>"Installer l'application"</b>.</li>
+                    <li data-i18n="install_android_step4">Appuyez sur <b>Ajouter</b>.</li>
+                </ol>
             </div>
         </div>
 
-        <div class="module" id="esprit-marin">
-            <div class="partner-header">
-                <div class="partner-logo">
-                    <img src="espritmarin.png" alt="Logo Esprit Marin">
-                </div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Esprit Marin</h2>
-                    <p class="partner-desc">Concept store : mode sport chic, déco et produits locaux/made in France.</p>
-                    <div class="sponsor-time">⏱️ Sponsor de 14h00 à 15h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233951284" class="btn-partner-link">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=esprit+marin+carteret" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
-                <a href="https://www.esprit-marin-carteret.fr/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;">🌐 SITE WEB</a>
+        <div class="module">
+            <h2 class="module-title">QR Code</h2>
+            <p class="module-text" data-i18n="share_desc">Faites scanner ce QR Code à un autre marin pour qu'il accède directement aux horaires du port.</p>
+            
+            <div style="background: white; padding: 20px; border-radius: 15px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 10px auto;">
+                <img src="mon-qrcode.png" 
+                     alt="QR Code Application" 
+                     style="width: 250px; height: auto; display: block; border-radius: 10px;">
             </div>
         </div>
 
-        <div class="module" style="background: #eff6ff; border-top-color: #3b82f6;">
-            <div class="partner-header">
-                <div class="partner-logo" style="background: white; border: none;">🤝</div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Devenez Partenaire</h2>
-                    <p class="partner-desc">Soutenez l'application et affichez votre enseigne sur l'application web.</p>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); flex-basis: 100%;">NOUS CONTACTER</a>
-            </div>
-        </div>
+   </div>
 
-    </div>
+   <script src="lang.js"></script>
+   <script>
+       // Logique de traduction
+       document.addEventListener('DOMContentLoaded', () => {
+           const browserLang = navigator.language.substring(0, 2);
+           const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+           
+           document.querySelectorAll('[data-i18n]').forEach(el => {
+               const key = el.getAttribute('data-i18n');
+               if (translations[savedLang] && translations[savedLang][key]) {
+                   el.innerHTML = translations[savedLang][key]; 
+               }
+           });
+       });
 
+       // Logique de partage natif
+       function shareApp() {
+           // On nettoie l'URL pour renvoyer vers l'accueil (index.html) et pas sur la page de partage
+           const appUrl = window.location.href.replace('partage.html', 'index.html');
+           const lang = localStorage.getItem('preferredLang') || 'fr';
+           
+           // Texte personnalisé selon la langue
+           const shareText = lang === 'en' 
+               ? "Check out the Barneville-Carteret port app! ⚓" 
+               : "Découvre l'application du port de Barneville-Carteret ! ⚓";
+
+           // Vérifie si le téléphone supporte le partage natif (iOS / Android)
+           if (navigator.share) {
+               navigator.share({
+                   title: 'Port Barneville-Carteret',
+                   text: shareText,
+                   url: appUrl
+               }).catch(err => {
+                   console.log("Partage annulé ou échoué", err);
+               });
+           } else {
+               // Si on est sur un vieil appareil ou un PC classique, on copie le lien
+               navigator.clipboard.writeText(appUrl).then(() => {
+                   const msg = (translations[lang] && translations[lang].share_copied) ? translations[lang].share_copied : "Lien copié dans le presse-papier !";
+                   alert(msg);
+               });
+           }
+       }
+   </script>
 </body>
 </html>
