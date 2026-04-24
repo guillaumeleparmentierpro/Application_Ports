@@ -81,7 +81,7 @@
         }
         .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
 
-        /* --- MODULE PARTENAIRE (TON MODÈLE) --- */
+        /* --- MODULE PARTENAIRE --- */
         .module {
             background: var(--card-bg);
             border-radius: 12px;
@@ -94,7 +94,7 @@
             border-right: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .partner-header {
@@ -104,33 +104,50 @@
         }
 
         .partner-logo {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: #f1f5f9;
-            border-radius: 8px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
             flex-shrink: 0;
+            overflow: hidden; /* Masque ce qui dépasse pour garder les coins arrondis */
+            border: 1px solid #e2e8f0;
+        }
+
+        .partner-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ajuste l'image pour remplir le carré parfaitement */
         }
 
         .partner-info {
             text-align: left;
+            flex: 1;
         }
 
         .partner-name {
-            font-size: 0.9rem;
-            font-weight: 700;
+            font-size: 0.95rem;
+            font-weight: 800;
             color: var(--marine-blue);
             margin: 0;
+            letter-spacing: -0.5px;
         }
 
         .partner-desc {
             font-size: 0.75rem;
             color: #64748b;
-            line-height: 1.3;
+            line-height: 1.4;
             margin: 4px 0 0 0;
+            font-weight: 500;
+        }
+
+        .partner-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
         }
 
         .btn-partner-link {
@@ -138,15 +155,20 @@
             background: #f8fafc;
             color: var(--marine-blue);
             border: 1px solid var(--border-color);
-            padding: 8px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 600;
+            padding: 10px 8px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
             text-align: center;
             transition: background 0.2s;
+            flex: 1; /* Permet aux boutons de prendre la même largeur */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
         }
 
-        .btn-partner-link:active { background: #e2e8f0; }
+        .btn-partner-link:active { background: #e2e8f0; transform: scale(0.98); }
 
         .disclaimer {
             font-size: 0.65rem; color: #64748b; text-align: center; padding: 0 15px; margin-top: 10px;
@@ -166,35 +188,42 @@
 
         <div class="module">
             <div class="partner-header">
-                <div class="partner-logo">🥐</div>
+                <div class="partner-logo">
+                    <img src="lorcoiffure.jpg" alt="Logo L'Or Coiffure">
+                </div>
                 <div class="partner-info">
-                    <h2 class="partner-name">La Boulangerie du Port</h2>
-                    <p class="partner-desc">Pains artisanaux, viennoiseries et sandwichs frais tous les jours dès 6h00.</p>
+                    <h2 class="partner-name">L'Or Coiffure</h2>
+                    <p class="partner-desc">Salon de coiffure.<br>23 place de l'église, 50270 Barneville-Carteret.</p>
                 </div>
             </div>
-            <a href="tel:0200000000" class="btn-partner-link">📞 CONTACTER</a>
+            <a href="tel:0233942579" class="btn-partner-link">📞 APPELER LE SALON</a>
         </div>
 
         <div class="module">
             <div class="partner-header">
-                <div class="partner-logo">🍽️</div>
+                <div class="partner-logo">
+                    <img src="lacambuse.png" alt="Logo La Cambuse">
+                </div>
                 <div class="partner-info">
-                    <h2 class="partner-name">Le Cap</h2>
-                    <p class="partner-desc">Cuisine de la mer et produits locaux. Terrasse panoramique avec vue sur le port.</p>
+                    <h2 class="partner-name">La Cambuse</h2>
+                    <p class="partner-desc">Boutique traiteur salé et sucré.</p>
                 </div>
             </div>
-            <a href="#" class="btn-partner-link">🌐 VOIR LA CARTE</a>
+            <div class="partner-actions">
+                <a href="tel:0233031852" class="btn-partner-link">📞 APPELER</a>
+                <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link">✉️ E-MAIL</a>
+            </div>
         </div>
 
-        <div class="module">
+        <div class="module" style="background: #eff6ff; border-top-color: #3b82f6;">
             <div class="partner-header">
-                <div class="partner-logo">⚓</div>
+                <div class="partner-logo" style="background: white; border: none;">🤝</div>
                 <div class="partner-info">
-                    <h2 class="partner-name">Banque Maritime</h2>
-                    <p class="partner-desc">L'accompagnement dédié aux professionnels et passionnés de la mer.</p>
+                    <h2 class="partner-name">Devenez Partenaire</h2>
+                    <p class="partner-desc">Soutenez l'application et affichez votre enseigne auprès des marins du port.</p>
                 </div>
             </div>
-            <a href="#" class="btn-partner-link">📍 NOUS TROUVER</a>
+            <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue);">NOUS CONTACTER</a>
         </div>
 
         <div class="disclaimer">
