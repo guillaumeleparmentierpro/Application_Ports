@@ -106,7 +106,7 @@
         .partner-logo {
             width: 60px;
             height: 60px;
-            background: #ffffff; /* Fond blanc pour les logos transparents */
+            background: #ffffff;
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -115,14 +115,14 @@
             flex-shrink: 0;
             overflow: hidden; 
             border: 1px solid #e2e8f0;
-            padding: 2px; /* Un peu d'air autour du logo */
+            padding: 2px;
             box-sizing: border-box;
         }
 
         .partner-logo img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* SOLUTION POUR LE RECTANGLE : Ne rogne pas l'image */
+            object-fit: contain;
         }
 
         .partner-info {
@@ -160,7 +160,7 @@
 
         .partner-actions {
             display: flex;
-            flex-wrap: wrap; /* Permet aux boutons de passer à la ligne si pas assez de place */
+            flex-wrap: wrap;
             gap: 8px;
             width: 100%;
         }
@@ -176,7 +176,7 @@
             font-weight: 700;
             text-align: center;
             transition: background 0.2s;
-            flex: 1 1 calc(50% - 4px); /* Permet d'avoir 2 boutons par ligne joliment répartis */
+            flex: 1 1 calc(50% - 4px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -197,9 +197,9 @@
 
         <div class="sticky-header">
             <div class="top-nav">
-                <a href="index.html" class="btn-action">◀ RETOUR</a>
+                <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
             </div>
-            <h1 class="main-title">NOS PARTENAIRES LOCAUX<sup>*</sup></h1>
+            <h1 class="main-title"><span data-i18n="partners_title">NOS PARTENAIRES LOCAUX</span><sup>*</sup></h1>
         </div>
 
         <div class="module" id="or-coiffure">
@@ -209,14 +209,14 @@
                 </div>
                 <div class="partner-info">
                     <h2 class="partner-name">L'Or Coiffure</h2>
-                    <p class="partner-desc">Salon de coiffure.</p>
-                    <div class="sponsor-time">⏱️ Sponsor de 09h00 à 10h00</div>
+                    <p class="partner-desc" data-i18n="desc_or_coiffure">Salon de coiffure.</p>
+                    <div class="sponsor-time" data-i18n="time_or_coiffure">⏱️ Sponsor de 09h00 à 10h00</div>
                 </div>
             </div>
             <div class="partner-actions">
-                <a href="tel:0233942579" class="btn-partner-link">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=23+place+de+l'église,+50270+Barneville-Carteret" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/lOrCoiffureBarneville/?locale=fr_FR" target="_blank" class="btn-partner-link" style="flex-basis: 100%;">🌐 SITE WEB</a>
+                <a href="tel:0233942579" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=23+place+de+l'église,+50270+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/lOrCoiffureBarneville/?locale=fr_FR" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_website">🌐 SITE WEB</a>
             </div>
         </div>
 
@@ -227,14 +227,14 @@
                 </div>
                 <div class="partner-info">
                     <h2 class="partner-name">Carteret Marine</h2>
-                    <p class="partner-desc">Accompagnement, rénovation, achat et accessoires nautiques.</p>
-                    <div class="sponsor-time">⏱️ Sponsor de 10h00 à 11h00</div>
+                    <p class="partner-desc" data-i18n="desc_carteret_marine">Accompagnement, rénovation, achat et accessoires nautiques.</p>
+                    <div class="sponsor-time" data-i18n="time_carteret_marine">⏱️ Sponsor de 10h00 à 11h00</div>
                 </div>
             </div>
             <div class="partner-actions">
-                <a href="tel:0233012001" class="btn-partner-link">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=carteret+marine" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
-                <a href="http://www.carteret-marine.fr/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;">🌐 SITE WEB</a>
+                <a href="tel:0233012001" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=carteret+marine" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
+                <a href="http://www.carteret-marine.fr/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_website">🌐 SITE WEB</a>
             </div>
         </div>
 
@@ -245,15 +245,15 @@
                 </div>
                 <div class="partner-info">
                     <h2 class="partner-name">La Cambuse</h2>
-                    <p class="partner-desc">Boutique traiteur salé et sucré.</p>
-                    <div class="sponsor-time">⏱️ Sponsor de 11h00 à 12h00</div>
+                    <p class="partner-desc" data-i18n="desc_la_cambuse">Boutique traiteur salé et sucré.</p>
+                    <div class="sponsor-time" data-i18n="time_la_cambuse">⏱️ Sponsor de 11h00 à 12h00</div>
                 </div>
             </div>
             <div class="partner-actions">
-                <a href="tel:0233031852" class="btn-partner-link">📞 APPELER</a>
-                <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=La+Cambuse+Barneville-Carteret" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/profile.php?id=100063477759757&sk=directory_contact_info" target="_blank" class="btn-partner-link">🌐 SITE WEB</a>
+                <a href="tel:0233031852" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
+                <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=La+Cambuse+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/profile.php?id=100063477759757&sk=directory_contact_info" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
             </div>
         </div>
 
@@ -264,14 +264,14 @@
                 </div>
                 <div class="partner-info">
                     <h2 class="partner-name">Esprit Marin</h2>
-                    <p class="partner-desc">Concept store : mode sport chic, déco et produits locaux/made in France.</p>
-                    <div class="sponsor-time">⏱️ Sponsor de 14h00 à 15h00</div>
+                    <p class="partner-desc" data-i18n="desc_esprit_marin">Concept store : mode sport chic, déco et produits locaux/made in France.</p>
+                    <div class="sponsor-time" data-i18n="time_esprit_marin">⏱️ Sponsor de 14h00 à 15h00</div>
                 </div>
             </div>
             <div class="partner-actions">
-                <a href="tel:0233951284" class="btn-partner-link">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=esprit+marin+carteret" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
-                <a href="https://www.esprit-marin-carteret.fr/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;">🌐 SITE WEB</a>
+                <a href="tel:0233951284" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=esprit+marin+carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
+                <a href="https://www.esprit-marin-carteret.fr/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_website">🌐 SITE WEB</a>
             </div>
         </div>
 
@@ -279,16 +279,34 @@
             <div class="partner-header">
                 <div class="partner-logo" style="background: white; border: none;">🤝</div>
                 <div class="partner-info">
-                    <h2 class="partner-name">Devenez Partenaire</h2>
-                    <p class="partner-desc">Soutenez l'application et affichez votre enseigne sur l'application web.</p>
+                    <h2 class="partner-name" data-i18n="become_partner_title">Devenez Partenaire</h2>
+                    <p class="partner-desc" data-i18n="become_partner_desc">Soutenez l'application et affichez votre enseigne sur l'application web.</p>
                 </div>
             </div>
             <div class="partner-actions">
-                <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); flex-basis: 100%;">NOUS CONTACTER</a>
+                <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); flex-basis: 100%;" data-i18n="btn_contact_us">NOUS CONTACTER</a>
             </div>
+        </div>
+
+        <div class="disclaimer" data-i18n="disclaimer_partners">
+            <strong style="color:#b03a2e;">*Attention :</strong> L'éditeur décline toute responsabilité en cas d'erreur.
         </div>
 
     </div>
 
+    <script src="lang.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language.substring(0, 2);
+            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[savedLang] && translations[savedLang][key]) {
+                    el.innerHTML = translations[savedLang][key]; 
+                }
+            });
+        });
+    </script>
 </body>
 </html>
