@@ -106,21 +106,23 @@
         .partner-logo {
             width: 60px;
             height: 60px;
-            background: #f1f5f9;
+            background: #ffffff; /* Fond blanc pour les logos transparents */
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
             flex-shrink: 0;
-            overflow: hidden; /* Masque ce qui dépasse pour garder les coins arrondis */
+            overflow: hidden; 
             border: 1px solid #e2e8f0;
+            padding: 2px; /* Un peu d'air autour du logo */
+            box-sizing: border-box;
         }
 
         .partner-logo img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ajuste l'image pour remplir le carré parfaitement */
+            object-fit: contain; /* SOLUTION POUR LE RECTANGLE : Ne rogne pas l'image */
         }
 
         .partner-info {
@@ -144,9 +146,22 @@
             font-weight: 500;
         }
 
+        .sponsor-time {
+            display: inline-block;
+            background: #e0e7ff;
+            color: var(--marine-blue);
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 4px;
+            margin-top: 6px;
+            border: 1px solid #c7d2fe;
+        }
+
         .partner-actions {
             display: flex;
-            gap: 10px;
+            flex-wrap: wrap; /* Permet aux boutons de passer à la ligne si pas assez de place */
+            gap: 8px;
             width: 100%;
         }
 
@@ -161,11 +176,12 @@
             font-weight: 700;
             text-align: center;
             transition: background 0.2s;
-            flex: 1; /* Permet aux boutons de prendre la même largeur */
+            flex: 1 1 calc(50% - 4px); /* Permet d'avoir 2 boutons par ligne joliment répartis */
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 5px;
+            box-sizing: border-box;
         }
 
         .btn-partner-link:active { background: #e2e8f0; transform: scale(0.98); }
@@ -193,10 +209,15 @@
                 </div>
                 <div class="partner-info">
                     <h2 class="partner-name">L'Or Coiffure</h2>
-                    <p class="partner-desc">Salon de coiffure.<br>23 place de l'église, 50270 Barneville-Carteret.</p>
+                    <p class="partner-desc">Salon de coiffure.</p>
+                    <div class="sponsor-time">⏱️ Sponsor de 09h00 à 10h00</div>
                 </div>
             </div>
-            <a href="tel:0233942579" class="btn-partner-link">📞 APPELER LE SALON</a>
+            <div class="partner-actions">
+                <a href="tel:0233942579" class="btn-partner-link">📞 APPELER</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=23+place+de+l'église,+50270+Barneville-Carteret" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/lOrCoiffureBarneville/?locale=fr_FR" target="_blank" class="btn-partner-link" style="flex-basis: 100%;">🌐 SITE WEB</a>
+            </div>
         </div>
 
         <div class="module">
@@ -206,12 +227,15 @@
                 </div>
                 <div class="partner-info">
                     <h2 class="partner-name">La Cambuse</h2>
-                    <p class="partner-desc">Boutique traiteur salé et sucré. Plats à emporter sur le port.</p>
+                    <p class="partner-desc">Boutique traiteur salé et sucré.</p>
+                    <div class="sponsor-time">⏱️ Sponsor de 11h00 à 12h00</div>
                 </div>
             </div>
             <div class="partner-actions">
                 <a href="tel:0233031852" class="btn-partner-link">📞 APPELER</a>
                 <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link">✉️ E-MAIL</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=La+Cambuse+Barneville-Carteret" target="_blank" class="btn-partner-link">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/profile.php?id=100063477759757&sk=directory_contact_info" target="_blank" class="btn-partner-link">🌐 SITE WEB</a>
             </div>
         </div>
 
@@ -220,14 +244,12 @@
                 <div class="partner-logo" style="background: white; border: none;">🤝</div>
                 <div class="partner-info">
                     <h2 class="partner-name">Devenez Partenaire</h2>
-                    <p class="partner-desc">Soutenez l'application et affichez votre enseigne auprès des marins du port.</p>
+                    <p class="partner-desc">Soutenez l'application et affichez votre enseigne sur l'application web.</p>
                 </div>
             </div>
-            <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue);">NOUS CONTACTER</a>
-        </div>
-
-        <div class="disclaimer">
-            <strong style="color:#b03a2e;">*Attention :</strong> L'éditeur décline toute responsabilité en cas d'erreur.
+            <div class="partner-actions">
+                <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); flex-basis: 100%;">NOUS CONTACTER</a>
+            </div>
         </div>
 
     </div>
