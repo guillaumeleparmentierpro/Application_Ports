@@ -495,5 +495,41 @@
         setLanguage(savedLang);
     });
 </script>
+    <script>
+    // L'Easter Egg d'Octave !
+    document.getElementById('status-box').addEventListener('click', function(e) {
+        const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋'];
+        
+        // On crée 5 petits éléments qui vont s'envoler
+        for(let i = 0; i < 5; i++) {
+            let particle = document.createElement('div');
+            particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            particle.style.position = 'fixed';
+            
+            // On les fait apparaître au niveau de la souris/du doigt
+            let x = e.clientX || window.innerWidth / 2;
+            let y = e.clientY || window.innerHeight / 3;
+            
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.fontSize = '2rem';
+            particle.style.pointerEvents = 'none'; // Pour ne pas bloquer les clics
+            particle.style.zIndex = '9999';
+            particle.style.transition = 'all 1s ease-out';
+            document.body.appendChild(particle);
+
+            // On lance l'animation (déplacement aléatoire vers le haut et fondu)
+            setTimeout(() => {
+                particle.style.transform = `translate(${Math.random() * 100 - 50}px, -${Math.random() * 150 + 50}px) rotate(${Math.random() * 360}deg)`;
+                particle.style.opacity = '0';
+            }, 50);
+
+            // On nettoie le code après 1 seconde pour ne pas alourdir l'application
+            setTimeout(() => {
+                particle.remove();
+            }, 1050);
+        }
+    });
+</script>
 </body>
 </html>
