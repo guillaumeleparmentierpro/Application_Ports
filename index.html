@@ -536,5 +536,52 @@
         }
     });
 </script>
+    <script>
+    // Easter Egg : Le Bateau Pirate (Clic x5 sur le titre)
+    let titleClickCount = 0;
+    const mainTitle = document.querySelector('.main-title');
+    
+    if (mainTitle) {
+        mainTitle.addEventListener('click', function() {
+            titleClickCount++;
+            
+            // Si on clique 5 fois...
+            if (titleClickCount === 5) {
+                // On crée le bateau
+                let ship = document.createElement('div');
+                ship.innerText = '🏴‍☠️⛵'; 
+                ship.style.position = 'fixed';
+                ship.style.top = '50%'; // Au milieu de l'écran
+                ship.style.left = '-100px'; // Caché à gauche
+                ship.style.fontSize = '4rem';
+                ship.style.zIndex = '9999';
+                ship.style.pointerEvents = 'none';
+                // L'animation CSS pour la traversée avec un petit effet de vague
+                ship.style.transition = 'transform 4s linear';
+                
+                document.body.appendChild(ship);
+                
+                // On lance le bateau après un court instant
+                setTimeout(() => {
+                    // Il traverse tout l'écran (120vw = 120% de la largeur)
+                    ship.style.transform = 'translateX(120vw) translateY(-20px)';
+                }, 50);
+                
+                // On supprime le bateau et on remet le compteur à zéro
+                setTimeout(() => {
+                    ship.remove();
+                    titleClickCount = 0;
+                }, 4050);
+            }
+            
+            // Si on s'arrête de cliquer, on remet le compteur à zéro après 2 secondes
+            setTimeout(() => {
+                if (titleClickCount > 0 && titleClickCount < 5) {
+                    titleClickCount = 0;
+                }
+            }, 2000);
+        });
+    }
+</script>
 </body>
 </html>
