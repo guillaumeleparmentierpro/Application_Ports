@@ -308,52 +308,37 @@
                         }
                     });
                 }
+                
+                // LA VRAIE SOLUTION EST ICI
                 [
-                    { time: dData.bm1, h: dData.bm1_h, type: "BM", label: "Basse Mer", c: dData.coeff1 },
-                    { time: dData.pm1, h: dData.pm1_h, type: "PM", label: "Pleine Mer", c: dData.coeff1 },
-                    { time: dData.bm2, h: dData.bm2_h, type: "BM", label: "Basse Mer", c: dData.coeff2 },
-                    { time: dData.pm2, h: dData.pm2_h, type: "PM", label: "Pleine Mer", c: dData.coeff2 }
+                    { time: dData.bm1, h: dData.bm1_h, type: "BM", label: "Basse Mer", c: dData.coeff1, refTime: null },
+                    { time: dData.pm1, h: dData.pm1_h, type: "PM", label: "Pleine Mer", c: dData.coeff1, refTime: null },
+                    { time: dData.bm2, h: dData.bm2_h, type: "BM", label: "Basse Mer", c: dData.coeff2, refTime: dData.bm1 },
+                    { time: dData.pm2, h: dData.pm2_h, type: "PM", label: "Pleine Mer", c: dData.coeff2, refTime: dData.pm1 }
                 ].forEach(t => {
                     if (t.time && t.time !== "--:--" && t.time !== "--") {
-                        allTides.push({ ...t, dateObj: new Date(ds + "T" + t.time) });
+                        let dObj = new Date(ds + "T" + t.time);
+                        // RÈGLE : Si la Marée 2 est à une heure inférieure à la Marée 1, c'est qu'elle a franchi minuit ! On la bascule au lendemain.
+                        if (t.refTime && t.refTime !== "--:--" && t.refTime !== "--") {
+                            if (t.time < t.refTime) {
+                                dObj.setDate(dObj.getDate() + 1);
+                            }
+                        }
+                        allTides.push({
+                            time: t.time,
+                            h: t.h,
+                            type: t.type,
+                            label: t.label,
+                            c: t.c,
+                            dateObj: dObj
+                        });
                     }
                 });
             }
         });
 
+        // On trie toutes nos marées par date/heure absolue
         allTides.sort((a, b) => a.dateObj - b.dateObj);
-
-        // --- NOUVEAU CODE : CORRECTION DU SAUT DE MARÉE ---
-        let correctedTides = [];
-        for (let i = 0; i < allTides.length; i++) {
-            if (i > 0) {
-                let prev = correctedTides[correctedTides.length - 1];
-                let curr = allTides[i];
-                
-                // Si on a deux Basse Mer ou deux Pleine Mer à la suite, c'est qu'il manque celle du milieu !
-                if (prev.type === curr.type) {
-                    // On recrée la marée manquante mathématiquement pile entre les deux
-                    let fakeTimeMs = (prev.dateObj.getTime() + curr.dateObj.getTime()) / 2;
-                    let fakeDate = new Date(fakeTimeMs);
-                    let hours = fakeDate.getHours().toString().padStart(2, '0');
-                    let mins = fakeDate.getMinutes().toString().padStart(2, '0');
-                    let fakeType = prev.type === "PM" ? "BM" : "PM";
-                    let fakeLabel = prev.type === "PM" ? "Basse Mer" : "Pleine Mer";
-                    
-                    correctedTides.push({
-                        time: `${hours}:${mins}`,
-                        h: "-.--", // Hauteur inconnue pour ne pas induire en erreur
-                        type: fakeType,
-                        label: fakeLabel,
-                        c: "--",
-                        dateObj: fakeDate
-                    });
-                }
-            }
-            correctedTides.push(allTides[i]);
-        }
-        allTides = correctedTides;
-        // ---------------------------------------------------
 
         // --- GESTION DES 2 CRÉNEAUX ---
         let futurePortes = allPortes.filter(p => p.sC > now); 
