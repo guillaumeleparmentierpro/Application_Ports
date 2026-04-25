@@ -495,39 +495,44 @@
         setLanguage(savedLang);
     });
 </script>
-    <script>
-    // L'Easter Egg d'Octave !
+<script>
+    // L'Easter Egg d'Octave (Version XXL !)
     document.getElementById('status-box').addEventListener('click', function(e) {
-        const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋'];
+        // J'ai ajouté un dauphin et un soleil pour faire bonne mesure !
+        const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋', '🐬', '☀️'];
         
-        // On crée 5 petits éléments qui vont s'envoler
-        for(let i = 0; i < 5; i++) {
+        // On lance 8 éléments au lieu de 5
+        for(let i = 0; i < 8; i++) {
             let particle = document.createElement('div');
             particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
             particle.style.position = 'fixed';
             
-            // On les fait apparaître au niveau de la souris/du doigt
             let x = e.clientX || window.innerWidth / 2;
             let y = e.clientY || window.innerHeight / 3;
             
-            particle.style.left = x + 'px';
-            particle.style.top = y + 'px';
-            particle.style.fontSize = '2rem';
-            particle.style.pointerEvents = 'none'; // Pour ne pas bloquer les clics
+            // On centre la particule par rapport au clic
+            particle.style.left = (x - 25) + 'px';
+            particle.style.top = (y - 25) + 'px';
+            
+            // ÉMOJIS BEAUCOUP PLUS GROS (3.5rem au lieu de 2rem)
+            particle.style.fontSize = '3.5rem';
+            particle.style.pointerEvents = 'none'; 
             particle.style.zIndex = '9999';
-            particle.style.transition = 'all 1s ease-out';
+            
+            // ANIMATION RALENTIE (2 secondes au lieu d'1)
+            particle.style.transition = 'transform 2s ease-out, opacity 2s ease-in';
             document.body.appendChild(particle);
 
-            // On lance l'animation (déplacement aléatoire vers le haut et fondu)
             setTimeout(() => {
-                particle.style.transform = `translate(${Math.random() * 100 - 50}px, -${Math.random() * 150 + 50}px) rotate(${Math.random() * 360}deg)`;
-                particle.style.opacity = '0';
+                // Ils montent plus haut (jusqu'à 400px) et s'écartent davantage
+                particle.style.transform = `translate(${Math.random() * 200 - 100}px, -${Math.random() * 300 + 100}px) rotate(${Math.random() * 360}deg)`;
+                particle.style.opacity = '0'; // Disparition progressive
             }, 50);
 
-            // On nettoie le code après 1 seconde pour ne pas alourdir l'application
+            // On nettoie le code après 2 secondes pour coller à l'animation
             setTimeout(() => {
                 particle.remove();
-            }, 1050);
+            }, 2050);
         }
     });
 </script>
