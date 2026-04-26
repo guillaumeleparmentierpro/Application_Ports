@@ -220,8 +220,12 @@
         }
     };
      
-    function updateSponsor() {
-        const hour = new Date().getHours();
+function updateSponsor() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        const day = now.getDay(); // 0 = Dimanche, 1 = Lundi, 2 = Mardi... 6 = Samedi
+        
         const sponsorText = document.getElementById('sponsor-text');
         if (!sponsorText) return;
 
@@ -234,7 +238,23 @@
             sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques</a>`;
         }
         else if (hour === 11) {
-            sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">🍽️ La Cambuse - Traiteur salé & sucré</a>`;
+            // Jours d'ouverture du Food Truck : Lundi(1), Mardi(2), Jeudi(4), Vendredi(5), Samedi(6)
+            const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
+            
+            // Si on est un jour d'ouverture ET que la minute est impaire (11h01, 11h03...), on affiche le Food Truck
+            if (isFoodTruckDay && minute % 2 !== 0) {
+                // On détermine le lieu en fonction du jour !
+                let lieu = "En service !";
+                if (day === 1) lieu = "Aujourd'hui à Denneville";
+                if (day === 2) lieu = "Aujourd'hui à Port-Bail";
+                if (day === 4) lieu = "Aujourd'hui pl. Flandres (Barneville)";
+                if (day === 5) lieu = "Aujourd'hui aux Pieux";
+                if (day === 6) lieu = "Aujourd'hui rue des Écoles (Barneville)";
+                sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">🍔 Deliziafoodtruck, Cuisine Italienne - ${lieu}</a>`;
+            } else {
+                // Sinon (jours fermés ou minute paire), La Cambuse s'affiche
+                sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">🍽️ La Cambuse - Traiteur salé & sucré</a>`;
+            }
         } 
         else if (hour === 14) {
             sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">🛍️ Esprit Marin - Concept store sport chic & Déco</a>`;
