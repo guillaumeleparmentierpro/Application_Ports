@@ -1,24 +1,340 @@
-<div class="module">
-    <h2 class="module-title">Météo Marine (Meteoblue)</h2>
-    <iframe src="https://www.meteoblue.com/fr/meteo/widget/three/barneville-carteret_france_3034958?geoloc=fixed&nocurrent=0&noforecast=0&days=4&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&layout=light"  
-            frameborder="0" scrolling="NO" allowtransparency="true" 
-            style="width: 100%; height: 590px;"></iframe>
-</div>
-
-<div class="module">
-    <h2 class="module-title">Conditions Actuelles</h2>
-    <div id="openweathermap-widget-11"></div>
-    <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-    <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  
-    window.myWidgetParam.push({id: 11,cityid: '3034958',appid: 'f893d69013f0d4bf1d006733cc2348ad',units: 'metric',containerid: 'openweathermap-widget-11',  });  
-    (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);})();
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5LY18V5457');
     </script>
-</div>
+    <title>Partenaires - Port de Barneville-Carteret</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --marine-blue: #1e3a8a;
+            --text-main: #1e293b;
+            --border-color: #e2e8f0;
+        }
 
-<div class="module">
-    <h2 class="module-title">Prévisions Météo France</h2>
-    <div id="mf-widget-carteret">
-        <iframe id="widget_meteofrance" width="100%" height="300" frameborder="0" 
-                src="https://meteofrance.com/widget/previsions/3034958"></iframe>
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--primary-bg); 
+            margin: 0; padding: 0; 
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            padding-bottom: 30px;
+        }
+
+        /* --- EN-TÊTE UNIFORMISÉE --- */
+        .sticky-header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background: var(--primary-bg);
+            z-index: 1000;
+            padding: 10px 15px 5px 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
+
+        .top-nav { display: flex; margin-bottom: 5px; }
+
+        .btn-action { 
+            text-decoration: none; 
+            background: var(--marine-blue);
+            color: #ffffff !important;
+            border: none; border-radius: 8px; 
+            padding: 6px 10px;
+            font-weight: 700; font-size: 0.6rem; 
+            display: inline-flex; align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .main-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--marine-blue);
+            text-align: center;
+            margin: 5px 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            white-space: nowrap;
+            width: 100%;
+            display: block;
+        }
+        .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
+
+        /* --- MODULE PARTENAIRE --- */
+        .module {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 0 15px 15px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--marine-blue);
+            border-bottom: 1px solid #e2e8f0;
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scroll-margin-top: 110px; 
+        }
+
+        .partner-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .partner-logo {
+            width: 60px;
+            height: 60px;
+            background: #ffffff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            overflow: hidden; 
+            border: 1px solid #e2e8f0;
+            padding: 2px;
+            box-sizing: border-box;
+        }
+
+        .partner-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .partner-info {
+            text-align: left;
+            flex: 1;
+        }
+
+        .partner-name {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--marine-blue);
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .partner-desc {
+            font-size: 0.75rem;
+            color: #64748b;
+            line-height: 1.4;
+            margin: 4px 0 0 0;
+            font-weight: 500;
+        }
+
+        .sponsor-time {
+            display: inline-block;
+            background: #e0e7ff;
+            color: var(--marine-blue);
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 4px;
+            margin-top: 6px;
+            border: 1px solid #c7d2fe;
+        }
+
+        .partner-schedule {
+            font-size: 0.65rem;
+            color: #64748b;
+            margin-top: 6px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .partner-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn-partner-link {
+            text-decoration: none;
+            background: #f8fafc;
+            color: var(--marine-blue);
+            border: 1px solid var(--border-color);
+            padding: 10px 8px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-align: center;
+            transition: background 0.2s;
+            flex: 1 1 calc(50% - 4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn-partner-link:active { background: #e2e8f0; transform: scale(0.98); }
+
+        .disclaimer {
+            font-size: 0.65rem; color: #64748b; text-align: center; padding: 0 15px; margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <div class="sticky-header">
+            <div class="top-nav">
+                <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
+            </div>
+            <h1 class="main-title"><span data-i18n="partners_title">NOS PARTENAIRES LOCAUX</span><sup>*</sup></h1>
+        </div>
+
+        <div class="module" id="or-coiffure">
+            <div class="partner-header">
+                <div class="partner-logo">
+                    <img src="lorcoiffure.jpg" alt="Logo L'Or Coiffure">
+                </div>
+                <div class="partner-info">
+                    <h2 class="partner-name">L'Or Coiffure</h2>
+                    <p class="partner-desc" data-i18n="desc_or_coiffure">Salon de coiffure.</p>
+                    <div class="sponsor-time" data-i18n="time_or_coiffure">⏱️ Sponsor de 09h00 à 10h00</div>
+                </div>
+            </div>
+            <div class="partner-actions">
+                <a href="tel:0233942579" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=23+place+de+l'église,+50270+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/lOrCoiffureBarneville/?locale=fr_FR" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_website">🌐 SITE WEB</a>
+            </div>
+        </div>
+
+        <div class="module" id="carteret-marine">
+            <div class="partner-header">
+                <div class="partner-logo">
+                    <img src="carteretmarine.png" alt="Logo Carteret Marine">
+                </div>
+                <div class="partner-info">
+                    <h2 class="partner-name">Carteret Marine</h2>
+                    <p class="partner-desc" data-i18n="desc_carteret_marine">Accompagnement, rénovation, achat et accessoires nautiques.</p>
+                    <div class="sponsor-time" data-i18n="time_carteret_marine">⏱️ Sponsor de 10h00 à 11h00</div>
+                </div>
+            </div>
+            <div class="partner-actions">
+                <a href="tel:0233012001" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=carteret+marine" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
+                <a href="http://www.carteret-marine.fr/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_website">🌐 SITE WEB</a>
+            </div>
+        </div>
+
+        <div class="module" id="la-cambuse">
+            <div class="partner-header">
+                <div class="partner-logo">
+                    <img src="lacambuse.png" alt="Logo La Cambuse">
+                </div>
+                <div class="partner-info">
+                    <h2 class="partner-name">La Cambuse</h2>
+                    <p class="partner-desc" data-i18n="desc_la_cambuse">Boutique traiteur salé et sucré.</p>
+                    <div class="sponsor-time" data-i18n="time_la_cambuse">⏱️ Sponsor de 11h00 à 12h00</div>
+                </div>
+            </div>
+            <div class="partner-actions">
+                <a href="tel:0233031852" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
+                <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=La+Cambuse+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/profile.php?id=100063477759757&sk=directory_contact_info" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
+            </div>
+        </div>
+
+        <div class="module" id="food-truck">
+            <div class="partner-header">
+                <div class="partner-logo">
+                    <img src="delizia.png" alt="Logo Delizia Food Truck">
+                </div>
+                <div class="partner-info">
+                    <h2 class="partner-name">Delizia Food Truck</h2>
+                    <p class="partner-desc" data-i18n="desc_delizia">Food Truck spécialités italiennes - Commandez à emporter.</p>
+                    <div class="sponsor-time" data-i18n="time_delizia">⏱️ Sponsor de 11h00 à 12h00</div>
+                    <div class="partner-schedule">📍 Lun: Denneville | Mar: Port-Bail & Barneville | Jeu & Sam: Barneville | Ven: Les Pieux</div>
+                </div>
+            </div>
+            <div class="partner-actions">
+                <a href="tel:0631099136" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
+                <a href="mailto:deliziafoodtruck@gmail.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
+                <a href="https://www.instagram.com/deliziafoodtruck/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_instagram">📸 INSTAGRAM</a>
+            </div>
+        </div>
+
+        <div class="module" id="esprit-marin">
+            <div class="partner-header">
+                <div class="partner-logo">
+                    <img src="espritmarin.png" alt="Logo Esprit Marin">
+                </div>
+                <div class="partner-info">
+                    <h2 class="partner-name">Esprit Marin</h2>
+                    <p class="partner-desc" data-i18n="desc_esprit_marin">Concept store : mode sport chic, déco et produits locaux/made in France.</p>
+                    <div class="sponsor-time" data-i18n="time_esprit_marin">⏱️ Sponsor de 14h00 à 15h00</div>
+                </div>
+            </div>
+            <div class="partner-actions">
+                <a href="tel:0233951284" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=esprit+marin+carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
+                <a href="https://www.esprit-marin-carteret.fr/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_website">🌐 SITE WEB</a>
+            </div>
+        </div>
+
+        <div class="module" style="background: #eff6ff; border-top-color: #3b82f6;">
+            <div class="partner-header">
+                <div class="partner-logo" style="background: white; border: none;">🤝</div>
+                <div class="partner-info">
+                    <h2 class="partner-name" data-i18n="become_partner_title">Devenez Partenaire</h2>
+                    <p class="partner-desc" data-i18n="become_partner_desc">Soutenez l'application et affichez votre enseigne sur l'application web.</p>
+                </div>
+            </div>
+            <div class="partner-actions">
+                <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); flex-basis: 100%;" data-i18n="btn_contact_us">NOUS CONTACTER</a>
+            </div>
+        </div>
+
+        <div class="disclaimer" data-i18n="disclaimer_partners">
+            <strong style="color:#b03a2e;">*Attention :</strong> L'éditeur décline toute responsabilité en cas d'erreur.
+        </div>
+
     </div>
-</div>
+
+    <script src="lang.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language.substring(0, 2);
+            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[savedLang] && translations[savedLang][key]) {
+                    el.innerHTML = translations[savedLang][key]; 
+                }
+            });
+        });
+    </script>
+</body>
+</html>
