@@ -2,8 +2,29 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Horaires & Marées - Port de Barneville-Carteret | L'App des Marins</title>
+    <meta name="google-site-verification" content="_x0ggsxOKABcmc9deMHWXhKNlpuAGGgT-JBxV3xi2CE" />
+    <meta name="description" content="Consultez en temps réel l'état de la porte du port de Barneville-Carteret, les horaires de marées, le planning officiel et la météo marine. L'outil indispensable du Cotentin.">
+    <meta name="keywords" content="Port, Barneville-Carteret, Marée, Porte, Horaires, Manche, Cotentin, Navigation, Normandie, Ouverture, Fermeture, Barneville, Carteret, Pêche, Marin, Yacht Club, YCBC, Météo marine">
+    
+    <meta property="og:title" content="Port de Barneville-Carteret - Horaires & Marées">
+    <meta property="og:description" content="Accédez en 1 clic à l'état de la porte (Ouverte/Fermée), aux horaires de marées et à la météo du port.">
+    <meta property="og:image" content="https://guillaumeleparmentierpro.github.io/Application_Ports/android-chrome-512x512.png">
+    <meta property="og:url" content="https://guillaumeleparmentierpro.github.io/Application_Ports/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Port Barneville-Carteret">
+    
+    <script type="application/ld+json">
+    {
+      "@context" : "https://schema.org",
+      "@type" : "WebSite",
+      "name" : "Port Barneville-Carteret",
+      "url" : "https://guillaumeleparmentierpro.github.io/Application_Ports/"
+    }
+    </script>
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -11,354 +32,604 @@
       gtag('js', new Date());
       gtag('config', 'G-5LY18V5457');
     </script>
-    <title>Partenaires - Port de Barneville-Carteret</title>
+    
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" href="icon-192.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="donnees.js"></script>
     
     <style>
-        :root {
-            --primary-bg: #f8fafc;
-            --card-bg: #ffffff;
-            --marine-blue: #1e3a8a;
-            --text-main: #1e293b;
-            --border-color: #e2e8f0;
-        }
-
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            background: var(--primary-bg); 
-            margin: 0; padding: 0; 
-            color: var(--text-main);
-            min-height: 100vh;
-        }
-
-        .app-container {
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-            padding-bottom: 30px;
-        }
-
-        /* --- EN-TÊTE UNIFORMISÉE --- */
-        .sticky-header {
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            background: var(--primary-bg);
-            z-index: 1000;
-            padding: 10px 15px 5px 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            margin-bottom: 15px;
-        }
-
-        .top-nav { display: flex; margin-bottom: 5px; }
-
-        .btn-action { 
-            text-decoration: none; 
-            background: var(--marine-blue);
-            color: #ffffff !important;
-            border: none; border-radius: 8px; 
-            padding: 6px 10px;
-            font-weight: 700; font-size: 0.6rem; 
-            display: inline-flex; align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .main-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--marine-blue);
-            text-align: center;
-            margin: 5px 0 15px 0;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-            line-height: 1.1;
-            white-space: nowrap;
-            width: 100%;
-            display: block;
-        }
+        .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
+        .sponsor-label { background: var(--marine-blue); color: white; font-size: 0.55rem; padding: 3px 6px; border-radius: 4px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; flex-shrink: 0; }
+        .sponsor-text { font-size: 0.7rem; font-weight: 600; line-height: 1.2; flex-grow: 1; text-align: right; }
+        :root { color-scheme: light; --primary-bg: #f1f5f9; --card-bg: #ffffff; --open-light: #10b981; --open-dark: #067a5c; --warning-color: #fbbf24; --warning-dark: #d97706; --danger-color: #ef4444; --danger-dark: #991b1b; --closed-color: #ef4444; --marine-blue: #1e3a8a; --text-main: #1e293b; --tide-light-blue: #eff6ff; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
+        .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; padding: 15px; box-sizing: border-box; padding-top: 0 !important; }
+        .footer-module { margin-top: 15px; padding-top: 20px; border-top: 1px dashed #cbd5e1; text-align: center; }
+        .footer-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .btn-footer { width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; box-sizing: border-box; }
+        .module { background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); border-bottom: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; gap: 5px; margin-bottom: 15px; width: 100%; }
+        .date-badge { background: white; padding: 6px 8px; border-radius: 8px; font-weight: 700; font-size: 0.6rem; border: 1px solid #e2e8f0; white-space: nowrap; flex-shrink: 1; }
+        .sticky-header { position: -webkit-sticky; position: sticky; top: 0; background: var(--primary-bg); z-index: 1000; padding: 10px 15px 5px 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        .main-title { font-size: 1.05rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 5px 0 8px 0; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.1; white-space: nowrap; width: 100%; display: block; }
         .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
-
-        /* --- MODULE PARTENAIRE --- */
-        .module {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 0 15px 15px 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--marine-blue);
-            border-bottom: 1px solid #e2e8f0;
-            border-left: 1px solid #e2e8f0;
-            border-right: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            scroll-margin-top: 110px; 
-        }
-
-        .partner-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .partner-logo {
-            width: 60px;
-            height: 60px;
-            background: #ffffff;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-            overflow: hidden; 
-            border: 1px solid #e2e8f0;
-            padding: 2px;
-            box-sizing: border-box;
-        }
-
-        .partner-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .partner-info {
-            text-align: left;
-            flex: 1;
-        }
-
-        .partner-name {
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: var(--marine-blue);
-            margin: 0;
-            letter-spacing: -0.5px;
-        }
-
-        .partner-desc {
-            font-size: 0.75rem;
-            color: #64748b;
-            line-height: 1.4;
-            margin: 4px 0 0 0;
-            font-weight: 500;
-        }
-
-        .sponsor-time {
-            display: inline-block;
-            background: #e0e7ff;
-            color: var(--marine-blue);
-            font-size: 0.6rem;
-            font-weight: 700;
-            padding: 3px 6px;
-            border-radius: 4px;
-            margin-top: 6px;
-            border: 1px solid #c7d2fe;
-        }
-
-        .partner-schedule {
-            font-size: 0.65rem;
-            color: #64748b;
-            margin-top: 6px;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        .partner-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            width: 100%;
-        }
-
-        /* Classe spéciale pour aligner 3 boutons sur une ligne */
-        .partner-actions.actions-3 {
-            flex-wrap: nowrap;
-        }
-
-        .btn-partner-link {
-            text-decoration: none;
-            background: #f8fafc;
-            color: var(--marine-blue);
-            border: 1px solid var(--border-color);
-            padding: 10px 4px;
-            border-radius: 8px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-align: center;
-            transition: background 0.2s;
-            flex: 1 1 calc(50% - 4px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 4px;
-            box-sizing: border-box;
-        }
-
-        .btn-partner-link:active { background: #e2e8f0; transform: scale(0.98); }
-
-        .disclaimer {
-            font-size: 0.65rem; color: #64748b; text-align: center; padding: 0 15px; margin-top: 10px;
-        }
+        .lang-switch { text-align: center; margin: 15px 0 5px 0; font-size: 1.5rem; }
+        .lang-btn { cursor: pointer; opacity: 0.3; transition: opacity 0.3s ease, transform 0.2s ease; display: inline-block; vertical-align: middle; }
+        .lang-btn.active { opacity: 1; transform: scale(1.15); }
+        .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn-action:active { transform: scale(0.95); }
+        .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
+        .status-box { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
+        .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
+        .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
+        .status-box.danger { background: var(--danger-color); border: 5px solid var(--danger-dark); animation: pulse 1s infinite; }
+        .status-box.closed { background: var(--closed-color); border: 5px solid var(--danger-dark); }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        .status-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; opacity: 0.9; margin-bottom: 2px; }
+        
+        .status-value { font-size: 1.4rem; font-weight: 900; margin: 5px 0; letter-spacing: -0.5px; line-height: 1.1; padding: 0 5px; text-align: center; }
+        
+        .status-box.warning .status-value, .status-box.danger .status-value { font-size: 1.15rem; letter-spacing: -1px; }
+        .progress-wrapper { margin: 10px 0; display: none; }
+        .progress-container { width: 100%; height: 34px; border-radius: 17px; overflow: hidden; position: relative; background: var(--open-light); transition: background 0.5s ease; }
+        .progress-container.warning { background: var(--warning-color); }
+        .progress-container.danger { background: var(--danger-color); }
+        .progress-container.waiting { background: #cbd5e1; } 
+        .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear, background 0.5s ease; }
+        .progress-container.warning .progress-bar { background: var(--warning-dark); }
+        .progress-container.danger .progress-bar { background: var(--danger-dark); animation: blink 1s infinite; }
+        .progress-container.waiting .progress-bar { background: var(--marine-blue); }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none; }
+        
+        .slots-container { background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
+        .slot-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        
+        .slot-title { font-size: 0.6rem; font-weight: 700; color: var(--marine-blue); line-height: 1.3; margin-right: 5px; text-transform: uppercase; flex: 1; }
+        .slot-title.secondary { color: #64748b; }
+        
+        .slot-pills { display: flex; gap: 5px; flex-shrink: 0; }
+        .slot-badge { width: 72px; padding: 5px 0; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 3px; color: white; }
+        .slot-badge span { font-size: 0.45rem; text-transform: uppercase; font-weight: 600; opacity: 0.9; }
+        .slot-badge b { font-size: 0.75rem; font-weight: 700; }
+        
+        .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
+        .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
+        
+        .tide-full-module { background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; padding: 15px 10px; margin: 0 12px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
+        .tide-header-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; font-weight: 700; color: var(--marine-blue); }
+        
+        .tide-column { flex: 1; flex-basis: 33.33%; min-width: 0; } 
+        
+        #tideCanvasLarge { width: 100%; height: 80px; }
+        .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
+        
+        .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 120px; border: 1px solid #e2e8f0; }
+        .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
+        .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-weight: 500; line-height: 1.4; }
     </style>
 </head>
 <body>
+<div class="app-container">
 
-    <div class="app-container">
-
-        <div class="sticky-header">
-            <div class="top-nav">
-                <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
-            </div>
-            <h1 class="main-title"><span data-i18n="partners_title">NOS PARTENAIRES LOCAUX</span><sup>*</sup></h1>
+    <div class="sticky-header">
+        <div class="top-sponsor-banner" id="sponsor-banner">
+            <span class="sponsor-label" data-i18n="sponsor_label">Sponsor</span>
+            <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
 
-        <div class="module" id="utile">
-            <div class="partner-header">
-                <div class="partner-logo">
-                    <img src="utile.png" alt="Logo UTILE">
-                </div>
-                <div class="partner-info">
-                    <h2 class="partner-name">UTILE Barneville-Carteret</h2>
-                    <p class="partner-desc" data-i18n="desc_utile">Shopping et vente au détail, livraison à domicile, dépôt de pain, viennoiserie, pâtisserie.</p>
-                    <div class="sponsor-time" data-i18n="time_utile">⏱️ Sponsor de 08h00 à 09h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233952512" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'UTILE'});">📞 APPELER</a>
-                <a href="mailto:utile.barneville@systeme-u.fr" class="btn-partner-link" data-i18n="btn_email" onclick="gtag('event', 'clic_email', {'partenaire': 'UTILE'});">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=11+place+du+Docteur+Auvret,+Barneville" target="_blank" class="btn-partner-link" data-i18n="btn_directions" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'UTILE'});">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/p/UTILE-Barneville-Carteret-100036393625812/" target="_blank" class="btn-partner-link" data-i18n="btn_website" onclick="gtag('event', 'clic_site', {'partenaire': 'UTILE'});">🌐 FACEBOOK</a>
+        <div class="top-nav" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="date-badge" id="current-date" style="font-size: 0.6rem; font-weight: 700; border: 1px solid #e2e8f0; padding: 6px; border-radius: 8px; background: white;">-- --</div>
+            <div class="nav-buttons" style="display: flex; gap: 5px;">
+                <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES & MARÉES</a>
+                <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
             </div>
         </div>
-
-        <div class="module" id="or-coiffure">
-            <div class="partner-header">
-                <div class="partner-logo">
-                    <img src="lorcoiffure.jpg" alt="Logo L'Or Coiffure">
-                </div>
-                <div class="partner-info">
-                    <h2 class="partner-name">L'Or Coiffure</h2>
-                    <p class="partner-desc" data-i18n="desc_or_coiffure">Salon de coiffure.</p>
-                    <div class="sponsor-time" data-i18n="time_or_coiffure">⏱️ Sponsor de 09h00 à 10h00</div>
-                </div>
-            </div>
-            <div class="partner-actions actions-3">
-                <a href="tel:0233942579" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'Or Coiffure'});">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=23+place+de+l'église,+50270+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'Or Coiffure'});">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/lOrCoiffureBarneville/?locale=fr_FR" target="_blank" class="btn-partner-link" data-i18n="btn_website" onclick="gtag('event', 'clic_site', {'partenaire': 'Or Coiffure'});">🌐 SITE WEB</a>
+        <h1 class="main-title">Port Barneville-Carteret<sup>*</sup></h1>
+        <div class="lang-switch">
+            <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span> 
+            <span style="color: #cbd5e1; font-size: 1rem; vertical-align: middle; margin: 0 5px;">|</span> 
+            <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
+        </div>
+    </div>
+        
+    <div class="module">
+        <div id="status-box" class="status-box closed">
+            <span class="status-label" data-i18n="label_gate">Porte</span>
+            <span class="status-value" id="status-text">--</span>
+        </div>
+        
+        <div class="progress-wrapper" id="progress-wrapper">
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-text" id="time-left">--</div>
             </div>
         </div>
 
-        <div class="module" id="carteret-marine">
-            <div class="partner-header">
-                <div class="partner-logo">
-                    <img src="carteretmarine.png" alt="Logo Carteret Marine">
-                </div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Carteret Marine</h2>
-                    <p class="partner-desc" data-i18n="desc_carteret_marine">Accompagnement, rénovation, achat et accessoires nautiques.</p>
-                    <div class="sponsor-time" data-i18n="time_carteret_marine">⏱️ Sponsor de 10h00 à 11h00</div>
+        <div class="slots-container">
+            <div class="slot-row">
+                <div class="slot-title" id="title-slot-1">Créneaux officiels</div>
+                <div class="slot-pills">
+                    <div class="slot-badge badge-open"><span id="label-ouv">OUV.</span><b id="open-time">--:--</b></div>
+                    <div class="slot-badge badge-close"><span id="label-ferm">FERM.</span><b id="close-time">--:--</b></div>
                 </div>
             </div>
-            <div class="partner-actions actions-3">
-                <a href="tel:0233012001" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'Carteret Marine'});">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=carteret+marine" target="_blank" class="btn-partner-link" data-i18n="btn_directions" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'Carteret Marine'});">📍 ITINÉRAIRE</a>
-                <a href="http://www.carteret-marine.fr/" target="_blank" class="btn-partner-link" data-i18n="btn_website" onclick="gtag('event', 'clic_site', {'partenaire': 'Carteret Marine'});">🌐 SITE WEB</a>
+            <div class="slot-row">
+                <div class="slot-title secondary" id="title-slot-2">Prochains créneaux</div>
+                <div class="slot-pills" style="opacity: 0.85;">
+                    <div class="slot-badge badge-open"><span id="label-ouv-next">OUV.</span><b id="open-time-next">--:--</b></div>
+                    <div class="slot-badge badge-close"><span id="label-ferm-next">FERM.</span><b id="close-time-next">--:--</b></div>
+                </div>
             </div>
         </div>
-
-        <div class="module" id="la-cambuse">
-            <div class="partner-header">
-                <div class="partner-logo">
-                    <img src="lacambuse.png" alt="Logo La Cambuse">
-                </div>
-                <div class="partner-info">
-                    <h2 class="partner-name">La Cambuse</h2>
-                    <p class="partner-desc" data-i18n="desc_la_cambuse">Boutique traiteur salé et sucré.</p>
-                    <div class="sponsor-time" data-i18n="time_la_cambuse">⏱️ Sponsor de 11h00 à 12h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233031852" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'La Cambuse'});">📞 APPELER</a>
-                <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link" data-i18n="btn_email" onclick="gtag('event', 'clic_email', {'partenaire': 'La Cambuse'});">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=La+Cambuse+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'La Cambuse'});">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/profile.php?id=100063477759757&sk=directory_contact_info" target="_blank" class="btn-partner-link" data-i18n="btn_website" onclick="gtag('event', 'clic_site', {'partenaire': 'La Cambuse'});">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" id="food-truck">
-            <div class="partner-header">
-                <div class="partner-logo">
-                    <img src="delizia.png" alt="Logo Delizia Food Truck">
-                </div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Delizia Food Truck</h2>
-                    <p class="partner-desc" data-i18n="desc_delizia">Food Truck spécialités italiennes - Commandez à emporter.</p>
-                    <div class="sponsor-time" data-i18n="time_delizia">⏱️ Sponsor de 11h00 à 12h00</div>
-                    <div class="partner-schedule">📍 Lun: Denneville | Mar: Port-Bail & Barneville | Jeu & Sam: Barneville | Ven: Les Pieux</div>
-                </div>
-            </div>
-            <div class="partner-actions actions-3">
-                <a href="tel:0631099136" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'Delizia Food Truck'});">📞 APPELER</a>
-                <a href="mailto:deliziafoodtruck@gmail.com" class="btn-partner-link" data-i18n="btn_email" onclick="gtag('event', 'clic_email', {'partenaire': 'Delizia Food Truck'});">✉️ E-MAIL</a>
-                <a href="https://www.instagram.com/deliziafoodtruck/" target="_blank" class="btn-partner-link" data-i18n="btn_instagram" onclick="gtag('event', 'clic_instagram', {'partenaire': 'Delizia Food Truck'});">📸 INSTAGRAM</a>
-            </div>
-        </div>
-
-        <div class="module" id="esprit-marin">
-            <div class="partner-header">
-                <div class="partner-logo">
-                    <img src="espritmarin.png" alt="Logo Esprit Marin">
-                </div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Esprit Marin</h2>
-                    <p class="partner-desc" data-i18n="desc_esprit_marin">Concept store : mode sport chic, déco et produits locaux/made in France.</p>
-                    <div class="sponsor-time" data-i18n="time_esprit_marin">⏱️ Sponsor de 14h00 à 15h00</div>
-                </div>
-            </div>
-            <div class="partner-actions actions-3">
-                <a href="tel:0233951284" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'Esprit Marin'});">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=esprit+marin+carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'Esprit Marin'});">📍 ITINÉRAIRE</a>
-                <a href="https://www.esprit-marin-carteret.fr/" target="_blank" class="btn-partner-link" data-i18n="btn_website" onclick="gtag('event', 'clic_site', {'partenaire': 'Esprit Marin'});">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" style="background: #eff6ff; border-top-color: #3b82f6;">
-            <div class="partner-header">
-                <div class="partner-logo" style="background: white; border: none;">🤝</div>
-                <div class="partner-info">
-                    <h2 class="partner-name" data-i18n="become_partner_title">Devenez Partenaire</h2>
-                    <p class="partner-desc" data-i18n="become_partner_desc">Soutenez l'application et affichez votre enseigne sur l'application web.</p>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); flex-basis: 100%;" data-i18n="btn_contact_us" onclick="gtag('event', 'clic_contact', {'partenaire': 'Devenir Partenaire'});">NOUS CONTACTER</a>
-            </div>
-        </div>
-
-        <div class="disclaimer" data-i18n="disclaimer_partners">
-            <strong style="color:#b03a2e;">*Attention :</strong> L'éditeur décline toute responsabilité en cas d'erreur.
-        </div>
-
     </div>
 
-    <script src="lang.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const browserLang = navigator.language.substring(0, 2);
-            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+    <div class="module">
+        <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;" data-i18n="tide_title">Informations marée</div>
+        <div class="tide-full-module">
             
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[savedLang] && translations[savedLang][key]) {
-                    el.innerHTML = translations[savedLang][key]; 
+            <div class="tide-header-info">
+                <div class="tide-column" style="text-align: left;">
+                    <div id="tide-left-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
+                </div>
+                
+                <div class="tide-column" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; line-height: 1.1;">
+                    <span data-i18n="coeff" style="font-size:0.6rem; font-weight:700; color:#64748b;">COEFF</span> 
+                    <span id="coeff-display" style="color:var(--marine-blue); font-size: 1.4rem; font-weight: 900;">--</span>
+                </div>
+                
+                <div class="tide-column" style="text-align: right;">
+                    <div id="tide-right-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
+                </div>
+            </div>
+            
+            <canvas id="tideCanvasLarge" style="width:100%; height:80px;"></canvas>
+            
+            <div class="tide-footer-info">
+                <div id="tide-left-data"><span id="val-left">--</span></div>
+                <div id="tide-right-data"><span id="val-right">--</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;" data-i18n="weather_title">Conditions météo</div>
+        <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden;">
+            <iframe width="100%" height="120" src="https://embed.windy.com/embed2.html?lat=49.381&lon=-1.750&zoom=10&overlay=wind&product=ecmwf&marker=true&metricWind=kt" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <div class="disclaimer" style="font-size:0.65rem; color:#64748b; text-align:center; padding:10px;" data-i18n="index_disclaimer">
+        <strong style="color:#b03a2e;">* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+    </div>
+
+    <div class="footer-module">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
+        <div class="footer-buttons">
+            <a href="securite.html" class="btn-action btn-footer" style="background: #b03a2e;" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
+            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES</a>
+            <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
+            <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
+        </div>
+    </div>
+</div> 
+
+<script>
+    window.onload = function() {
+        if (typeof data !== 'undefined') {
+            updateApp();
+            setInterval(updateApp, 1000);
+        }
+    };
+     
+function updateSponsor() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        const day = now.getDay(); // 0 = Dimanche, 1 = Lundi, 2 = Mardi... 6 = Samedi
+        
+        const sponsorText = document.getElementById('sponsor-text');
+        if (!sponsorText) return;
+
+        const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
+
+        // 1. On récupère la langue actuelle (Français par défaut)
+        const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
+        
+        // 2. On charge les traductions (avec une sécurité au cas où le fichier lang.js ne soit pas encore lu)
+        const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+
+        // 3. On prépare nos textes traduits avec un fallback (texte de secours en français)
+        const txtUtile = t.sponsor_utile || "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison";
+        const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
+        const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
+        const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
+        const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
+        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+
+        if (hour === 8) {
+            sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">${txtUtile}</a>`;
+        }
+        else if (hour === 9) {
+            sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
+        } 
+        else if (hour === 10) {
+            sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">${txtCarteret}</a>`;
+        }
+        else if (hour === 11) {
+            const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
+            
+            if (isFoodTruckDay && minute % 2 !== 0) {
+                // On détermine le lieu traduit en fonction du jour !
+                let lieu = t.loc_service || "En service !";
+                if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
+                if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
+                if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres (Barneville)";
+                if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
+                if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles (Barneville)";
+                
+                const txtDelizia = (t.sponsor_delizia || "🍔 Deliziafoodtruck, Cuisine Italienne - ") + lieu;
+                
+                sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">${txtDelizia}</a>`;
+            } else {
+                sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
+            }
+        } 
+        else if (hour === 14) {
+            sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
+        }
+        else {
+            sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
+        }
+    }
+
+    function drawTideGraph(percent, isDescending) {
+        const canvas = document.getElementById('tideCanvasLarge');
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth;
+        canvas.height = 80;
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        
+        ctx.beginPath(); ctx.strokeStyle = '#cbd5e1'; ctx.setLineDash([5, 5]);
+        ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.stroke(); ctx.setLineDash([]);
+        
+        ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 3;
+        for (let x = 0; x <= w; x++) {
+            let ratio = x / w;
+            let y = isDescending ? 
+                15 + ((1 - Math.cos(ratio * Math.PI)) / 2) * 50 : 
+                15 + ((Math.cos(ratio * Math.PI) + 1) / 2) * 50;
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        const dotX = (percent / 100) * w;
+        const dotY = isDescending ? 
+            15 + ((1 - Math.cos((percent/100) * Math.PI)) / 2) * 50 : 
+            15 + ((Math.cos((percent/100) * Math.PI) + 1) / 2) * 50;
+
+        ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 5, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+    }
+
+    function updateApp() {
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const localISOTime = (new Date(now - tzoffset)).toISOString().slice(0, -1);
+        const dateStr = localISOTime.split('T')[0];
+        
+        const currentLang = localStorage.getItem('preferredLang') || 'fr';
+        const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
+        document.getElementById('current-date').innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
+        
+        updateSponsor();
+        if (typeof data === 'undefined' || data.length === 0) return;
+
+        const yesterdayStr = new Date(now.getTime() - 86400000 - tzoffset).toISOString().split('T')[0];
+        const tomorrowStr = new Date(now.getTime() + 86400000 - tzoffset).toISOString().split('T')[0];
+
+        let allPortes = [];
+        let allTides = [];
+
+        [yesterdayStr, dateStr, tomorrowStr].forEach(ds => {
+            let dData = data.find(d => d.date === ds);
+            if(dData) {
+                if(dData.portes) {
+                    dData.portes.forEach(p => {
+                        if(p.open !== "--" && p.open !== "--:--" && p.close !== "--" && p.close !== "--:--") {
+                            let sO = new Date(ds + "T" + p.open);
+                            let sC = new Date(ds + "T" + p.close);
+                            if (sC < sO) sC.setDate(sC.getDate() + 1);
+                            allPortes.push({ sO: sO, sC: sC, openStr: p.open, closeStr: p.close });
+                        }
+                    });
                 }
-            });
+                
+                // LA VRAIE SOLUTION EST ICI
+                [
+                    { time: dData.bm1, h: dData.bm1_h, type: "BM", label: "Basse Mer", c: dData.coeff1, refTime: null },
+                    { time: dData.pm1, h: dData.pm1_h, type: "PM", label: "Pleine Mer", c: dData.coeff1, refTime: null },
+                    { time: dData.bm2, h: dData.bm2_h, type: "BM", label: "Basse Mer", c: dData.coeff2, refTime: dData.bm1 },
+                    { time: dData.pm2, h: dData.pm2_h, type: "PM", label: "Pleine Mer", c: dData.coeff2, refTime: dData.pm1 }
+                ].forEach(t => {
+                    if (t.time && t.time !== "--:--" && t.time !== "--") {
+                        let dObj = new Date(ds + "T" + t.time);
+                        // RÈGLE : Si la Marée 2 est à une heure inférieure à la Marée 1, c'est qu'elle a franchi minuit ! On la bascule au lendemain.
+                        if (t.refTime && t.refTime !== "--:--" && t.refTime !== "--") {
+                            if (t.time < t.refTime) {
+                                dObj.setDate(dObj.getDate() + 1);
+                            }
+                        }
+                        allTides.push({
+                            time: t.time,
+                            h: t.h,
+                            type: t.type,
+                            label: t.label,
+                            c: t.c,
+                            dateObj: dObj
+                        });
+                    }
+                });
+            }
         });
-    </script>
+
+        // On trie toutes nos marées par date/heure absolue
+        allTides.sort((a, b) => a.dateObj - b.dateObj);
+
+        // --- GESTION DES 2 CRÉNEAUX ---
+        let futurePortes = allPortes.filter(p => p.sC > now); 
+        let pastPortes = allPortes.filter(p => p.sC <= now);
+        
+        let activePorte = null;
+        let nextPorte = null;
+        let lastPorteClose = pastPortes.length > 0 ? pastPortes[pastPortes.length - 1].sC : new Date(now.getTime() - (7 * 3600000));
+
+        if (futurePortes.length > 0) {
+            if (now >= futurePortes[0].sO) {
+                activePorte = futurePortes[0];
+            } else {
+                nextPorte = futurePortes[0];
+            }
+        }
+
+        const wrapper = document.getElementById('progress-wrapper');
+        const pbContainer = document.getElementById('progress-container');
+        const pb = document.getElementById('progress-bar');
+        wrapper.style.display = "block";
+
+        const t = translations[currentLang] || {}; 
+
+        document.getElementById('label-ouv').innerText = t.pill_open || "OUV.";
+        document.getElementById('label-ferm').innerText = t.pill_close || "FERM.";
+        document.getElementById('label-ouv-next').innerText = t.pill_open || "OUV.";
+        document.getElementById('label-ferm-next').innerText = t.pill_close || "FERM.";
+
+        function formatTitle(p, baseLabel) {
+            if (!p) return baseLabel;
+            if (p.sO.getDate() !== now.getDate()) return baseLabel + " (" + (t.tomorrow || "Demain") + ")";
+            return baseLabel;
+        }
+
+        document.getElementById('title-slot-1').innerText = formatTitle(futurePortes[0], t.slot_current || "Créneaux officiels");
+        document.getElementById('title-slot-2').innerText = formatTitle(futurePortes[1], t.slot_next || "Prochains créneaux");
+
+        if (futurePortes[0]) {
+            document.getElementById('open-time').innerText = futurePortes[0].openStr;
+            document.getElementById('close-time').innerText = futurePortes[0].closeStr;
+        } else {
+            document.getElementById('open-time').innerText = "--:--";
+            document.getElementById('close-time').innerText = "--:--";
+        }
+
+        if (futurePortes[1]) {
+            document.getElementById('open-time-next').innerText = futurePortes[1].openStr;
+            document.getElementById('close-time-next').innerText = futurePortes[1].closeStr;
+        } else {
+            document.getElementById('open-time-next').innerText = "--:--";
+            document.getElementById('close-time-next').innerText = "--:--";
+        }
+
+        // --- GESTION DU ROND CENTRAL ---
+        if (activePorte) {
+            const diffMs = activePorte.sC - now;
+            const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
+            const h = Math.floor(diffMs / 3600000);
+            const m = Math.floor((diffMs % 3600000) / 60000);
+            
+            document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + (t.time_before_close || " avant fermeture");
+            pb.style.width = percent + "%";
+            pbContainer.className = "progress-container";
+            
+            let circleClass = "open"; 
+            let statusText = t.status_open || "OUVERTE"; 
+            let labelText = t.label_gate || "PORTE";
+            
+            if (diffMs < 25 * 60 * 1000) { 
+                pbContainer.classList.add("danger"); circleClass = "danger"; 
+                statusText = t.status_imminent || "IMMINENTE"; labelText = t.label_closing || "FERMETURE"; 
+            }
+            else if (percent > 85) { 
+                pbContainer.classList.add("warning"); circleClass = "warning"; 
+                statusText = t.next_close || "PROCHAINE FERMETURE"; 
+                labelText = ""; 
+            }
+            
+            document.getElementById('status-text').innerText = statusText;
+            document.querySelector('.status-label').innerText = labelText;
+            document.getElementById('status-box').className = "status-box " + circleClass;
+        } else if (nextPorte) {
+            const diffMs = nextPorte.sO - now;
+            const totalWait = nextPorte.sO - lastPorteClose;
+            const elapsedWait = now - lastPorteClose;
+            let waitPercent = Math.max(0, Math.min(100, (elapsedWait / totalWait) * 100));
+
+            document.getElementById('time-left').innerText = (t.time_opening_in || "Ouverture dans ") + Math.floor(diffMs/3600000) + "h" + (Math.floor((diffMs%3600000)/60000) < 10 ? "0" : "") + Math.floor((diffMs%3600000)/60000);
+            pbContainer.className = "progress-container waiting";
+            pb.style.width = waitPercent + "%";
+            
+            document.getElementById('status-text').innerText = t.status_closed || "FERMÉE";
+            document.querySelector('.status-label').innerText = t.label_gate || "PORTE";
+            document.getElementById('status-box').className = "status-box closed";
+        }
+
+        // --- GESTION DES MARÉES ---
+        let prevTide = allTides[0], nextTide = allTides[1];
+        for (let i = 0; i < allTides.length - 1; i++) {
+            if (now >= allTides[i].dateObj && now <= allTides[i+1].dateObj) {
+                prevTide = allTides[i];
+                nextTide = allTides[i+1];
+                break;
+            }
+        }
+
+        if (prevTide && nextTide) {
+            const tidePercent = ((now - prevTide.dateObj) / (nextTide.dateObj - prevTide.dateObj)) * 100;
+            const isDescending = (prevTide.type === "PM");
+
+            let coeffText = prevTide.c && prevTide.c !== "-" ? prevTide.c : (nextTide.c && nextTide.c !== "-" ? nextTide.c : "--");
+            
+            document.getElementById('coeff-display').innerText = coeffText;
+            
+            const leftLabelTrad = prevTide.type === "PM" ? (t.high_tide || "Pleine Mer") : (t.low_tide || "Basse Mer");
+            const rightLabelTrad = nextTide.type === "PM" ? (t.high_tide || "Pleine Mer") : (t.low_tide || "Basse Mer");
+
+            document.getElementById('tide-left-label').innerText = leftLabelTrad;
+            document.getElementById('tide-right-label').innerText = rightLabelTrad;
+            document.getElementById('val-left').innerText = prevTide.time + " (" + prevTide.h + "m)";
+            document.getElementById('val-right').innerText = nextTide.time + " (" + nextTide.h + "m)";
+            
+            drawTideGraph(tidePercent, isDescending);
+        }
+    }
+</script>
+<script src="lang.js"></script>
+
+<script>
+    function setLanguage(lang) {
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.getElementById(`btn-${lang}`);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                el.innerHTML = translations[lang][key];
+            }
+        });
+
+        localStorage.setItem('preferredLang', lang);
+
+        if (typeof updateApp === "function") {
+            updateApp(); 
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const browserLang = navigator.language.substring(0, 2);
+        const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+        
+        setLanguage(savedLang);
+    });
+</script>
+<script>
+    // L'Easter Egg d'Octave (Version XXL !)
+    document.getElementById('status-box').addEventListener('click', function(e) {
+        // J'ai ajouté un dauphin et un soleil pour faire bonne mesure !
+        const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋', '🐬', '☀️'];
+        
+        // On lance 8 éléments au lieu de 5
+        for(let i = 0; i < 8; i++) {
+            let particle = document.createElement('div');
+            particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            particle.style.position = 'fixed';
+            
+            let x = e.clientX || window.innerWidth / 2;
+            let y = e.clientY || window.innerHeight / 3;
+            
+            // On centre la particule par rapport au clic
+            particle.style.left = (x - 25) + 'px';
+            particle.style.top = (y - 25) + 'px';
+            
+            // ÉMOJIS BEAUCOUP PLUS GROS (3.5rem au lieu de 2rem)
+            particle.style.fontSize = '3.5rem';
+            particle.style.pointerEvents = 'none'; 
+            particle.style.zIndex = '9999';
+            
+            // ANIMATION RALENTIE (2 secondes au lieu d'1)
+            particle.style.transition = 'transform 2s ease-out, opacity 2s ease-in';
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                // Ils montent plus haut (jusqu'à 400px) et s'écartent davantage
+                particle.style.transform = `translate(${Math.random() * 200 - 100}px, -${Math.random() * 300 + 100}px) rotate(${Math.random() * 360}deg)`;
+                particle.style.opacity = '0'; // Disparition progressive
+            }, 50);
+
+            // On nettoie le code après 2 secondes pour coller à l'animation
+            setTimeout(() => {
+                particle.remove();
+            }, 2050);
+        }
+    });
+</script>
+    <script>
+    // Easter Egg : Le Bateau Pirate (Clic x5 sur le titre)
+    let titleClickCount = 0;
+    const mainTitle = document.querySelector('.main-title');
+    
+    if (mainTitle) {
+        mainTitle.addEventListener('click', function() {
+            titleClickCount++;
+            
+            // Si on clique 5 fois...
+            if (titleClickCount === 5) {
+                // On crée le bateau
+                let ship = document.createElement('div');
+                ship.innerText = '🏴‍☠️⛵'; 
+                ship.style.position = 'fixed';
+                ship.style.top = '50%'; // Au milieu de l'écran
+                ship.style.left = '-100px'; // Caché à gauche
+                ship.style.fontSize = '4rem';
+                ship.style.zIndex = '9999';
+                ship.style.pointerEvents = 'none';
+                // L'animation CSS pour la traversée avec un petit effet de vague
+                ship.style.transition = 'transform 4s linear';
+                
+                document.body.appendChild(ship);
+                
+                // On lance le bateau après un court instant
+                setTimeout(() => {
+                    // Il traverse tout l'écran (120vw = 120% de la largeur)
+                    ship.style.transform = 'translateX(120vw) translateY(-20px)';
+                }, 50);
+                
+                // On supprime le bateau et on remet le compteur à zéro
+                setTimeout(() => {
+                    ship.remove();
+                    titleClickCount = 0;
+                }, 4050);
+            }
+            
+            // Si on s'arrête de cliquer, on remet le compteur à zéro après 2 secondes
+            setTimeout(() => {
+                if (titleClickCount > 0 && titleClickCount < 5) {
+                    titleClickCount = 0;
+                }
+            }, 2000);
+        });
+    }
+</script>
 </body>
 </html>
