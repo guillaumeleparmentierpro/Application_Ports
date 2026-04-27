@@ -640,6 +640,75 @@
             }, 2000);
         });
     }
+        <script>
+    // LE NOUVEL EASTER EGG : Le Kraken du Graphique des Marées 🐙🐳
+    const tideCanvas = document.getElementById('tideCanvasLarge');
+    
+    if (tideCanvas) {
+        tideCanvas.addEventListener('click', function(e) {
+            // On vérifie s'il y a déjà une créature en pleine chorégraphie
+            if (document.getElementById('kraken-egg')) return;
+
+            // Une chance sur deux de voir la baleine ou la pieuvre !
+            const seaCreatures = ['🐙', '🐳'];
+            const creature = seaCreatures[Math.floor(Math.random() * seaCreatures.length)];
+
+            // On crée notre créature
+            let kraken = document.createElement('div');
+            kraken.id = 'kraken-egg';
+            kraken.innerText = creature;
+            
+            // On la positionne précisément au niveau du clic
+            kraken.style.position = 'fixed';
+            kraken.style.fontSize = '2.5rem';
+            kraken.style.zIndex = '999';
+            kraken.style.pointerEvents = 'none';
+            kraken.style.left = e.clientX + 'px';
+            kraken.style.top = e.clientY + 'px';
+            
+            // Position de départ (inviisble, un peu plus bas)
+            kraken.style.transform = 'translate(-50%, 20px) scale(0)';
+            kraken.style.opacity = '0';
+            kraken.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'; // Petit effet rebond très sympa
+            
+            document.body.appendChild(kraken);
+
+            // C'est parti pour le show !
+            setTimeout(() => {
+                // 1. Apparition
+                kraken.style.opacity = '1';
+                kraken.style.transform = 'translate(-50%, -40px) scale(1)';
+            }, 50);
+
+            setTimeout(() => {
+                // 2. Coup d'oeil à gauche
+                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(-20deg)';
+            }, 600);
+
+            setTimeout(() => {
+                // 3. Coup d'oeil à droite
+                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(20deg)';
+            }, 1200);
+
+            setTimeout(() => {
+                // 4. Regarde devant
+                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(0deg)';
+            }, 1800);
+
+            setTimeout(() => {
+                // 5. Plouf ! Il disparaît
+                kraken.style.transition = 'all 0.4s ease-in';
+                kraken.style.transform = 'translate(-50%, 20px) scale(0.5)';
+                kraken.style.opacity = '0';
+            }, 2400);
+
+            // On efface la trace du crime
+            setTimeout(() => {
+                kraken.remove();
+            }, 3000);
+        });
+    }
+</script>
 </script>
 </body>
 </html>
