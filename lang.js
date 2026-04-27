@@ -3,6 +3,7 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        btn_webcam: "📷 WEBCAM",
         webcam_main_title: "WEBCAM EN DIRECT",
     webcam_module_title: "Vue du chenal",
     webcam_desc: "Observez les conditions en temps réel à l'entrée du port de Barneville-Carteret.",
@@ -140,6 +141,7 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        btn_webcam: "📷 WEBCAM",
         webcam_main_title: "LIVE WEBCAM",
     webcam_module_title: "Channel View",
     webcam_desc: "Check the real-time conditions at the entrance of Barneville-Carteret port.",
