@@ -45,6 +45,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
+    <script src="lang.js"></script>
     
     <style>
         .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
@@ -231,7 +232,7 @@
         }
     };
      
-function updateSponsor() {
+    function updateSponsor() {
         const now = new Date();
         const hour = now.getHours();
         const minute = now.getMinutes();
@@ -242,39 +243,53 @@ function updateSponsor() {
 
         const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
 
+        // 1. On récupère la langue actuelle (Français par défaut)
+        const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
+        
+        // 2. On charge les traductions (avec une sécurité au cas où le fichier lang.js ne soit pas encore lu)
+        const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+
+        // 3. On prépare nos textes traduits avec un fallback (texte de secours en français)
+        const txtUtile = t.sponsor_utile || "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison";
+        const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
+        const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
+        const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
+        const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
+        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+
         if (hour === 8) {
-            sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison</a>`;
+            sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">${txtUtile}</a>`;
         }
         else if (hour === 9) {
-            sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">✂️ L'Or Coiffure - Salon de coiffure</a>`;
+            sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
         } 
         else if (hour === 10) {
-            sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques</a>`;
+            sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">${txtCarteret}</a>`;
         }
         else if (hour === 11) {
-            // Jours d'ouverture du Food Truck : Lundi(1), Mardi(2), Jeudi(4), Vendredi(5), Samedi(6)
             const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
             
-            // Si on est un jour d'ouverture ET que la minute est impaire (11h01, 11h03...), on affiche le Food Truck
             if (isFoodTruckDay && minute % 2 !== 0) {
-                // On détermine le lieu en fonction du jour !
-                let lieu = "En service !";
-                if (day === 1) lieu = "Aujourd'hui à Denneville";
-                if (day === 2) lieu = "Aujourd'hui à Port-Bail";
-                if (day === 4) lieu = "Aujourd'hui pl. Flandres (Barneville)";
-                if (day === 5) lieu = "Aujourd'hui aux Pieux";
-                if (day === 6) lieu = "Aujourd'hui rue des Écoles (Barneville)";
-                sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">🍔 Deliziafoodtruck, Cuisine Italienne - ${lieu}</a>`;
+                // On détermine le lieu traduit en fonction du jour !
+                let lieu = t.loc_service || "En service !";
+                if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
+                if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
+                if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres (Barneville)";
+                if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
+                if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles (Barneville)";
+                
+                const txtDelizia = (t.sponsor_delizia || "🍔 Deliziafoodtruck, Cuisine Italienne - ") + lieu;
+                
+                sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">${txtDelizia}</a>`;
             } else {
-                // Sinon (jours fermés ou minute paire), La Cambuse s'affiche
-                sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">🍽️ La Cambuse - Traiteur salé & sucré</a>`;
+                sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
             }
         } 
         else if (hour === 14) {
-            sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">🛍️ Esprit Marin - Concept store sport chic & Déco</a>`;
+            sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
         }
         else {
-            sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">⚓ Votre publicité ici ! Cliquez pour nous contacter.</a>`;
+            sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
         }
     }
 
@@ -500,7 +515,6 @@ function updateSponsor() {
         }
     }
 </script>
-<script src="lang.js"></script>
 
 <script>
     function setLanguage(lang) {
