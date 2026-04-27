@@ -174,6 +174,17 @@
             width: 100%;
         }
 
+        /* Classe spéciale pour aligner 3 boutons sur une ligne */
+        .partner-actions.actions-3 {
+            flex-wrap: nowrap;
+        }
+
+        .partner-actions.actions-3 .btn-partner-link {
+            font-size: 0.62rem; /* Légèrement plus petit pour tout faire rentrer */
+            padding: 10px 2px;
+            gap: 3px;
+        }
+
         .btn-partner-link {
             text-decoration: none;
             background: #f8fafc;
@@ -211,6 +222,26 @@
             <h1 class="main-title"><span data-i18n="partners_title">NOS PARTENAIRES LOCAUX</span><sup>*</sup></h1>
         </div>
 
+        <div class="module" id="utile">
+            <div class="partner-header">
+                <div class="partner-logo">
+                    <img src="utile.png" alt="Logo UTILE">
+                </div>
+                <div class="partner-info">
+                    <h2 class="partner-name">UTILE Barneville-Carteret</h2>
+                    <p class="partner-desc" data-i18n="desc_utile">Shopping et vente au détail, livraison à domicile, dépôt de pain, viennoiserie, pâtisserie.</p>
+                    <div class="sponsor-time" data-i18n="time_utile">⏱️ Sponsor de 08h00 à 09h00</div>
+                    <div class="partner-schedule">📍 11 place du Dr Auvret, Barneville</div>
+                </div>
+            </div>
+            <div class="partner-actions">
+                <a href="tel:0233952512" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'UTILE'});">📞 APPELER</a>
+                <a href="mailto:utile.barneville@systeme-u.fr" class="btn-partner-link" data-i18n="btn_email" onclick="gtag('event', 'clic_email', {'partenaire': 'UTILE'});">✉️ E-MAIL</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=11+place+du+Docteur+Auvret,+Barneville" target="_blank" class="btn-partner-link" data-i18n="btn_directions" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'UTILE'});">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/p/UTILE-Barneville-Carteret-100036393625812/" target="_blank" class="btn-partner-link" data-i18n="btn_website" onclick="gtag('event', 'clic_site', {'partenaire': 'UTILE'});">🌐 FACEBOOK</a>
+            </div>
+        </div>
+
         <div class="module" id="or-coiffure">
             <div class="partner-header">
                 <div class="partner-logo">
@@ -222,10 +253,10 @@
                     <div class="sponsor-time" data-i18n="time_or_coiffure">⏱️ Sponsor de 09h00 à 10h00</div>
                 </div>
             </div>
-            <div class="partner-actions">
-                <a href="tel:0233942579" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=23+place+de+l'église,+50270+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/lOrCoiffureBarneville/?locale=fr_FR" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_website">🌐 SITE WEB</a>
+            <div class="partner-actions actions-3">
+                <a href="tel:0233942579" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'Or Coiffure'});">📞 APPELER</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=23+place+de+l'église,+50270+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'Or Coiffure'});">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/lOrCoiffureBarneville/?locale=fr_FR" target="_blank" class="btn-partner-link" data-i18n="btn_website" onclick="gtag('event', 'clic_site', {'partenaire': 'Or Coiffure'});">🌐 SITE WEB</a>
             </div>
         </div>
 
@@ -240,10 +271,10 @@
                     <div class="sponsor-time" data-i18n="time_carteret_marine">⏱️ Sponsor de 10h00 à 11h00</div>
                 </div>
             </div>
-            <div class="partner-actions">
-                <a href="tel:0233012001" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=carteret+marine" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="http://www.carteret-marine.fr/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_website">🌐 SITE WEB</a>
+            <div class="partner-actions actions-3">
+                <a href="tel:0233012001" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'Carteret Marine'});">📞 APPELER</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=carteret+marine" target="_blank" class="btn-partner-link" data-i18n="btn_directions" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'Carteret Marine'});">📍 ITINÉRAIRE</a>
+                <a href="http://www.carteret-marine.fr/" target="_blank" class="btn-partner-link" data-i18n="btn_website" onclick="gtag('event', 'clic_site', {'partenaire': 'Carteret Marine'});">🌐 SITE WEB</a>
             </div>
         </div>
 
@@ -259,10 +290,10 @@
                 </div>
             </div>
             <div class="partner-actions">
-                <a href="tel:0233031852" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=La+Cambuse+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/profile.php?id=100063477759757&sk=directory_contact_info" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
+                <a href="tel:0233031852" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'La Cambuse'});">📞 APPELER</a>
+                <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link" data-i18n="btn_email" onclick="gtag('event', 'clic_email', {'partenaire': 'La Cambuse'});">✉️ E-MAIL</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=La+Cambuse+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'La Cambuse'});">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/profile.php?id=100063477759757&sk=directory_contact_info" target="_blank" class="btn-partner-link" data-i18n="btn_website" onclick="gtag('event', 'clic_site', {'partenaire': 'La Cambuse'});">🌐 SITE WEB</a>
             </div>
         </div>
 
@@ -279,9 +310,9 @@
                 </div>
             </div>
             <div class="partner-actions">
-                <a href="tel:0631099136" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:deliziafoodtruck@gmail.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.instagram.com/deliziafoodtruck/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_instagram">📸 INSTAGRAM</a>
+                <a href="tel:0631099136" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'Delizia Food Truck'});">📞 APPELER</a>
+                <a href="mailto:deliziafoodtruck@gmail.com" class="btn-partner-link" data-i18n="btn_email" onclick="gtag('event', 'clic_email', {'partenaire': 'Delizia Food Truck'});">✉️ E-MAIL</a>
+                <a href="https://www.instagram.com/deliziafoodtruck/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_instagram" onclick="gtag('event', 'clic_instagram', {'partenaire': 'Delizia Food Truck'});">📸 INSTAGRAM</a>
             </div>
         </div>
 
@@ -296,10 +327,10 @@
                     <div class="sponsor-time" data-i18n="time_esprit_marin">⏱️ Sponsor de 14h00 à 15h00</div>
                 </div>
             </div>
-            <div class="partner-actions">
-                <a href="tel:0233951284" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=esprit+marin+carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.esprit-marin-carteret.fr/" target="_blank" class="btn-partner-link" style="flex-basis: 100%;" data-i18n="btn_website">🌐 SITE WEB</a>
+            <div class="partner-actions actions-3">
+                <a href="tel:0233951284" class="btn-partner-link" data-i18n="btn_call" onclick="gtag('event', 'clic_appel', {'partenaire': 'Esprit Marin'});">📞 APPELER</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=esprit+marin+carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'Esprit Marin'});">📍 ITINÉRAIRE</a>
+                <a href="https://www.esprit-marin-carteret.fr/" target="_blank" class="btn-partner-link" data-i18n="btn_website" onclick="gtag('event', 'clic_site', {'partenaire': 'Esprit Marin'});">🌐 SITE WEB</a>
             </div>
         </div>
 
@@ -312,7 +343,7 @@
                 </div>
             </div>
             <div class="partner-actions">
-                <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); flex-basis: 100%;" data-i18n="btn_contact_us">NOUS CONTACTER</a>
+                <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); flex-basis: 100%;" data-i18n="btn_contact_us" onclick="gtag('event', 'clic_contact', {'partenaire': 'Devenir Partenaire'});">NOUS CONTACTER</a>
             </div>
         </div>
 
