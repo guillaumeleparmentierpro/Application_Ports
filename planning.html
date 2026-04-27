@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light">
-    <title>Planning - Barneville-Carteret</title>
+    <title>Horaires de la porte et des marées</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
 <style>
@@ -204,7 +204,7 @@
         <div class="top-nav" style="display: flex; margin-bottom: 5px;">
             <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
         </div>
-        <h1 class="main-title">PORT BARNEVILLE-CARTERET<sup>*</sup></h1>
+        <h1 class="main-title" data-i18n="plan_main_title">Horaires de la porte et des marées<sup>*</sup></h1>
     </div>
 
     <div class="scroll-hint" data-i18n="plan_scroll_hint">👉 Glissez le tableau vers la gauche pour voir le SOIR</div>
@@ -241,9 +241,10 @@
         const today = new Date().toISOString().split('T')[0];
         
         if (typeof data === 'undefined') return;
-        tbody.innerHTML = "";
         
         let currentMonthStr = ""; 
+        // OPTIMISATION : On crée une variable texte pour stocker tout le HTML
+        let tableHTML = "";
 
         // On récupère la langue pour adapter le format des dates
         const currentLang = localStorage.getItem('preferredLang') || 'fr';
@@ -263,7 +264,8 @@
                     <tr class="month-separator">
                         <td colspan="9">${monthName}</td>
                     </tr>`;
-                tbody.innerHTML += sepRow;
+                // On ajoute à notre variable texte
+                tableHTML += sepRow;
                 currentMonthStr = monthName; 
             }
 
@@ -314,9 +316,14 @@
                     </td>
                 </tr>`;
             
-            tbody.innerHTML += row;
+            // On ajoute la ligne à la variable texte
+            tableHTML += row;
         });
 
+        // OPTIMISATION : On injecte tout le code HTML en une seule fois !
+        tbody.innerHTML = tableHTML;
+
+        // J'ai aussi légèrement baissé le délai d'attente vu que l'affichage est maintenant instantané.
         setTimeout(() => {
             const container = document.querySelector('.table-container');
             const todayEl = document.getElementById('today-marker');
@@ -324,7 +331,7 @@
                 const topPos = todayEl.offsetTop - 100;
                 container.scrollTo({ top: topPos, behavior: 'smooth' });
             }
-        }, 300);
+        }, 100);
     }
     </script>
 
