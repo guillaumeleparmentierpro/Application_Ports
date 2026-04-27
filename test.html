@@ -45,6 +45,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
+    <script src="lang.js"></script>
     
     <style>
         .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
@@ -231,7 +232,7 @@
         }
     };
      
-function updateSponsor() {
+    function updateSponsor() {
         const now = new Date();
         const hour = now.getHours();
         const minute = now.getMinutes();
@@ -514,7 +515,6 @@ function updateSponsor() {
         }
     }
 </script>
-<script src="lang.js"></script>
 
 <script>
     function setLanguage(lang) {
