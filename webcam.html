@@ -1,1 +1,193 @@
-ff
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5LY18V5457');
+    </script>
+    <title>Webcam - Port de Barneville-Carteret</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- VARIABLES GLOBALES --- */
+        :root {
+            color-scheme: light;
+            --primary-bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --marine-blue: #1e3a8a;
+            --text-main: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--primary-bg); 
+            margin: 0; 
+            padding: 0; 
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        /* --- CONTENEUR PRINCIPAL --- */
+        .app-container {
+            width: 100%;
+            max-width: 450px; 
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            padding-bottom: 30px;
+        }
+
+        /* --- EN-TÊTE UNIVERSELLE --- */
+        .sticky-header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background: var(--primary-bg);
+            z-index: 1000;
+            padding: 10px 15px 5px 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .btn-action { 
+            text-decoration: none; 
+            background: var(--marine-blue);
+            color: #ffffff !important;
+            border: none; 
+            border-radius: 8px; 
+            padding: 6px 10px;
+            font-weight: 700; 
+            font-size: 0.6rem; 
+            display: inline-flex; 
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* --- LE TITRE UNIVERSEL --- */
+        .main-title {
+            font-size: 1.05rem; 
+            font-weight: 700; 
+            color: var(--marine-blue);
+            text-align: center;
+            margin: 5px 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            white-space: nowrap; 
+            width: 100%;
+            display: block; 
+        }
+
+        .main-title sup { 
+            color: #b03a2e; 
+            font-size: 0.75rem; 
+            vertical-align: super; 
+        }
+
+        /* --- LE MODULE --- */
+        .module {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px; 
+            margin: 0 15px 15px 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--marine-blue);
+            border-bottom: 1px solid #e2e8f0;
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .module-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--marine-blue);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .module-text {
+            font-size: 0.8rem;
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* --- CONTENEUR WEBCAM --- */
+        .webcam-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #e2e8f0; /* Couleur de fond pendant le chargement */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .webcam-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .disclaimer {
+            font-size: 0.65rem; color: #64748b; text-align: center; padding: 0 15px; margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <div class="sticky-header">
+            <div class="top-nav" style="display: flex; margin-bottom: 5px;">
+                <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
+            </div>
+            <h1 class="main-title"><span data-i18n="webcam_main_title">WEBCAM EN DIRECT</span><sup>*</sup></h1>
+        </div>
+
+        <div class="module">
+            <h2 class="module-title" data-i18n="webcam_module_title">Gare Maritime</h2>
+            <p class="module-text" data-i18n="webcam_desc">Observez les conditions en temps réel à l'entrée du port de Barneville-Carteret.</p>
+            
+            <div class="webcam-container">
+                <iframe src="https://pv.viewsurf.com/778/Barneville-Carteret-Gare-Maritime?i=NDE2Njo" allowfullscreen title="Webcam Barneville-Carteret"></iframe>
+            </div>
+        </div>
+
+        <div class="disclaimer" data-i18n="webcam_disclaimer">
+            <strong style="color:#b03a2e;">* Attention :</strong> Le flux vidéo est fourni à titre indicatif par Viewsurf et peut subir des décalages.
+        </div>
+
+   </div>
+
+   <script src="lang.js"></script>
+   <script>
+       // Logique de traduction
+       document.addEventListener('DOMContentLoaded', () => {
+           const browserLang = navigator.language.substring(0, 2);
+           const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+           
+           document.querySelectorAll('[data-i18n]').forEach(el => {
+               const key = el.getAttribute('data-i18n');
+               if (translations[savedLang] && translations[savedLang][key]) {
+                   el.innerHTML = translations[savedLang][key]; 
+               }
+           });
+       });
+   </script>
+</body>
+</html>
