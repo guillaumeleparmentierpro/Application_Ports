@@ -86,7 +86,6 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         plan_low_tide: "Basse Mer",
         plan_coeff: "Coeff",
         // --- NOUVEAUTÉS PAGE INDEX ---
-        sponsor_label: "Sponsor",
         slots_title: "Créneaux officiels :",
         tide_title: "Informations marée",
         weather_title: "Conditions météo",
@@ -225,7 +224,6 @@ btn_email: "✉️ E-MAIL",
 btn_contact_us: "CONTACT US",
 disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Warning:</strong> The publisher declines all responsibility in case of error.",
 // --- NOUVEAUTÉS PAGE INDEX ---
-        sponsor_label: "Sponsor",
         slots_title: "Official slots:",
         tide_title: "Tide information",
         weather_title: "Weather conditions",
