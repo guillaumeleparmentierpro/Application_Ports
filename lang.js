@@ -3,6 +3,10 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        webcam_main_title: "WEBCAM EN DIRECT",
+    webcam_module_title: "Vue du chenal",
+    webcam_desc: "Observez les conditions en temps réel à l'entrée du port de Barneville-Carteret.",
+    webcam_disclaimer: "<strong style=\"color:#b03a2e;\">* Attention :</strong> Le flux vidéo est fourni à titre indicatif par Viewsurf et peut subir des décalages.",
         sponsor_utile: "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison",
     sponsor_or_coiffure: "✂️ L'Or Coiffure - Salon de coiffure",
     sponsor_carteret_marine: "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques",
@@ -136,6 +140,10 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        webcam_main_title: "LIVE WEBCAM",
+    webcam_module_title: "Channel View",
+    webcam_desc: "Check the real-time conditions at the entrance of Barneville-Carteret port.",
+    webcam_disclaimer: "<strong style=\"color:#b03a2e;\">* Warning:</strong> The video feed is provided for informational purposes by Viewsurf and may experience delays.",
         sponsor_utile: "🛒 UTILE Barneville-Carteret - Groceries, Bakery & Delivery",
     sponsor_or_coiffure: "✂️ L'Or Coiffure - Hair Salon",
     sponsor_carteret_marine: "🛥️ Carteret Marine - Boat renovation, sales & accessories",
