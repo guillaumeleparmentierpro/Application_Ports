@@ -242,7 +242,10 @@ function updateSponsor() {
 
         const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
 
-        if (hour === 9) {
+        if (hour === 8) {
+            sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison</a>`;
+        }
+        else if (hour === 9) {
             sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">✂️ L'Or Coiffure - Salon de coiffure</a>`;
         } 
         else if (hour === 10) {
