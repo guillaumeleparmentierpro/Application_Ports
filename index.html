@@ -209,7 +209,7 @@
             <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">📷 WEBCAM</a>
         </div>
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
-            <iframe src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0; width: 0; height: 0;" frameborder="0"></iframe>
+            <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
         </div>
     </div>
 
@@ -538,7 +538,7 @@
         // --- Mise à jour de la langue du widget Wisuki ---
         const wisukiIframe = document.getElementById('wisuki-widget');
         if (wisukiIframe) {
-            wisukiIframe.src = `https://wisuki.com/widget-summary?spot=2434&lang=${lang}`;
+            wisukiIframe.src = `https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=${lang}`;
         }
 
         if (typeof updateApp === "function") {
