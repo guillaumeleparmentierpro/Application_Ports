@@ -3,6 +3,7 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        sponsor_label: "PARTENAIRES",
         btn_webcam: "📷 WEBCAM",
         webcam_main_title: "WEBCAM EN DIRECT",
     webcam_module_title: "Vue du chenal",
@@ -141,6 +142,7 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        sponsor_label: "PARTNERS",
         btn_webcam: "📷 WEBCAM",
         webcam_main_title: "LIVE WEBCAM",
     webcam_module_title: "Channel View",
