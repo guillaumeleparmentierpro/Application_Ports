@@ -7,6 +7,8 @@
     <title>Horaires & Marées - Port de Barneville-Carteret | L'App des Marins</title>
     <meta name="google-site-verification" content="_x0ggsxOKABcmc9deMHWXhKNlpuAGGgT-JBxV3xi2CE" />
     <meta name="description" content="Consultez en temps réel l'état de la porte du port de Barneville-Carteret, les horaires de marées, le planning officiel et la météo marine. L'outil indispensable du Cotentin.">
+    <meta name="author" content="Cotentin Web Studio - Guillaume Leparmentier">
+    <meta name="publisher" content="Cotentin Web Studio">
     <meta name="keywords" content="Port, Barneville-Carteret, Marée, Porte, Horaires, Manche, Cotentin, Navigation, Normandie, Ouverture, Fermeture, Barneville, Carteret, Pêche, Marin, Yacht Club, YCBC, Météo marine">
     
     <meta property="og:title" content="Port de Barneville-Carteret - Horaires & Marées">
@@ -106,12 +108,12 @@
         .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
         .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
         
-        .tide-full-module { background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; padding: 15px 10px; margin: 0 12px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
+        .tide-full-module { background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; padding: 15px 10px; margin: 0 12px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; position: relative; }
         .tide-header-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; font-weight: 700; color: var(--marine-blue); }
         
         .tide-column { flex: 1; flex-basis: 33.33%; min-width: 0; } 
         
-        #tideCanvasLarge { width: 100%; height: 80px; }
+        #tideCanvasLarge { width: 100%; height: 80px; cursor: pointer; }
         .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
         
         /* Modification pour adapter le widget Wisuki */
@@ -224,6 +226,9 @@
             <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES</a>
             <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
             <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
+        </div>
+        <div style="font-size: 0.55rem; color: #94a3b8; margin-top: 20px; font-weight: 600;">
+            © 2026 Cotentin Web Studio - Créé avec passion dans le Cotentin
         </div>
     </div>
 </div> 
@@ -553,13 +558,12 @@
         setLanguage(savedLang);
     });
 </script>
+
 <script>
     // L'Easter Egg d'Octave (Version XXL !)
     document.getElementById('status-box').addEventListener('click', function(e) {
-        // J'ai ajouté un dauphin et un soleil pour faire bonne mesure !
         const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋', '🐬', '☀️'];
         
-        // On lance 8 éléments au lieu de 5
         for(let i = 0; i < 8; i++) {
             let particle = document.createElement('div');
             particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
@@ -568,33 +572,29 @@
             let x = e.clientX || window.innerWidth / 2;
             let y = e.clientY || window.innerHeight / 3;
             
-            // On centre la particule par rapport au clic
             particle.style.left = (x - 25) + 'px';
             particle.style.top = (y - 25) + 'px';
             
-            // ÉMOJIS BEAUCOUP PLUS GROS (3.5rem au lieu de 2rem)
             particle.style.fontSize = '3.5rem';
             particle.style.pointerEvents = 'none'; 
             particle.style.zIndex = '9999';
             
-            // ANIMATION RALENTIE (2 secondes au lieu d'1)
             particle.style.transition = 'transform 2s ease-out, opacity 2s ease-in';
             document.body.appendChild(particle);
 
             setTimeout(() => {
-                // Ils montent plus haut (jusqu'à 400px) et s'écartent davantage
                 particle.style.transform = `translate(${Math.random() * 200 - 100}px, -${Math.random() * 300 + 100}px) rotate(${Math.random() * 360}deg)`;
-                particle.style.opacity = '0'; // Disparition progressive
+                particle.style.opacity = '0';
             }, 50);
 
-            // On nettoie le code après 2 secondes pour coller à l'animation
             setTimeout(() => {
                 particle.remove();
             }, 2050);
         }
     });
 </script>
-    <script>
+
+<script>
     // Easter Egg : Le Bateau Pirate (Clic x5 sur le titre)
     let titleClickCount = 0;
     const mainTitle = document.querySelector('.main-title');
@@ -603,36 +603,29 @@
         mainTitle.addEventListener('click', function() {
             titleClickCount++;
             
-            // Si on clique 5 fois...
             if (titleClickCount === 5) {
-                // On crée le bateau
                 let ship = document.createElement('div');
                 ship.innerText = '🏴‍☠️⛵'; 
                 ship.style.position = 'fixed';
-                ship.style.top = '50%'; // Au milieu de l'écran
-                ship.style.left = '-100px'; // Caché à gauche
+                ship.style.top = '50%';
+                ship.style.left = '-100px';
                 ship.style.fontSize = '4rem';
                 ship.style.zIndex = '9999';
                 ship.style.pointerEvents = 'none';
-                // L'animation CSS pour la traversée avec un petit effet de vague
                 ship.style.transition = 'transform 4s linear';
                 
                 document.body.appendChild(ship);
                 
-                // On lance le bateau après un court instant
                 setTimeout(() => {
-                    // Il traverse tout l'écran (120vw = 120% de la largeur)
                     ship.style.transform = 'translateX(120vw) translateY(-20px)';
                 }, 50);
                 
-                // On supprime le bateau et on remet le compteur à zéro
                 setTimeout(() => {
                     ship.remove();
                     titleClickCount = 0;
                 }, 4050);
             }
             
-            // Si on s'arrête de cliquer, on remet le compteur à zéro après 2 secondes
             setTimeout(() => {
                 if (titleClickCount > 0 && titleClickCount < 5) {
                     titleClickCount = 0;
@@ -641,7 +634,8 @@
         });
     }
 </script>
-    <script>
+
+<script>
     // LE NOUVEL EASTER EGG : Le Kraken du Graphique des Marées 🐙🐳
     const tideCanvas = document.getElementById('tideCanvasLarge');
     
