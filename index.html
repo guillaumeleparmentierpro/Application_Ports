@@ -60,15 +60,15 @@
         .footer-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
         .btn-footer { width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; box-sizing: border-box; }
         .module { background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); border-bottom: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; }
-        .top-nav { display: flex; justify-content: space-between; align-items: center; gap: 5px; margin-bottom: 15px; width: 100%; }
-        .date-badge { background: white; padding: 6px 8px; border-radius: 8px; font-weight: 700; font-size: 0.6rem; border: 1px solid #e2e8f0; white-space: nowrap; flex-shrink: 1; }
+        .top-nav { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 15px; width: 100%; }
+        .date-badge { background: white; padding: 6px 8px; border-radius: 8px; font-weight: 700; font-size: 0.6rem; border: 1px solid #e2e8f0; white-space: nowrap; flex-shrink: 1; text-align: center; }
         .sticky-header { position: -webkit-sticky; position: sticky; top: 0; background: var(--primary-bg); z-index: 1000; padding: 10px 15px 5px 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; }
         .main-title { font-size: 1.05rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 5px 0 8px 0; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.1; white-space: nowrap; width: 100%; display: block; }
         .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
         .lang-switch { text-align: center; margin: 15px 0 5px 0; font-size: 1.5rem; }
         .lang-btn { cursor: pointer; opacity: 0.3; transition: opacity 0.3s ease, transform 0.2s ease; display: inline-block; vertical-align: middle; }
         .lang-btn.active { opacity: 1; transform: scale(1.15); }
-        .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .btn-action:active { transform: scale(0.95); }
         .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
         .status-box { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
@@ -123,6 +123,13 @@
     </style>
 </head>
 <body>
+
+<div id="ios-install-popup" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: white; border: 2px solid var(--marine-blue); padding: 15px; border-radius: 12px; z-index: 9999; width: 85%; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: center;">
+    <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; font-weight: bold; color: #94a3b8; font-size: 1.2rem;" onclick="document.getElementById('ios-install-popup').style.display='none'">×</span>
+    <p style="font-size: 0.85rem; margin: 0; font-weight: 700; color: var(--marine-blue);">Installer sur iPhone / iPad</p>
+    <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: var(--text-main); line-height: 1.4;">Touchez l'icône <b>Partager</b> en bas de votre écran, puis faites défiler et choisissez <br><b>"Sur l'écran d'accueil"</b>.</p>
+</div>
+
 <div class="app-container">
 
     <div class="sticky-header">
@@ -131,11 +138,12 @@
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
 
-        <div class="top-nav" style="display: flex; justify-content: space-between; align-items: center;">
-            <div class="date-badge" id="current-date" style="font-size: 0.6rem; font-weight: 700; border: 1px solid #e2e8f0; padding: 6px; border-radius: 8px; background: white;">-- --</div>
-            <div class="nav-buttons" style="display: flex; gap: 5px;">
+        <div class="top-nav">
+            <div class="date-badge" id="current-date">-- --</div>
+            <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%;">
                 <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES & MARÉES</a>
                 <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
+                <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
             </div>
         </div>
         <h1 class="main-title">Port Barneville-Carteret<sup>*</sup></h1>
@@ -232,6 +240,52 @@
         </div>
     </div>
 </div> 
+
+<script>
+    // --- GESTION DE L'INSTALLATION PWA ---
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
+    const iosPopup = document.getElementById('ios-install-popup');
+
+    // Vérifier si l'app est déjà installée
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (isStandalone) {
+        // Si déjà installé, on cache le bouton pour ne pas polluer l'écran
+        installBtn.style.display = 'none';
+    }
+
+    // Intercepter l'événement d'installation Android
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // On s'assure que le bouton est visible si l'app n'est pas installée
+        if (!isStandalone) {
+            installBtn.style.display = 'inline-flex';
+        }
+    });
+
+    installBtn.addEventListener('click', async () => {
+        // Détection iOS
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+        if (isIOS) {
+            // Afficher le pop-up d'aide pour iOS
+            iosPopup.style.display = 'block';
+            return;
+        }
+
+        if (deferredPrompt) {
+            // Afficher le pop-up natif Android
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+        } else {
+            // Sécurité de secours si le bouton est cliqué sur un navigateur non compatible
+            alert("Pour installer l'application, ouvrez le menu de votre navigateur et choisissez 'Ajouter à l'écran d'accueil'.");
+        }
+    });
+</script>
 
 <script>
     window.onload = function() {
