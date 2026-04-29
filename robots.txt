@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://guillaumeleparmentierpro.github.io/Application_Ports/sitemap.xml
