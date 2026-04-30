@@ -63,12 +63,11 @@
         .footer-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
         .btn-footer { width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; box-sizing: border-box; }
         .module { background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); border-bottom: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; }
-        .top-nav { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 15px; width: 100%; }
         .date-badge { background: white; padding: 6px 8px; border-radius: 8px; font-weight: 700; font-size: 0.6rem; border: 1px solid #e2e8f0; white-space: nowrap; flex-shrink: 1; text-align: center; }
         .sticky-header { position: -webkit-sticky; position: sticky; top: 0; background: var(--primary-bg); z-index: 1000; padding: 10px 15px 5px 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; }
         .main-title { font-size: 1.05rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 5px 0 8px 0; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.1; white-space: nowrap; width: 100%; display: block; }
         .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
-        .lang-switch { text-align: center; margin: 15px 0 5px 0; font-size: 1.5rem; }
+        .lang-switch { text-align: center; font-size: 1.5rem; }
         .lang-btn { cursor: pointer; opacity: 0.3; transition: opacity 0.3s ease, transform 0.2s ease; display: inline-block; vertical-align: middle; }
         .lang-btn.active { opacity: 1; transform: scale(1.15); }
         .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
@@ -188,19 +187,19 @@
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
         
-        <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">⚓ Choix du port</h3>
+        <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">Choix du port</h3>
         
         <div style="display: flex; flex-direction: column; gap: 10px;">
             <a href="#" onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="display: block; background: var(--marine-blue); color: white; text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem;">
-                📍 Barneville-Carteret (Actuel)
+                Barneville-Carteret (Actuel)
             </a>
             
             <a href="dielette/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
-                🌊 Port de Diélette
+                Port de Diélette
             </a>
 
             <div style="display: block; background: #f8fafc; color: #94a3b8; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.85rem; border: 1px dashed #cbd5e1; cursor: not-allowed;">
-                ⏳ Port-Bail (Prochainement)
+                Port-Bail (Prochainement)
             </div>
         </div>
     </div>
@@ -215,30 +214,34 @@
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
 
-        <div class="top-nav">
+        <!-- === NOUVELLE DISPOSITION DATE ET DRAPEAUX === -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 5px;">
             <div class="date-badge" id="current-date">-- --</div>
-            <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%;">
-                <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES & MARÉES</a>
-                <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
-                <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
+            <div class="lang-switch" style="margin: 0; font-size: 1.6rem;">
+                <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span> 
+                <span style="color: #cbd5e1; font-size: 1.2rem; vertical-align: middle; margin: 0 2px;">|</span> 
+                <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
             </div>
         </div>
+        <!-- ============================================== -->
+
+        <!-- === BOUTONS D'ACTION REMONTÉS === -->
+        <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 12px;">
+            <a href="planning.html" class="btn-action" data-i18n="btn_planning">PORTES & MARÉES</a>
+            <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
+            <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
+        </div>
+        <!-- ================================== -->
         
-        <h1 class="main-title">Port Barneville-Carteret<sup>*</sup></h1>
+        <h1 class="main-title">PORT BARNEVILLE-CARTERET<sup>*</sup></h1>
 
         <!-- === BOUTON CHANGER DE PORT === -->
-        <div style="text-align: center; margin: 8px 0 10px 0;">
+        <div style="text-align: center; margin: 8px 0 5px 0;">
             <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
                 ⚓ <span data-i18n="change_port">CHANGER DE PORT</span> ▾
             </button>
         </div>
         <!-- ============================== -->
-
-        <div class="lang-switch">
-            <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span> 
-            <span style="color: #cbd5e1; font-size: 1rem; vertical-align: middle; margin: 0 5px;">|</span> 
-            <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
-        </div>
     </div>
         
     <div class="module">
