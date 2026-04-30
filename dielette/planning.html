@@ -1,1 +1,356 @@
-en construction, à venir pour cette saison 2026
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5LY18V5457');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Horaires de la porte et des marées</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="donnees.js"></script>
+<style>
+    :root {
+        color-scheme: light;
+        --primary-bg: #f8fafc;
+        --card-bg: #ffffff;
+        --marine-blue: #1e3a8a;
+        --text-main: #1e293b;
+        --border-color: #e2e8f0;
+        --matin-bg: #eff6ff;
+        --soir-bg: #fffbeb;
+        --weekend-color: #fef2f2;
+        --today-bg: #fef9c3;
+    }
+
+    body { 
+        font-family: 'Montserrat', sans-serif; 
+        background: var(--primary-bg); 
+        margin: 0; 
+        padding: 0; 
+        color: var(--text-main);
+        height: 100vh; 
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; 
+    }
+
+    .main-title {
+        font-size: 1.05rem; 
+        font-weight: 700; 
+        color: var(--marine-blue);
+        text-align: center;
+        margin: 5px 0 8px 0;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        line-height: 1.1;
+        white-space: nowrap; 
+        width: 100%;
+        display: block; 
+    }
+
+    .main-title sup { 
+        color: #b03a2e; 
+        font-size: 0.75rem; 
+        vertical-align: super; 
+    }
+
+    .sticky-header {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        background: var(--primary-bg);
+        z-index: 1000;
+        padding: 10px 15px 5px 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        margin-bottom: 15px;
+    }
+
+    .btn-action { 
+        text-decoration: none; 
+        background: var(--marine-blue);
+        color: #ffffff !important;
+        border: none; 
+        border-radius: 8px; 
+        padding: 6px 10px;
+        font-family: 'Montserrat', sans-serif; 
+        font-weight: 700; 
+        font-size: 0.6rem; 
+        display: inline-flex; 
+        align-items: center;
+        white-space: nowrap;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .page-title { font-size: 0.95rem; font-weight: 700; margin: 0; }
+    .page-title sup { color: #b03a2e; font-size: 0.6rem; }
+
+    .table-container {
+        flex-grow: 1;
+        overflow: auto; 
+        -webkit-overflow-scrolling: touch;
+        background: var(--primary-bg);
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: max-content;
+        min-width: 100%;
+        background: var(--card-bg);
+    }
+
+    thead th {
+        position: sticky;
+        background-color: #f1f5f9 !important; 
+        color: var(--text-main);
+        padding: 10px 8px;
+        border-bottom: 1px solid var(--border-color);
+        border-right: 1px solid var(--border-color);
+        box-sizing: border-box;
+        z-index: 10;
+    }
+
+    thead tr:nth-child(1) th { top: 0; height: 45px; z-index: 110; }
+    thead tr:nth-child(2) th { top: 45px; height: 35px; z-index: 110; }
+
+    .sticky-col {
+        position: sticky;
+        left: 0;
+        background-color: white !important;
+        z-index: 20;
+        border-right: 2px solid var(--marine-blue) !important;
+        min-width: 60px; 
+    }
+
+    thead th.sticky-col { 
+        top: 0 !important;
+        height: 80px !important;
+        z-index: 300 !important; 
+    }
+
+    td { 
+        padding: 10px 4px; 
+        text-align: center; 
+        border-bottom: 1px solid var(--border-color); 
+        border-right: 1px solid var(--border-color); 
+        font-size: 0.75rem; 
+    }
+    
+    .group-header { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; }
+    .sub-header { 
+        font-size: 0.6rem; 
+        color: #475569; 
+        font-weight: 700; 
+        text-transform: uppercase; 
+        line-height: 1.1;
+        white-space: normal; 
+        max-width: 65px;    
+        word-wrap: break-word;
+    }
+    
+    .matin-group { background-color: var(--matin-bg) !important; }
+    .soir-group { background-color: var(--soir-bg) !important; }
+
+    .today-row td { background-color: var(--today-bg) !important; }
+    .today-row .sticky-col { border-left: 5px solid var(--marine-blue) !important; }
+    
+    .weekend td:not(.sticky-col) { background-color: var(--weekend-color) !important; }
+    .weekend .sticky-col { background-color: #fee2e2 !important; } 
+
+    .month-separator td {
+        background: var(--marine-blue) !important;
+        color: white !important;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-align: left;
+        padding: 10px 15px;
+        position: sticky;
+        left: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        z-index: 15;
+    }
+
+    .porte-line { 
+        font-weight: 700; 
+        font-size: 0.7rem; 
+        display: block; 
+        white-space: nowrap; 
+    }
+    .sep { color: #cbd5e1; margin: 0 3px; font-weight: 400; }
+    .data-stack { display: flex; flex-direction: column; }
+    .data-main { font-weight: 700; font-size: 0.8rem; }
+    .data-sub { font-size: 0.65rem; color: #64748b; }
+    
+    .high-tide-text { color: #ef4444 !important; font-weight: 700; }
+    .coeff-badge { background: var(--marine-blue); color: white; padding: 3px 6px; border-radius: 4px; font-weight: 700; display: inline-block; }
+    .coeff-badge.high { background: #ef4444 !important; }
+    
+    /* Indication scrollable */
+    .scroll-hint { font-size: 0.75rem; text-align: center; color: var(--marine-blue); padding: 5px 0; font-weight: 600; background: #e0e7ff; margin-bottom: 5px; }
+</style>
+</head>
+<body>
+
+    <div class="sticky-header">
+        <div class="top-nav" style="display: flex; margin-bottom: 5px;">
+            <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
+        </div>
+        <h1 class="main-title" data-i18n="plan_main_title">Horaires de la porte et des marées<sup>*</sup></h1>
+    </div>
+
+    <div class="scroll-hint" data-i18n="plan_scroll_hint">👉 Glissez le tableau vers la gauche pour voir le SOIR</div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="sticky-col" rowspan="2" data-i18n="plan_date">Date</th>
+                    <th class="group-header matin-group" colspan="4" data-i18n="plan_morning">☀️ MATIN</th>
+                    <th class="group-header soir-group" colspan="4" data-i18n="plan_evening">🌙 SOIR</th>
+                </tr>
+                <tr>
+                    <th class="sub-header matin-group" data-i18n="plan_gate_col">Porte (Ouv | Ferm)</th>
+                    <th class="sub-header matin-group" data-i18n="plan_high_tide">Pleine Mer</th>
+                    <th class="sub-header matin-group" data-i18n="plan_low_tide">Basse Mer</th>
+                    <th class="sub-header matin-group" data-i18n="plan_coeff">Coeff</th>
+                    <th class="sub-header soir-group" data-i18n="plan_gate_col">Porte (Ouv | Ferm)</th>
+                    <th class="sub-header soir-group" data-i18n="plan_high_tide">Pleine Mer</th>
+                    <th class="sub-header soir-group" data-i18n="plan_low_tide">Basse Mer</th>
+                    <th class="sub-header soir-group" data-i18n="plan_coeff">Coeff</th>
+                </tr>
+            </thead>
+            <tbody id="planning-body">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="lang.js"></script>
+
+    <script>
+    function generateTable() {
+        const tbody = document.getElementById('planning-body');
+        const today = new Date().toISOString().split('T')[0];
+        
+        if (typeof data === 'undefined') return;
+        
+        let currentMonthStr = ""; 
+        // OPTIMISATION : On crée une variable texte pour stocker tout le HTML
+        let tableHTML = "";
+
+        // On récupère la langue pour adapter le format des dates
+        const currentLang = localStorage.getItem('preferredLang') || 'fr';
+        // 'en-GB' donne le format Européen pour l'anglais (Jour puis Mois)
+        const locale = currentLang === 'en' ? 'en-GB' : 'fr-FR';
+
+        data.forEach(jour => {
+            const d = new Date(jour.date);
+            const isToday = (jour.date === today);
+            const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
+            
+            // Le mois s'adapte automatiquement à la langue !
+            const monthName = d.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
+            
+            if (monthName !== currentMonthStr) {
+                const sepRow = `
+                    <tr class="month-separator">
+                        <td colspan="9">${monthName}</td>
+                    </tr>`;
+                // On ajoute à notre variable texte
+                tableHTML += sepRow;
+                currentMonthStr = monthName; 
+            }
+
+            // Les jours s'adaptent aussi (LUN vs MON)
+            const dayLabel = d.toLocaleDateString(locale, { weekday: 'short' }).toUpperCase();
+            const dayNum = d.toLocaleDateString(locale, { day: '2-digit', month: 'short' });
+            
+            const p1 = jour.portes && jour.portes[0] ? jour.portes[0] : {open:"--", close:"--"};
+            const p2 = jour.portes && jour.portes[1] ? jour.portes[1] : {open:"--", close:"--"};
+
+            const isHigh1 = parseInt(jour.coeff1) >= 90;
+            const isHigh2 = parseInt(jour.coeff2) >= 90;
+
+            const row = `
+                <tr class="${isWeekend ? 'weekend' : ''} ${isToday ? 'today-row' : ''}" ${isToday ? 'id="today-marker"' : ''}>
+                    <td class="sticky-col">
+                        <div class="data-stack"><span class="data-main">${dayLabel}</span><span class="data-sub">${dayNum}</span></div>
+                    </td>
+                    
+                    <td class="matin-group">
+                        <div class="porte-line">
+                            <span style="color: #067a5c;">${p1.open}</span> <span class="sep">|</span> <span style="color: #991b1b;">${p1.close}</span>
+                        </div>
+                    </td>
+                    <td class="matin-group ${isHigh1 ? 'high-tide-text' : ''}">
+                        <div class="data-stack"><span class="data-main">${jour.pm1 || '--'}</span><span class="data-sub">${jour.pm1_h ? jour.pm1_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="matin-group">
+                        <div class="data-stack"><span class="data-main">${jour.bm1 || '--'}</span><span class="data-sub">${jour.bm1_h ? jour.bm1_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="matin-group">
+                        <span class="coeff-badge ${isHigh1 ? 'high' : ''}">${jour.coeff1 || '--'}</span>
+                    </td>
+
+                    <td class="soir-group">
+                        <div class="porte-line">
+                            <span style="color: #067a5c;">${p2.open}</span> <span class="sep">|</span> <span style="color: #991b1b;">${p2.close}</span>
+                        </div>
+                    </td>
+                    <td class="soir-group ${isHigh2 ? 'high-tide-text' : ''}">
+                        <div class="data-stack"><span class="data-main">${jour.pm2 || '--'}</span><span class="data-sub">${jour.pm2_h ? jour.pm2_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="soir-group">
+                        <div class="data-stack"><span class="data-main">${jour.bm2 || '--'}</span><span class="data-sub">${jour.bm2_h ? jour.bm2_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="soir-group">
+                        <span class="coeff-badge ${isHigh2 ? 'high' : ''}">${jour.coeff2 || '--'}</span>
+                    </td>
+                </tr>`;
+            
+            // On ajoute la ligne à la variable texte
+            tableHTML += row;
+        });
+
+        // OPTIMISATION : On injecte tout le code HTML en une seule fois !
+        tbody.innerHTML = tableHTML;
+
+        // J'ai aussi légèrement baissé le délai d'attente vu que l'affichage est maintenant instantané.
+        setTimeout(() => {
+            const container = document.querySelector('.table-container');
+            const todayEl = document.getElementById('today-marker');
+            if (container && todayEl) {
+                const topPos = todayEl.offsetTop - 100;
+                container.scrollTo({ top: topPos, behavior: 'smooth' });
+            }
+        }, 100);
+    }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Détection et application de la langue
+            const browserLang = navigator.language.substring(0, 2);
+            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[savedLang] && translations[savedLang][key]) {
+                    el.innerHTML = translations[savedLang][key]; 
+                }
+            });
+
+            // On génère le tableau APRÈS avoir récupéré la langue pour les dates
+            generateTable();
+        });
+    </script>
+</body>
+</html>
