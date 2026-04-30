@@ -12,20 +12,20 @@
     <meta name="description" content="Consultez en temps réel l'état de la porte du port de Diélette, les horaires de marées, le planning officiel et la météo marine. L'outil indispensable du Cotentin.">
     <meta name="author" content="Cotentin Web Studio - Guillaume Leparmentier">
     <meta name="publisher" content="Cotentin Web Studio">
-    <meta name="keywords" content="Port, Diélette, Flamanville, Marée, Porte, Horaires, Manche, Cotentin, Navigation, Normandie, Ouverture, Fermeture, Pêche, Marin, Plaisance, Météo marine">
+    <meta name="keywords" content="Port, Diélette, Marée, Porte, Horaires, Manche, Cotentin, Navigation, Normandie, Ouverture, Fermeture, Flamanville, Pêche, Marin, Météo marine">
     
     <meta property="og:title" content="Port de Diélette - Horaires & Marées">
     <meta property="og:description" content="Accédez en 1 clic à l'état de la porte (Ouverte/Fermée), aux horaires de marées et à la météo du port.">
-    <meta property="og:image" content="https://guillaumeleparmentierpro.github.io/Application_Ports/dielette/android-chrome-512x512.png">
+    <meta property="og:image" content="https://guillaumeleparmentierpro.github.io/Application_Ports/android-chrome-512x512.png">
     <meta property="og:url" content="https://guillaumeleparmentierpro.github.io/Application_Ports/dielette/">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Port Diélette">
+    <meta property="og:site_name" content="Port de Diélette">
     
     <script type="application/ld+json">
     {
       "@context" : "https://schema.org",
       "@type" : "WebSite",
-      "name" : "Port Diélette",
+      "name" : "Port de Diélette",
       "url" : "https://guillaumeleparmentierpro.github.io/Application_Ports/dielette/"
     }
     </script>
@@ -49,6 +49,7 @@
     <link rel="apple-touch-icon" href="icon-192.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Fichiers de données de Diélette -->
     <script src="donnees.js"></script>
     <script src="lang.js"></script>
     
@@ -63,12 +64,11 @@
         .footer-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
         .btn-footer { width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; box-sizing: border-box; }
         .module { background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); border-bottom: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; }
-        .top-nav { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 15px; width: 100%; }
         .date-badge { background: white; padding: 6px 8px; border-radius: 8px; font-weight: 700; font-size: 0.6rem; border: 1px solid #e2e8f0; white-space: nowrap; flex-shrink: 1; text-align: center; }
         .sticky-header { position: -webkit-sticky; position: sticky; top: 0; background: var(--primary-bg); z-index: 1000; padding: 10px 15px 5px 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; }
         .main-title { font-size: 1.05rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 5px 0 8px 0; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.1; white-space: nowrap; width: 100%; display: block; }
         .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
-        .lang-switch { text-align: center; margin: 15px 0 5px 0; font-size: 1.5rem; }
+        .lang-switch { text-align: center; font-size: 1.5rem; }
         .lang-btn { cursor: pointer; opacity: 0.3; transition: opacity 0.3s ease, transform 0.2s ease; display: inline-block; vertical-align: middle; }
         .lang-btn.active { opacity: 1; transform: scale(1.15); }
         .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
@@ -119,7 +119,6 @@
         #tideCanvasLarge { width: 100%; height: 80px; cursor: pointer; }
         .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
         
-        /* Modification pour adapter le widget Wisuki */
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 270px; border: 1px solid #e2e8f0; }
         .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
         .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-weight: 500; line-height: 1.4; }
@@ -183,6 +182,32 @@
     <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
 </div>
 
+<!-- === MODAL CHOIX DU PORT (VERSION DIÉLETTE) === -->
+<div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
+    <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
+        <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
+        
+        <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">Choix du port</h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Lien vers Carteret en gris -->
+            <a href="../index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
+                Barneville-Carteret
+            </a>
+            
+            <!-- Diélette en bleu (Actuel) -->
+            <a href="#" onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="display: block; background: var(--marine-blue); color: white; text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem;">
+                📍 Port de Diélette (Actuel)
+            </a>
+
+            <div style="display: block; background: #f8fafc; color: #94a3b8; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.85rem; border: 1px dashed #cbd5e1; cursor: not-allowed;">
+                Port-Bail (Prochainement)
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================== -->
+
 <div class="app-container">
 
     <div class="sticky-header">
@@ -191,20 +216,34 @@
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
 
-        <div class="top-nav">
+        <!-- === NOUVELLE DISPOSITION DATE ET DRAPEAUX === -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 5px;">
             <div class="date-badge" id="current-date">-- --</div>
-            <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%;">
-                <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES & MARÉES</a>
-                <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
-                <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
+            <div class="lang-switch" style="margin: 0; font-size: 1.6rem;">
+                <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span> 
+                <span style="color: #cbd5e1; font-size: 1.2rem; vertical-align: middle; margin: 0 2px;">|</span> 
+                <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
             </div>
         </div>
-        <h1 class="main-title">Port Diélette<sup>*</sup></h1>
-        <div class="lang-switch">
-            <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span> 
-            <span style="color: #cbd5e1; font-size: 1rem; vertical-align: middle; margin: 0 5px;">|</span> 
-            <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
+        <!-- ============================================== -->
+
+        <!-- === BOUTONS D'ACTION REMONTÉS === -->
+        <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 12px;">
+            <a href="planning.html" class="btn-action" data-i18n="btn_planning">PORTES & MARÉES</a>
+            <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
+            <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
         </div>
+        <!-- ================================== -->
+        
+        <h1 class="main-title">PORT DIÉLETTE<sup>*</sup></h1>
+
+        <!-- === BOUTON CHANGER DE PORT === -->
+        <div style="text-align: center; margin: 8px 0 5px 0;">
+            <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
+                ⚓ <span data-i18n="change_port">CHANGER DE PORT</span> ▾
+            </button>
+        </div>
+        <!-- ============================== -->
     </div>
         
     <div class="module">
@@ -272,7 +311,7 @@
             <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">📷 WEBCAM</a>
         </div>
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
-            <!-- Remarque : tu pourras ajuster le spotid et le spot ci-dessous pour viser plus spécifiquement Flamanville/Diélette le moment venu -->
+            <!-- ⚠️ PENSE À VÉRIFIER LE SPOT ID WISUKI POUR DIÉLETTE ICI SI NÉCESSAIRE -->
             <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
         </div>
     </div>
@@ -313,41 +352,33 @@
     const installBtn = document.getElementById('install-btn');
     const iosPopup = document.getElementById('ios-install-popup');
 
-    // Vérifier si l'app est déjà installée
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
     if (isStandalone) {
-        // Si déjà installé, on cache le bouton pour ne pas polluer l'écran
         installBtn.style.display = 'none';
     }
 
-    // Intercepter l'événement d'installation Android
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        // On s'assure que le bouton est visible si l'app n'est pas installée
         if (!isStandalone) {
             installBtn.style.display = 'inline-flex';
         }
     });
 
     installBtn.addEventListener('click', async () => {
-        // Détection iOS
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
         if (isIOS) {
-            // Afficher le pop-up d'aide pour iOS
             iosPopup.style.display = 'block';
             return;
         }
 
         if (deferredPrompt) {
-            // Afficher le pop-up natif Android
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
             deferredPrompt = null;
         } else {
-            // Sécurité de secours si le bouton est cliqué sur un navigateur non compatible
             alert("Pour installer l'application, ouvrez le menu de votre navigateur et choisissez 'Ajouter à l'écran d'accueil'.");
         }
     });
@@ -361,18 +392,86 @@
         }
     };
      
-    function updateSponsor() {
-        const sponsorText = document.getElementById('sponsor-text');
-        if (!sponsorText) return;
+function updateSponsor() {
+    const now = new Date();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const day = now.getDay(); 
+    
+    const sponsorText = document.getElementById('sponsor-text');
+    if (!sponsorText) return;
 
-        const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
-        const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
-        const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+    const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
 
-        // Remise à zéro pour Port Diélette - Affichage du sponsor par défaut permanent
-        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+    const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
+    const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+
+    // Préparation des textes traduits
+    const txtMaisonRenard = t.sponsor_maison_renard_index || "🥖 Boulangerie Maison Renard - Pains spéciaux, macarons & chocolats";
+    const txtUtile = t.sponsor_utile || "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison";
+    const txtLestran = t.sponsor_lestran_index || "🥐 L’Estran Carteret - Boulangerie & Pâtisserie";
+    const txtComptoir = t.sponsor_comptoir_index || "🥫 Le Comptoir de Carteret - Épicerie";
+    const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
+    const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
+    const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
+    const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
+    const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+
+    // Créneau 07h - 08h : Maison Renard
+    if (hour === 7) {
+        sponsorText.innerHTML = `<a href="partenaires.html#maison-renard" style="${linkStyle}">${txtMaisonRenard}</a>`;
+    }
+    // Créneau 08h - 09h : Rotation à 3 (Utile, L'Estran, Le Comptoir)
+    else if (hour === 8) {
+        const rotation = minute % 3;
+        
+        if (rotation === 0) {
+            sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">${txtUtile}</a>`;
+        } else if (rotation === 1) {
+            sponsorText.innerHTML = `<a href="partenaires.html#lestran" style="${linkStyle}">${txtLestran}</a>`;
+        } else {
+            sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
+        }
+    }
+    // Créneau 09h - 10h : L'Or Coiffure
+    else if (hour === 9) {
+        sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
+    } 
+    // Créneau 10h - 11h : Carteret Marine
+    else if (hour === 10) {
+        sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">${txtCarteret}</a>`;
+    }
+    // Créneau 11h - 12h : Delizia / La Cambuse
+    else if (hour === 11) {
+        const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
+        
+        if (isFoodTruckDay && minute % 2 !== 0) {
+            let lieu = t.loc_service || "En service !";
+            if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
+            if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
+            if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres (Barneville)";
+            if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
+            if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles (Barneville)";
+            
+            const txtDelizia = (t.sponsor_delizia || "🍔 Deliziafoodtruck, Cuisine Italienne - ") + lieu;
+            sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">${txtDelizia}</a>`;
+        } else {
+            sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
+        }
+    } 
+    // Créneau 14h - 15h : Esprit Marin
+    else if (hour === 14) {
+        sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
+    }
+    // Créneau 15h - 16h : Le Comptoir de Carteret (2ème créneau)
+    else if (hour === 15) {
+        sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
+    }
+    // Par défaut
+    else {
         sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
     }
+}
 
     function drawTideGraph(percent, isDescending) {
         const canvas = document.getElementById('tideCanvasLarge');
@@ -763,7 +862,6 @@
     // Gérer le retour sur l'application (sortie de veille ou changement d'onglet)
     document.addEventListener("visibilitychange", function() {
         if (document.visibilityState === 'visible') {
-            // Relance immédiatement le calcul des marées et de la porte
             if (typeof updateApp === "function") {
                 updateApp();
             }
