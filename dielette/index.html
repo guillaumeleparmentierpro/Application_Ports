@@ -38,20 +38,24 @@
       gtag('config', 'G-5LY18V5457');
     </script>
     
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="icon" href="icon-192.png" sizes="192x192">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <!-- Liens vers les ressources à la racine (mutualisées) -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="icon" href="../icon-192.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#1e3a8a">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="../icon-192.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <!-- Fichiers de données de Diélette -->
+    
+    <!-- Fichiers spécifiques à Diélette -->
     <script src="donnees.js"></script>
-    <script src="lang.js"></script>
+    
+    <!-- Fichier de langue mutualisé à la racine -->
+    <script src="../lang.js"></script>
     
     <style>
         .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
@@ -182,7 +186,7 @@
     <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
 </div>
 
-<!-- === MODAL CHOIX DU PORT (VERSION DIÉLETTE) === -->
+<!-- === MODAL CHOIX DU PORT === -->
 <div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
@@ -190,7 +194,7 @@
         <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">Choix du port</h3>
         
         <div style="display: flex; flex-direction: column; gap: 10px;">
-            <!-- Lien vers Carteret en gris -->
+            <!-- Lien vers Carteret à la racine -->
             <a href="../index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
                 Barneville-Carteret
             </a>
@@ -206,12 +210,13 @@
         </div>
     </div>
 </div>
-<!-- ============================================== -->
+<!-- =========================== -->
 
 <div class="app-container">
 
     <div class="sticky-header">
         <div class="top-sponsor-banner" id="sponsor-banner">
+            <!-- Partenaires de Diélette -->
             <a href="partenaires.html" class="sponsor-label" style="text-decoration: none; color: white;" data-i18n="sponsor_label">PARTENAIRES</a>
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
@@ -229,8 +234,10 @@
 
         <!-- === BOUTONS D'ACTION REMONTÉS === -->
         <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 12px;">
+            <!-- Fichiers spécifiques à Diélette ou racine -->
             <a href="planning.html" class="btn-action" data-i18n="btn_planning">PORTES & MARÉES</a>
-            <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
+            <!-- Fichier mutualisé à la racine -->
+            <a href="../partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
             <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
         </div>
         <!-- ================================== -->
@@ -308,10 +315,11 @@
     <div class="module">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
+            <!-- Fichier spécifique à Diélette -->
             <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">📷 WEBCAM</a>
         </div>
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
-            <!-- ⚠️ PENSE À VÉRIFIER LE SPOT ID WISUKI POUR DIÉLETTE ICI SI NÉCESSAIRE -->
+            <!-- ⚠️ PENSE À VÉRIFIER LE SPOT ID WISUKI POUR DIÉLETTE ICI -->
             <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
         </div>
     </div>
@@ -324,14 +332,16 @@
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         
         <div class="footer-buttons">
-            <a href="securite.html" class="btn-action btn-footer" style="background: #b03a2e;" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
+            <!-- Fichiers mutualisés à la racine et partenaires spécifique -->
+            <a href="../securite.html" class="btn-action btn-footer" style="background: #b03a2e;" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
             <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES</a>
-            <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
-            <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
+            <a href="../liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
+            <a href="../contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
         </div>
 
         <div style="margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 8px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
-            <img src="logo-cws.png" alt="Cotentin Web Studio" style="width: 50px; height: auto; filter: grayscale(20%); opacity: 0.9;">
+            <!-- Image mutualisée à la racine -->
+            <img src="../logo-cws.png" alt="Cotentin Web Studio" style="width: 50px; height: auto; filter: grayscale(20%); opacity: 0.9;">
             <div style="font-size: 0.65rem; color: #1e3a8a; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Montserrat', sans-serif;">
                © 2026 - Cotentin Web Studio
             </div>
@@ -342,7 +352,8 @@
         <div class="premium-badge" data-i18n="premium_badge">Sponsor Officiel 2026</div>
         <h2 class="premium-title" data-i18n="premium_title">Espace Partenaire Premium</h2>
         <p class="premium-desc" data-i18n="premium_desc">Affichez votre entreprise ici en grand format 24h/24 ! Contactez-nous pour réserver cet emplacement exclusif.</p>
-        <a href="contact.html" class="btn-premium" data-i18n="btn_premium">RÉSERVER CET ESPACE</a>
+        <!-- Lien mutualisé à la racine -->
+        <a href="../contact.html" class="btn-premium" data-i18n="btn_premium">RÉSERVER CET ESPACE</a>
     </div>
 </div>
 
@@ -404,72 +415,25 @@ function updateSponsor() {
     const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
 
     const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
+    // On utilise translations qui vient de ../lang.js
     const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
 
-    // Préparation des textes traduits
-    const txtMaisonRenard = t.sponsor_maison_renard_index || "🥖 Boulangerie Maison Renard - Pains spéciaux, macarons & chocolats";
-    const txtUtile = t.sponsor_utile || "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison";
-    const txtLestran = t.sponsor_lestran_index || "🥐 L’Estran Carteret - Boulangerie & Pâtisserie";
-    const txtComptoir = t.sponsor_comptoir_index || "🥫 Le Comptoir de Carteret - Épicerie";
-    const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
-    const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
-    const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
-    const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
+    // ⚠️ ICI TU METTRAS TES TRADUCTIONS ET TEXTES SPÉCIFIQUES POUR LES PARTENAIRES DE DIÉLETTE ⚠️
+    // Par exemple : 
     const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
 
-    // Créneau 07h - 08h : Maison Renard
+    // Créneau 07h - 08h
     if (hour === 7) {
-        sponsorText.innerHTML = `<a href="partenaires.html#maison-renard" style="${linkStyle}">${txtMaisonRenard}</a>`;
+        sponsorText.innerHTML = `<a href="partenaires.html#ton-partenaire-1" style="${linkStyle}">Partenaire Diélette Matin</a>`;
     }
-    // Créneau 08h - 09h : Rotation à 3 (Utile, L'Estran, Le Comptoir)
+    // Créneau 08h - 09h
     else if (hour === 8) {
-        const rotation = minute % 3;
-        
-        if (rotation === 0) {
-            sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">${txtUtile}</a>`;
-        } else if (rotation === 1) {
-            sponsorText.innerHTML = `<a href="partenaires.html#lestran" style="${linkStyle}">${txtLestran}</a>`;
-        } else {
-            sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
-        }
-    }
-    // Créneau 09h - 10h : L'Or Coiffure
-    else if (hour === 9) {
-        sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
-    } 
-    // Créneau 10h - 11h : Carteret Marine
-    else if (hour === 10) {
-        sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">${txtCarteret}</a>`;
-    }
-    // Créneau 11h - 12h : Delizia / La Cambuse
-    else if (hour === 11) {
-        const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
-        
-        if (isFoodTruckDay && minute % 2 !== 0) {
-            let lieu = t.loc_service || "En service !";
-            if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
-            if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
-            if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres (Barneville)";
-            if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
-            if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles (Barneville)";
-            
-            const txtDelizia = (t.sponsor_delizia || "🍔 Deliziafoodtruck, Cuisine Italienne - ") + lieu;
-            sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">${txtDelizia}</a>`;
-        } else {
-            sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
-        }
-    } 
-    // Créneau 14h - 15h : Esprit Marin
-    else if (hour === 14) {
-        sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
-    }
-    // Créneau 15h - 16h : Le Comptoir de Carteret (2ème créneau)
-    else if (hour === 15) {
-        sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
+        sponsorText.innerHTML = `<a href="partenaires.html#ton-partenaire-2" style="${linkStyle}">Partenaire Diélette 8h</a>`;
     }
     // Par défaut
     else {
-        sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
+        // Lien de contact pointe vers la racine
+        sponsorText.innerHTML = `<a href="../contact.html" style="${linkStyle}">${txtDefault}</a>`;
     }
 }
 
@@ -705,7 +669,6 @@ function updateSponsor() {
 
         localStorage.setItem('preferredLang', lang);
 
-        // --- Mise à jour de la langue du widget Wisuki ---
         const wisukiIframe = document.getElementById('wisuki-widget');
         if (wisukiIframe) {
             wisukiIframe.src = `https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=${lang}`;
@@ -725,7 +688,6 @@ function updateSponsor() {
 </script>
 
 <script>
-    // L'Easter Egg d'Octave (Version XXL !)
     document.getElementById('status-box').addEventListener('click', function(e) {
         const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋', '🐬', '☀️'];
         
@@ -760,7 +722,6 @@ function updateSponsor() {
 </script>
 
 <script>
-    // Easter Egg : Le Bateau Pirate (Clic x5 sur le titre)
     let titleClickCount = 0;
     const mainTitle = document.querySelector('.main-title');
     
@@ -801,7 +762,6 @@ function updateSponsor() {
 </script>
 
 <script>
-    // LE NOUVEL EASTER EGG : Le Kraken du Graphique des Marées 🐙🐳
     const tideCanvas = document.getElementById('tideCanvasLarge');
     
     if (tideCanvas) {
@@ -859,7 +819,6 @@ function updateSponsor() {
 </script>
 
 <script>
-    // Gérer le retour sur l'application (sortie de veille ou changement d'onglet)
     document.addEventListener("visibilitychange", function() {
         if (document.visibilityState === 'visible') {
             if (typeof updateApp === "function") {
