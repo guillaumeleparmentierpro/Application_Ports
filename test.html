@@ -120,6 +120,56 @@
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 270px; border: 1px solid #e2e8f0; }
         .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
         .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-weight: 500; line-height: 1.4; }
+
+        /* --- STYLES POUR LE NOUVEAU BLOC PREMIUM --- */
+        .premium-sponsor {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.2);
+            margin: 0 15px 15px 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .premium-badge {
+            background: #fbbf24;
+            color: #991b1b;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .premium-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 5px 0 10px 0;
+            line-height: 1.2;
+        }
+        .premium-desc {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .btn-premium {
+            background: white;
+            color: var(--marine-blue) !important;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .btn-premium:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -227,7 +277,15 @@
         <strong style="color:#b03a2e;">* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
     </div>
 
-<div class="footer-module">
+    <!-- NOUVEAU BLOC PREMIUM -->
+    <div class="premium-sponsor">
+        <div class="premium-badge" data-i18n="premium_badge">Sponsor Officiel 2026</div>
+        <h2 class="premium-title" data-i18n="premium_title">Espace Partenaire Premium</h2>
+        <p class="premium-desc" data-i18n="premium_desc">Affichez votre entreprise ici en grand format 24h/24 ! Contactez-nous pour réserver cet emplacement exclusif.</p>
+        <a href="contact.html" class="btn-premium" data-i18n="btn_premium">RÉSERVER CET ESPACE</a>
+    </div>
+
+    <div class="footer-module">
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         
         <div class="footer-buttons">
@@ -240,10 +298,7 @@
         <div style="margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 8px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
             <img src="logo-cws.png" alt="Cotentin Web Studio" style="width: 50px; height: auto; filter: grayscale(20%); opacity: 0.9;">
             <div style="font-size: 0.65rem; color: #1e3a8a; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Montserrat', sans-serif;">
-                Cotentin Web Studio
-            </div>
-            <div style="font-size: 0.55rem; color: #94a3b8; font-weight: 600;">
-                © 2026 - Créations Numériques dans le Cotentin
+               © 2026 - Cotentin Web Studio
             </div>
         </div>
     </div>
@@ -303,66 +358,86 @@
         }
     };
      
-    function updateSponsor() {
-        const now = new Date();
-        const hour = now.getHours();
-        const minute = now.getMinutes();
-        const day = now.getDay(); // 0 = Dimanche, 1 = Lundi, 2 = Mardi... 6 = Samedi
+function updateSponsor() {
+    const now = new Date();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const day = now.getDay(); 
+    
+    const sponsorText = document.getElementById('sponsor-text');
+    if (!sponsorText) return;
+
+    const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
+
+    const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
+    const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+
+    // Préparation des textes traduits
+    const txtMaisonRenard = t.sponsor_maison_renard_index || "🥖 Boulangerie Maison Renard - Pains spéciaux, macarons & chocolats";
+    const txtUtile = t.sponsor_utile || "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison";
+    const txtLestran = t.sponsor_lestran_index || "🥐 L’Estran Carteret - Boulangerie & Pâtisserie";
+    const txtComptoir = t.sponsor_comptoir_index || "🥫 Le Comptoir de Carteret - Épicerie";
+    const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
+    const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
+    const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
+    const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
+    const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+
+    // Créneau 07h - 08h : Maison Renard
+    if (hour === 7) {
+        sponsorText.innerHTML = `<a href="partenaires.html#maison-renard" style="${linkStyle}">${txtMaisonRenard}</a>`;
+    }
+    // Créneau 08h - 09h : Rotation à 3 (Utile, L'Estran, Le Comptoir)
+    else if (hour === 8) {
+        const rotation = minute % 3; // Va renvoyer 0, 1, ou 2 selon la minute actuelle
         
-        const sponsorText = document.getElementById('sponsor-text');
-        if (!sponsorText) return;
-
-        const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
-
-        // 1. On récupère la langue actuelle (Français par défaut)
-        const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
-        
-        // 2. On charge les traductions (avec une sécurité au cas où le fichier lang.js ne soit pas encore lu)
-        const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
-
-        // 3. On prépare nos textes traduits avec un fallback (texte de secours en français)
-        const txtUtile = t.sponsor_utile || "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison";
-        const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
-        const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
-        const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
-        const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
-        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
-
-        if (hour === 8) {
+        if (rotation === 0) {
             sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">${txtUtile}</a>`;
-        }
-        else if (hour === 9) {
-            sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
-        } 
-        else if (hour === 10) {
-            sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">${txtCarteret}</a>`;
-        }
-        else if (hour === 11) {
-            const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
-            
-            if (isFoodTruckDay && minute % 2 !== 0) {
-                // On détermine le lieu traduit en fonction du jour !
-                let lieu = t.loc_service || "En service !";
-                if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
-                if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
-                if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres (Barneville)";
-                if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
-                if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles (Barneville)";
-                
-                const txtDelizia = (t.sponsor_delizia || "🍔 Deliziafoodtruck, Cuisine Italienne - ") + lieu;
-                
-                sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">${txtDelizia}</a>`;
-            } else {
-                sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
-            }
-        } 
-        else if (hour === 14) {
-            sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
-        }
-        else {
-            sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
+        } else if (rotation === 1) {
+            sponsorText.innerHTML = `<a href="partenaires.html#lestran" style="${linkStyle}">${txtLestran}</a>`;
+        } else {
+            sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
         }
     }
+    // Créneau 09h - 10h : L'Or Coiffure
+    else if (hour === 9) {
+        sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
+    } 
+    // Créneau 10h - 11h : Carteret Marine
+    else if (hour === 10) {
+        sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">${txtCarteret}</a>`;
+    }
+    // Créneau 11h - 12h : Delizia / La Cambuse
+    else if (hour === 11) {
+        const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
+        
+        if (isFoodTruckDay && minute % 2 !== 0) {
+            let lieu = t.loc_service || "En service !";
+            if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
+            if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
+            if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres (Barneville)";
+            if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
+            if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles (Barneville)";
+            
+            const txtDelizia = (t.sponsor_delizia || "🍔 Deliziafoodtruck, Cuisine Italienne - ") + lieu;
+            sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">${txtDelizia}</a>`;
+        } else {
+            sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
+        }
+    } 
+    // Créneau 14h - 15h : Esprit Marin
+    else if (hour === 14) {
+        sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
+    }
+    // Créneau 15h - 16h : Le Comptoir de Carteret (2ème créneau)
+    else if (hour === 15) {
+        sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
+    }
+    // Par défaut
+    else {
+        sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
+    }
+}
 
     function drawTideGraph(percent, isDescending) {
         const canvas = document.getElementById('tideCanvasLarge');
