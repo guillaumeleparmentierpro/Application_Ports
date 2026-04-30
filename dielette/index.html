@@ -1,1 +1,774 @@
-d
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Horaires & Marées - Port de Diélette | L'App des Marins</title>
+    <meta name="google-site-verification" content="_x0ggsxOKABcmc9deMHWXhKNlpuAGGgT-JBxV3xi2CE" />
+    <meta name="description" content="Consultez en temps réel l'état de la porte du port de Diélette, les horaires de marées, le planning officiel et la météo marine. L'outil indispensable du Cotentin.">
+    <meta name="author" content="Cotentin Web Studio - Guillaume Leparmentier">
+    <meta name="publisher" content="Cotentin Web Studio">
+    <meta name="keywords" content="Port, Diélette, Flamanville, Marée, Porte, Horaires, Manche, Cotentin, Navigation, Normandie, Ouverture, Fermeture, Pêche, Marin, Plaisance, Météo marine">
+    
+    <meta property="og:title" content="Port de Diélette - Horaires & Marées">
+    <meta property="og:description" content="Accédez en 1 clic à l'état de la porte (Ouverte/Fermée), aux horaires de marées et à la météo du port.">
+    <meta property="og:image" content="https://guillaumeleparmentierpro.github.io/Application_Ports/dielette/android-chrome-512x512.png">
+    <meta property="og:url" content="https://guillaumeleparmentierpro.github.io/Application_Ports/dielette/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Port Diélette">
+    
+    <script type="application/ld+json">
+    {
+      "@context" : "https://schema.org",
+      "@type" : "WebSite",
+      "name" : "Port Diélette",
+      "url" : "https://guillaumeleparmentierpro.github.io/Application_Ports/dielette/"
+    }
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5LY18V5457');
+    </script>
+    
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" href="icon-192.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="donnees.js"></script>
+    <script src="lang.js"></script>
+    
+    <style>
+        .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
+        .sponsor-label { background: var(--marine-blue); color: white; font-size: 0.55rem; padding: 3px 6px; border-radius: 4px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; flex-shrink: 0; }
+        .sponsor-text { font-size: 0.7rem; font-weight: 600; line-height: 1.2; flex-grow: 1; text-align: right; }
+        :root { color-scheme: light; --primary-bg: #f1f5f9; --card-bg: #ffffff; --open-light: #10b981; --open-dark: #067a5c; --warning-color: #fbbf24; --warning-dark: #d97706; --danger-color: #ef4444; --danger-dark: #991b1b; --closed-color: #ef4444; --marine-blue: #1e3a8a; --text-main: #1e293b; --tide-light-blue: #eff6ff; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
+        .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; padding: 15px; box-sizing: border-box; padding-top: 0 !important; }
+        .footer-module { margin-top: 15px; padding-top: 20px; border-top: 1px dashed #cbd5e1; text-align: center; }
+        .footer-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .btn-footer { width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; box-sizing: border-box; }
+        .module { background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); border-bottom: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; }
+        .top-nav { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 15px; width: 100%; }
+        .date-badge { background: white; padding: 6px 8px; border-radius: 8px; font-weight: 700; font-size: 0.6rem; border: 1px solid #e2e8f0; white-space: nowrap; flex-shrink: 1; text-align: center; }
+        .sticky-header { position: -webkit-sticky; position: sticky; top: 0; background: var(--primary-bg); z-index: 1000; padding: 10px 15px 5px 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        .main-title { font-size: 1.05rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 5px 0 8px 0; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.1; white-space: nowrap; width: 100%; display: block; }
+        .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
+        .lang-switch { text-align: center; margin: 15px 0 5px 0; font-size: 1.5rem; }
+        .lang-btn { cursor: pointer; opacity: 0.3; transition: opacity 0.3s ease, transform 0.2s ease; display: inline-block; vertical-align: middle; }
+        .lang-btn.active { opacity: 1; transform: scale(1.15); }
+        .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn-action:active { transform: scale(0.95); }
+        .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
+        .status-box { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
+        .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
+        .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
+        .status-box.danger { background: var(--danger-color); border: 5px solid var(--danger-dark); animation: pulse 1s infinite; }
+        .status-box.closed { background: var(--closed-color); border: 5px solid var(--danger-dark); }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        .status-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; opacity: 0.9; margin-bottom: 2px; }
+        
+        .status-value { font-size: 1.4rem; font-weight: 900; margin: 5px 0; letter-spacing: -0.5px; line-height: 1.1; padding: 0 5px; text-align: center; }
+        
+        .status-box.warning .status-value, .status-box.danger .status-value { font-size: 1.15rem; letter-spacing: -1px; }
+        .progress-wrapper { margin: 10px 0; display: none; }
+        .progress-container { width: 100%; height: 34px; border-radius: 17px; overflow: hidden; position: relative; background: var(--open-light); transition: background 0.5s ease; }
+        .progress-container.warning { background: var(--warning-color); }
+        .progress-container.danger { background: var(--danger-color); }
+        .progress-container.waiting { background: #cbd5e1; } 
+        .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear, background 0.5s ease; }
+        .progress-container.warning .progress-bar { background: var(--warning-dark); }
+        .progress-container.danger .progress-bar { background: var(--danger-dark); animation: blink 1s infinite; }
+        .progress-container.waiting .progress-bar { background: var(--marine-blue); }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none; }
+        
+        .slots-container { background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
+        .slot-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        
+        .slot-title { font-size: 0.6rem; font-weight: 700; color: var(--marine-blue); line-height: 1.3; margin-right: 5px; text-transform: uppercase; flex: 1; }
+        .slot-title.secondary { color: #64748b; }
+        
+        .slot-pills { display: flex; gap: 5px; flex-shrink: 0; }
+        .slot-badge { width: 72px; padding: 5px 0; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 3px; color: white; }
+        .slot-badge span { font-size: 0.45rem; text-transform: uppercase; font-weight: 600; opacity: 0.9; }
+        .slot-badge b { font-size: 0.75rem; font-weight: 700; }
+        
+        .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
+        .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
+        
+        .tide-full-module { background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; padding: 15px 10px; margin: 0 12px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .tide-header-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; font-weight: 700; color: var(--marine-blue); }
+        
+        .tide-column { flex: 1; flex-basis: 33.33%; min-width: 0; } 
+        
+        #tideCanvasLarge { width: 100%; height: 80px; cursor: pointer; }
+        .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
+        
+        /* Modification pour adapter le widget Wisuki */
+        .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 270px; border: 1px solid #e2e8f0; }
+        .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
+        .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-weight: 500; line-height: 1.4; }
+
+        /* --- STYLES POUR LE NOUVEAU BLOC PREMIUM --- */
+        .premium-sponsor {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.2);
+            margin: 0 15px 15px 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .premium-badge {
+            background: #fbbf24;
+            color: #991b1b;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .premium-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 5px 0 10px 0;
+            line-height: 1.2;
+        }
+        .premium-desc {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .btn-premium {
+            background: white;
+            color: var(--marine-blue) !important;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .btn-premium:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+<div id="ios-install-popup" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; border: 2px solid #fbbf24; padding: 15px 15px 20px 15px; border-radius: 12px; z-index: 9999; width: 85%; max-width: 350px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); text-align: center; color: white;">
+    <span style="position: absolute; top: 2px; right: 12px; cursor: pointer; font-weight: bold; color: #94a3b8; font-size: 1.5rem;" onclick="document.getElementById('ios-install-popup').style.display='none'">×</span>
+    <p style="font-size: 0.9rem; margin: 0; font-weight: 800; color: #fbbf24;">🍎 Installer sur iPhone / iPad</p>
+    <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
+</div>
+
+<div class="app-container">
+
+    <div class="sticky-header">
+        <div class="top-sponsor-banner" id="sponsor-banner">
+            <a href="partenaires.html" class="sponsor-label" style="text-decoration: none; color: white;" data-i18n="sponsor_label">PARTENAIRES</a>
+            <span class="sponsor-text" id="sponsor-text">Chargement...</span>
+        </div>
+
+        <div class="top-nav">
+            <div class="date-badge" id="current-date">-- --</div>
+            <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%;">
+                <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES & MARÉES</a>
+                <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
+                <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
+            </div>
+        </div>
+        <h1 class="main-title">Port Diélette<sup>*</sup></h1>
+        <div class="lang-switch">
+            <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span> 
+            <span style="color: #cbd5e1; font-size: 1rem; vertical-align: middle; margin: 0 5px;">|</span> 
+            <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
+        </div>
+    </div>
+        
+    <div class="module">
+        <div id="status-box" class="status-box closed">
+            <span class="status-label" data-i18n="label_gate">Porte</span>
+            <span class="status-value" id="status-text">--</span>
+        </div>
+        
+        <div class="progress-wrapper" id="progress-wrapper">
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-text" id="time-left">--</div>
+            </div>
+        </div>
+
+        <div class="slots-container">
+            <div class="slot-row">
+                <div class="slot-title" id="title-slot-1">Créneaux officiels</div>
+                <div class="slot-pills">
+                    <div class="slot-badge badge-open"><span id="label-ouv">OUV.</span><b id="open-time">--:--</b></div>
+                    <div class="slot-badge badge-close"><span id="label-ferm">FERM.</span><b id="close-time">--:--</b></div>
+                </div>
+            </div>
+            <div class="slot-row">
+                <div class="slot-title secondary" id="title-slot-2">Prochains créneaux</div>
+                <div class="slot-pills" style="opacity: 0.85;">
+                    <div class="slot-badge badge-open"><span id="label-ouv-next">OUV.</span><b id="open-time-next">--:--</b></div>
+                    <div class="slot-badge badge-close"><span id="label-ferm-next">FERM.</span><b id="close-time-next">--:--</b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="module">
+        <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;" data-i18n="tide_title">Informations marée</div>
+        <div class="tide-full-module">
+            
+            <div class="tide-header-info">
+                <div class="tide-column" style="text-align: left;">
+                    <div id="tide-left-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
+                </div>
+                
+                <div class="tide-column" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; line-height: 1.1;">
+                    <span data-i18n="coeff" style="font-size:0.6rem; font-weight:700; color:#64748b;">COEFF</span> 
+                    <span id="coeff-display" style="color:var(--marine-blue); font-size: 1.4rem; font-weight: 900;">--</span>
+                </div>
+                
+                <div class="tide-column" style="text-align: right;">
+                    <div id="tide-right-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
+                </div>
+            </div>
+            
+            <canvas id="tideCanvasLarge" style="width:100%; height:80px;"></canvas>
+            
+            <div class="tide-footer-info">
+                <div id="tide-left-data"><span id="val-left">--</span></div>
+                <div id="tide-right-data"><span id="val-right">--</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="module">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
+            <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">📷 WEBCAM</a>
+        </div>
+        <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
+            <!-- Remarque : tu pourras ajuster le spotid et le spot ci-dessous pour viser plus spécifiquement Flamanville/Diélette le moment venu -->
+            <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <div class="disclaimer" style="font-size:0.65rem; color:#64748b; text-align:center; padding:10px;" data-i18n="index_disclaimer">
+        <strong style="color:#b03a2e;">* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+    </div>
+
+    <div class="footer-module">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
+        
+        <div class="footer-buttons">
+            <a href="securite.html" class="btn-action btn-footer" style="background: #b03a2e;" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
+            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES</a>
+            <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
+            <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
+        </div>
+
+        <div style="margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 8px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+            <img src="logo-cws.png" alt="Cotentin Web Studio" style="width: 50px; height: auto; filter: grayscale(20%); opacity: 0.9;">
+            <div style="font-size: 0.65rem; color: #1e3a8a; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Montserrat', sans-serif;">
+               © 2026 - Cotentin Web Studio
+            </div>
+        </div>
+    </div>
+
+    <div class="premium-sponsor" style="margin-top: 30px; margin-bottom: 20px;">
+        <div class="premium-badge" data-i18n="premium_badge">Sponsor Officiel 2026</div>
+        <h2 class="premium-title" data-i18n="premium_title">Espace Partenaire Premium</h2>
+        <p class="premium-desc" data-i18n="premium_desc">Affichez votre entreprise ici en grand format 24h/24 ! Contactez-nous pour réserver cet emplacement exclusif.</p>
+        <a href="contact.html" class="btn-premium" data-i18n="btn_premium">RÉSERVER CET ESPACE</a>
+    </div>
+</div>
+
+<script>
+    // --- GESTION DE L'INSTALLATION PWA ---
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
+    const iosPopup = document.getElementById('ios-install-popup');
+
+    // Vérifier si l'app est déjà installée
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (isStandalone) {
+        // Si déjà installé, on cache le bouton pour ne pas polluer l'écran
+        installBtn.style.display = 'none';
+    }
+
+    // Intercepter l'événement d'installation Android
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // On s'assure que le bouton est visible si l'app n'est pas installée
+        if (!isStandalone) {
+            installBtn.style.display = 'inline-flex';
+        }
+    });
+
+    installBtn.addEventListener('click', async () => {
+        // Détection iOS
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+        if (isIOS) {
+            // Afficher le pop-up d'aide pour iOS
+            iosPopup.style.display = 'block';
+            return;
+        }
+
+        if (deferredPrompt) {
+            // Afficher le pop-up natif Android
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+        } else {
+            // Sécurité de secours si le bouton est cliqué sur un navigateur non compatible
+            alert("Pour installer l'application, ouvrez le menu de votre navigateur et choisissez 'Ajouter à l'écran d'accueil'.");
+        }
+    });
+</script>
+
+<script>
+    window.onload = function() {
+        if (typeof data !== 'undefined') {
+            updateApp();
+            setInterval(updateApp, 1000);
+        }
+    };
+     
+    function updateSponsor() {
+        const sponsorText = document.getElementById('sponsor-text');
+        if (!sponsorText) return;
+
+        const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
+        const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
+        const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+
+        // Remise à zéro pour Port Diélette - Affichage du sponsor par défaut permanent
+        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+        sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
+    }
+
+    function drawTideGraph(percent, isDescending) {
+        const canvas = document.getElementById('tideCanvasLarge');
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth;
+        canvas.height = 80;
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        
+        ctx.beginPath(); ctx.strokeStyle = '#cbd5e1'; ctx.setLineDash([5, 5]);
+        ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.stroke(); ctx.setLineDash([]);
+        
+        ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 3;
+        for (let x = 0; x <= w; x++) {
+            let ratio = x / w;
+            let y = isDescending ? 
+                15 + ((1 - Math.cos(ratio * Math.PI)) / 2) * 50 : 
+                15 + ((Math.cos(ratio * Math.PI) + 1) / 2) * 50;
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        const dotX = (percent / 100) * w;
+        const dotY = isDescending ? 
+            15 + ((1 - Math.cos((percent/100) * Math.PI)) / 2) * 50 : 
+            15 + ((Math.cos((percent/100) * Math.PI) + 1) / 2) * 50;
+
+        ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 5, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+    }
+
+    function updateApp() {
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const localISOTime = (new Date(now - tzoffset)).toISOString().slice(0, -1);
+        const dateStr = localISOTime.split('T')[0];
+        
+        const currentLang = localStorage.getItem('preferredLang') || 'fr';
+        const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
+        document.getElementById('current-date').innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
+        
+        updateSponsor();
+        if (typeof data === 'undefined' || data.length === 0) return;
+
+        const yesterdayStr = new Date(now.getTime() - 86400000 - tzoffset).toISOString().split('T')[0];
+        const tomorrowStr = new Date(now.getTime() + 86400000 - tzoffset).toISOString().split('T')[0];
+
+        let allPortes = [];
+        let allTides = [];
+
+        [yesterdayStr, dateStr, tomorrowStr].forEach(ds => {
+            let dData = data.find(d => d.date === ds);
+            if(dData) {
+                if(dData.portes) {
+                    dData.portes.forEach(p => {
+                        if(p.open !== "--" && p.open !== "--:--" && p.close !== "--" && p.close !== "--:--") {
+                            let sO = new Date(ds + "T" + p.open);
+                            let sC = new Date(ds + "T" + p.close);
+                            if (sC < sO) sC.setDate(sC.getDate() + 1);
+                            allPortes.push({ sO: sO, sC: sC, openStr: p.open, closeStr: p.close });
+                        }
+                    });
+                }
+                
+                [
+                    { time: dData.bm1, h: dData.bm1_h, type: "BM", label: "Basse Mer", c: dData.coeff1, refTime: null },
+                    { time: dData.pm1, h: dData.pm1_h, type: "PM", label: "Pleine Mer", c: dData.coeff1, refTime: null },
+                    { time: dData.bm2, h: dData.bm2_h, type: "BM", label: "Basse Mer", c: dData.coeff2, refTime: dData.bm1 },
+                    { time: dData.pm2, h: dData.pm2_h, type: "PM", label: "Pleine Mer", c: dData.coeff2, refTime: dData.pm1 }
+                ].forEach(t => {
+                    if (t.time && t.time !== "--:--" && t.time !== "--") {
+                        let dObj = new Date(ds + "T" + t.time);
+                        if (t.refTime && t.refTime !== "--:--" && t.refTime !== "--") {
+                            if (t.time < t.refTime) {
+                                dObj.setDate(dObj.getDate() + 1);
+                            }
+                        }
+                        allTides.push({
+                            time: t.time,
+                            h: t.h,
+                            type: t.type,
+                            label: t.label,
+                            c: t.c,
+                            dateObj: dObj
+                        });
+                    }
+                });
+            }
+        });
+
+        allTides.sort((a, b) => a.dateObj - b.dateObj);
+
+        let futurePortes = allPortes.filter(p => p.sC > now); 
+        let pastPortes = allPortes.filter(p => p.sC <= now);
+        
+        let activePorte = null;
+        let nextPorte = null;
+        let lastPorteClose = pastPortes.length > 0 ? pastPortes[pastPortes.length - 1].sC : new Date(now.getTime() - (7 * 3600000));
+
+        if (futurePortes.length > 0) {
+            if (now >= futurePortes[0].sO) {
+                activePorte = futurePortes[0];
+            } else {
+                nextPorte = futurePortes[0];
+            }
+        }
+
+        const wrapper = document.getElementById('progress-wrapper');
+        const pbContainer = document.getElementById('progress-container');
+        const pb = document.getElementById('progress-bar');
+        wrapper.style.display = "block";
+
+        const t = translations[currentLang] || {}; 
+
+        document.getElementById('label-ouv').innerText = t.pill_open || "OUV.";
+        document.getElementById('label-ferm').innerText = t.pill_close || "FERM.";
+        document.getElementById('label-ouv-next').innerText = t.pill_open || "OUV.";
+        document.getElementById('label-ferm-next').innerText = t.pill_close || "FERM.";
+
+        function formatTitle(p, baseLabel) {
+            if (!p) return baseLabel;
+            if (p.sO.getDate() !== now.getDate()) return baseLabel + " (" + (t.tomorrow || "Demain") + ")";
+            return baseLabel;
+        }
+
+        document.getElementById('title-slot-1').innerText = formatTitle(futurePortes[0], t.slot_current || "Créneaux officiels");
+        document.getElementById('title-slot-2').innerText = formatTitle(futurePortes[1], t.slot_next || "Prochains créneaux");
+
+        if (futurePortes[0]) {
+            document.getElementById('open-time').innerText = futurePortes[0].openStr;
+            document.getElementById('close-time').innerText = futurePortes[0].closeStr;
+        } else {
+            document.getElementById('open-time').innerText = "--:--";
+            document.getElementById('close-time').innerText = "--:--";
+        }
+
+        if (futurePortes[1]) {
+            document.getElementById('open-time-next').innerText = futurePortes[1].openStr;
+            document.getElementById('close-time-next').innerText = futurePortes[1].closeStr;
+        } else {
+            document.getElementById('open-time-next').innerText = "--:--";
+            document.getElementById('close-time-next').innerText = "--:--";
+        }
+
+        if (activePorte) {
+            const diffMs = activePorte.sC - now;
+            const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
+            const h = Math.floor(diffMs / 3600000);
+            const m = Math.floor((diffMs % 3600000) / 60000);
+            
+            document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + (t.time_before_close || " avant fermeture");
+            pb.style.width = percent + "%";
+            pbContainer.className = "progress-container";
+            
+            let circleClass = "open"; 
+            let statusText = t.status_open || "OUVERTE"; 
+            let labelText = t.label_gate || "PORTE";
+            
+            if (diffMs < 25 * 60 * 1000) { 
+                pbContainer.classList.add("danger"); circleClass = "danger"; 
+                statusText = t.status_imminent || "IMMINENTE"; labelText = t.label_closing || "FERMETURE"; 
+            }
+            else if (percent > 85) { 
+                pbContainer.classList.add("warning"); circleClass = "warning"; 
+                statusText = t.next_close || "PROCHAINE FERMETURE"; 
+                labelText = ""; 
+            }
+            
+            document.getElementById('status-text').innerText = statusText;
+            document.querySelector('.status-label').innerText = labelText;
+            document.getElementById('status-box').className = "status-box " + circleClass;
+        } else if (nextPorte) {
+            const diffMs = nextPorte.sO - now;
+            const totalWait = nextPorte.sO - lastPorteClose;
+            const elapsedWait = now - lastPorteClose;
+            let waitPercent = Math.max(0, Math.min(100, (elapsedWait / totalWait) * 100));
+
+            document.getElementById('time-left').innerText = (t.time_opening_in || "Ouverture dans ") + Math.floor(diffMs/3600000) + "h" + (Math.floor((diffMs%3600000)/60000) < 10 ? "0" : "") + Math.floor((diffMs%3600000)/60000);
+            pbContainer.className = "progress-container waiting";
+            pb.style.width = waitPercent + "%";
+            
+            document.getElementById('status-text').innerText = t.status_closed || "FERMÉE";
+            document.querySelector('.status-label').innerText = t.label_gate || "PORTE";
+            document.getElementById('status-box').className = "status-box closed";
+        }
+
+        let prevTide = allTides[0], nextTide = allTides[1];
+        for (let i = 0; i < allTides.length - 1; i++) {
+            if (now >= allTides[i].dateObj && now <= allTides[i+1].dateObj) {
+                prevTide = allTides[i];
+                nextTide = allTides[i+1];
+                break;
+            }
+        }
+
+        if (prevTide && nextTide) {
+            const tidePercent = ((now - prevTide.dateObj) / (nextTide.dateObj - prevTide.dateObj)) * 100;
+            const isDescending = (prevTide.type === "PM");
+
+            let coeffText = prevTide.c && prevTide.c !== "-" ? prevTide.c : (nextTide.c && nextTide.c !== "-" ? nextTide.c : "--");
+            
+            document.getElementById('coeff-display').innerText = coeffText;
+            
+            const leftLabelTrad = prevTide.type === "PM" ? (t.high_tide || "Pleine Mer") : (t.low_tide || "Basse Mer");
+            const rightLabelTrad = nextTide.type === "PM" ? (t.high_tide || "Pleine Mer") : (t.low_tide || "Basse Mer");
+
+            document.getElementById('tide-left-label').innerText = leftLabelTrad;
+            document.getElementById('tide-right-label').innerText = rightLabelTrad;
+            document.getElementById('val-left').innerText = prevTide.time + " (" + prevTide.h + "m)";
+            document.getElementById('val-right').innerText = nextTide.time + " (" + nextTide.h + "m)";
+            
+            drawTideGraph(tidePercent, isDescending);
+        }
+    }
+</script>
+
+<script>
+    function setLanguage(lang) {
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.getElementById(`btn-${lang}`);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                el.innerHTML = translations[lang][key];
+            }
+        });
+
+        localStorage.setItem('preferredLang', lang);
+
+        // --- Mise à jour de la langue du widget Wisuki ---
+        const wisukiIframe = document.getElementById('wisuki-widget');
+        if (wisukiIframe) {
+            wisukiIframe.src = `https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=${lang}`;
+        }
+
+        if (typeof updateApp === "function") {
+            updateApp(); 
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const browserLang = navigator.language.substring(0, 2);
+        const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+        
+        setLanguage(savedLang);
+    });
+</script>
+
+<script>
+    // L'Easter Egg d'Octave (Version XXL !)
+    document.getElementById('status-box').addEventListener('click', function(e) {
+        const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋', '🐬', '☀️'];
+        
+        for(let i = 0; i < 8; i++) {
+            let particle = document.createElement('div');
+            particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            particle.style.position = 'fixed';
+            
+            let x = e.clientX || window.innerWidth / 2;
+            let y = e.clientY || window.innerHeight / 3;
+            
+            particle.style.left = (x - 25) + 'px';
+            particle.style.top = (y - 25) + 'px';
+            
+            particle.style.fontSize = '3.5rem';
+            particle.style.pointerEvents = 'none'; 
+            particle.style.zIndex = '9999';
+            
+            particle.style.transition = 'transform 2s ease-out, opacity 2s ease-in';
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                particle.style.transform = `translate(${Math.random() * 200 - 100}px, -${Math.random() * 300 + 100}px) rotate(${Math.random() * 360}deg)`;
+                particle.style.opacity = '0';
+            }, 50);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 2050);
+        }
+    });
+</script>
+
+<script>
+    // Easter Egg : Le Bateau Pirate (Clic x5 sur le titre)
+    let titleClickCount = 0;
+    const mainTitle = document.querySelector('.main-title');
+    
+    if (mainTitle) {
+        mainTitle.addEventListener('click', function() {
+            titleClickCount++;
+            
+            if (titleClickCount === 5) {
+                let ship = document.createElement('div');
+                ship.innerText = '🏴‍☠️⛵'; 
+                ship.style.position = 'fixed';
+                ship.style.top = '50%';
+                ship.style.left = '-100px';
+                ship.style.fontSize = '4rem';
+                ship.style.zIndex = '9999';
+                ship.style.pointerEvents = 'none';
+                ship.style.transition = 'transform 4s linear';
+                
+                document.body.appendChild(ship);
+                
+                setTimeout(() => {
+                    ship.style.transform = 'translateX(120vw) translateY(-20px)';
+                }, 50);
+                
+                setTimeout(() => {
+                    ship.remove();
+                    titleClickCount = 0;
+                }, 4050);
+            }
+            
+            setTimeout(() => {
+                if (titleClickCount > 0 && titleClickCount < 5) {
+                    titleClickCount = 0;
+                }
+            }, 2000);
+        });
+    }
+</script>
+
+<script>
+    // LE NOUVEL EASTER EGG : Le Kraken du Graphique des Marées 🐙🐳
+    const tideCanvas = document.getElementById('tideCanvasLarge');
+    
+    if (tideCanvas) {
+        tideCanvas.addEventListener('click', function(e) {
+            if (document.getElementById('kraken-egg')) return;
+
+            const seaCreatures = ['🐙', '🐳'];
+            const creature = seaCreatures[Math.floor(Math.random() * seaCreatures.length)];
+
+            let kraken = document.createElement('div');
+            kraken.id = 'kraken-egg';
+            kraken.innerText = creature;
+            
+            kraken.style.position = 'fixed';
+            kraken.style.fontSize = '2.5rem';
+            kraken.style.zIndex = '999';
+            kraken.style.pointerEvents = 'none';
+            kraken.style.left = e.clientX + 'px';
+            kraken.style.top = e.clientY + 'px';
+            
+            kraken.style.transform = 'translate(-50%, 20px) scale(0)';
+            kraken.style.opacity = '0';
+            kraken.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            
+            document.body.appendChild(kraken);
+
+            setTimeout(() => {
+                kraken.style.opacity = '1';
+                kraken.style.transform = 'translate(-50%, -40px) scale(1)';
+            }, 50);
+
+            setTimeout(() => {
+                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(-20deg)';
+            }, 600);
+
+            setTimeout(() => {
+                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(20deg)';
+            }, 1200);
+
+            setTimeout(() => {
+                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(0deg)';
+            }, 1800);
+
+            setTimeout(() => {
+                kraken.style.transition = 'all 0.4s ease-in';
+                kraken.style.transform = 'translate(-50%, 20px) scale(0.5)';
+                kraken.style.opacity = '0';
+            }, 2400);
+
+            setTimeout(() => {
+                kraken.remove();
+            }, 3000);
+        });
+    }
+</script>
+
+<script>
+    // Gérer le retour sur l'application (sortie de veille ou changement d'onglet)
+    document.addEventListener("visibilitychange", function() {
+        if (document.visibilityState === 'visible') {
+            // Relance immédiatement le calcul des marées et de la porte
+            if (typeof updateApp === "function") {
+                updateApp();
+            }
+        }
+    });
+</script>
+</body>
+</html>
