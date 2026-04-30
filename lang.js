@@ -3,6 +3,10 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        "desc_lestran": "Boulangerie - Pâtisserie",
+"time_lestran": "⏱️ Sponsor de 08h00 à 09h00",
+"desc_comptoir": "Épicerie",
+"time_comptoir": "⏱️ Sponsor de 08h00-09h00 & 15h00-16h00",
         "sponsor_maison_renard_index": "🥖 Boulangerie Maison Renard - Pains spéciaux, macarons & chocolats",
         // --- Page Sécurité ---
 "desc_maison_renard": "Pains spéciaux, macarons, nos meilleurs chocolats et pâtisseries artisanales.",
@@ -163,6 +167,10 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        "desc_lestran": "Bakery - Pastry Shop",
+"time_lestran": "⏱️ Sponsor from 8:00 AM to 9:00 AM",
+"desc_comptoir": "Grocery Store",
+"time_comptoir": "⏱️ Sponsor from 8:00 AM-9:00 AM & 3:00 PM-4:00 PM",
         "sponsor_maison_renard_index": "🥖 Maison Renard Bakery - Specialty breads, macarons & chocolates",
         // --- Security Page ---
 "desc_maison_renard": "Specialty breads, macarons, our finest chocolates and artisanal pastries.",
