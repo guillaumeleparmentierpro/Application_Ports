@@ -183,6 +183,30 @@
     <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
 </div>
 
+<!-- === MODAL CHOIX DU PORT === -->
+<div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
+    <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
+        <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
+        
+        <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">⚓ Choix du port</h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <a href="#" onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="display: block; background: var(--marine-blue); color: white; text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem;">
+                📍 Barneville-Carteret (Actuel)
+            </a>
+            
+            <a href="dielette/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
+                🌊 Port de Diélette
+            </a>
+
+            <div style="display: block; background: #f8fafc; color: #94a3b8; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.85rem; border: 1px dashed #cbd5e1; cursor: not-allowed;">
+                ⏳ Port-Bail (Prochainement)
+            </div>
+        </div>
+    </div>
+</div>
+<!-- =========================== -->
+
 <div class="app-container">
 
     <div class="sticky-header">
@@ -191,7 +215,7 @@
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
 
-<div class="top-nav">
+        <div class="top-nav">
             <div class="date-badge" id="current-date">-- --</div>
             <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%;">
                 <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES & MARÉES</a>
@@ -202,13 +226,13 @@
         
         <h1 class="main-title">Port Barneville-Carteret<sup>*</sup></h1>
 
-        <!-- === NOUVEAU : LE SÉLECTEUR DE PORT === -->
+        <!-- === BOUTON CHANGER DE PORT === -->
         <div style="text-align: center; margin: 8px 0 10px 0;">
-            <a href="dielette/index.html" style="display: inline-flex; align-items: center; gap: 5px; background: #e0e7ff; color: var(--marine-blue); text-decoration: none; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 800; border: 1px solid #c7d2fe; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <span style="font-size: 0.8rem;">📍</span> <span style="opacity: 0.8; font-weight: 600;" data-i18n="switch_port">Aller à :</span> PORT DIÉLETTE ➔
-            </a>
+            <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
+                ⚓ <span data-i18n="change_port">CHANGER DE PORT</span> ▾
+            </button>
         </div>
-        <!-- ====================================== -->
+        <!-- ============================== -->
 
         <div class="lang-switch">
             <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span> 
@@ -290,7 +314,7 @@
         <strong style="color:#b03a2e;">* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
     </div>
 
-<div class="footer-module">
+    <div class="footer-module">
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         
         <div class="footer-buttons">
@@ -853,7 +877,8 @@ function updateSponsor() {
         });
     }
 </script>
-    <script>
+
+<script>
     // Gérer le retour sur l'application (sortie de veille ou changement d'onglet)
     document.addEventListener("visibilitychange", function() {
         if (document.visibilityState === 'visible') {
