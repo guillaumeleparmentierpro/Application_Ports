@@ -3,6 +3,8 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        "sponsor_lestran_index": "🥐 L’Estran Carteret - Boulangerie & Pâtisserie",
+"sponsor_comptoir_index": "🥫 Le Comptoir de Carteret - Épicerie",
         "desc_lestran": "Boulangerie - Pâtisserie",
 "time_lestran": "⏱️ Sponsor de 08h00 à 09h00",
 "desc_comptoir": "Épicerie",
@@ -167,6 +169,8 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        "sponsor_lestran_index": "🥐 L’Estran Carteret - Bakery & Pastry Shop",
+"sponsor_comptoir_index": "🥫 Le Comptoir de Carteret - Grocery Store",
         "desc_lestran": "Bakery - Pastry Shop",
 "time_lestran": "⏱️ Sponsor from 8:00 AM to 9:00 AM",
 "desc_comptoir": "Grocery Store",
