@@ -3,6 +3,8 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        "change_port": "CHANGER DE PORT",
+"select_port_title": "⚓ Choix du port",
         "sponsor_lestran_index": "🥐 L’Estran Carteret - Boulangerie & Pâtisserie",
 "sponsor_comptoir_index": "🥫 Le Comptoir de Carteret - Épicerie",
         "desc_lestran": "Boulangerie - Pâtisserie",
@@ -169,6 +171,8 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        "change_port": "CHANGE PORT",
+"select_port_title": "⚓ Select Port",
         "sponsor_lestran_index": "🥐 L’Estran Carteret - Bakery & Pastry Shop",
 "sponsor_comptoir_index": "🥫 Le Comptoir de Carteret - Grocery Store",
         "desc_lestran": "Bakery - Pastry Shop",
