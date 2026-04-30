@@ -2,6 +2,9 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <title>Horaires & Marées - Port de Barneville-Carteret | L'App des Marins</title>
@@ -120,14 +123,64 @@
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 270px; border: 1px solid #e2e8f0; }
         .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
         .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-weight: 500; line-height: 1.4; }
+
+        /* --- STYLES POUR LE NOUVEAU BLOC PREMIUM --- */
+        .premium-sponsor {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.2);
+            margin: 0 15px 15px 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .premium-badge {
+            background: #fbbf24;
+            color: #991b1b;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .premium-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 5px 0 10px 0;
+            line-height: 1.2;
+        }
+        .premium-desc {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .btn-premium {
+            background: white;
+            color: var(--marine-blue) !important;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .btn-premium:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
 
-<div id="ios-install-popup" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: white; border: 2px solid var(--marine-blue); padding: 15px; border-radius: 12px; z-index: 9999; width: 85%; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: center;">
-    <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; font-weight: bold; color: #94a3b8; font-size: 1.2rem;" onclick="document.getElementById('ios-install-popup').style.display='none'">×</span>
-    <p style="font-size: 0.85rem; margin: 0; font-weight: 700; color: var(--marine-blue);">Installer sur iPhone / iPad</p>
-    <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: var(--text-main); line-height: 1.4;">Touchez l'icône <b>Partager</b> en bas de votre écran, puis faites défiler et choisissez <br><b>"Sur l'écran d'accueil"</b>.</p>
+<div id="ios-install-popup" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; border: 2px solid #fbbf24; padding: 15px 15px 20px 15px; border-radius: 12px; z-index: 9999; width: 85%; max-width: 350px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); text-align: center; color: white;">
+    <span style="position: absolute; top: 2px; right: 12px; cursor: pointer; font-weight: bold; color: #94a3b8; font-size: 1.5rem;" onclick="document.getElementById('ios-install-popup').style.display='none'">×</span>
+    <p style="font-size: 0.9rem; margin: 0; font-weight: 800; color: #fbbf24;">🍎 Installer sur iPhone / iPad</p>
+    <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
 </div>
 
 <div class="app-container">
@@ -243,6 +296,13 @@
                © 2026 - Cotentin Web Studio
             </div>
         </div>
+    </div>
+
+    <div class="premium-sponsor" style="margin-top: 30px; margin-bottom: 20px;">
+        <div class="premium-badge" data-i18n="premium_badge">Sponsor Officiel 2026</div>
+        <h2 class="premium-title" data-i18n="premium_title">Espace Partenaire Premium</h2>
+        <p class="premium-desc" data-i18n="premium_desc">Affichez votre entreprise ici en grand format 24h/24 ! Contactez-nous pour réserver cet emplacement exclusif.</p>
+        <a href="contact.html" class="btn-premium" data-i18n="btn_premium">RÉSERVER CET ESPACE</a>
     </div>
 </div>
 
@@ -782,6 +842,17 @@ function updateSponsor() {
             }, 3000);
         });
     }
+</script>
+    <script>
+    // Gérer le retour sur l'application (sortie de veille ou changement d'onglet)
+    document.addEventListener("visibilitychange", function() {
+        if (document.visibilityState === 'visible') {
+            // Relance immédiatement le calcul des marées et de la porte
+            if (typeof updateApp === "function") {
+                updateApp();
+            }
+        }
+    });
 </script>
 </body>
 </html>
