@@ -1,8 +1,21 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    
+    <title>Horaires de la porte et des marées - Port de Diélette</title>
+    
+    <!-- Fichiers mutualisés à la racine -->
+    <link rel="manifest" href="../manifest.json">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" href="../icon-192.png">
+    
     <meta name="theme-color" content="#1e3a8a">
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -10,12 +23,12 @@
       gtag('js', new Date());
       gtag('config', 'G-5LY18V5457');
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light">
-    <title>Horaires de la porte et des marées</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Fichier de données SPECIFIQUE à Diélette (en local) -->
     <script src="donnees.js"></script>
+
 <style>
     :root {
         color-scheme: light;
@@ -233,7 +246,8 @@
         </table>
     </div>
 
-    <script src="lang.js"></script>
+    <!-- Fichier de langue MUTUALISÉ à la racine -->
+    <script src="../lang.js"></script>
 
     <script>
     function generateTable() {
@@ -243,12 +257,9 @@
         if (typeof data === 'undefined') return;
         
         let currentMonthStr = ""; 
-        // OPTIMISATION : On crée une variable texte pour stocker tout le HTML
         let tableHTML = "";
 
-        // On récupère la langue pour adapter le format des dates
         const currentLang = localStorage.getItem('preferredLang') || 'fr';
-        // 'en-GB' donne le format Européen pour l'anglais (Jour puis Mois)
         const locale = currentLang === 'en' ? 'en-GB' : 'fr-FR';
 
         data.forEach(jour => {
@@ -256,7 +267,6 @@
             const isToday = (jour.date === today);
             const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
             
-            // Le mois s'adapte automatiquement à la langue !
             const monthName = d.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
             
             if (monthName !== currentMonthStr) {
@@ -264,12 +274,10 @@
                     <tr class="month-separator">
                         <td colspan="9">${monthName}</td>
                     </tr>`;
-                // On ajoute à notre variable texte
                 tableHTML += sepRow;
                 currentMonthStr = monthName; 
             }
 
-            // Les jours s'adaptent aussi (LUN vs MON)
             const dayLabel = d.toLocaleDateString(locale, { weekday: 'short' }).toUpperCase();
             const dayNum = d.toLocaleDateString(locale, { day: '2-digit', month: 'short' });
             
@@ -316,14 +324,11 @@
                     </td>
                 </tr>`;
             
-            // On ajoute la ligne à la variable texte
             tableHTML += row;
         });
 
-        // OPTIMISATION : On injecte tout le code HTML en une seule fois !
         tbody.innerHTML = tableHTML;
 
-        // J'ai aussi légèrement baissé le délai d'attente vu que l'affichage est maintenant instantané.
         setTimeout(() => {
             const container = document.querySelector('.table-container');
             const todayEl = document.getElementById('today-marker');
@@ -337,7 +342,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Détection et application de la langue
             const browserLang = navigator.language.substring(0, 2);
             const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
             
@@ -348,7 +352,6 @@
                 }
             });
 
-            // On génère le tableau APRÈS avoir récupéré la langue pour les dates
             generateTable();
         });
     </script>
