@@ -904,16 +904,18 @@ function updateSponsor() {
     });
 </script>
     <script>
-    // --- GESTION DES POP-UPS DE JOURS FÉRIÉS ---
-    
-    // Dictionnaire des dates (Format: MM-JJ)
     const joursFeries = {
         "01-01": { titre: "🎉 Bonne Année !", message: "Toute l'équipe vous souhaite une excellente année pleine de belles navigations !" },
+        "04-06": { titre: "🍫 Joyeuses Pâques !", message: "Bon Lundi de Pâques à tous ! Ne mangez pas trop de chocolat avant de prendre la mer." },
         "05-01": { titre: "🌿 Bon 1er Mai !", message: "Joyeuse Fête du Travail. Profitez bien de ce jour férié (et de votre brin de muguet) !" },
         "05-08": { titre: "🕊️ 8 Mai 1945", message: "Aujourd'hui, nous commémorons la Victoire du 8 mai 1945. Bonne journée à tous." },
+        "05-14": { titre: "🌤️ Jeudi de l'Ascension", message: "Profitez bien de ce jour de l'Ascension pour une belle sortie en mer !" },
+        "05-25": { titre: "⚓ Lundi de Pentecôte", message: "Bon Lundi de Pentecôte à tous les marins et plaisanciers." },
         "07-14": { titre: "🎆 Fête Nationale", message: "Joyeux 14 Juillet ! Excellente journée de fête nationale et bonne navigation." },
-        "08-15": { titre: "⚓ Fête de la Mer", message: "Bon 15 août et très belle fête de la mer à tous les marins de la côte !" },
-        "12-25": { titre: "🎄 Joyeux Noël !", message: "Passez d'excellentes fêtes de fin d'année auprès de vos proches." }
+        "08-15": { titre: "⛵ L'Assomption", message: "Bon 15 août et très belle fête de la mer à tous les amoureux de la côte !" },
+        "11-01": { titre: "🍂 La Toussaint", message: "Passez un bon jour de la Toussaint, prudence si vous sortez en mer avec la météo d'automne." },
+        "11-11": { titre: "🏵️ 11 Novembre 1918", message: "Aujourd'hui, nous commémorons l'Armistice du 11 novembre 1918. Bonne journée à tous." },
+        "12-25": { titre: "🎄 Joyeux Noël !", message: "L'équipe vous souhaite d'excellentes fêtes de fin d'année auprès de vos proches !" }
     };
 
     function checkHolidayPopup() {
