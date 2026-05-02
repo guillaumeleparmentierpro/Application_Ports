@@ -3,6 +3,9 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        desc_lumieres: "Photographie de Sébastien Rachine.",
+    time_lumieres: "⏱️ Sponsor de 16h00 à 17h00",
+    sponsor_lumieres: "📸 Lumières de mer - Photographie de Sébastien Rachine",
      desc_epicerie_fine: "Épicerie Fine / Cave à vin.",
     time_epicerie_fine: "⏱️ Sponsor de 17h00 à 18h00",
     sponsor_epicerie_fine: "🍷 L'Epicerie Fine - Épicerie Fine & Cave à vin",   
@@ -176,6 +179,9 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        desc_lumieres: "Photography by Sébastien Rachine.",
+    time_lumieres: "⏱️ Sponsor from 4:00 PM to 5:00 PM",
+    sponsor_lumieres: "📸 Lumières de mer - Photography by Sébastien Rachine",
      desc_epicerie_fine: "Delicatessen / Wine cellar.",
     time_epicerie_fine: "⏱️ Sponsor from 5:00 PM to 6:00 PM",
     sponsor_epicerie_fine: "🍷 L'Epicerie Fine - Delicatessen & Wine Cellar",   
