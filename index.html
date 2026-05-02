@@ -432,6 +432,7 @@ function updateSponsor() {
     const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
     const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
     const txtEpicerieFine = t.sponsor_epicerie_fine || "🍷 L'Epicerie Fine - Épicerie Fine & Cave à vin";
+    const txtLumieres = t.sponsor_lumieres || "📸 Lumières de mer - Photographie de Sébastien Rachine";
     const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
 
     // Créneau 07h - 08h : Maison Renard
@@ -483,6 +484,10 @@ function updateSponsor() {
     // Créneau 15h - 16h : Le Comptoir de Carteret (2ème créneau)
     else if (hour === 15) {
         sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
+    }
+    // Créneau 16h - 17h : Lumières de mer
+    else if (hour === 16) {
+        sponsorText.innerHTML = `<a href="partenaires.html#lumieres-de-mer" style="${linkStyle}">${txtLumieres}</a>`;
     }
     // Créneau 17h - 18h : L'Epicerie Fine
     else if (hour === 17) {
