@@ -3,6 +3,13 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        desc_century21: "Agence immobilière.",
+    time_century21: "⏱️ Sponsor de 09h00 à 10h00",
+    sponsor_century21: "🏠 Century 21 Chevet Immobilier - Agence immobilière",
+
+    desc_chalet: "Plateaux de Fruits de Mer, Poissons - Crustacés, Fruits-Légumes de Pays.",
+    time_chalet: "⏱️ Sponsor de 12h00 à 13h00",
+    sponsor_chalet: "🦞 Au Chalet Gourmand - Terre et Mer",
         desc_lumieres: "Photographie de Sébastien Rachine.",
     time_lumieres: "⏱️ Sponsor de 16h00 à 17h00",
     sponsor_lumieres: "📸 Lumières de mer - Photographie de Sébastien Rachine",
@@ -179,6 +186,13 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        desc_century21: "Real estate agency.",
+    time_century21: "⏱️ Sponsor from 9:00 AM to 10:00 AM",
+    sponsor_century21: "🏠 Century 21 Chevet Immobilier - Real estate agency",
+
+    desc_chalet: "Seafood platters, Fish - Shellfish, Local Fruits & Vegetables.",
+    time_chalet: "⏱️ Sponsor from 12:00 PM to 1:00 PM",
+    sponsor_chalet: "🦞 Au Chalet Gourmand - Terre and Mer",
         desc_lumieres: "Photography by Sébastien Rachine.",
     time_lumieres: "⏱️ Sponsor from 4:00 PM to 5:00 PM",
     sponsor_lumieres: "📸 Lumières de mer - Photography by Sébastien Rachine",
