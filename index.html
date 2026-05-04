@@ -428,8 +428,10 @@ function updateSponsor() {
     const txtLestran = t.sponsor_lestran_index || "🥐 L’Estran Carteret - Boulangerie & Pâtisserie";
     const txtComptoir = t.sponsor_comptoir_index || "🥫 Le Comptoir de Carteret - Épicerie";
     const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
+    const txtCentury21 = t.sponsor_century21 || "🏠 Century 21 Chevet Immobilier - Agence immobilière";
     const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
     const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
+    const txtChalet = t.sponsor_chalet || "🦞 Au Chalet Gourmand - Terre et Mer";
     const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
     const txtEpicerieFine = t.sponsor_epicerie_fine || "🍷 L'Epicerie Fine - Épicerie Fine & Cave à vin";
     const txtLumieres = t.sponsor_lumieres || "📸 Lumières de mer - Photographie de Sébastien Rachine";
@@ -451,9 +453,13 @@ function updateSponsor() {
             sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
         }
     }
-    // Créneau 09h - 10h : L'Or Coiffure
+    // Créneau 09h - 10h : Rotation à 2 (L'Or Coiffure / Century 21)
     else if (hour === 9) {
-        sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
+        if (minute % 2 === 0) {
+            sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
+        } else {
+            sponsorText.innerHTML = `<a href="partenaires.html#century21" style="${linkStyle}">${txtCentury21}</a>`;
+        }
     } 
     // Créneau 10h - 11h : Carteret Marine
     else if (hour === 10) {
@@ -477,6 +483,10 @@ function updateSponsor() {
             sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
         }
     } 
+    // Créneau 12h - 13h : Chalet Gourmand
+    else if (hour === 12) {
+        sponsorText.innerHTML = `<a href="partenaires.html#chalet-gourmand" style="${linkStyle}">${txtChalet}</a>`;
+    }
     // Créneau 14h - 15h : Esprit Marin
     else if (hour === 14) {
         sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
