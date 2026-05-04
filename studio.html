@@ -14,14 +14,14 @@
     <title>Cotentin Web Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
-    <style>
+<style>
         :root {
             --primary-bg: #f8fafc;
             --card-bg: #ffffff;
-            --marine-blue: #1e3a8a;
+            --marine-blue: #0b2545; /* Le bleu très profond de ton phare */
+            --accent-color: #26c4c5; /* Le cyan lumineux des ondes */
             --text-main: #1e293b;
             --border-color: #e2e8f0;
-            --accent-color: #3b82f6;
         }
 
         body { 
@@ -82,12 +82,12 @@
             padding: 20px 15px;
             margin: 0 15px 15px 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--marine-blue);
+            border-top: 4px solid var(--accent-color); /* Ligne cyan en haut des blocs */
             text-align: center;
         }
 
         .studio-logo {
-            width: 90px;
+            width: 110px;
             height: auto;
             margin: 0 auto 15px auto;
             display: block;
@@ -131,34 +131,39 @@
             line-height: 1;
         }
 
+        /* --- Design Puzzblock aligné avec le logo --- */
         .puzzblock-badge {
-            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            background: linear-gradient(135deg, var(--marine-blue) 0%, #153866 100%);
             color: white;
             padding: 15px;
             border-radius: 12px;
             margin-top: 15px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(217, 119, 6, 0.2);
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 8px 15px rgba(11, 37, 69, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
         .puzzblock-badge h3 {
             margin: 0 0 5px 0;
             font-size: 1rem;
             font-weight: 900;
+            color: var(--accent-color); /* Titre en cyan */
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .puzzblock-badge p {
-            color: #fffbeb;
+            color: #f1f5f9;
             margin: 0;
             font-size: 0.75rem;
             font-weight: 600;
         }
 
         .btn-contact {
-            background: var(--marine-blue);
-            color: white !important;
+            background: var(--accent-color);
+            color: var(--marine-blue) !important;
             text-decoration: none;
             padding: 12px 20px;
             border-radius: 8px;
@@ -168,7 +173,7 @@
             width: 100%;
             box-sizing: border-box;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2);
+            box-shadow: 0 4px 10px rgba(38, 196, 197, 0.3);
             transition: transform 0.2s;
         }
         .btn-contact:active { transform: scale(0.98); }
