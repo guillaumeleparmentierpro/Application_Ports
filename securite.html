@@ -20,7 +20,9 @@
             --primary-bg: #f8fafc;
             --card-bg: #ffffff;
             --marine-blue: #1e3a8a;
-            --danger-red: #b03a2e;
+            --danger-color: #ef4444; /* Rouge principal aligné avec l'index */
+            --danger-dark: #991b1b;  /* Rouge foncé aligné avec l'index */
+            --danger-light: #fef2f2; /* Fond d'alerte aligné avec l'index */
             --text-main: #1e293b;
             --border-color: #e2e8f0;
         }
@@ -40,13 +42,13 @@
         .rule-text { font-size: 0.8rem; line-height: 1.4; color: #475569; margin: 0; }
         
         /* URGENCE */
-        .emergency-num { font-size: 1.4rem; font-weight: 900; color: var(--danger-red); text-align: center; display: block; margin: 5px 0; text-decoration: none; }
+        .emergency-num { font-size: 1.4rem; font-weight: 900; color: var(--danger-color); text-align: center; display: block; margin: 5px 0; text-decoration: none; }
         .phone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
         .phone-item { background: #f1f5f9; padding: 8px; border-radius: 8px; text-align: center; }
         .phone-label { font-size: 0.55rem; font-weight: 700; color: #64748b; text-transform: uppercase; display: block; margin-bottom: 2px; }
         .phone-val { font-size: 0.75rem; font-weight: 800; color: var(--marine-blue); text-decoration: none; }
         
-        .highlight { color: var(--danger-red); font-weight: 700; }
+        .highlight { color: var(--danger-color); font-weight: 700; }
     </style>
 </head>
 <body>
@@ -59,11 +61,11 @@
             <h1 class="main-title" data-i18n="secu_title">Sécurité & Rappels</h1>
         </div>
 
-        <div class="module" style="border-top-color: var(--danger-red);">
-            <span class="rule-title" style="color: var(--danger-red); text-align: center;" data-i18n="secu_cross_title">Secours en mer (CROSS)</span>
+        <div class="module" style="border-top-color: var(--danger-color);">
+            <span class="rule-title" style="color: var(--danger-color); text-align: center;" data-i18n="secu_cross_title">Secours en mer (CROSS)</span>
             <a href="tel:196" class="emergency-num">196</a>
             <p class="rule-text" style="text-align: center; font-weight: 700; margin-bottom: 10px;" data-i18n="secu_vhf">VHF CANAL 16</p>
-            <div style="text-align: center; border-top: 1px solid #fee2e2; padding-top: 10px;">
+            <div style="text-align: center; border-top: 1px solid var(--danger-light); padding-top: 10px;">
                 <span class="phone-label" data-i18n="secu_direct_line">Ligne directe CROSS Manche</span>
                 <a href="tel:0233522938" class="phone-val">02 33 52 29 38</a>
             </div>
@@ -112,12 +114,12 @@
             </p>
         </div>
 
-        <div class="module" style="background: #fff7ed; border-top-color: #ea580c;">
-            <span class="rule-title" style="color: #ea580c;" data-i18n="secu_resp_title">Responsabilité du Capitaine</span>
-            <p class="rule-text" style="font-weight: 600; color: #9a3412;" data-i18n="secu_resp_text1">
+        <div class="module" style="background: var(--danger-light); border-top-color: var(--danger-color);">
+            <span class="rule-title" style="color: var(--danger-color);" data-i18n="secu_resp_title">Responsabilité du Capitaine</span>
+            <p class="rule-text" style="font-weight: 600; color: var(--danger-dark);" data-i18n="secu_resp_text1">
                 Le chef de bord est l'unique responsable de la conduite de son navire, de la sécurité de son équipage et du respect de la réglementation en vigueur. 
             </p>
-            <p class="rule-text" style="margin-top: 8px; font-size: 0.75rem;" data-i18n="secu_resp_text2">
+            <p class="rule-text" style="margin-top: 8px; font-size: 0.75rem; color: var(--danger-dark); opacity: 0.85;" data-i18n="secu_resp_text2">
                 Les informations fournies par cette application sont purement indicatives. L'éditeur décline toute responsabilité en cas d'erreur ou d'incident survenu suite à l'utilisation de ces données. Seuls les documents et signaux officiels font foi.
             </p>
         </div>
