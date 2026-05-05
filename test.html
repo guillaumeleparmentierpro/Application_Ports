@@ -279,7 +279,7 @@
         </div>
     </div>
 
-    <div class="module">
+<div class="module">
         <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;" data-i18n="tide_title">Informations marée</div>
         <div class="tide-full-module">
             
@@ -288,9 +288,14 @@
                     <div id="tide-left-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
                 </div>
                 
+                <!-- COLONNE CENTRALE MODIFIÉE (Coeff + Hauteur) -->
                 <div class="tide-column" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; line-height: 1.1;">
                     <span data-i18n="coeff" style="font-size:0.6rem; font-weight:700; color:#64748b;">COEFF</span> 
                     <span id="coeff-display" style="color:var(--marine-blue); font-size: 1.4rem; font-weight: 900;">--</span>
+                    
+                    <!-- NOUVEAU BLOC HAUTEUR DE MARÉE -->
+                    <span data-i18n="ht_maree" style="font-size:0.55rem; font-weight:700; color:#ef4444; margin-top:6px; text-transform: uppercase;">Ht. marée</span>
+                    <span id="current-tide-height" style="color:#ef4444; font-size: 0.85rem; font-weight: 800;">-- m</span>
                 </div>
                 
                 <div class="tide-column" style="text-align: right;">
@@ -298,13 +303,8 @@
                 </div>
             </div>
             
-            <!-- === MODIFICATION: AJOUT DE LA HAUTEUR D'EAU EN TEMPS RÉEL === -->
-            <div style="position: relative; width: 100%;">
-                <canvas id="tideCanvasLarge" style="width:100%; height:80px; cursor: pointer;"></canvas>
-                <div style="position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); background: rgba(255,255,255,0.9); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; color: var(--marine-blue); box-shadow: 0 2px 5px rgba(0,0,0,0.15); border: 1px solid #dbeafe; pointer-events: none; white-space: nowrap;">
-                    🌊 <span id="current-tide-height">-- m</span>
-                </div>
-            </div>
+            <!-- GRAPHIC NETTOYÉ (sans le badge par-dessus) -->
+            <canvas id="tideCanvasLarge" style="width:100%; height:80px; cursor: pointer;"></canvas>
             
             <div class="tide-footer-info">
                 <div id="tide-left-data"><span id="val-left">--</span></div>
