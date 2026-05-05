@@ -118,11 +118,9 @@
         #tideCanvasLarge { width: 100%; height: 80px; cursor: pointer; }
         .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
         
-        /* Modification pour adapter le widget Wisuki */
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 270px; border: 1px solid #e2e8f0; }
         .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
-        .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-weight: 500; line-height: 1.4; }
-
+        
         /* --- STYLES POUR LE NOUVEAU BLOC PREMIUM --- */
         .premium-sponsor {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
@@ -191,21 +189,33 @@
         
         <div style="display: flex; flex-direction: column; gap: 10px;">
             <a href="#" onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="display: block; background: var(--marine-blue); color: white; text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem;">
-                Barneville-Carteret (Actuel)
+                📍  Port Barneville-Carteret (Actuel)
             </a>
             
             <a href="dielette/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
-                Port de Diélette
+                Port Diélette
             </a>
 
             <div style="display: block; background: #f8fafc; color: #94a3b8; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.85rem; border: 1px dashed #cbd5e1; cursor: not-allowed;">
-                Port-Bail (Prochainement)
+                Port Port-Bail (Prochainement)
             </div>
         </div>
     </div>
 </div>
 <!-- =========================== -->
 
+<div id="holiday-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
+    <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border-top: 6px solid var(--marine-blue);">
+        
+        <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('holiday-modal').style.display='none'">×</span>
+        
+        <h3 id="holiday-title" style="margin: 0 0 10px 0; color: var(--marine-blue); font-weight: 800; font-size: 1.2rem;">--</h3>
+        <p id="holiday-message" style="margin: 0 0 20px 0; font-size: 0.85rem; color: #475569; line-height: 1.5; font-weight: 600;">--</p>
+        
+        <button onclick="document.getElementById('holiday-modal').style.display='none'" style="background: var(--marine-blue); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Merci, fermer</button>
+    </div>
+</div>
+    
 <div class="app-container">
 
     <div class="sticky-header">
@@ -214,7 +224,6 @@
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
 
-        <!-- === NOUVELLE DISPOSITION DATE ET DRAPEAUX === -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 5px;">
             <div class="date-badge" id="current-date">-- --</div>
             <div class="lang-switch" style="margin: 0; font-size: 1.6rem;">
@@ -223,25 +232,20 @@
                 <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
             </div>
         </div>
-        <!-- ============================================== -->
 
-        <!-- === BOUTONS D'ACTION REMONTÉS === -->
         <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 12px;">
-            <a href="planning.html" class="btn-action" data-i18n="btn_planning">PORTES & MARÉES</a>
+            <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES PORTE & MARÉES</a>
             <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
             <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
         </div>
-        <!-- ================================== -->
         
         <h1 class="main-title">PORT BARNEVILLE-CARTERET<sup>*</sup></h1>
 
-        <!-- === BOUTON CHANGER DE PORT === -->
         <div style="text-align: center; margin: 8px 0 5px 0;">
             <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
                 ⚓ <span data-i18n="change_port">CHANGER DE PORT</span> ▾
             </button>
         </div>
-        <!-- ============================== -->
     </div>
         
     <div class="module">
@@ -294,7 +298,13 @@
                 </div>
             </div>
             
-            <canvas id="tideCanvasLarge" style="width:100%; height:80px;"></canvas>
+            <!-- === MODIFICATION: AJOUT DE LA HAUTEUR D'EAU EN TEMPS RÉEL === -->
+            <div style="position: relative; width: 100%;">
+                <canvas id="tideCanvasLarge" style="width:100%; height:80px; cursor: pointer;"></canvas>
+                <div style="position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); background: rgba(255,255,255,0.9); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; color: var(--marine-blue); box-shadow: 0 2px 5px rgba(0,0,0,0.15); border: 1px solid #dbeafe; pointer-events: none; white-space: nowrap;">
+                    🌊 <span id="current-tide-height">-- m</span>
+                </div>
+            </div>
             
             <div class="tide-footer-info">
                 <div id="tide-left-data"><span id="val-left">--</span></div>
@@ -313,26 +323,31 @@
         </div>
     </div>
 
-    <div class="disclaimer" style="font-size:0.65rem; color:#64748b; text-align:center; padding:10px;" data-i18n="index_disclaimer">
-        <strong style="color:#b03a2e;">* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+    <!-- NOUVEAU MODULE AVERTISSEMENT ET SÉCURITÉ -->
+    <div class="module" style="background: #fef2f2; border: 2px solid #ef4444; text-align: center; margin-top: 10px;">
+        <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
+        <div style="color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.5; margin-bottom: 15px;" data-i18n="index_disclaimer">
+            <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+        </div>
+        <a href="securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
     </div>
 
+    <!-- FOOTER MIS À JOUR (Sans le bouton sécurité) -->
     <div class="footer-module">
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         
         <div class="footer-buttons">
-            <a href="securite.html" class="btn-action btn-footer" style="background: #b03a2e;" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
             <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES</a>
             <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
             <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
         </div>
 
-        <div style="margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 8px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+        <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" style="margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 8px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-decoration: none; transition: transform 0.2s; cursor: pointer;" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
             <img src="logo-cws.png" alt="Cotentin Web Studio" style="width: 50px; height: auto; filter: grayscale(20%); opacity: 0.9;">
             <div style="font-size: 0.65rem; color: #1e3a8a; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Montserrat', sans-serif;">
                © 2026 - Cotentin Web Studio
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="premium-sponsor" style="margin-top: 30px; margin-bottom: 20px;">
@@ -344,46 +359,35 @@
 </div>
 
 <script>
-    // --- GESTION DE L'INSTALLATION PWA ---
     let deferredPrompt;
     const installBtn = document.getElementById('install-btn');
     const iosPopup = document.getElementById('ios-install-popup');
-
-    // Vérifier si l'app est déjà installée
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
     if (isStandalone) {
-        // Si déjà installé, on cache le bouton pour ne pas polluer l'écran
         installBtn.style.display = 'none';
     }
 
-    // Intercepter l'événement d'installation Android
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        // On s'assure que le bouton est visible si l'app n'est pas installée
         if (!isStandalone) {
             installBtn.style.display = 'inline-flex';
         }
     });
 
     installBtn.addEventListener('click', async () => {
-        // Détection iOS
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
         if (isIOS) {
-            // Afficher le pop-up d'aide pour iOS
             iosPopup.style.display = 'block';
             return;
         }
 
         if (deferredPrompt) {
-            // Afficher le pop-up natif Android
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
             deferredPrompt = null;
         } else {
-            // Sécurité de secours si le bouton est cliqué sur un navigateur non compatible
             alert("Pour installer l'application, ouvrez le menu de votre navigateur et choisissez 'Ajouter à l'écran d'accueil'.");
         }
     });
@@ -397,86 +401,92 @@
         }
     };
      
-function updateSponsor() {
-    const now = new Date();
-    const hour = now.getHours();
-    const minute = now.getMinutes();
-    const day = now.getDay(); 
-    
-    const sponsorText = document.getElementById('sponsor-text');
-    if (!sponsorText) return;
-
-    const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
-
-    const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
-    const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
-
-    // Préparation des textes traduits
-    const txtMaisonRenard = t.sponsor_maison_renard_index || "🥖 Boulangerie Maison Renard - Pains spéciaux, macarons & chocolats";
-    const txtUtile = t.sponsor_utile || "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison";
-    const txtLestran = t.sponsor_lestran_index || "🥐 L’Estran Carteret - Boulangerie & Pâtisserie";
-    const txtComptoir = t.sponsor_comptoir_index || "🥫 Le Comptoir de Carteret - Épicerie";
-    const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
-    const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
-    const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
-    const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
-    const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
-
-    // Créneau 07h - 08h : Maison Renard
-    if (hour === 7) {
-        sponsorText.innerHTML = `<a href="partenaires.html#maison-renard" style="${linkStyle}">${txtMaisonRenard}</a>`;
-    }
-    // Créneau 08h - 09h : Rotation à 3 (Utile, L'Estran, Le Comptoir)
-    else if (hour === 8) {
-        const rotation = minute % 3; // Va renvoyer 0, 1, ou 2 selon la minute actuelle
+    function updateSponsor() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        const day = now.getDay(); 
         
-        if (rotation === 0) {
-            sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">${txtUtile}</a>`;
-        } else if (rotation === 1) {
-            sponsorText.innerHTML = `<a href="partenaires.html#lestran" style="${linkStyle}">${txtLestran}</a>`;
-        } else {
+        const sponsorText = document.getElementById('sponsor-text');
+        if (!sponsorText) return;
+
+        const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
+
+        const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
+        const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+
+        const txtMaisonRenard = t.sponsor_maison_renard_index || "🥖 Boulangerie Maison Renard - Pains spéciaux, macarons & chocolats";
+        const txtUtile = t.sponsor_utile || "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison";
+        const txtLestran = t.sponsor_lestran_index || "🥐 L’Estran Carteret - Boulangerie & Pâtisserie";
+        const txtComptoir = t.sponsor_comptoir_index || "🥫 Le Comptoir de Carteret - Épicerie";
+        const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
+        const txtCentury21 = t.sponsor_century21 || "🏠 Century 21 Chevet Immobilier - Agence immobilière";
+        const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
+        const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
+        const txtChalet = t.sponsor_chalet || "🦞 Au Chalet Gourmand - Terre et Mer";
+        const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
+        const txtEpicerieFine = t.sponsor_epicerie_fine || "🍷 L'Epicerie Fine - Épicerie Fine & Cave à vin";
+        const txtLumieres = t.sponsor_lumieres || "📸 Lumières de mer - Photographie de Sébastien Rachine";
+        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+
+        if (hour === 7) {
+            sponsorText.innerHTML = `<a href="partenaires.html#maison-renard" style="${linkStyle}">${txtMaisonRenard}</a>`;
+        }
+        else if (hour === 8) {
+            const rotation = minute % 3; 
+            if (rotation === 0) {
+                sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">${txtUtile}</a>`;
+            } else if (rotation === 1) {
+                sponsorText.innerHTML = `<a href="partenaires.html#lestran" style="${linkStyle}">${txtLestran}</a>`;
+            } else {
+                sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
+            }
+        }
+        else if (hour === 9) {
+            if (minute % 2 === 0) {
+                sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
+            } else {
+                sponsorText.innerHTML = `<a href="partenaires.html#century21" style="${linkStyle}">${txtCentury21}</a>`;
+            }
+        } 
+        else if (hour === 10) {
+            sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">${txtCarteret}</a>`;
+        }
+        else if (hour === 11) {
+            const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
+            if (isFoodTruckDay && minute % 2 !== 0) {
+                let lieu = t.loc_service || "En service !";
+                if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
+                if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
+                if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres (Barneville)";
+                if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
+                if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles (Barneville)";
+                
+                const txtDelizia = (t.sponsor_delizia || "🍔 Deliziafoodtruck, Cuisine Italienne - ") + lieu;
+                sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">${txtDelizia}</a>`;
+            } else {
+                sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
+            }
+        } 
+        else if (hour === 12) {
+            sponsorText.innerHTML = `<a href="partenaires.html#chalet-gourmand" style="${linkStyle}">${txtChalet}</a>`;
+        }
+        else if (hour === 14) {
+            sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
+        }
+        else if (hour === 15) {
             sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
         }
-    }
-    // Créneau 09h - 10h : L'Or Coiffure
-    else if (hour === 9) {
-        sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
-    } 
-    // Créneau 10h - 11h : Carteret Marine
-    else if (hour === 10) {
-        sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">${txtCarteret}</a>`;
-    }
-    // Créneau 11h - 12h : Delizia / La Cambuse
-    else if (hour === 11) {
-        const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
-        
-        if (isFoodTruckDay && minute % 2 !== 0) {
-            let lieu = t.loc_service || "En service !";
-            if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
-            if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
-            if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres (Barneville)";
-            if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
-            if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles (Barneville)";
-            
-            const txtDelizia = (t.sponsor_delizia || "🍔 Deliziafoodtruck, Cuisine Italienne - ") + lieu;
-            sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">${txtDelizia}</a>`;
-        } else {
-            sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
+        else if (hour === 16) {
+            sponsorText.innerHTML = `<a href="partenaires.html#lumieres-de-mer" style="${linkStyle}">${txtLumieres}</a>`;
         }
-    } 
-    // Créneau 14h - 15h : Esprit Marin
-    else if (hour === 14) {
-        sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
+        else if (hour === 17) {
+            sponsorText.innerHTML = `<a href="partenaires.html#epicerie-fine" style="${linkStyle}">${txtEpicerieFine}</a>`;
+        }
+        else {
+            sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
+        }
     }
-    // Créneau 15h - 16h : Le Comptoir de Carteret (2ème créneau)
-    else if (hour === 15) {
-        sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
-    }
-    // Par défaut
-    else {
-        sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
-    }
-}
 
     function drawTideGraph(percent, isDescending) {
         const canvas = document.getElementById('tideCanvasLarge');
@@ -543,7 +553,6 @@ function updateSponsor() {
                     });
                 }
                 
-                // LA VRAIE SOLUTION EST ICI
                 [
                     { time: dData.bm1, h: dData.bm1_h, type: "BM", label: "Basse Mer", c: dData.coeff1, refTime: null },
                     { time: dData.pm1, h: dData.pm1_h, type: "PM", label: "Pleine Mer", c: dData.coeff1, refTime: null },
@@ -552,7 +561,6 @@ function updateSponsor() {
                 ].forEach(t => {
                     if (t.time && t.time !== "--:--" && t.time !== "--") {
                         let dObj = new Date(ds + "T" + t.time);
-                        // RÈGLE : Si la Marée 2 est à une heure inférieure à la Marée 1, c'est qu'elle a franchi minuit ! On la bascule au lendemain.
                         if (t.refTime && t.refTime !== "--:--" && t.refTime !== "--") {
                             if (t.time < t.refTime) {
                                 dObj.setDate(dObj.getDate() + 1);
@@ -571,10 +579,8 @@ function updateSponsor() {
             }
         });
 
-        // On trie toutes nos marées par date/heure absolue
         allTides.sort((a, b) => a.dateObj - b.dateObj);
 
-        // --- GESTION DES 2 CRÉNEAUX ---
         let futurePortes = allPortes.filter(p => p.sC > now); 
         let pastPortes = allPortes.filter(p => p.sC <= now);
         
@@ -627,7 +633,6 @@ function updateSponsor() {
             document.getElementById('close-time-next').innerText = "--:--";
         }
 
-        // --- GESTION DU ROND CENTRAL ---
         if (activePorte) {
             const diffMs = activePorte.sC - now;
             const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
@@ -670,7 +675,6 @@ function updateSponsor() {
             document.getElementById('status-box').className = "status-box closed";
         }
 
-        // --- GESTION DES MARÉES ---
         let prevTide = allTides[0], nextTide = allTides[1];
         for (let i = 0; i < allTides.length - 1; i++) {
             if (now >= allTides[i].dateObj && now <= allTides[i+1].dateObj) {
@@ -683,6 +687,17 @@ function updateSponsor() {
         if (prevTide && nextTide) {
             const tidePercent = ((now - prevTide.dateObj) / (nextTide.dateObj - prevTide.dateObj)) * 100;
             const isDescending = (prevTide.type === "PM");
+
+            // --- NOUVEAU : CALCUL DE LA HAUTEUR D'EAU EN TEMPS RÉEL ---
+            const h1 = parseFloat(prevTide.h);
+            const h2 = parseFloat(nextTide.h);
+            
+            if (!isNaN(h1) && !isNaN(h2)) {
+                const ratio = tidePercent / 100;
+                const currentHeight = h1 + (h2 - h1) * ((1 - Math.cos(ratio * Math.PI)) / 2);
+                document.getElementById('current-tide-height').innerText = currentHeight.toFixed(2) + " m";
+            }
+            // -----------------------------------------------------------
 
             let coeffText = prevTide.c && prevTide.c !== "-" ? prevTide.c : (nextTide.c && nextTide.c !== "-" ? nextTide.c : "--");
             
@@ -716,7 +731,6 @@ function updateSponsor() {
 
         localStorage.setItem('preferredLang', lang);
 
-        // --- Mise à jour de la langue du widget Wisuki ---
         const wisukiIframe = document.getElementById('wisuki-widget');
         if (wisukiIframe) {
             wisukiIframe.src = `https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=${lang}`;
@@ -736,49 +750,34 @@ function updateSponsor() {
 </script>
 
 <script>
-    // L'Easter Egg d'Octave (Version XXL !)
     document.getElementById('status-box').addEventListener('click', function(e) {
         const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋', '🐬', '☀️'];
-        
         for(let i = 0; i < 8; i++) {
             let particle = document.createElement('div');
             particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
             particle.style.position = 'fixed';
-            
             let x = e.clientX || window.innerWidth / 2;
             let y = e.clientY || window.innerHeight / 3;
-            
             particle.style.left = (x - 25) + 'px';
             particle.style.top = (y - 25) + 'px';
-            
             particle.style.fontSize = '3.5rem';
             particle.style.pointerEvents = 'none'; 
             particle.style.zIndex = '9999';
-            
             particle.style.transition = 'transform 2s ease-out, opacity 2s ease-in';
             document.body.appendChild(particle);
-
             setTimeout(() => {
                 particle.style.transform = `translate(${Math.random() * 200 - 100}px, -${Math.random() * 300 + 100}px) rotate(${Math.random() * 360}deg)`;
                 particle.style.opacity = '0';
             }, 50);
-
-            setTimeout(() => {
-                particle.remove();
-            }, 2050);
+            setTimeout(() => { particle.remove(); }, 2050);
         }
     });
-</script>
 
-<script>
-    // Easter Egg : Le Bateau Pirate (Clic x5 sur le titre)
     let titleClickCount = 0;
     const mainTitle = document.querySelector('.main-title');
-    
     if (mainTitle) {
         mainTitle.addEventListener('click', function() {
             titleClickCount++;
-            
             if (titleClickCount === 5) {
                 let ship = document.createElement('div');
                 ship.innerText = '🏴‍☠️⛵'; 
@@ -789,108 +788,89 @@ function updateSponsor() {
                 ship.style.zIndex = '9999';
                 ship.style.pointerEvents = 'none';
                 ship.style.transition = 'transform 4s linear';
-                
                 document.body.appendChild(ship);
-                
-                setTimeout(() => {
-                    ship.style.transform = 'translateX(120vw) translateY(-20px)';
-                }, 50);
-                
-                setTimeout(() => {
-                    ship.remove();
-                    titleClickCount = 0;
-                }, 4050);
+                setTimeout(() => { ship.style.transform = 'translateX(120vw) translateY(-20px)'; }, 50);
+                setTimeout(() => { ship.remove(); titleClickCount = 0; }, 4050);
             }
-            
-            setTimeout(() => {
-                if (titleClickCount > 0 && titleClickCount < 5) {
-                    titleClickCount = 0;
-                }
-            }, 2000);
+            setTimeout(() => { if (titleClickCount > 0 && titleClickCount < 5) titleClickCount = 0; }, 2000);
         });
     }
-</script>
 
-<script>
-    // LE NOUVEL EASTER EGG : Le Kraken du Graphique des Marées 🐙🐳
     const tideCanvas = document.getElementById('tideCanvasLarge');
-    
     if (tideCanvas) {
         tideCanvas.addEventListener('click', function(e) {
-            // On vérifie s'il y a déjà une créature en pleine chorégraphie
             if (document.getElementById('kraken-egg')) return;
-
-            // Une chance sur deux de voir la baleine ou la pieuvre !
             const seaCreatures = ['🐙', '🐳'];
             const creature = seaCreatures[Math.floor(Math.random() * seaCreatures.length)];
-
-            // On crée notre créature
             let kraken = document.createElement('div');
             kraken.id = 'kraken-egg';
             kraken.innerText = creature;
-            
-            // On la positionne précisément au niveau du clic
             kraken.style.position = 'fixed';
             kraken.style.fontSize = '2.5rem';
             kraken.style.zIndex = '999';
             kraken.style.pointerEvents = 'none';
             kraken.style.left = e.clientX + 'px';
             kraken.style.top = e.clientY + 'px';
-            
-            // Position de départ (inviisble, un peu plus bas)
             kraken.style.transform = 'translate(-50%, 20px) scale(0)';
             kraken.style.opacity = '0';
-            kraken.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'; // Petit effet rebond très sympa
-            
+            kraken.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'; 
             document.body.appendChild(kraken);
 
-            // C'est parti pour le show !
+            setTimeout(() => { kraken.style.opacity = '1'; kraken.style.transform = 'translate(-50%, -40px) scale(1)'; }, 50);
+            setTimeout(() => { kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(-20deg)'; }, 600);
+            setTimeout(() => { kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(20deg)'; }, 1200);
+            setTimeout(() => { kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(0deg)'; }, 1800);
             setTimeout(() => {
-                // 1. Apparition
-                kraken.style.opacity = '1';
-                kraken.style.transform = 'translate(-50%, -40px) scale(1)';
-            }, 50);
-
-            setTimeout(() => {
-                // 2. Coup d'oeil à gauche
-                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(-20deg)';
-            }, 600);
-
-            setTimeout(() => {
-                // 3. Coup d'oeil à droite
-                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(20deg)';
-            }, 1200);
-
-            setTimeout(() => {
-                // 4. Regarde devant
-                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(0deg)';
-            }, 1800);
-
-            setTimeout(() => {
-                // 5. Plouf ! Il disparaît
                 kraken.style.transition = 'all 0.4s ease-in';
                 kraken.style.transform = 'translate(-50%, 20px) scale(0.5)';
                 kraken.style.opacity = '0';
             }, 2400);
-
-            // On efface la trace du crime
-            setTimeout(() => {
-                kraken.remove();
-            }, 3000);
+            setTimeout(() => { kraken.remove(); }, 3000);
         });
     }
 </script>
 
 <script>
-    // Gérer le retour sur l'application (sortie de veille ou changement d'onglet)
     document.addEventListener("visibilitychange", function() {
         if (document.visibilityState === 'visible') {
-            // Relance immédiatement le calcul des marées et de la porte
-            if (typeof updateApp === "function") {
-                updateApp();
-            }
+            if (typeof updateApp === "function") updateApp();
         }
     });
+</script>
+<script>
+    const joursFeries = {
+        "01-01": { titre: "🎉 Bonne Année !", message: "Toute l'équipe vous souhaite une excellente année pleine de belles navigations !" },
+        "04-06": { titre: "🍫 Joyeuses Pâques !", message: "Bon Lundi de Pâques à tous ! Ne mangez pas trop de chocolat avant de prendre la mer." },
+        "05-01": { titre: "🌿 Bon 1er Mai !", message: "Joyeuse Fête du Travail. Profitez bien de ce jour férié (et de votre brin de muguet) !" },
+        "05-08": { titre: "🕊️ 8 Mai 1945", message: "Aujourd'hui, nous commémorons la Victoire du 8 mai 1945. Bonne journée à tous." },
+        "05-14": { titre: "🌤️ Jeudi de l'Ascension", message: "Profitez bien de ce jour de l'Ascension pour une belle sortie en mer !" },
+        "05-25": { titre: "⚓ Lundi de Pentecôte", message: "Bon Lundi de Pentecôte à tous les marins et plaisanciers." },
+        "07-14": { titre: "🎆 Fête Nationale", message: "Joyeux 14 Juillet ! Excellente journée de fête nationale et bonne navigation." },
+        "08-15": { titre: "⛵ L'Assomption", message: "Bon 15 août et très belle fête de la mer à tous les amoureux de la côte !" },
+        "11-01": { titre: "🍂 La Toussaint", message: "Passez un bon jour de la Toussaint, prudence si vous sortez en mer avec la météo d'automne." },
+        "11-11": { titre: "🏵️ 11 Novembre 1918", message: "Aujourd'hui, nous commémorons l'Armistice du 11 novembre 1918. Bonne journée à tous." },
+        "12-25": { titre: "🎄 Joyeux Noël !", message: "L'équipe vous souhaite d'excellentes fêtes de fin d'année auprès de vos proches !" }
+    };
+
+    function checkHolidayPopup() {
+        const now = new Date();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const todayKey = `${month}-${day}`;
+        const year = now.getFullYear();
+        const storageKey = `holiday_${year}_${todayKey}`;
+
+        if (joursFeries[todayKey] && !localStorage.getItem(storageKey)) {
+            document.getElementById('holiday-title').innerText = joursFeries[todayKey].titre;
+            document.getElementById('holiday-message').innerText = joursFeries[todayKey].message;
+            setTimeout(() => {
+                document.getElementById('holiday-modal').style.display = 'flex';
+            }, 500);
+            localStorage.setItem(storageKey, "true");
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', checkHolidayPopup);
 </script>
 </body>
 </html>
