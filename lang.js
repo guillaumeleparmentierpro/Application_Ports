@@ -3,6 +3,7 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        moon_phase: "Phase lunaire",
         ht_maree: "Ht. marée",
         currents_title: "Courants marins",
     currents_hint: "👆 Touchez la carte pour explorer la zone.",
@@ -191,6 +192,7 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        moon_phase: "Moon phase",
         ht_maree: "Tide ht.",
         currents_title: "Ocean Currents",
     currents_hint: "👆 Touch the map to explore the area.",
