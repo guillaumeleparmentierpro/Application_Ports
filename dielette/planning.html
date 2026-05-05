@@ -354,6 +354,31 @@
 
             generateTable();
         });
+// --- GESTION DU POP-UP À CHAQUE VISITE ---
+        function checkWarningPopup() {
+            // On affiche systématiquement le pop-up au chargement de la page
+            document.getElementById('warning-modal').style.display = 'flex';
+        }
+
+        // Événement pour simplement fermer le pop-up
+        document.getElementById('btn-close-warning').addEventListener('click', () => {
+            document.getElementById('warning-modal').style.display = 'none';
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language.substring(0, 2);
+            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[savedLang] && translations[savedLang][key]) {
+                    el.innerHTML = translations[savedLang][key]; 
+                }
+            });
+
+            generateTable();
+            checkWarningPopup(); // On lance la vérification du pop-up au chargement
+        });
     </script>
 </body>
 </html>
