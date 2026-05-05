@@ -889,8 +889,23 @@
     }
 
     document.addEventListener('DOMContentLoaded', checkHolidayPopup);
-    function updateApp() {
-// --- CALCUL FIABLE DE LA PHASE DE LUNE ---
+function updateApp() {
+        // 1. Récupération de la date et de l'heure
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const localISOTime = (new Date(now - tzoffset)).toISOString().slice(0, -1);
+        const dateStr = localISOTime.split('T')[0];
+        
+        // 2. Gestion de la traduction pour la date en haut de l'application
+        const currentLang = localStorage.getItem('preferredLang') || 'fr';
+        const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
+        
+        const dateElement = document.getElementById('current-date');
+        if (dateElement) {
+            dateElement.innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
+        }
+        
+        // 3. --- CALCUL FIABLE DE LA PHASE DE LUNE ---
         try {
             // Durée exacte d'un cycle lunaire en millisecondes (29.530588 jours)
             const cycleLunaireMs = 2551442877; 
@@ -911,6 +926,7 @@
             else if (phase < 0.78) moonEmoji = "🌗"; // Dernier quartier
             else moonEmoji = "🌘"; // Dernier croissant
             
+            // Affichage dans le HTML
             const moonBadge = document.getElementById('moon-phase-badge');
             if(moonBadge) {
                 moonBadge.innerText = moonEmoji;
