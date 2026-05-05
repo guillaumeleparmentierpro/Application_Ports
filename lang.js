@@ -3,6 +3,8 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        planning_warning_text: "<strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.",
+    btn_understood: "J'AI COMPRIS",
         desc_century21: "Agence immobilière.",
     time_century21: "⏱️ Sponsor de 09h00 à 10h00",
     sponsor_century21: "🏠 Century 21 Chevet Immobilier - Agence immobilière",
@@ -186,6 +188,8 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        planning_warning_text: "<strong>* Warning :</strong> Times may vary depending on weather and tide (+/- 30 min). Channeling to be expected under 10 minutes. All data on the site is indicative. The publisher declines all responsibility in the event of an error. The captain is responsible for their navigation.",
+    btn_understood: "I UNDERSTAND",
         desc_century21: "Real estate agency.",
     time_century21: "⏱️ Sponsor from 9:00 AM to 10:00 AM",
     sponsor_century21: "🏠 Century 21 Chevet Immobilier - Real estate agency",
