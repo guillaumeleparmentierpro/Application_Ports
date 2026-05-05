@@ -377,21 +377,14 @@
     </script>
 
     <script>
-        // --- GESTION DU POP-UP QUOTIDIEN ---
+// --- GESTION DU POP-UP À CHAQUE VISITE ---
         function checkWarningPopup() {
-            const today = new Date().toISOString().split('T')[0];
-            const storedDate = localStorage.getItem('planning_warning_date');
-            
-            // Si la date enregistrée n'est pas celle d'aujourd'hui, on affiche le pop-up
-            if (storedDate !== today) {
-                document.getElementById('warning-modal').style.display = 'flex';
-            }
+            // On affiche systématiquement le pop-up au chargement de la page
+            document.getElementById('warning-modal').style.display = 'flex';
         }
 
-        // Événement pour fermer le pop-up et enregistrer la date
+        // Événement pour simplement fermer le pop-up
         document.getElementById('btn-close-warning').addEventListener('click', () => {
-            const today = new Date().toISOString().split('T')[0];
-            localStorage.setItem('planning_warning_date', today);
             document.getElementById('warning-modal').style.display = 'none';
         });
 
