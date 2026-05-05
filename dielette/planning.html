@@ -1,21 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light">
-    
-    <title>Horaires de la porte et des marées - Port de Diélette</title>
-    
-    <!-- Fichiers mutualisés à la racine -->
-    <link rel="manifest" href="../manifest.json">
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-    <link rel="apple-touch-icon" href="../icon-192.png">
-    
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e3a8a">
-    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -23,12 +10,12 @@
       gtag('js', new Date());
       gtag('config', 'G-5LY18V5457');
     </script>
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Horaires de la porte et des marées</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Fichier de données SPECIFIQUE à Diélette (en local) -->
     <script src="donnees.js"></script>
-
 <style>
     :root {
         color-scheme: light;
@@ -209,9 +196,59 @@
     
     /* Indication scrollable */
     .scroll-hint { font-size: 0.75rem; text-align: center; color: var(--marine-blue); padding: 5px 0; font-weight: 600; background: #e0e7ff; margin-bottom: 5px; }
+
+    /* --- NOUVEAU POP-UP D'AVERTISSEMENT --- */
+    .warning-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(30, 41, 59, 0.8);
+        z-index: 10000;
+        justify-content: center; align-items: center;
+        backdrop-filter: blur(3px);
+    }
+    .warning-modal-box {
+        background: #fef2f2;
+        width: 85%; max-width: 350px;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        border: 2px solid #ef4444;
+        text-align: center;
+    }
+    .warning-modal-text {
+        color: #991b1b;
+        font-size: 0.8rem;
+        font-weight: 600;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+    .btn-warning-ok {
+        background: #ef4444;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 700;
+        font-family: 'Montserrat', sans-serif;
+        cursor: pointer;
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+    }
 </style>
 </head>
 <body>
+
+    <!-- MODAL AVERTISSEMENT -->
+    <div id="warning-modal" class="warning-modal-overlay">
+        <div class="warning-modal-box">
+            <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
+            <div class="warning-modal-text" data-i18n="planning_warning_text">
+                <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+            </div>
+            <button id="btn-close-warning" class="btn-warning-ok" data-i18n="btn_understood">J'AI COMPRIS</button>
+        </div>
+    </div>
 
     <div class="sticky-header">
         <div class="top-nav" style="display: flex; margin-bottom: 5px;">
@@ -246,8 +283,7 @@
         </table>
     </div>
 
-    <!-- Fichier de langue MUTUALISÉ à la racine -->
-    <script src="../lang.js"></script>
+    <script src="lang.js"></script>
 
     <script>
     function generateTable() {
@@ -341,19 +377,6 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const browserLang = navigator.language.substring(0, 2);
-            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
-            
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[savedLang] && translations[savedLang][key]) {
-                    el.innerHTML = translations[savedLang][key]; 
-                }
-            });
-
-            generateTable();
-        });
 // --- GESTION DU POP-UP À CHAQUE VISITE ---
         function checkWarningPopup() {
             // On affiche systématiquement le pop-up au chargement de la page
