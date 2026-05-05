@@ -3,6 +3,7 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        ht_maree: "Ht. marée",
         currents_title: "Courants marins",
     currents_hint: "👆 Touchez la carte pour explorer la zone.",
         planning_warning_text: "<strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.",
@@ -190,6 +191,7 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        ht_maree: "Tide ht.",
         currents_title: "Ocean Currents",
     currents_hint: "👆 Touch the map to explore the area.",
         planning_warning_text: "<strong>* Warning :</strong> Times may vary depending on weather and tide (+/- 30 min). Channeling to be expected under 10 minutes. All data on the site is indicative. The publisher declines all responsibility in the event of an error. The captain is responsible for their navigation.",
