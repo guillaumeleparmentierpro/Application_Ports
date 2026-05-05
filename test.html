@@ -890,41 +890,35 @@
 
     document.addEventListener('DOMContentLoaded', checkHolidayPopup);
     function updateApp() {
-        const now = new Date();
-        const tzoffset = now.getTimezoneOffset() * 60000;
-        const localISOTime = (new Date(now - tzoffset)).toISOString().slice(0, -1);
-        const dateStr = localISOTime.split('T')[0];
-        
-        const currentLang = localStorage.getItem('preferredLang') || 'fr';
-        const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
-        document.getElementById('current-date').innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
-        
-        // --- NOUVEAU : CALCUL MATHÉMATIQUE DE LA PHASE DE LUNE ---
-        let moonYear = now.getFullYear();
-        let moonMonth = now.getMonth() + 1;
-        let moonDay = now.getDate();
-        if (moonMonth < 3) { moonYear--; moonMonth += 12; }
-        moonMonth++;
-        const c = 365.25 * moonYear;
-        const e = 30.6 * moonMonth;
-        // Calcul des jours juliens depuis la nouvelle lune de référence
-        const jd = c + e + moonDay - 694039.09; 
-        let phase = jd / 29.5305882; // Divisé par la durée exacte d'un cycle lunaire
-        phase = phase - Math.floor(phase); // On ne garde que le pourcentage
-        
-        let moonEmoji = "🌑"; 
-        if (phase < 0.03 || phase > 0.97) moonEmoji = "🌑"; // Nouvelle lune
-        else if (phase < 0.22) moonEmoji = "🌒"; // Premier croissant
-        else if (phase < 0.28) moonEmoji = "🌓"; // Premier quartier
-        else if (phase < 0.47) moonEmoji = "🌔"; // Gibbeuse croissante
-        else if (phase < 0.53) moonEmoji = "🌕"; // Pleine lune
-        else if (phase < 0.72) moonEmoji = "🌖"; // Gibbeuse décroissante
-        else if (phase < 0.78) moonEmoji = "🌗"; // Dernier quartier
-        else moonEmoji = "🌘"; // Dernier croissant
-        
-        const moonBadge = document.getElementById('moon-phase-badge');
-        if(moonBadge) moonBadge.innerText = moonEmoji;
-        // ---------------------------------------------------------
+// --- CALCUL FIABLE DE LA PHASE DE LUNE ---
+        try {
+            // Durée exacte d'un cycle lunaire en millisecondes (29.530588 jours)
+            const cycleLunaireMs = 2551442877; 
+            // Nouvelle lune de référence (11 Janvier 2024 à 11h57 UTC)
+            const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57); 
+            const maintenantMs = now.getTime();
+            
+            // Calcul du pourcentage du cycle en cours (entre 0 et 1)
+            const phase = ((maintenantMs - referenceNouvelleLuneMs) % cycleLunaireMs) / cycleLunaireMs;
+            
+            let moonEmoji = "";
+            if (phase < 0.03 || phase > 0.97) moonEmoji = "🌑"; // Nouvelle lune
+            else if (phase < 0.22) moonEmoji = "🌒"; // Premier croissant
+            else if (phase < 0.28) moonEmoji = "🌓"; // Premier quartier
+            else if (phase < 0.47) moonEmoji = "🌔"; // Gibbeuse croissante
+            else if (phase < 0.53) moonEmoji = "🌕"; // Pleine lune
+            else if (phase < 0.72) moonEmoji = "🌖"; // Gibbeuse décroissante
+            else if (phase < 0.78) moonEmoji = "🌗"; // Dernier quartier
+            else moonEmoji = "🌘"; // Dernier croissant
+            
+            const moonBadge = document.getElementById('moon-phase-badge');
+            if(moonBadge) {
+                moonBadge.innerText = moonEmoji;
+            }
+        } catch (error) {
+            console.log("Erreur calcul lune :", error);
+        }
+        // -----------------------------------------
 </script>
 </body>
 </html>
