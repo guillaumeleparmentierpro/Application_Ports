@@ -196,9 +196,59 @@
     
     /* Indication scrollable */
     .scroll-hint { font-size: 0.75rem; text-align: center; color: var(--marine-blue); padding: 5px 0; font-weight: 600; background: #e0e7ff; margin-bottom: 5px; }
+
+    /* --- NOUVEAU POP-UP D'AVERTISSEMENT --- */
+    .warning-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(30, 41, 59, 0.8);
+        z-index: 10000;
+        justify-content: center; align-items: center;
+        backdrop-filter: blur(3px);
+    }
+    .warning-modal-box {
+        background: #fef2f2;
+        width: 85%; max-width: 350px;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        border: 2px solid #ef4444;
+        text-align: center;
+    }
+    .warning-modal-text {
+        color: #991b1b;
+        font-size: 0.8rem;
+        font-weight: 600;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+    .btn-warning-ok {
+        background: #ef4444;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 700;
+        font-family: 'Montserrat', sans-serif;
+        cursor: pointer;
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+    }
 </style>
 </head>
 <body>
+
+    <!-- MODAL AVERTISSEMENT -->
+    <div id="warning-modal" class="warning-modal-overlay">
+        <div class="warning-modal-box">
+            <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
+            <div class="warning-modal-text" data-i18n="planning_warning_text">
+                <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+            </div>
+            <button id="btn-close-warning" class="btn-warning-ok" data-i18n="btn_understood">J'AI COMPRIS</button>
+        </div>
+    </div>
 
     <div class="sticky-header">
         <div class="top-nav" style="display: flex; margin-bottom: 5px;">
@@ -243,12 +293,9 @@
         if (typeof data === 'undefined') return;
         
         let currentMonthStr = ""; 
-        // OPTIMISATION : On crée une variable texte pour stocker tout le HTML
         let tableHTML = "";
 
-        // On récupère la langue pour adapter le format des dates
         const currentLang = localStorage.getItem('preferredLang') || 'fr';
-        // 'en-GB' donne le format Européen pour l'anglais (Jour puis Mois)
         const locale = currentLang === 'en' ? 'en-GB' : 'fr-FR';
 
         data.forEach(jour => {
@@ -256,7 +303,6 @@
             const isToday = (jour.date === today);
             const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
             
-            // Le mois s'adapte automatiquement à la langue !
             const monthName = d.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
             
             if (monthName !== currentMonthStr) {
@@ -264,12 +310,10 @@
                     <tr class="month-separator">
                         <td colspan="9">${monthName}</td>
                     </tr>`;
-                // On ajoute à notre variable texte
                 tableHTML += sepRow;
                 currentMonthStr = monthName; 
             }
 
-            // Les jours s'adaptent aussi (LUN vs MON)
             const dayLabel = d.toLocaleDateString(locale, { weekday: 'short' }).toUpperCase();
             const dayNum = d.toLocaleDateString(locale, { day: '2-digit', month: 'short' });
             
@@ -316,14 +360,11 @@
                     </td>
                 </tr>`;
             
-            // On ajoute la ligne à la variable texte
             tableHTML += row;
         });
 
-        // OPTIMISATION : On injecte tout le code HTML en une seule fois !
         tbody.innerHTML = tableHTML;
 
-        // J'ai aussi légèrement baissé le délai d'attente vu que l'affichage est maintenant instantané.
         setTimeout(() => {
             const container = document.querySelector('.table-container');
             const todayEl = document.getElementById('today-marker');
@@ -336,8 +377,25 @@
     </script>
 
     <script>
+        // --- GESTION DU POP-UP QUOTIDIEN ---
+        function checkWarningPopup() {
+            const today = new Date().toISOString().split('T')[0];
+            const storedDate = localStorage.getItem('planning_warning_date');
+            
+            // Si la date enregistrée n'est pas celle d'aujourd'hui, on affiche le pop-up
+            if (storedDate !== today) {
+                document.getElementById('warning-modal').style.display = 'flex';
+            }
+        }
+
+        // Événement pour fermer le pop-up et enregistrer la date
+        document.getElementById('btn-close-warning').addEventListener('click', () => {
+            const today = new Date().toISOString().split('T')[0];
+            localStorage.setItem('planning_warning_date', today);
+            document.getElementById('warning-modal').style.display = 'none';
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
-            // Détection et application de la langue
             const browserLang = navigator.language.substring(0, 2);
             const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
             
@@ -348,8 +406,8 @@
                 }
             });
 
-            // On génère le tableau APRÈS avoir récupéré la langue pour les dates
             generateTable();
+            checkWarningPopup(); // On lance la vérification du pop-up au chargement
         });
     </script>
 </body>
