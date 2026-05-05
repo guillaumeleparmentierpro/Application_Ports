@@ -12,21 +12,21 @@
     <meta name="description" content="Consultez en temps réel l'état de la porte du port de Diélette, les horaires de marées, le planning officiel et la météo marine. L'outil indispensable du Cotentin.">
     <meta name="author" content="Cotentin Web Studio - Guillaume Leparmentier">
     <meta name="publisher" content="Cotentin Web Studio">
-    <meta name="keywords" content="Port, Diélette, Marée, Porte, Horaires, Manche, Cotentin, Navigation, Normandie, Ouverture, Fermeture, Flamanville, Pêche, Marin, Météo marine">
+    <meta name="keywords" content="Port, Barneville-Carteret, Marée, Porte, Horaires, Manche, Cotentin, Navigation, Normandie, Ouverture, Fermeture, Barneville, Diélette, Carteret, Pêche, Marin, Yacht Club, YCBC, Météo marine">
     
     <meta property="og:title" content="Port de Diélette - Horaires & Marées">
     <meta property="og:description" content="Accédez en 1 clic à l'état de la porte (Ouverte/Fermée), aux horaires de marées et à la météo du port.">
     <meta property="og:image" content="https://guillaumeleparmentierpro.github.io/Application_Ports/android-chrome-512x512.png">
-    <meta property="og:url" content="https://guillaumeleparmentierpro.github.io/Application_Ports/dielette/">
+    <meta property="og:url" content="https://guillaumeleparmentierpro.github.io/Application_Ports/">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Port de Diélette">
+    <meta property="og:site_name" content="Port Diélette">
     
     <script type="application/ld+json">
     {
       "@context" : "https://schema.org",
       "@type" : "WebSite",
-      "name" : "Port de Diélette",
-      "url" : "https://guillaumeleparmentierpro.github.io/Application_Ports/dielette/"
+      "name" : "Port Diélette",
+      "url" : "https://guillaumeleparmentierpro.github.io/Application_Ports/"
     }
     </script>
 
@@ -38,23 +38,18 @@
       gtag('config', 'G-5LY18V5457');
     </script>
     
-    <!-- Liens vers les ressources à la racine (mutualisées) -->
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-    <link rel="icon" href="../icon-192.png" sizes="192x192">
-    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" href="icon-192.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     
-    <link rel="manifest" href="../manifest.json">
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e3a8a">
-    <link rel="apple-touch-icon" href="../icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Fichiers spécifiques à Diélette -->
     <script src="donnees.js"></script>
-    
-    <!-- Fichier de langue mutualisé à la racine -->
     <script src="../lang.js"></script>
     
     <style>
@@ -125,8 +120,7 @@
         
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 270px; border: 1px solid #e2e8f0; }
         .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
-        .disclaimer { font-size: 0.65rem; color: #b03a2e; padding: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-weight: 500; line-height: 1.4; }
-
+        
         /* --- STYLES POUR LE NOUVEAU BLOC PREMIUM --- */
         .premium-sponsor {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
@@ -194,14 +188,12 @@
         <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">Choix du port</h3>
         
         <div style="display: flex; flex-direction: column; gap: 10px;">
-            <!-- Lien vers Carteret à la racine -->
-            <a href="../index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
-                Port Barneville-Carteret
+            <a href="#" onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="display: block; background: var(--marine-blue); color: white; text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem;">
+                Port Barneville-Carteret (Actuel)
             </a>
             
-            <!-- Diélette en bleu (Actuel) -->
-            <a href="#" onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="display: block; background: var(--marine-blue); color: white; text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem;">
-                📍 Port de Diélette (Actuel)
+            <a href="dielette/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
+                📍  Port Diélette
             </a>
 
             <div style="display: block; background: #f8fafc; color: #94a3b8; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.85rem; border: 1px dashed #cbd5e1; cursor: not-allowed;">
@@ -228,12 +220,10 @@
 
     <div class="sticky-header">
         <div class="top-sponsor-banner" id="sponsor-banner">
-            <!-- Partenaires de Diélette -->
             <a href="partenaires.html" class="sponsor-label" style="text-decoration: none; color: white;" data-i18n="sponsor_label">PARTENAIRES</a>
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
 
-        <!-- === NOUVELLE DISPOSITION DATE ET DRAPEAUX === -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 5px;">
             <div class="date-badge" id="current-date">-- --</div>
             <div class="lang-switch" style="margin: 0; font-size: 1.6rem;">
@@ -242,27 +232,20 @@
                 <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
             </div>
         </div>
-        <!-- ============================================== -->
 
-        <!-- === BOUTONS D'ACTION REMONTÉS === -->
         <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 12px;">
-            <!-- Fichiers spécifiques à Diélette ou racine -->
-            <a href="planning.html" class="btn-action" data-i18n="btn_planning">PORTES & MARÉES</a>
-            <!-- Fichier mutualisé à la racine -->
-            <a href="../partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
+            <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES PORTE & MARÉES</a>
+            <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
             <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
         </div>
-        <!-- ================================== -->
         
         <h1 class="main-title">PORT DIÉLETTE<sup>*</sup></h1>
 
-        <!-- === BOUTON CHANGER DE PORT === -->
         <div style="text-align: center; margin: 8px 0 5px 0;">
             <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
                 ⚓ <span data-i18n="change_port">CHANGER DE PORT</span> ▾
             </button>
         </div>
-        <!-- ============================== -->
     </div>
         
     <div class="module">
@@ -296,7 +279,7 @@
         </div>
     </div>
 
-    <div class="module">
+<div class="module">
         <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;" data-i18n="tide_title">Informations marée</div>
         <div class="tide-full-module">
             
@@ -305,9 +288,14 @@
                     <div id="tide-left-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
                 </div>
                 
+                <!-- COLONNE CENTRALE MODIFIÉE (Coeff + Hauteur) -->
                 <div class="tide-column" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; line-height: 1.1;">
                     <span data-i18n="coeff" style="font-size:0.6rem; font-weight:700; color:#64748b;">COEFF</span> 
                     <span id="coeff-display" style="color:var(--marine-blue); font-size: 1.4rem; font-weight: 900;">--</span>
+                    
+                    <!-- NOUVEAU BLOC HAUTEUR DE MARÉE -->
+                    <span data-i18n="ht_maree" style="font-size:0.55rem; font-weight:700; color:#ef4444; margin-top:6px; text-transform: uppercase;">Ht. marée</span>
+                    <span id="current-tide-height" style="color:#ef4444; font-size: 0.85rem; font-weight: 800;">-- m</span>
                 </div>
                 
                 <div class="tide-column" style="text-align: right;">
@@ -315,7 +303,8 @@
                 </div>
             </div>
             
-            <canvas id="tideCanvasLarge" style="width:100%; height:80px;"></canvas>
+            <!-- GRAPHIC NETTOYÉ (sans le badge par-dessus) -->
+            <canvas id="tideCanvasLarge" style="width:100%; height:80px; cursor: pointer;"></canvas>
             
             <div class="tide-footer-info">
                 <div id="tide-left-data"><span id="val-left">--</span></div>
@@ -327,29 +316,43 @@
     <div class="module">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
-            <!-- Fichier spécifique à Diélette -->
             <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">📷 WEBCAM</a>
         </div>
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
-            <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1180&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
+           <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1180&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
         </div>
     </div>
 
+<!-- COURANTS MARINS (WINDY) -->
+    <div class="module">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="currents_title">Courants marins</div>
+        </div>
+        <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
+            <iframe width="100%" height="300" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C&radarRange=-1&overlay=currents&product=copernicus&level=surface&lat=49.558&lon=-1.860&zoom=10&detailLat=49.558&detailLon=-1.860&marker=true" frameborder="0" style="border:0;"></iframe>
+        </div>
+        <div style="font-size: 0.65rem; color: #64748b; text-align: center; margin-top: 8px;" data-i18n="currents_hint">
+            👆 Touchez la carte pour explorer la zone.
+        </div>
+    </div>
+    
+    <!-- NOUVEAU MODULE AVERTISSEMENT ET SÉCURITÉ -->
     <div class="module" style="background: #fef2f2; border: 2px solid #ef4444; text-align: center; margin-top: 10px;">
         <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
         <div style="color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.5; margin-bottom: 15px;" data-i18n="index_disclaimer">
-            <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+            <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
         </div>
-        <a href="securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
+        <a href="../securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
     </div>
 
+    <!-- FOOTER MIS À JOUR (Sans le bouton sécurité) -->
     <div class="footer-module">
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         
         <div class="footer-buttons">
             <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES</a>
-            <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
-            <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
+            <a href="../liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
+            <a href="../contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
         </div>
 
         <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" style="margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 8px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-decoration: none; transition: transform 0.2s; cursor: pointer;" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
@@ -364,17 +367,14 @@
         <div class="premium-badge" data-i18n="premium_badge">Sponsor Officiel 2026</div>
         <h2 class="premium-title" data-i18n="premium_title">Espace Partenaire Premium</h2>
         <p class="premium-desc" data-i18n="premium_desc">Affichez votre entreprise ici en grand format 24h/24 ! Contactez-nous pour réserver cet emplacement exclusif.</p>
-        <!-- Lien mutualisé à la racine -->
-        <a href="../contact.html" class="btn-premium" data-i18n="btn_premium">RÉSERVER CET ESPACE</a>
+        <a href="contact.html" class="btn-premium" data-i18n="btn_premium">RÉSERVER CET ESPACE</a>
     </div>
 </div>
 
 <script>
-    // --- GESTION DE L'INSTALLATION PWA ---
     let deferredPrompt;
     const installBtn = document.getElementById('install-btn');
     const iosPopup = document.getElementById('ios-install-popup');
-
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
     if (isStandalone) {
@@ -391,7 +391,6 @@
 
     installBtn.addEventListener('click', async () => {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
         if (isIOS) {
             iosPopup.style.display = 'block';
             return;
@@ -415,39 +414,92 @@
         }
     };
      
-function updateSponsor() {
-    const now = new Date();
-    const hour = now.getHours();
-    const minute = now.getMinutes();
-    const day = now.getDay(); 
-    
-    const sponsorText = document.getElementById('sponsor-text');
-    if (!sponsorText) return;
+    function updateSponsor() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        const day = now.getDay(); 
+        
+        const sponsorText = document.getElementById('sponsor-text');
+        if (!sponsorText) return;
 
-    const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
+        const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
 
-    const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
-    // On utilise translations qui vient de ../lang.js
-    const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+        const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
+        const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
 
-    // ⚠️ ICI TU METTRAS TES TRADUCTIONS ET TEXTES SPÉCIFIQUES POUR LES PARTENAIRES DE DIÉLETTE ⚠️
-    // Par exemple : 
-    const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+        const txtMaisonRenard = t.sponsor_maison_renard_index || "🥖 Boulangerie Maison Renard - Pains spéciaux, macarons & chocolats";
+        const txtUtile = t.sponsor_utile || "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison";
+        const txtLestran = t.sponsor_lestran_index || "🥐 L’Estran Carteret - Boulangerie & Pâtisserie";
+        const txtComptoir = t.sponsor_comptoir_index || "🥫 Le Comptoir de Carteret - Épicerie";
+        const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
+        const txtCentury21 = t.sponsor_century21 || "🏠 Century 21 Chevet Immobilier - Agence immobilière";
+        const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
+        const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
+        const txtChalet = t.sponsor_chalet || "🦞 Au Chalet Gourmand - Terre et Mer";
+        const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
+        const txtEpicerieFine = t.sponsor_epicerie_fine || "🍷 L'Epicerie Fine - Épicerie Fine & Cave à vin";
+        const txtLumieres = t.sponsor_lumieres || "📸 Lumières de mer - Photographie de Sébastien Rachine";
+        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
 
-    // Créneau 07h - 08h
-    if (hour === 7) {
-        sponsorText.innerHTML = `<a href="partenaires.html#ton-partenaire-1" style="${linkStyle}">Partenaire Diélette Matin</a>`;
+        if (hour === 7) {
+            sponsorText.innerHTML = `<a href="partenaires.html#maison-renard" style="${linkStyle}">${txtMaisonRenard}</a>`;
+        }
+        else if (hour === 8) {
+            const rotation = minute % 3; 
+            if (rotation === 0) {
+                sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">${txtUtile}</a>`;
+            } else if (rotation === 1) {
+                sponsorText.innerHTML = `<a href="partenaires.html#lestran" style="${linkStyle}">${txtLestran}</a>`;
+            } else {
+                sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
+            }
+        }
+        else if (hour === 9) {
+            if (minute % 2 === 0) {
+                sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
+            } else {
+                sponsorText.innerHTML = `<a href="partenaires.html#century21" style="${linkStyle}">${txtCentury21}</a>`;
+            }
+        } 
+        else if (hour === 10) {
+            sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">${txtCarteret}</a>`;
+        }
+        else if (hour === 11) {
+            const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
+            if (isFoodTruckDay && minute % 2 !== 0) {
+                let lieu = t.loc_service || "En service !";
+                if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
+                if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
+                if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres (Barneville)";
+                if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
+                if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles (Barneville)";
+                
+                const txtDelizia = (t.sponsor_delizia || "🍔 Deliziafoodtruck, Cuisine Italienne - ") + lieu;
+                sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">${txtDelizia}</a>`;
+            } else {
+                sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
+            }
+        } 
+        else if (hour === 12) {
+            sponsorText.innerHTML = `<a href="partenaires.html#chalet-gourmand" style="${linkStyle}">${txtChalet}</a>`;
+        }
+        else if (hour === 14) {
+            sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
+        }
+        else if (hour === 15) {
+            sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
+        }
+        else if (hour === 16) {
+            sponsorText.innerHTML = `<a href="partenaires.html#lumieres-de-mer" style="${linkStyle}">${txtLumieres}</a>`;
+        }
+        else if (hour === 17) {
+            sponsorText.innerHTML = `<a href="partenaires.html#epicerie-fine" style="${linkStyle}">${txtEpicerieFine}</a>`;
+        }
+        else {
+            sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
+        }
     }
-    // Créneau 08h - 09h
-    else if (hour === 8) {
-        sponsorText.innerHTML = `<a href="partenaires.html#ton-partenaire-2" style="${linkStyle}">Partenaire Diélette 8h</a>`;
-    }
-    // Par défaut
-    else {
-        // Lien de contact pointe vers la racine
-        sponsorText.innerHTML = `<a href="../contact.html" style="${linkStyle}">${txtDefault}</a>`;
-    }
-}
 
     function drawTideGraph(percent, isDescending) {
         const canvas = document.getElementById('tideCanvasLarge');
@@ -649,6 +701,17 @@ function updateSponsor() {
             const tidePercent = ((now - prevTide.dateObj) / (nextTide.dateObj - prevTide.dateObj)) * 100;
             const isDescending = (prevTide.type === "PM");
 
+            // --- NOUVEAU : CALCUL DE LA HAUTEUR D'EAU EN TEMPS RÉEL ---
+            const h1 = parseFloat(prevTide.h);
+            const h2 = parseFloat(nextTide.h);
+            
+            if (!isNaN(h1) && !isNaN(h2)) {
+                const ratio = tidePercent / 100;
+                const currentHeight = h1 + (h2 - h1) * ((1 - Math.cos(ratio * Math.PI)) / 2);
+                document.getElementById('current-tide-height').innerText = currentHeight.toFixed(2) + " m";
+            }
+            // -----------------------------------------------------------
+
             let coeffText = prevTide.c && prevTide.c !== "-" ? prevTide.c : (nextTide.c && nextTide.c !== "-" ? nextTide.c : "--");
             
             document.getElementById('coeff-display').innerText = coeffText;
@@ -702,45 +765,32 @@ function updateSponsor() {
 <script>
     document.getElementById('status-box').addEventListener('click', function(e) {
         const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋', '🐬', '☀️'];
-        
         for(let i = 0; i < 8; i++) {
             let particle = document.createElement('div');
             particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
             particle.style.position = 'fixed';
-            
             let x = e.clientX || window.innerWidth / 2;
             let y = e.clientY || window.innerHeight / 3;
-            
             particle.style.left = (x - 25) + 'px';
             particle.style.top = (y - 25) + 'px';
-            
             particle.style.fontSize = '3.5rem';
             particle.style.pointerEvents = 'none'; 
             particle.style.zIndex = '9999';
-            
             particle.style.transition = 'transform 2s ease-out, opacity 2s ease-in';
             document.body.appendChild(particle);
-
             setTimeout(() => {
                 particle.style.transform = `translate(${Math.random() * 200 - 100}px, -${Math.random() * 300 + 100}px) rotate(${Math.random() * 360}deg)`;
                 particle.style.opacity = '0';
             }, 50);
-
-            setTimeout(() => {
-                particle.remove();
-            }, 2050);
+            setTimeout(() => { particle.remove(); }, 2050);
         }
     });
-</script>
 
-<script>
     let titleClickCount = 0;
     const mainTitle = document.querySelector('.main-title');
-    
     if (mainTitle) {
         mainTitle.addEventListener('click', function() {
             titleClickCount++;
-            
             if (titleClickCount === 5) {
                 let ship = document.createElement('div');
                 ship.innerText = '🏴‍☠️⛵'; 
@@ -751,81 +801,44 @@ function updateSponsor() {
                 ship.style.zIndex = '9999';
                 ship.style.pointerEvents = 'none';
                 ship.style.transition = 'transform 4s linear';
-                
                 document.body.appendChild(ship);
-                
-                setTimeout(() => {
-                    ship.style.transform = 'translateX(120vw) translateY(-20px)';
-                }, 50);
-                
-                setTimeout(() => {
-                    ship.remove();
-                    titleClickCount = 0;
-                }, 4050);
+                setTimeout(() => { ship.style.transform = 'translateX(120vw) translateY(-20px)'; }, 50);
+                setTimeout(() => { ship.remove(); titleClickCount = 0; }, 4050);
             }
-            
-            setTimeout(() => {
-                if (titleClickCount > 0 && titleClickCount < 5) {
-                    titleClickCount = 0;
-                }
-            }, 2000);
+            setTimeout(() => { if (titleClickCount > 0 && titleClickCount < 5) titleClickCount = 0; }, 2000);
         });
     }
-</script>
 
-<script>
     const tideCanvas = document.getElementById('tideCanvasLarge');
-    
     if (tideCanvas) {
         tideCanvas.addEventListener('click', function(e) {
             if (document.getElementById('kraken-egg')) return;
-
             const seaCreatures = ['🐙', '🐳'];
             const creature = seaCreatures[Math.floor(Math.random() * seaCreatures.length)];
-
             let kraken = document.createElement('div');
             kraken.id = 'kraken-egg';
             kraken.innerText = creature;
-            
             kraken.style.position = 'fixed';
             kraken.style.fontSize = '2.5rem';
             kraken.style.zIndex = '999';
             kraken.style.pointerEvents = 'none';
             kraken.style.left = e.clientX + 'px';
             kraken.style.top = e.clientY + 'px';
-            
             kraken.style.transform = 'translate(-50%, 20px) scale(0)';
             kraken.style.opacity = '0';
-            kraken.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            
+            kraken.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'; 
             document.body.appendChild(kraken);
 
-            setTimeout(() => {
-                kraken.style.opacity = '1';
-                kraken.style.transform = 'translate(-50%, -40px) scale(1)';
-            }, 50);
-
-            setTimeout(() => {
-                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(-20deg)';
-            }, 600);
-
-            setTimeout(() => {
-                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(20deg)';
-            }, 1200);
-
-            setTimeout(() => {
-                kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(0deg)';
-            }, 1800);
-
+            setTimeout(() => { kraken.style.opacity = '1'; kraken.style.transform = 'translate(-50%, -40px) scale(1)'; }, 50);
+            setTimeout(() => { kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(-20deg)'; }, 600);
+            setTimeout(() => { kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(20deg)'; }, 1200);
+            setTimeout(() => { kraken.style.transform = 'translate(-50%, -40px) scale(1) rotate(0deg)'; }, 1800);
             setTimeout(() => {
                 kraken.style.transition = 'all 0.4s ease-in';
                 kraken.style.transform = 'translate(-50%, 20px) scale(0.5)';
                 kraken.style.opacity = '0';
             }, 2400);
-
-            setTimeout(() => {
-                kraken.remove();
-            }, 3000);
+            setTimeout(() => { kraken.remove(); }, 3000);
         });
     }
 </script>
@@ -833,13 +846,11 @@ function updateSponsor() {
 <script>
     document.addEventListener("visibilitychange", function() {
         if (document.visibilityState === 'visible') {
-            if (typeof updateApp === "function") {
-                updateApp();
-            }
+            if (typeof updateApp === "function") updateApp();
         }
     });
 </script>
-        <script>
+<script>
     const joursFeries = {
         "01-01": { titre: "🎉 Bonne Année !", message: "Toute l'équipe vous souhaite une excellente année pleine de belles navigations !" },
         "04-06": { titre: "🍫 Joyeuses Pâques !", message: "Bon Lundi de Pâques à tous ! Ne mangez pas trop de chocolat avant de prendre la mer." },
@@ -856,35 +867,22 @@ function updateSponsor() {
 
     function checkHolidayPopup() {
         const now = new Date();
-        
-        // On récupère le mois et le jour avec un zéro devant si besoin (ex: "05-01")
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const day = String(now.getDate()).padStart(2, '0');
         const todayKey = `${month}-${day}`;
-        
-        // On crée une clé unique incluant l'année pour le navigateur
-        // Ex: "holiday_2026_05-01". L'année prochaine, ça affichera à nouveau le pop-up.
         const year = now.getFullYear();
         const storageKey = `holiday_${year}_${todayKey}`;
 
-        // Si on est un jour configuré ET qu'on n'a pas encore affiché le pop-up aujourd'hui
         if (joursFeries[todayKey] && !localStorage.getItem(storageKey)) {
-            
-            // On remplit les textes
             document.getElementById('holiday-title').innerText = joursFeries[todayKey].titre;
             document.getElementById('holiday-message').innerText = joursFeries[todayKey].message;
-            
-            // On affiche le modal avec un tout petit délai pour la fluidité
             setTimeout(() => {
                 document.getElementById('holiday-modal').style.display = 'flex';
             }, 500);
-            
-            // On mémorise dans le navigateur que c'est fait pour aujourd'hui
             localStorage.setItem(storageKey, "true");
         }
     }
 
-    // On lance la vérification dès que la page est chargée
     document.addEventListener('DOMContentLoaded', checkHolidayPopup);
 </script>
 </body>
