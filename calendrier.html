@@ -8,7 +8,6 @@
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    
     <script src="donnees.js"></script>
 <style>
     :root {
@@ -67,10 +66,9 @@
         border-radius: 12px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         border: 2px solid var(--marine-blue);
-        overflow: hidden; /* Permet aux coins du titre d'être arrondis avec la carte */
+        overflow: hidden;
     }
 
-    /* --- NOUVEAU STYLE DU TITRE (Bleu Marine / Blanc) --- */
     .month-title {
         font-size: 1rem;
         font-weight: 700;
@@ -86,14 +84,14 @@
     .chart-wrapper {
         padding: 15px;
         position: relative;
-        height: 280px; /* Un poil plus haut pour respirer */
+        height: 280px; 
         width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
 
     .chart-inner {
-        min-width: 800px; /* On élargit un peu pour que les ronds aient de la place */
+        min-width: 800px; 
         height: 100%;
     }
 </style>
@@ -106,13 +104,11 @@
     </div>
 
     <div class="charts-container" id="charts-container">
-        </div>
+    </div>
 
     <script>
-        // Activation du plugin Datalabels pour écrire dans les ronds
         Chart.register(ChartDataLabels);
 
-        // Calcul de la lune
         function getMoonPhase(dateString) {
             const date = new Date(dateString);
             const year = date.getFullYear();
@@ -143,7 +139,6 @@
             const container = document.getElementById('charts-container');
             const groupedData = {};
 
-            // Détermination du mois actuel (ex: "mai 2026")
             const now = new Date();
             const currentMonthKey = now.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
 
@@ -175,7 +170,6 @@
                 const card = document.createElement('div');
                 card.className = 'month-card';
                 
-                // --- ON MARQUE LE MOIS EN COURS ---
                 if (month === currentMonthKey) {
                     card.id = 'current-month-anchor';
                 }
@@ -207,13 +201,19 @@
                         datasets: [{
                             label: 'Coefficient Max',
                             data: monthData.coeffs,
-                            borderColor: '#cbd5e1', // Ligne du graphe un peu plus discrète
+                            borderColor: '#1e3a8a', // Ligne bleue marine bien visible
                             backgroundColor: 'rgba(30, 58, 138, 0.05)',
-                            borderWidth: 2,
-                            // --- STYLE DES RONDS ---
-                            pointBackgroundColor: '#1e3a8a', // Rond bleu marine
-                            pointBorderColor: '#1e3a8a',
-                            pointRadius: 11, // Taille du rond
+                            borderWidth: 4, // Ligne plus épaisse
+                            // --- COULEURS DYNAMIQUES DES RONDS ---
+                            pointBackgroundColor: (context) => {
+                                const val = context.dataset.data[context.dataIndex];
+                                return val >= 90 ? '#ef4444' : '#1e3a8a'; // Rouge si >= 90, sinon Bleu
+                            },
+                            pointBorderColor: (context) => {
+                                const val = context.dataset.data[context.dataIndex];
+                                return val >= 90 ? '#ef4444' : '#1e3a8a'; // Rouge si >= 90, sinon Bleu
+                            },
+                            pointRadius: 11,
                             pointHoverRadius: 13,
                             fill: true,
                             tension: 0.3 
@@ -223,11 +223,10 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         layout: {
-                            padding: { top: 20, bottom: 10 } // Empêche les gros ronds d'être coupés en haut
+                            padding: { top: 20, bottom: 10 }
                         },
                         plugins: {
                             legend: { display: false },
-                            // --- CONFIGURATION DU TEXTE DANS LE ROND ---
                             datalabels: {
                                 color: 'white',
                                 font: {
@@ -243,16 +242,15 @@
                             y: {
                                 min: 20,
                                 max: 120,
-                                // --- ON CACHE LES VALEURS EN ORDONNÉE ---
                                 ticks: { display: false },
                                 grid: {
                                     color: (context) => {
-                                        if (context.tick.value === 90) return 'rgba(239, 68, 68, 0.5)'; // Garde la ligne rouge repère
+                                        if (context.tick.value === 90) return 'rgba(239, 68, 68, 0.5)';
                                         return '#f1f5f9';
                                     },
                                     lineWidth: (context) => context.tick.value === 90 ? 2 : 1
                                 },
-                                border: { display: false } // Cache la ligne verticale gauche
+                                border: { display: false }
                             },
                             x: {
                                 grid: { display: false },
@@ -266,16 +264,14 @@
                 });
             });
 
-            // --- DEFILEMENT AUTO VERS LE MOIS EN COURS ---
             setTimeout(() => {
                 const currentMonthEl = document.getElementById('current-month-anchor');
                 if (currentMonthEl) {
-                    // Descend jusqu'à la carte du mois en cours avec une animation douce
-                    const yOffset = -70; // Garde un peu de marge par rapport au menu du haut
+                    const yOffset = -70; 
                     const y = currentMonthEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                 }
-            }, 500); // Petit délai pour laisser le temps aux graphiques de se dessiner
+            }, 500); 
         });
     </script>
 </body>
