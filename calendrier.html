@@ -82,16 +82,17 @@
     }
 
     .chart-wrapper {
-        padding: 15px;
+        padding: 10px; /* Réduit un peu pour gagner de la place */
         position: relative;
-        height: 280px; 
+        height: 300px; 
         width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
 
     .chart-inner {
-        min-width: 800px; 
+        /* On passe à 900px pour que les 31 jours soient bien espacés */
+        min-width: 900px; 
         height: 100%;
     }
 </style>
@@ -147,10 +148,7 @@
                 const monthKey = d.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
                 
                 if (!groupedData[monthKey]) {
-                    groupedData[monthKey] = {
-                        labels: [], 
-                        coeffs: []  
-                    };
+                    groupedData[monthKey] = { labels: [], coeffs: [] };
                 }
 
                 const dayNum = d.getDate();
@@ -169,10 +167,7 @@
                 
                 const card = document.createElement('div');
                 card.className = 'month-card';
-                
-                if (month === currentMonthKey) {
-                    card.id = 'current-month-anchor';
-                }
+                if (month === currentMonthKey) card.id = 'current-month-anchor';
                 
                 const title = document.createElement('h2');
                 title.className = 'month-title';
@@ -201,17 +196,16 @@
                         datasets: [{
                             label: 'Coefficient Max',
                             data: monthData.coeffs,
-                            borderColor: '#1e3a8a', // Ligne bleue marine bien visible
+                            borderColor: '#1e3a8a',
                             backgroundColor: 'rgba(30, 58, 138, 0.05)',
-                            borderWidth: 4, // Ligne plus épaisse
-                            // --- COULEURS DYNAMIQUES DES RONDS ---
+                            borderWidth: 4,
                             pointBackgroundColor: (context) => {
                                 const val = context.dataset.data[context.dataIndex];
-                                return val >= 90 ? '#ef4444' : '#1e3a8a'; // Rouge si >= 90, sinon Bleu
+                                return val >= 90 ? '#ef4444' : '#1e3a8a';
                             },
                             pointBorderColor: (context) => {
                                 const val = context.dataset.data[context.dataIndex];
-                                return val >= 90 ? '#ef4444' : '#1e3a8a'; // Rouge si >= 90, sinon Bleu
+                                return val >= 90 ? '#ef4444' : '#1e3a8a';
                             },
                             pointRadius: 11,
                             pointHoverRadius: 13,
@@ -223,31 +217,24 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         layout: {
-                            padding: { top: 20, bottom: 10 }
+                            // --- AJOUT DE MARGE À DROITE POUR NE PAS COUPER LE DERNIER ROND ---
+                            padding: { top: 25, bottom: 10, right: 40, left: 10 }
                         },
                         plugins: {
                             legend: { display: false },
                             datalabels: {
                                 color: 'white',
-                                font: {
-                                    family: 'Montserrat',
-                                    weight: 'bold',
-                                    size: 9
-                                },
+                                font: { family: 'Montserrat', weight: 'bold', size: 9 },
                                 align: 'center',
                                 anchor: 'center'
                             }
                         },
                         scales: {
                             y: {
-                                min: 20,
-                                max: 120,
+                                min: 20, max: 120,
                                 ticks: { display: false },
                                 grid: {
-                                    color: (context) => {
-                                        if (context.tick.value === 90) return 'rgba(239, 68, 68, 0.5)';
-                                        return '#f1f5f9';
-                                    },
+                                    color: (context) => context.tick.value === 90 ? 'rgba(239, 68, 68, 0.5)' : '#f1f5f9',
                                     lineWidth: (context) => context.tick.value === 90 ? 2 : 1
                                 },
                                 border: { display: false }
