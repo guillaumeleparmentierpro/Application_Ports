@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier Visuel des Marées</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="donnees.js"></script>
+<style>
+    :root {
+        --primary-bg: #f8fafc;
+        --marine-blue: #1e3a8a;
+        --text-main: #1e293b;
+    }
+
+    body { 
+        font-family: 'Montserrat', sans-serif; 
+        background: var(--primary-bg); 
+        margin: 0; 
+        padding: 0; 
+        color: var(--text-main);
+    }
+
+    .header {
+        position: sticky;
+        top: 0;
+        background: var(--primary-bg);
+        z-index: 1000;
+        padding: 10px 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .btn-action { 
+        text-decoration: none; 
+        background: var(--marine-blue);
+        color: #ffffff;
+        border-radius: 8px; 
+        padding: 6px 10px;
+        font-weight: 700; 
+        font-size: 0.7rem; 
+        display: inline-flex; 
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .main-title {
+        font-size: 1.1rem; 
+        font-weight: 700; 
+        color: var(--marine-blue);
+        text-align: center;
+        margin: 10px 0 5px 0;
+        text-transform: uppercase;
+    }
+
+    .charts-container {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .month-card {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border: 1px solid #e2e8f0;
+    }
+
+    .month-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--marine-blue);
+        text-transform: uppercase;
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-align: center;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 10px;
+    }
+
+    .chart-wrapper {
+        position: relative;
+        height: 250px; /* Hauteur du graphique sur mobile */
+        width: 100%;
+        overflow-x: auto; /* Permet de scroller le graphique horizontalement s'il est trop large */
+    }
+
+    .chart-inner {
+        min-width: 600px; /* Force une largeur minimale pour que les jours ne soient pas écrasés */
+        height: 100%;
+    }
+</style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="planning.html" class="btn-action">◀ RETOUR AU TABLEAU</a>
+        <h1 class="main-title">Évolution des coefficients</h1>
+    </div>
+
+    <div class="charts-container" id="charts-container">
+        </div>
+
+    <script>
+        // Fonction astronomique simplifiée pour calculer la phase de la lune
+        function getMoonPhase(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            let month = date.getMonth() + 1;
+            const day = date.getDate();
+            
+            let y = year;
+            let m = month;
+            if (m < 3) { y--; m += 12; }
+            m++;
+            
+            let c = 365.25 * y;
+            let e = 30.6 * m;
+            let jd = c + e + day - 694039.09; // Jour Julien
+            jd /= 29.5305882; // Cycle lunaire
+            let b = parseInt(jd);
+            jd -= b;
+            b = Math.round(jd * 8);
+            if (b >= 8) b = 0;
+            
+            // 0: Nouvelle lune, 4: Pleine lune
+            const phases = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+            return phases[b];
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof data === 'undefined' || data.length === 0) return;
+
+            const container = document.getElementById('charts-container');
+            const groupedData = {};
+
+            // 1. On trie les données mois par mois
+            data.forEach(jour => {
+                const d = new Date(jour.date);
+                const monthKey = d.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
+                
+                if (!groupedData[monthKey]) {
+                    groupedData[monthKey] = {
+                        labels: [], // Les jours (et la lune)
+                        coeffs: []  // Les valeurs
+                    };
+                }
+
+                const dayNum = d.getDate();
+                const moon = getMoonPhase(jour.date);
+                
+                // On prend le plus gros coefficient de la journée
+                let c1 = parseInt(jour.coeff1) || 0;
+                let c2 = parseInt(jour.coeff2) || 0;
+                let maxCoeff = Math.max(c1, c2);
+
+                // On formate l'étiquette de l'axe X (Jour sur la ligne 1, Lune sur la ligne 2)
+                groupedData[monthKey].labels.push([`${dayNum}`, moon]);
+                groupedData[monthKey].coeffs.push(maxCoeff > 0 ? maxCoeff : null);
+            });
+
+            // 2. On génère un graphique pour chaque mois
+            Object.keys(groupedData).forEach((month, index) => {
+                const monthData = groupedData[month];
+                
+                // Création des éléments HTML
+                const card = document.createElement('div');
+                card.className = 'month-card';
+                
+                const title = document.createElement('h2');
+                title.className = 'month-title';
+                title.textContent = month;
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'chart-wrapper';
+                
+                const inner = document.createElement('div');
+                inner.className = 'chart-inner';
+                
+                const canvas = document.createElement('canvas');
+                canvas.id = `chart-${index}`;
+
+                inner.appendChild(canvas);
+                wrapper.appendChild(inner);
+                card.appendChild(title);
+                card.appendChild(wrapper);
+                container.appendChild(card);
+
+                // Configuration de Chart.js
+                const ctx = canvas.getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: monthData.labels,
+                        datasets: [{
+                            label: 'Coefficient Max',
+                            data: monthData.coeffs,
+                            borderColor: '#1e3a8a',
+                            backgroundColor: 'rgba(30, 58, 138, 0.1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#ef4444',
+                            pointRadius: 3,
+                            fill: true,
+                            tension: 0.3 // Rend la courbe plus douce
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            annotation: {
+                                // Cette option dessine une ligne rouge au coeff 90 (Nécessite le plugin annotation si besoin plus tard, ici on utilise un hack simple avec grid)
+                            }
+                        },
+                        scales: {
+                            y: {
+                                min: 20, // Les coefficients descendent rarement en dessous
+                                max: 120,
+                                grid: {
+                                    color: (context) => {
+                                        if (context.tick.value === 90) return 'rgba(239, 68, 68, 0.5)'; // Ligne rouge à 90
+                                        return '#e2e8f0';
+                                    },
+                                    lineWidth: (context) => context.tick.value === 90 ? 2 : 1
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Coefficient',
+                                    font: { size: 10 }
+                                }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: {
+                                    font: { size: 10, family: 'Montserrat' }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
