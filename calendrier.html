@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendrier Visuel des Marées</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    
     <script src="donnees.js"></script>
 <style>
     :root {
@@ -62,32 +65,35 @@
     .month-card {
         background: white;
         border-radius: 12px;
-        padding: 15px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border: 2px solid var(--marine-blue);
+        overflow: hidden; /* Permet aux coins du titre d'être arrondis avec la carte */
     }
 
+    /* --- NOUVEAU STYLE DU TITRE (Bleu Marine / Blanc) --- */
     .month-title {
         font-size: 1rem;
         font-weight: 700;
-        color: var(--marine-blue);
+        background-color: var(--marine-blue);
+        color: white;
         text-transform: uppercase;
-        margin-top: 0;
-        margin-bottom: 15px;
+        margin: 0;
         text-align: center;
-        border-bottom: 2px solid #e2e8f0;
-        padding-bottom: 10px;
+        padding: 12px;
+        letter-spacing: 1px;
     }
 
     .chart-wrapper {
+        padding: 15px;
         position: relative;
-        height: 250px; /* Hauteur du graphique sur mobile */
+        height: 280px; /* Un poil plus haut pour respirer */
         width: 100%;
-        overflow-x: auto; /* Permet de scroller le graphique horizontalement s'il est trop large */
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .chart-inner {
-        min-width: 600px; /* Force une largeur minimale pour que les jours ne soient pas écrasés */
+        min-width: 800px; /* On élargit un peu pour que les ronds aient de la place */
         height: 100%;
     }
 </style>
@@ -103,7 +109,10 @@
         </div>
 
     <script>
-        // Fonction astronomique simplifiée pour calculer la phase de la lune
+        // Activation du plugin Datalabels pour écrire dans les ronds
+        Chart.register(ChartDataLabels);
+
+        // Calcul de la lune
         function getMoonPhase(dateString) {
             const date = new Date(dateString);
             const year = date.getFullYear();
@@ -117,14 +126,13 @@
             
             let c = 365.25 * y;
             let e = 30.6 * m;
-            let jd = c + e + day - 694039.09; // Jour Julien
-            jd /= 29.5305882; // Cycle lunaire
+            let jd = c + e + day - 694039.09; 
+            jd /= 29.5305882; 
             let b = parseInt(jd);
             jd -= b;
             b = Math.round(jd * 8);
             if (b >= 8) b = 0;
             
-            // 0: Nouvelle lune, 4: Pleine lune
             const phases = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
             return phases[b];
         }
@@ -135,38 +143,42 @@
             const container = document.getElementById('charts-container');
             const groupedData = {};
 
-            // 1. On trie les données mois par mois
+            // Détermination du mois actuel (ex: "mai 2026")
+            const now = new Date();
+            const currentMonthKey = now.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
+
             data.forEach(jour => {
                 const d = new Date(jour.date);
                 const monthKey = d.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
                 
                 if (!groupedData[monthKey]) {
                     groupedData[monthKey] = {
-                        labels: [], // Les jours (et la lune)
-                        coeffs: []  // Les valeurs
+                        labels: [], 
+                        coeffs: []  
                     };
                 }
 
                 const dayNum = d.getDate();
                 const moon = getMoonPhase(jour.date);
                 
-                // On prend le plus gros coefficient de la journée
                 let c1 = parseInt(jour.coeff1) || 0;
                 let c2 = parseInt(jour.coeff2) || 0;
                 let maxCoeff = Math.max(c1, c2);
 
-                // On formate l'étiquette de l'axe X (Jour sur la ligne 1, Lune sur la ligne 2)
                 groupedData[monthKey].labels.push([`${dayNum}`, moon]);
                 groupedData[monthKey].coeffs.push(maxCoeff > 0 ? maxCoeff : null);
             });
 
-            // 2. On génère un graphique pour chaque mois
             Object.keys(groupedData).forEach((month, index) => {
                 const monthData = groupedData[month];
                 
-                // Création des éléments HTML
                 const card = document.createElement('div');
                 card.className = 'month-card';
+                
+                // --- ON MARQUE LE MOIS EN COURS ---
+                if (month === currentMonthKey) {
+                    card.id = 'current-month-anchor';
+                }
                 
                 const title = document.createElement('h2');
                 title.className = 'month-title';
@@ -187,7 +199,6 @@
                 card.appendChild(wrapper);
                 container.appendChild(card);
 
-                // Configuration de Chart.js
                 const ctx = canvas.getContext('2d');
                 new Chart(ctx, {
                     type: 'line',
@@ -196,51 +207,75 @@
                         datasets: [{
                             label: 'Coefficient Max',
                             data: monthData.coeffs,
-                            borderColor: '#1e3a8a',
-                            backgroundColor: 'rgba(30, 58, 138, 0.1)',
+                            borderColor: '#cbd5e1', // Ligne du graphe un peu plus discrète
+                            backgroundColor: 'rgba(30, 58, 138, 0.05)',
                             borderWidth: 2,
-                            pointBackgroundColor: '#ef4444',
-                            pointRadius: 3,
+                            // --- STYLE DES RONDS ---
+                            pointBackgroundColor: '#1e3a8a', // Rond bleu marine
+                            pointBorderColor: '#1e3a8a',
+                            pointRadius: 11, // Taille du rond
+                            pointHoverRadius: 13,
                             fill: true,
-                            tension: 0.3 // Rend la courbe plus douce
+                            tension: 0.3 
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        layout: {
+                            padding: { top: 20, bottom: 10 } // Empêche les gros ronds d'être coupés en haut
+                        },
                         plugins: {
                             legend: { display: false },
-                            annotation: {
-                                // Cette option dessine une ligne rouge au coeff 90 (Nécessite le plugin annotation si besoin plus tard, ici on utilise un hack simple avec grid)
+                            // --- CONFIGURATION DU TEXTE DANS LE ROND ---
+                            datalabels: {
+                                color: 'white',
+                                font: {
+                                    family: 'Montserrat',
+                                    weight: 'bold',
+                                    size: 9
+                                },
+                                align: 'center',
+                                anchor: 'center'
                             }
                         },
                         scales: {
                             y: {
-                                min: 20, // Les coefficients descendent rarement en dessous
+                                min: 20,
                                 max: 120,
+                                // --- ON CACHE LES VALEURS EN ORDONNÉE ---
+                                ticks: { display: false },
                                 grid: {
                                     color: (context) => {
-                                        if (context.tick.value === 90) return 'rgba(239, 68, 68, 0.5)'; // Ligne rouge à 90
-                                        return '#e2e8f0';
+                                        if (context.tick.value === 90) return 'rgba(239, 68, 68, 0.5)'; // Garde la ligne rouge repère
+                                        return '#f1f5f9';
                                     },
                                     lineWidth: (context) => context.tick.value === 90 ? 2 : 1
                                 },
-                                title: {
-                                    display: true,
-                                    text: 'Coefficient',
-                                    font: { size: 10 }
-                                }
+                                border: { display: false } // Cache la ligne verticale gauche
                             },
                             x: {
                                 grid: { display: false },
                                 ticks: {
-                                    font: { size: 10, family: 'Montserrat' }
+                                    font: { size: 10, family: 'Montserrat' },
+                                    color: '#1e293b'
                                 }
                             }
                         }
                     }
                 });
             });
+
+            // --- DEFILEMENT AUTO VERS LE MOIS EN COURS ---
+            setTimeout(() => {
+                const currentMonthEl = document.getElementById('current-month-anchor');
+                if (currentMonthEl) {
+                    // Descend jusqu'à la carte du mois en cours avec une animation douce
+                    const yOffset = -70; // Garde un peu de marge par rapport au menu du haut
+                    const y = currentMonthEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+            }, 500); // Petit délai pour laisser le temps aux graphiques de se dessiner
         });
     </script>
 </body>
