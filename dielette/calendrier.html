@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier Visuel des Marées</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="donnees.js"></script>
+<style>
+    :root {
+        --primary-bg: #f8fafc;
+        --marine-blue: #1e3a8a;
+        --text-main: #1e293b;
+    }
+
+    body { 
+        font-family: 'Montserrat', sans-serif; 
+        background: var(--primary-bg); 
+        margin: 0; 
+        padding: 0; 
+        color: var(--text-main);
+    }
+
+    .header {
+        position: sticky;
+        top: 0;
+        background: var(--primary-bg);
+        z-index: 1000;
+        padding: 10px 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .btn-action { 
+        text-decoration: none; 
+        background: var(--marine-blue);
+        color: #ffffff;
+        border-radius: 8px; 
+        padding: 6px 10px;
+        font-weight: 700; 
+        font-size: 0.7rem; 
+        display: inline-flex; 
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .main-title {
+        font-size: 1.1rem; 
+        font-weight: 700; 
+        color: var(--marine-blue);
+        text-align: center;
+        margin: 10px 0 5px 0;
+        text-transform: uppercase;
+    }
+
+    .charts-container {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .month-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border: 2px solid var(--marine-blue);
+        overflow: hidden;
+    }
+
+    .month-title {
+        font-size: 1rem;
+        font-weight: 700;
+        background-color: var(--marine-blue);
+        color: white;
+        text-transform: uppercase;
+        margin: 0;
+        text-align: center;
+        padding: 12px;
+        letter-spacing: 1px;
+    }
+
+    .chart-wrapper {
+        padding: 10px; /* Réduit un peu pour gagner de la place */
+        position: relative;
+        height: 300px; 
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .chart-inner {
+        /* On passe à 900px pour que les 31 jours soient bien espacés */
+        min-width: 900px; 
+        height: 100%;
+    }
+</style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="planning.html" class="btn-action">◀ RETOUR AU TABLEAU</a>
+        <h1 class="main-title">Évolution des coefficients</h1>
+    </div>
+
+    <div class="charts-container" id="charts-container">
+    </div>
+
+    <script>
+        Chart.register(ChartDataLabels);
+
+        function getMoonPhase(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            let month = date.getMonth() + 1;
+            const day = date.getDate();
+            
+            let y = year;
+            let m = month;
+            if (m < 3) { y--; m += 12; }
+            m++;
+            
+            let c = 365.25 * y;
+            let e = 30.6 * m;
+            let jd = c + e + day - 694039.09; 
+            jd /= 29.5305882; 
+            let b = parseInt(jd);
+            jd -= b;
+            b = Math.round(jd * 8);
+            if (b >= 8) b = 0;
+            
+            const phases = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+            return phases[b];
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof data === 'undefined' || data.length === 0) return;
+
+            const container = document.getElementById('charts-container');
+            const groupedData = {};
+
+            const now = new Date();
+            const currentMonthKey = now.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
+
+            data.forEach(jour => {
+                const d = new Date(jour.date);
+                const monthKey = d.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
+                
+                if (!groupedData[monthKey]) {
+                    groupedData[monthKey] = { labels: [], coeffs: [] };
+                }
+
+                const dayNum = d.getDate();
+                const moon = getMoonPhase(jour.date);
+                
+                let c1 = parseInt(jour.coeff1) || 0;
+                let c2 = parseInt(jour.coeff2) || 0;
+                let maxCoeff = Math.max(c1, c2);
+
+                groupedData[monthKey].labels.push([`${dayNum}`, moon]);
+                groupedData[monthKey].coeffs.push(maxCoeff > 0 ? maxCoeff : null);
+            });
+
+            Object.keys(groupedData).forEach((month, index) => {
+                const monthData = groupedData[month];
+                
+                const card = document.createElement('div');
+                card.className = 'month-card';
+                if (month === currentMonthKey) card.id = 'current-month-anchor';
+                
+                const title = document.createElement('h2');
+                title.className = 'month-title';
+                title.textContent = month;
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'chart-wrapper';
+                
+                const inner = document.createElement('div');
+                inner.className = 'chart-inner';
+                
+                const canvas = document.createElement('canvas');
+                canvas.id = `chart-${index}`;
+
+                inner.appendChild(canvas);
+                wrapper.appendChild(inner);
+                card.appendChild(title);
+                card.appendChild(wrapper);
+                container.appendChild(card);
+
+                const ctx = canvas.getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: monthData.labels,
+                        datasets: [{
+                            label: 'Coefficient Max',
+                            data: monthData.coeffs,
+                            borderColor: '#1e3a8a',
+                            backgroundColor: 'rgba(30, 58, 138, 0.05)',
+                            borderWidth: 4,
+                            pointBackgroundColor: (context) => {
+                                const val = context.dataset.data[context.dataIndex];
+                                return val >= 90 ? '#ef4444' : '#1e3a8a';
+                            },
+                            pointBorderColor: (context) => {
+                                const val = context.dataset.data[context.dataIndex];
+                                return val >= 90 ? '#ef4444' : '#1e3a8a';
+                            },
+                            pointRadius: 11,
+                            pointHoverRadius: 13,
+                            fill: true,
+                            tension: 0.3 
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        layout: {
+                            // --- AJOUT DE MARGE À DROITE POUR NE PAS COUPER LE DERNIER ROND ---
+                            padding: { top: 25, bottom: 10, right: 40, left: 10 }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            datalabels: {
+                                color: 'white',
+                                font: { family: 'Montserrat', weight: 'bold', size: 9 },
+                                align: 'center',
+                                anchor: 'center'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                min: 20, max: 120,
+                                ticks: { display: false },
+                                grid: {
+                                    color: (context) => context.tick.value === 90 ? 'rgba(239, 68, 68, 0.5)' : '#f1f5f9',
+                                    lineWidth: (context) => context.tick.value === 90 ? 2 : 1
+                                },
+                                border: { display: false }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: {
+                                    font: { size: 10, family: 'Montserrat' },
+                                    color: '#1e293b'
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+
+            setTimeout(() => {
+                const currentMonthEl = document.getElementById('current-month-anchor');
+                if (currentMonthEl) {
+                    const yOffset = -70; 
+                    const y = currentMonthEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+            }, 500); 
+        });
+    </script>
+</body>
+</html>
