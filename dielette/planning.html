@@ -70,7 +70,7 @@
         z-index: 1000;
         padding: 10px 15px 5px 15px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
 
     .btn-action { 
@@ -91,6 +91,61 @@
 
     .page-title { font-size: 0.95rem; font-weight: 700; margin: 0; }
     .page-title sup { color: #b03a2e; font-size: 0.6rem; }
+
+    /* --- STYLE MIS À JOUR : BLOC GRANDES MARÉES SUR UNE LIGNE --- */
+    .grandes-marees-box {
+        background: white;
+        border-left: 4px solid #ef4444;
+        border-radius: 8px;
+        margin: 0 15px 10px 15px;
+        padding: 8px 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+    .gm-title {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #991b1b;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .gm-list {
+        display: flex;
+        flex-wrap: nowrap; /* Interdit le passage à la ligne */
+        gap: 5px;
+        overflow-x: auto; /* Autorise le défilement horizontal si l'écran est trop petit */
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Cache la barre de scroll sur Firefox */
+        padding-bottom: 2px;
+    }
+    .gm-list::-webkit-scrollbar {
+        display: none; /* Cache la barre de scroll sur Chrome/Safari */
+    }
+    .gm-item {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        padding: 4px 6px; /* Marges réduites */
+        border-radius: 6px;
+        font-size: 0.65rem; /* Texte un tout petit peu plus petit */
+        font-weight: 700;
+        color: var(--marine-blue);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap; /* Le texte de chaque bloc ne se coupe pas */
+    }
+    .gm-coeff {
+        background: #ef4444;
+        color: white;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-weight: 800;
+    }
 
     .table-container {
         flex-grow: 1;
@@ -195,7 +250,7 @@
     .coeff-badge.high { background: #ef4444 !important; }
     
     /* Indication scrollable */
-    .scroll-hint { font-size: 0.75rem; text-align: center; color: var(--marine-blue); padding: 5px 0; font-weight: 600; background: #e0e7ff; margin-bottom: 5px; }
+    .scroll-hint { font-size: 0.75rem; text-align: center; color: var(--marine-blue); padding: 5px 0; font-weight: 600; background: #e0e7ff; margin-bottom: 5px; flex-shrink: 0; }
 
     /* --- NOUVEAU POP-UP D'AVERTISSEMENT --- */
     .warning-modal-overlay {
@@ -239,7 +294,6 @@
 </head>
 <body>
 
-    <!-- MODAL AVERTISSEMENT -->
     <div id="warning-modal" class="warning-modal-overlay">
         <div class="warning-modal-box">
             <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
@@ -255,6 +309,12 @@
             <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
         </div>
         <h1 class="main-title" data-i18n="plan_main_title">Horaires de la porte et des marées<sup>*</sup></h1>
+    </div>
+
+    <div class="grandes-marees-box" id="grandes-marees-container" style="display: none;">
+        <div class="gm-title" data-i18n="next_big_tides">🌊 Prochaines grandes marées</div>
+        <div class="gm-list" id="gm-list-content">
+            </div>
     </div>
 
     <div class="scroll-hint" data-i18n="plan_scroll_hint">👉 Glissez le tableau vers la gauche pour voir le SOIR</div>
@@ -286,9 +346,60 @@
     <script src="../lang.js"></script>
 
     <script>
+    // --- NOUVELLE FONCTION : CHERCHER LES GRANDES MARÉES ---
+    function findNextGrandesMarees() {
+        if (typeof data === 'undefined' || data.length === 0) return;
+        
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const todayStr = new Date(now - tzoffset).toISOString().split('T')[0];
+        
+        const currentLang = localStorage.getItem('preferredLang') || 'fr';
+        const locale = currentLang === 'en' ? 'en-GB' : 'fr-FR';
+        
+        let grandesMarees = [];
+        const seuilCoefficient = 100; // On cherche les coeff >= 100
+
+        // On parcourt les données
+        for (let i = 0; i < data.length; i++) {
+            let jour = data[i];
+            
+            // On ne regarde que les dates d'aujourd'hui ou futures
+            if (jour.date >= todayStr) {
+                let maxCoeff = Math.max(parseInt(jour.coeff1) || 0, parseInt(jour.coeff2) || 0);
+                
+                if (maxCoeff >= seuilCoefficient) {
+                    const dObj = new Date(jour.date);
+                    const dateFormatted = dObj.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' });
+                    grandesMarees.push({ date: dateFormatted, coeff: maxCoeff });
+                }
+            }
+            
+            // On s'arrête quand on a trouvé 3 jours différents
+            if (grandesMarees.length >= 3) break;
+        }
+
+        // Affichage dans le HTML
+        if (grandesMarees.length > 0) {
+            const container = document.getElementById('grandes-marees-container');
+            const listContent = document.getElementById('gm-list-content');
+            let htmlContent = "";
+            
+            grandesMarees.forEach(gm => {
+                htmlContent += `<div class="gm-item">${gm.date} <span class="gm-coeff">${gm.coeff}</span></div>`;
+            });
+            
+            listContent.innerHTML = htmlContent;
+            container.style.display = 'flex';
+        }
+    }
+
+
     function generateTable() {
         const tbody = document.getElementById('planning-body');
-        const today = new Date().toISOString().split('T')[0];
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const today = new Date(now - tzoffset).toISOString().split('T')[0];
         
         if (typeof data === 'undefined') return;
         
@@ -400,7 +511,8 @@
             });
 
             generateTable();
-            checkWarningPopup(); // On lance la vérification du pop-up au chargement
+            findNextGrandesMarees(); // On appelle la nouvelle fonction
+            checkWarningPopup();
         });
     </script>
 </body>
