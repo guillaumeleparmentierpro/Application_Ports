@@ -3,6 +3,7 @@ const translations = {
         // --- COMMUN ---
         btn_back_arrow: "◀ RETOUR",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+        next_big_tides: "Prochaines grandes marées",
         moon_phase: "Phase lunaire",
         ht_maree: "Ht. marée",
         currents_title: "Courants marins",
@@ -192,6 +193,7 @@ disclaimer_partners: "<strong style=\"color:#b03a2e;\">*Attention :</strong> L'�
         // --- COMMUN ---
         btn_back_arrow: "◀ BACK",
 // --- NOUVEAUTÉS PAGE PARTAGE ---
+                next_big_tides: "Next spring tides",
         moon_phase: "Moon phase",
         ht_maree: "Tide ht.",
         currents_title: "Ocean Currents",
