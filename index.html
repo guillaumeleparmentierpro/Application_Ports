@@ -168,6 +168,17 @@
             transition: transform 0.2s;
         }
         .btn-premium:active { transform: scale(0.95); }
+
+        /* --- EFFET REVEAL ON SCROLL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -178,7 +189,6 @@
     <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
 </div>
 
-<!-- === MODAL CHOIX DU PORT === -->
 <div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
@@ -200,8 +210,6 @@
         </div>
     </div>
 </div>
-<!-- =========================== -->
-
 <div id="holiday-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border-top: 6px solid var(--marine-blue);">
         
@@ -246,7 +254,7 @@
         </div>
     </div>
         
-    <div class="module">
+    <div class="module reveal">
         <div id="status-box" class="status-box closed">
             <span class="status-label" data-i18n="label_gate">Porte</span>
             <span class="status-value" id="status-text">--</span>
@@ -277,13 +285,10 @@
         </div>
     </div>
 
-<!-- MODULE Informations marée -->
-<div class="module">
+    <div class="module reveal">
         <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;" data-i18n="tide_title">Informations marée</div>
         
-        <!-- === LE MODULE BLEU CLAIR === -->
         <div class="tide-full-module">
-            
             <div class="tide-header-info">
                 <div class="tide-column" style="text-align: left;">
                     <div id="tide-left-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
@@ -309,16 +314,13 @@
                 <div id="tide-right-data"><span id="val-right">--</span></div>
             </div>
         </div>
-        <!-- === FIN DU MODULE BLEU CLAIR === -->
-
-        <!-- === PHASES LUNAIRES JUSTE EN DESSOUS === -->
+        
         <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.75rem; font-weight: 700; color: var(--marine-blue);">
             <span data-i18n="moon_phase">Phase lunaire</span> : <span id="moon-phase-badge" style="font-size: 1.2rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15));"></span>
         </div>
-        </div>
+    </div>
 
-    <!-- MODULE Conditions météo -->
-    <div class="module">
+    <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
             <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">📷 WEBCAM</a>
@@ -328,8 +330,7 @@
         </div>
     </div>
 
-<!-- COURANTS MARINS (WINDY) -->
-    <div class="module">
+    <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="currents_title">Courants marins</div>
         </div>
@@ -341,8 +342,7 @@
         </div>
     </div>
     
-    <!-- MODULE AVERTISSEMENT ET SÉCURITÉ -->
-    <div class="module" style="background: #fef2f2; border: 2px solid #ef4444; text-align: center; margin-top: 10px;">
+    <div class="module reveal" style="background: #fef2f2; border: 2px solid #ef4444; text-align: center; margin-top: 10px;">
         <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
         <div style="color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.5; margin-bottom: 15px;" data-i18n="index_disclaimer">
             <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
@@ -350,7 +350,6 @@
         <a href="securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
     </div>
 
-    <!-- FOOTER MIS À JOUR -->
     <div class="footer-module">
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         
@@ -368,7 +367,7 @@
         </a>
     </div>
 
-    <div class="premium-sponsor" style="margin-top: 30px; margin-bottom: 20px;">
+    <div class="premium-sponsor reveal" style="margin-top: 30px; margin-bottom: 20px;">
         <div class="premium-badge" data-i18n="premium_badge">Sponsor Officiel 2026</div>
         <h2 class="premium-title" data-i18n="premium_title">Espace Partenaire Premium</h2>
         <p class="premium-desc" data-i18n="premium_desc">Affichez votre entreprise ici en grand format 24h/24 ! Contactez-nous pour réserver cet emplacement exclusif.</p>
@@ -917,5 +916,27 @@
 
     document.addEventListener('DOMContentLoaded', checkHolidayPopup);
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const elementsToReveal = document.querySelectorAll(".reveal");
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                    obs.unobserve(entry.target); 
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.1, 
+            rootMargin: "0px 0px -20px 0px"
+        });
+
+        elementsToReveal.forEach(el => observer.observe(el));
+    });
+</script>
+
 </body>
 </html>
