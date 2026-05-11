@@ -81,6 +81,86 @@
         }
         .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
 
+        /* --- NOUVEAU : BANDE DÉROULANTE (MARQUEE) --- */
+        .marquee-container {
+            width: calc(100% - 30px);
+            margin: 0 15px 15px 15px;
+            overflow: hidden;
+            background: white;
+            padding: 12px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Effet de fondu sur les bords */
+        .marquee-container::before, .marquee-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .marquee-container::before {
+            left: 0;
+            background: linear-gradient(to right, white, transparent);
+        }
+        .marquee-container::after {
+            right: 0;
+            background: linear-gradient(to left, white, transparent);
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 15px;
+            width: max-content;
+            animation: scroll-marquee 30s linear infinite;
+            padding: 0 15px;
+        }
+        
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        .marquee-item {
+            width: 55px;
+            height: 55px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            box-sizing: border-box;
+            background: white;
+            flex-shrink: 0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }
+
+        .marquee-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-color: var(--marine-blue);
+        }
+
+        .marquee-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        @keyframes scroll-marquee {
+            0% { transform: translateX(0); }
+            /* Translate de 50% de la largeur totale + la moitié du gap pour un raccord invisible */
+            100% { transform: translateX(calc(-50% - 7.5px)); }
+        }
+
         /* --- MODULE PARTENAIRE --- */
         .module {
             background: var(--card-bg);
@@ -215,6 +295,37 @@
             <h1 class="main-title"><span data-i18n="partners_title">NOS PARTENAIRES LOCAUX</span><sup>*</sup></h1>
         </div>
 
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <a href="#maison-renard" class="marquee-item"><img src="renard.png" alt="Renard"></a>
+                <a href="#utile" class="marquee-item"><img src="utile.png" alt="Utile"></a>
+                <a href="#lestran" class="marquee-item"><img src="lestran.png" alt="L'Estran"></a>
+                <a href="#comptoir" class="marquee-item"><img src="comptoir.png" alt="Comptoir"></a>
+                <a href="#or-coiffure" class="marquee-item"><img src="lorcoiffure.jpg" alt="Or Coiffure"></a>
+                <a href="#century21" class="marquee-item"><img src="century21.png" alt="Century 21"></a>
+                <a href="#carteret-marine" class="marquee-item"><img src="carteretmarine.png" alt="Carteret Marine"></a>
+                <a href="#la-cambuse" class="marquee-item"><img src="lacambuse.png" alt="La Cambuse"></a>
+                <a href="#food-truck" class="marquee-item"><img src="delizia.png" alt="Delizia"></a>
+                <a href="#chalet-gourmand" class="marquee-item"><img src="chaletgourmand.png" alt="Chalet Gourmand"></a>
+                <a href="#esprit-marin" class="marquee-item"><img src="espritmarin.png" alt="Esprit Marin"></a>
+                <a href="#lumieres-de-mer" class="marquee-item"><img src="lumieresdemer.png" alt="Lumières de mer"></a>
+                <a href="#epicerie-fine" class="marquee-item"><img src="epiceriefine.jpg" alt="Epicerie Fine"></a>
+
+                <a href="#maison-renard" class="marquee-item"><img src="renard.png" alt="Renard"></a>
+                <a href="#utile" class="marquee-item"><img src="utile.png" alt="Utile"></a>
+                <a href="#lestran" class="marquee-item"><img src="lestran.png" alt="L'Estran"></a>
+                <a href="#comptoir" class="marquee-item"><img src="comptoir.png" alt="Comptoir"></a>
+                <a href="#or-coiffure" class="marquee-item"><img src="lorcoiffure.jpg" alt="Or Coiffure"></a>
+                <a href="#century21" class="marquee-item"><img src="century21.png" alt="Century 21"></a>
+                <a href="#carteret-marine" class="marquee-item"><img src="carteretmarine.png" alt="Carteret Marine"></a>
+                <a href="#la-cambuse" class="marquee-item"><img src="lacambuse.png" alt="La Cambuse"></a>
+                <a href="#food-truck" class="marquee-item"><img src="delizia.png" alt="Delizia"></a>
+                <a href="#chalet-gourmand" class="marquee-item"><img src="chaletgourmand.png" alt="Chalet Gourmand"></a>
+                <a href="#esprit-marin" class="marquee-item"><img src="espritmarin.png" alt="Esprit Marin"></a>
+                <a href="#lumieres-de-mer" class="marquee-item"><img src="lumieresdemer.png" alt="Lumières de mer"></a>
+                <a href="#epicerie-fine" class="marquee-item"><img src="epiceriefine.jpg" alt="Epicerie Fine"></a>
+            </div>
+        </div>
         <div class="module" id="maison-renard">
             <div class="partner-header">
                 <div class="partner-logo">
@@ -309,7 +420,6 @@
             </div>
         </div>
 
-        <!-- NOUVEAU PARTENAIRE : CENTURY 21 -->
         <div class="module" id="century21">
             <div class="partner-header">
                 <div class="partner-logo">
@@ -385,7 +495,6 @@
             </div>
         </div>
 
-        <!-- NOUVEAU PARTENAIRE : CHALET GOURMAND -->
         <div class="module" id="chalet-gourmand">
             <div class="partner-header">
                 <div class="partner-logo">
