@@ -11,6 +11,10 @@
     <meta name="author" content="Cotentin Web Studio - Guillaume Leparmentier">
     <meta name="publisher" content="Cotentin Web Studio">
     <meta name="keywords" content="Ports, Cotentin, Marée, Porte, Horaires, Manche, Navigation, Normandie, Ouverture, Fermeture, Barneville, Carteret, Diélette, Port-Bail, Pêche, Marin, Météo marine">
+    
+    <meta name="apple-mobile-web-app-title" content="Port Diélette">
+    <meta name="application-name" content="Port Diélette">
+    
     <meta property="og:title" content="Ports du Cotentin - Horaires, Portes & Marées">
     <meta property="og:description" content="Accédez en 1 clic à l'état des portes, aux horaires des marées et à la météo des ports de Carteret et Diélette.">
     <meta property="og:image" content="https://portsducotentin.fr/android-chrome-512x512.png">
@@ -178,7 +182,6 @@
     <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
 </div>
 
-<!-- === MODAL CHOIX DU PORT === -->
 <div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
@@ -186,25 +189,20 @@
         <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">Choix du port</h3>
         
         <div style="display: flex; flex-direction: column; gap: 10px;">
-            <!-- Carteret : Retour au dossier parent -->
             <a href="../index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
                 Port Barneville-Carteret
             </a>
             
-            <!-- Diélette : Port actuel (Désactivé + Style Actif) -->
             <a href="#" onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="display: block; background: var(--marine-blue); color: white; text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem;">
                 📍  Port Diélette (Actuel)
             </a>
 
-            <!-- Port-Bail : Prochainement -->
             <div style="display: block; background: #f8fafc; color: #94a3b8; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.85rem; border: 1px dashed #cbd5e1; cursor: not-allowed;">
                 Port Port-Bail (Prochainement)
             </div>
         </div>
     </div>
 </div>
-<!-- =========================== -->
-
 <div id="holiday-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border-top: 6px solid var(--marine-blue);">
         
@@ -280,11 +278,9 @@
         </div>
     </div>
 
-<!-- MODULE Informations marée -->
 <div class="module">
         <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;" data-i18n="tide_title">Informations marée</div>
         
-        <!-- === LE MODULE BLEU CLAIR === -->
         <div class="tide-full-module">
             
             <div class="tide-header-info">
@@ -312,15 +308,11 @@
                 <div id="tide-right-data"><span id="val-right">--</span></div>
             </div>
         </div>
-        <!-- === FIN DU MODULE BLEU CLAIR === -->
-
-        <!-- === PHASES LUNAIRES JUSTE EN DESSOUS === -->
         <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.75rem; font-weight: 700; color: var(--marine-blue);">
             <span data-i18n="moon_phase">Phase lunaire</span> : <span id="moon-phase-badge" style="font-size: 1.2rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15));"></span>
         </div>
             </div>
-<!-- Conditions météo -->
-    <div class="module">
+<div class="module">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
             <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">📷 WEBCAM</a>
@@ -330,8 +322,7 @@
         </div>
     </div>
 
-<!-- COURANTS MARINS (WINDY) -->
-    <div class="module">
+<div class="module">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="currents_title">Courants marins</div>
         </div>
@@ -343,7 +334,6 @@
         </div>
     </div>
     
-    <!-- NOUVEAU MODULE AVERTISSEMENT ET SÉCURITÉ -->
     <div class="module" style="background: #fef2f2; border: 2px solid #ef4444; text-align: center; margin-top: 10px;">
         <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
         <div style="color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.5; margin-bottom: 15px;" data-i18n="index_disclaimer">
@@ -352,7 +342,6 @@
         <a href="../securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
     </div>
 
-    <!-- FOOTER MIS À JOUR (Sans le bouton sécurité) -->
     <div class="footer-module">
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         
