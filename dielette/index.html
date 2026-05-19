@@ -410,11 +410,9 @@
         }
     };
      
-    function updateSponsor() {
+function updateSponsor() {
         const now = new Date();
         const hour = now.getHours();
-        const minute = now.getMinutes();
-        const day = now.getDay(); 
         
         const sponsorText = document.getElementById('sponsor-text');
         if (!sponsorText) return;
@@ -424,74 +422,15 @@
         const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
         const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
 
-        const txtMaisonRenard = t.sponsor_maison_renard_index || "🥖 Boulangerie Maison Renard - Pains spéciaux, macarons & chocolats";
-        const txtUtile = t.sponsor_utile || "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison";
-        const txtLestran = t.sponsor_lestran_index || "🥐 L’Estran Carteret - Boulangerie & Pâtisserie";
-        const txtComptoir = t.sponsor_comptoir_index || "🥫 Le Comptoir de Carteret - Épicerie";
-        const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
-        const txtCentury21 = t.sponsor_century21 || "🏠 Century 21 Chevet Immobilier - Agence immobilière";
-        const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
-        const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
-        const txtChalet = t.sponsor_chalet || "🦞 Au Chalet Gourmand - Terre et Mer";
-        const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
-        const txtEpicerieFine = t.sponsor_epicerie_fine || "🍷 L'Epicerie Fine - Épicerie Fine & Cave à vin";
-        const txtLumieres = t.sponsor_lumieres || "📸 Lumières de mer - Photographie de Sébastien Rachine";
+        // Les textes spécifiques pour Diélette
+        const txtEffetPapillon = "🦋 L'Effet Papillon - L'essentiel du bien-être";
         const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
 
-        if (hour === 7) {
-            sponsorText.innerHTML = `<a href="partenaires.html#maison-renard" style="${linkStyle}">${txtMaisonRenard}</a>`;
-        }
-        else if (hour === 8) {
-            const rotation = minute % 3; 
-            if (rotation === 0) {
-                sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">${txtUtile}</a>`;
-            } else if (rotation === 1) {
-                sponsorText.innerHTML = `<a href="partenaires.html#lestran" style="${linkStyle}">${txtLestran}</a>`;
-            } else {
-                sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
-            }
-        }
-        else if (hour === 9) {
-            if (minute % 2 === 0) {
-                sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
-            } else {
-                sponsorText.innerHTML = `<a href="partenaires.html#century21" style="${linkStyle}">${txtCentury21}</a>`;
-            }
+        // Créneau de 17h00 à 18h00 pour L'Effet Papillon
+        if (hour === 17) {
+            sponsorText.innerHTML = `<a href="partenaires.html#effet-papillon" style="${linkStyle}">${txtEffetPapillon}</a>`;
         } 
-        else if (hour === 10) {
-            sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">${txtCarteret}</a>`;
-        }
-        else if (hour === 11) {
-            const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
-            if (isFoodTruckDay && minute % 2 !== 0) {
-                let lieu = t.loc_service || "En service !";
-                if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
-                if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
-                if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres (Barneville)";
-                if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
-                if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles (Barneville)";
-                
-                const txtDelizia = (t.sponsor_delizia || "🍔 Deliziafoodtruck, Cuisine Italienne - ") + lieu;
-                sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">${txtDelizia}</a>`;
-            } else {
-                sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
-            }
-        } 
-        else if (hour === 12) {
-            sponsorText.innerHTML = `<a href="partenaires.html#chalet-gourmand" style="${linkStyle}">${txtChalet}</a>`;
-        }
-        else if (hour === 14) {
-            sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
-        }
-        else if (hour === 15) {
-            sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
-        }
-        else if (hour === 16) {
-            sponsorText.innerHTML = `<a href="partenaires.html#lumieres-de-mer" style="${linkStyle}">${txtLumieres}</a>`;
-        }
-        else if (hour === 17) {
-            sponsorText.innerHTML = `<a href="partenaires.html#epicerie-fine" style="${linkStyle}">${txtEpicerieFine}</a>`;
-        }
+        // Le reste de la journée, on affiche le message par défaut
         else {
             sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
         }
