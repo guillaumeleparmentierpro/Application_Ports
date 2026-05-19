@@ -81,6 +81,86 @@
         }
         .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
 
+        /* --- NOUVEAU : BANDE DÉROULANTE (MARQUEE) --- */
+        .marquee-container {
+            width: calc(100% - 30px);
+            margin: 0 15px 15px 15px;
+            overflow: hidden;
+            background: white;
+            padding: 12px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Effet de fondu sur les bords */
+        .marquee-container::before, .marquee-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .marquee-container::before {
+            left: 0;
+            background: linear-gradient(to right, white, transparent);
+        }
+        .marquee-container::after {
+            right: 0;
+            background: linear-gradient(to left, white, transparent);
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 15px;
+            width: max-content;
+            animation: scroll-marquee 15s linear infinite; /* Animation plus rapide car moins de logos pour le moment */
+            padding: 0 15px;
+        }
+        
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        .marquee-item {
+            width: 55px;
+            height: 55px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            box-sizing: border-box;
+            background: white;
+            flex-shrink: 0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }
+
+        .marquee-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-color: var(--marine-blue);
+        }
+
+        .marquee-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        @keyframes scroll-marquee {
+            0% { transform: translateX(0); }
+            /* Translate de 50% de la largeur totale + la moitié du gap pour un raccord invisible */
+            100% { transform: translateX(calc(-50% - 7.5px)); }
+        }
+
         /* --- MODULE PARTENAIRE --- */
         .module {
             background: var(--card-bg);
@@ -215,7 +295,38 @@
             <h1 class="main-title"><span data-i18n="partners_title">NOS PARTENAIRES LOCAUX</span><sup>*</sup></h1>
         </div>
 
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <a href="#effet-papillon" class="marquee-item"><img src="effpap.png" alt="L'Effet Papillon"></a>
+                <a href="#effet-papillon" class="marquee-item"><img src="effpap.png" alt="L'Effet Papillon"></a>
+                <a href="#effet-papillon" class="marquee-item"><img src="effpap.png" alt="L'Effet Papillon"></a>
+                <a href="#effet-papillon" class="marquee-item"><img src="effpap.png" alt="L'Effet Papillon"></a>
+                <a href="#effet-papillon" class="marquee-item"><img src="effpap.png" alt="L'Effet Papillon"></a>
+                <a href="#effet-papillon" class="marquee-item"><img src="effpap.png" alt="L'Effet Papillon"></a>
+                <a href="#effet-papillon" class="marquee-item"><img src="effpap.png" alt="L'Effet Papillon"></a>
+                <a href="#effet-papillon" class="marquee-item"><img src="effpap.png" alt="L'Effet Papillon"></a>
+            </div>
+        </div>
 
+        <div class="module" id="effet-papillon">
+            <div class="partner-header">
+                <div class="partner-logo">
+                    <img src="effpap.png" alt="Logo L'Effet Papillon">
+                </div>
+                <div class="partner-info">
+                    <h2 class="partner-name">L'Effet Papillon Diélette</h2>
+                    <p class="partner-desc">L'essentiel du bien-être.</p>
+                    <div class="sponsor-time">⏱️ Sponsor de 17h00 à 18h00</div>
+                    <div class="partner-schedule">Ouvert du Mardi au Samedi :<br>10h00 - 12h30 / 15h00 - 18h30</div>
+                </div>
+            </div>
+            <div class="partner-actions">
+                <a href="tel:0785215659" class="btn-partner-link" onclick="gtag('event', 'clic_appel', {'partenaire': 'L-Effet Papillon'});">📞 APPELER</a>
+                <a href="mailto:leffetpapillondielette@gmail.com" class="btn-partner-link" onclick="gtag('event', 'clic_email', {'partenaire': 'L-Effet Papillon'});">✉️ E-MAIL</a>
+                <a href="https://www.google.com/maps/place/L'Effet+Papillon+-+L'essentiel+du+bien-%C3%AAtre/@49.5519168,-1.8550955,16.25z/data=!4m6!3m5!1s0x480ced98e2ccf639:0x345b4976f62b1273!8m2!3d49.5528134!4d-1.8576363!16s%2Fg%2F11qm2473zk?authuser=0&entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'L-Effet Papillon'});">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/leffetpapillonlessentieldubienetre/?locale=fr_FR" target="_blank" class="btn-partner-link" onclick="gtag('event', 'clic_site', {'partenaire': 'L-Effet Papillon'});">🌐 FACEBOOK</a>
+            </div>
+        </div>
 
         <div class="module" style="background: #eff6ff; border-top-color: #3b82f6;">
             <div class="partner-header">
