@@ -481,6 +481,10 @@
         const txtEpicerieFine = t.sponsor_epicerie_fine || "🍷 L'Epicerie Fine - Épicerie Fine & Cave à vin";
         const txtLumieres = t.sponsor_lumieres || "📸 Lumières de mer - Photographie de Sébastien Rachine";
         const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+        
+        // --- Nouveaux Partenaires ---
+        const txtCoralie = "📸 Coralie Renouf - Photographe professionnelle";
+        const txtLamaison = "🛠️ Lamaison.fr - Bricolage, jardin, déco & animalerie";
 
         if (hour === 7) {
             sponsorText.innerHTML = `<a href="partenaires.html#maison-renard" style="${linkStyle}">${txtMaisonRenard}</a>`;
@@ -522,7 +526,16 @@
             }
         } 
         else if (hour === 12) {
-            sponsorText.innerHTML = `<a href="partenaires.html#chalet-gourmand" style="${linkStyle}">${txtChalet}</a>`;
+            // Alternance Chalet Gourmand / Coralie Renouf
+            if (minute % 2 === 0) {
+                sponsorText.innerHTML = `<a href="partenaires.html#chalet-gourmand" style="${linkStyle}">${txtChalet}</a>`;
+            } else {
+                sponsorText.innerHTML = `<a href="partenaires.html#coralie-renouf" style="${linkStyle}">${txtCoralie}</a>`;
+            }
+        }
+        else if (hour === 13) {
+            // Nouveau créneau exclusif pour Lamaison.fr
+            sponsorText.innerHTML = `<a href="partenaires.html#lamaison" style="${linkStyle}">${txtLamaison}</a>`;
         }
         else if (hour === 14) {
             sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
