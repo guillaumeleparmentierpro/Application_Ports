@@ -157,7 +157,6 @@
 
         @keyframes scroll-marquee {
             0% { transform: translateX(0); }
-            /* Translate de 50% de la largeur totale + la moitié du gap pour un raccord invisible */
             100% { transform: translateX(calc(-50% - 7.5px)); }
         }
 
@@ -307,7 +306,9 @@
                 <a href="#la-cambuse" class="marquee-item"><img src="lacambuse.png" alt="La Cambuse"></a>
                 <a href="#food-truck" class="marquee-item"><img src="delizia.png" alt="Delizia"></a>
                 <a href="#chalet-gourmand" class="marquee-item"><img src="chaletgourmand.png" alt="Chalet Gourmand"></a>
+                <a href="#lamaison" class="marquee-item"><img src="lamaison.fr.webp" alt="Lamaison.fr"></a>
                 <a href="#esprit-marin" class="marquee-item"><img src="espritmarin.png" alt="Esprit Marin"></a>
+                <a href="#coralie-renouf" class="marquee-item"><img src="coralierenouf.jpg" alt="Coralie Renouf"></a>
                 <a href="#lumieres-de-mer" class="marquee-item"><img src="lumieresdemer.png" alt="Lumières de mer"></a>
                 <a href="#epicerie-fine" class="marquee-item"><img src="epiceriefine.jpg" alt="Epicerie Fine"></a>
 
@@ -321,11 +322,14 @@
                 <a href="#la-cambuse" class="marquee-item"><img src="lacambuse.png" alt="La Cambuse"></a>
                 <a href="#food-truck" class="marquee-item"><img src="delizia.png" alt="Delizia"></a>
                 <a href="#chalet-gourmand" class="marquee-item"><img src="chaletgourmand.png" alt="Chalet Gourmand"></a>
+                <a href="#lamaison" class="marquee-item"><img src="lamaison.fr.webp" alt="Lamaison.fr"></a>
                 <a href="#esprit-marin" class="marquee-item"><img src="espritmarin.png" alt="Esprit Marin"></a>
+                <a href="#coralie-renouf" class="marquee-item"><img src="coralierenouf.jpg" alt="Coralie Renouf"></a>
                 <a href="#lumieres-de-mer" class="marquee-item"><img src="lumieresdemer.png" alt="Lumières de mer"></a>
                 <a href="#epicerie-fine" class="marquee-item"><img src="epiceriefine.jpg" alt="Epicerie Fine"></a>
             </div>
         </div>
+
         <div class="module" id="maison-renard">
             <div class="partner-header">
                 <div class="partner-logo">
@@ -511,6 +515,44 @@
                 <a href="mailto:chaletgourmand@orange.fr" class="btn-partner-link" data-i18n="btn_email" onclick="gtag('event', 'clic_email', {'partenaire': 'Chalet Gourmand'});">✉️ E-MAIL</a>
                 <a href="https://www.google.com/maps/place/Au+Chalet+Gourmand+-+Terre+et+Mer/@49.3858232,-1.7527837,17z" target="_blank" class="btn-partner-link" data-i18n="btn_directions" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'Chalet Gourmand'});">📍 ITINÉRAIRE</a>
                 <a href="https://www.facebook.com/auchaletgourmand50/" target="_blank" class="btn-partner-link" data-i18n="btn_website" onclick="gtag('event', 'clic_site', {'partenaire': 'Chalet Gourmand'});">🌐 FACEBOOK</a>
+            </div>
+        </div>
+
+        <div class="module" id="coralie-renouf">
+            <div class="partner-header">
+                <div class="partner-logo">
+                    <img src="coralierenouf.jpg" alt="Logo Coralie Renouf">
+                </div>
+                <div class="partner-info">
+                    <h2 class="partner-name">Coralie Renouf Photographe</h2>
+                    <p class="partner-desc">Photographe professionnelle.</p>
+                    <div class="sponsor-time">⏱️ Sponsor de 12h00 à 13h00</div>
+                </div>
+            </div>
+            <div class="partner-actions">
+                <a href="tel:0659402959" class="btn-partner-link" onclick="gtag('event', 'clic_appel', {'partenaire': 'Coralie Renouf'});">📞 APPELER</a>
+                <a href="mailto:renoufcoralie@gmail.com" class="btn-partner-link" onclick="gtag('event', 'clic_email', {'partenaire': 'Coralie Renouf'});">✉️ E-MAIL</a>
+                <a href="https://www.google.com/maps/place/Coralie+Renouf+Photographe/@49.3778143,-1.7863634,18.68z/data=!4m6!3m5!1s0x480c6176a29d0909:0x724ca8b70a21dc3d!8m2!3d49.3777853!4d-1.7863015!16s%2Fg%2F11b6dhk2wf?authuser=0&entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'Coralie Renouf'});">📍 ITINÉRAIRE</a>
+                <a href="https://www.coralierenouf.com/" target="_blank" class="btn-partner-link" onclick="gtag('event', 'clic_site', {'partenaire': 'Coralie Renouf'});">🌐 SITE WEB</a>
+            </div>
+        </div>
+
+        <div class="module" id="lamaison">
+            <div class="partner-header">
+                <div class="partner-logo">
+                    <img src="lamaison.fr.webp" alt="Logo Lamaison.fr">
+                </div>
+                <div class="partner-info">
+                    <h2 class="partner-name">Lamaison.fr</h2>
+                    <p class="partner-desc">Vente et conseils en bricolage, jardin, décoration et animalerie.</p>
+                    <div class="sponsor-time">⏱️ Sponsor de 13h00 à 14h00</div>
+                </div>
+            </div>
+            <div class="partner-actions">
+                <a href="tel:0233875640" class="btn-partner-link" onclick="gtag('event', 'clic_appel', {'partenaire': 'Lamaison.fr'});">📞 APPELER</a>
+                <a href="mailto:barnevillecarteret@lamaison.fr" class="btn-partner-link" onclick="gtag('event', 'clic_email', {'partenaire': 'Lamaison.fr'});">✉️ E-MAIL</a>
+                <a href="https://www.google.com/maps/place/LaMaison.fr/@49.3839926,-1.7526033,18.43z/data=!4m6!3m5!1s0x480c8b535197e509:0xb4ba6d23a2fb4ea8!8m2!3d49.384085!4d-1.7526004!16s%2Fg%2F11h6lm_4pk?authuser=0&entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" onclick="gtag('event', 'clic_itineraire', {'partenaire': 'Lamaison.fr'});">📍 ITINÉRAIRE</a>
+                <a href="https://www.facebook.com/lamaison.fr.barneville/" target="_blank" class="btn-partner-link" onclick="gtag('event', 'clic_site', {'partenaire': 'Lamaison.fr'});">🌐 FACEBOOK</a>
             </div>
         </div>
 
