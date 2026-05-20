@@ -15,7 +15,7 @@ const translations = {
         // --- PARTENAIRES ---
         desc_century21: "Agence immobilière.",
         time_century21: "⏱️ Sponsor de 09h00 à 10h00",
-        sponsor_century21: "Century 21 Chevet Immobilier - Agence immobilière",
+        sponsor_century21: "Century 21 Chevet Immobilier",
 
         desc_chalet: "Plateaux de Fruits de Mer, Poissons - Crustacés, Fruits-Légumes de Pays.",
         time_chalet: "⏱️ Sponsor de 12h00 à 13h00",
@@ -222,7 +222,7 @@ const translations = {
         // --- PARTENAIRES ---
         desc_century21: "Real estate agency.",
         time_century21: "⏱️ Sponsor from 9:00 AM to 10:00 AM",
-        sponsor_century21: "Century 21 Chevet Immobilier - Real estate agency",
+        sponsor_century21: "Century 21 Chevet Immobilier",
 
         desc_chalet: "Seafood platters, Fish - Shellfish, Local Fruits & Vegetables.",
         time_chalet: "⏱️ Sponsor from 12:00 PM to 1:00 PM",
