@@ -70,6 +70,7 @@
         .lang-btn.active { opacity: 1; transform: scale(1.15); }
         .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .btn-action:active { transform: scale(0.95); }
+        .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
         .status-box { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
         .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
         .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
@@ -77,7 +78,9 @@
         .status-box.closed { background: var(--closed-color); border: 5px solid var(--danger-dark); }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
         .status-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; opacity: 0.9; margin-bottom: 2px; }
+        
         .status-value { font-size: 1.4rem; font-weight: 900; margin: 5px 0; letter-spacing: -0.5px; line-height: 1.1; padding: 0 5px; text-align: center; }
+        
         .status-box.warning .status-value, .status-box.danger .status-value { font-size: 1.15rem; letter-spacing: -1px; }
         .progress-wrapper { margin: 10px 0; display: none; }
         .progress-container { width: 100%; height: 34px; border-radius: 17px; overflow: hidden; position: relative; background: var(--open-light); transition: background 0.5s ease; }
@@ -93,41 +96,113 @@
         
         .slots-container { background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
         .slot-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        
         .slot-title { font-size: 0.6rem; font-weight: 700; color: var(--marine-blue); line-height: 1.3; margin-right: 5px; text-transform: uppercase; flex: 1; }
         .slot-title.secondary { color: #64748b; }
+        
         .slot-pills { display: flex; gap: 5px; flex-shrink: 0; }
         .slot-badge { width: 72px; padding: 5px 0; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 3px; color: white; }
         .slot-badge span { font-size: 0.45rem; text-transform: uppercase; font-weight: 600; opacity: 0.9; }
         .slot-badge b { font-size: 0.75rem; font-weight: 700; }
+        
         .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
         .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
         
         .tide-full-module { background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; padding: 15px 10px; margin: 0 12px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; position: relative; }
         .tide-header-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; font-weight: 700; color: var(--marine-blue); }
+        
         .tide-column { flex: 1; flex-basis: 33.33%; min-width: 0; } 
+        
         #tideCanvasLarge { width: 100%; height: 80px; cursor: pointer; }
         .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
-        .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 270px; border: 1px solid #e2e8f0; }
         
-        /* --- STYLES PREMIUM --- */
+        .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 270px; border: 1px solid #e2e8f0; }
+        .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
+        
+        /* --- STYLES POUR LE NOUVEAU BLOC PREMIUM --- */
         .premium-sponsor {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white; border-radius: 12px; padding: 20px 15px; text-align: center;
-            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.2); margin: 0 15px 15px 15px;
-            position: relative; overflow: hidden;
+            color: white;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.2);
+            margin: 0 15px 15px 15px;
+            position: relative;
+            overflow: hidden;
         }
-        .premium-badge { background: #fbbf24; color: #991b1b; font-size: 0.6rem; font-weight: 800; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; display: inline-block; margin-bottom: 8px; letter-spacing: 1px; }
-        .premium-title { font-size: 1.1rem; font-weight: 800; margin: 5px 0 10px 0; line-height: 1.2; }
-        .premium-desc { font-size: 0.75rem; opacity: 0.9; margin-bottom: 15px; line-height: 1.4; }
-        .btn-premium { background: white; color: var(--marine-blue) !important; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 800; font-size: 0.75rem; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .premium-badge {
+            background: #fbbf24;
+            color: #991b1b;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .premium-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 5px 0 10px 0;
+            line-height: 1.2;
+        }
+        .premium-desc {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .btn-premium {
+            background: white;
+            color: var(--marine-blue) !important;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
         .btn-premium:active { transform: scale(0.95); }
 
-        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* --- EFFET REVEAL ON SCROLL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        .sun-times-container { display: flex; justify-content: center; gap: 15px; margin-top: 12px; font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); }
-        .sun-badge { display: flex; align-items: center; gap: 6px; background: #f8fafc; padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .sun-badge span.emoji { font-size: 1.1rem; }
+        /* --- STYLE POUR LES HORAIRES DU SOLEIL --- */
+        .sun-times-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--marine-blue);
+        }
+        .sun-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f8fafc;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .sun-badge span.emoji {
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 <body>
@@ -161,9 +236,12 @@
 </div>
 <div id="holiday-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border-top: 6px solid var(--marine-blue);">
+        
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('holiday-modal').style.display='none'">×</span>
+        
         <h3 id="holiday-title" style="margin: 0 0 10px 0; color: var(--marine-blue); font-weight: 800; font-size: 1.2rem;">--</h3>
         <p id="holiday-message" style="margin: 0 0 20px 0; font-size: 0.85rem; color: #475569; line-height: 1.5; font-weight: 600;">--</p>
+        
         <button onclick="document.getElementById('holiday-modal').style.display='none'" style="background: var(--marine-blue); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Merci, fermer</button>
     </div>
 </div>
@@ -436,7 +514,8 @@
             }
         } 
         else if (hour === 12) {
-            if (minute % 2 === 0) finalHTML = getPartnerHTML("chalet-gourmand", "chaletgourmand.png", t.sponsor_chalet || "Au Chalet Gourmand");
+            const rot = minute % 2;
+            if (rot === 0) finalHTML = getPartnerHTML("chalet-gourmand", "chaletgourmand.png", t.sponsor_chalet || "Au Chalet Gourmand");
             else finalHTML = getPartnerHTML("coralie-renouf", "coralierenouf.jpg", "Coralie Renouf - Photographe");
         }
         else if (hour === 13) {
@@ -492,6 +571,21 @@
         ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
     }
 
+    // --- NOUVEAU PARSEUR ROBUSTE POUR SÉCURISER LES DONNÉES ---
+    function parseTime(tStr) {
+        if (!tStr) return null;
+        let s = String(tStr).trim().toLowerCase().replace('h', ':').replace('.', ':');
+        if (s === "--" || s === "--:--" || s === "") return null;
+        let parts = s.split(':');
+        if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+            let hour = parseInt(parts[0], 10);
+            let min = parseInt(parts[1], 10);
+            let cleanStr = hour.toString().padStart(2, '0') + ":" + min.toString().padStart(2, '0');
+            return { h: hour, m: min, clean: cleanStr };
+        }
+        return null;
+    }
+
     function updateApp() {
         const now = new Date();
         const tzoffset = now.getTimezoneOffset() * 60000;
@@ -502,6 +596,7 @@
         const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
         document.getElementById('current-date').innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
         
+        // --- CALCUL FIABLE DE LA PHASE DE LUNE ---
         try {
             const cycleLunaireMs = 2551442877; 
             const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57); 
@@ -539,16 +634,38 @@
         [yesterdayStr, dateStr, tomorrowStr].forEach(ds => {
             let dData = data.find(d => d.date === ds);
             if(dData) {
-                if(dData.portes) {
-                    dData.portes.forEach(p => {
-                        if(p.open !== "--" && p.open !== "--:--" && p.close !== "--" && p.close !== "--:--") {
-                            let sO = new Date(ds + "T" + p.open);
-                            let sC = new Date(ds + "T" + p.close);
-                            if (sC < sO) sC.setDate(sC.getDate() + 1);
-                            allPortes.push({ sO: sO, sC: sC, openStr: p.open, closeStr: p.close });
+                let parts = ds.split('-');
+                let y = parseInt(parts[0], 10);
+                let m = parseInt(parts[1], 10) - 1;
+                let day = parseInt(parts[2], 10);
+
+                let portesArray = dData.portes || [];
+                // Support ancien format si besoin
+                if (!dData.portes) {
+                    for(let i=1; i<=4; i++) {
+                        if(dData["ouv"+i] && dData["ferm"+i]) {
+                            portesArray.push({open: dData["ouv"+i], close: dData["ferm"+i]});
                         }
-                    });
+                    }
                 }
+
+                portesArray.forEach(p => {
+                    let openTime = parseTime(p.open);
+                    let closeTime = parseTime(p.close);
+                    
+                    if(openTime && closeTime) {
+                        let sO = new Date(y, m, day, openTime.h, openTime.m, 0);
+                        let sC = new Date(y, m, day, closeTime.h, closeTime.m, 0);
+                        if (sC < sO) sC.setDate(sC.getDate() + 1);
+                        
+                        allPortes.push({ 
+                            sO: sO, 
+                            sC: sC, 
+                            openStr: openTime.clean, 
+                            closeStr: closeTime.clean 
+                        });
+                    }
+                });
                 
                 [
                     { time: dData.bm1, h: dData.bm1_h, type: "BM", label: "Basse Mer", c: dData.coeff1, refTime: null },
@@ -556,15 +673,18 @@
                     { time: dData.bm2, h: dData.bm2_h, type: "BM", label: "Basse Mer", c: dData.coeff2, refTime: dData.bm1 },
                     { time: dData.pm2, h: dData.pm2_h, type: "PM", label: "Pleine Mer", c: dData.coeff2, refTime: dData.pm1 }
                 ].forEach(t => {
-                    if (t.time && t.time !== "--:--" && t.time !== "--") {
-                        let dObj = new Date(ds + "T" + t.time);
-                        if (t.refTime && t.refTime !== "--:--" && t.refTime !== "--") {
-                            if (t.time < t.refTime) {
+                    let parsedTime = parseTime(t.time);
+                    if (parsedTime) {
+                        let dObj = new Date(y, m, day, parsedTime.h, parsedTime.m, 0);
+                        let parsedRef = parseTime(t.refTime);
+                        if (parsedRef) {
+                            let refObj = new Date(y, m, day, parsedRef.h, parsedRef.m, 0);
+                            if (dObj < refObj) {
                                 dObj.setDate(dObj.getDate() + 1);
                             }
                         }
                         allTides.push({
-                            time: t.time,
+                            time: parsedTime.clean,
                             h: t.h,
                             type: t.type,
                             label: t.label,
@@ -576,6 +696,8 @@
             }
         });
 
+        // TRI DE SÉCURITÉ ABSOLU
+        allPortes.sort((a, b) => a.sO - b.sO);
         allTides.sort((a, b) => a.dateObj - b.dateObj);
 
         let futurePortes = allPortes.filter(p => p.sC > now); 
