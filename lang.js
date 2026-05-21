@@ -5,7 +5,6 @@ const translations = {
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
         next_big_tides: "Prochaines grandes marées",
-        moon_phase: "Phase lunaire",
         ht_maree: "Ht. marée",
         currents_title: "Courants marins",
         currents_hint: "👆 Touchez la carte pour explorer la zone.",
@@ -32,7 +31,7 @@ const translations = {
         change_port: "CHANGER DE PORT",
         select_port_title: "⚓ Choix du port",
         
-        sponsor_lestran_index: "L’Estran Carteret - Boulangerie & Pâtisserie",
+        sponsor_lestran_index: "L'Estran Carteret - Boulangerie & Pâtisserie",
         sponsor_comptoir_index: "Le Comptoir de Carteret - Épicerie",
         
         desc_lestran: "Boulangerie - Pâtisserie",
@@ -77,7 +76,7 @@ const translations = {
         secu_speed_title: "Limitation de vitesse",
         secu_speed_text: "• <span class=\"highlight\">3 nœuds</span> dans la zone du bassin à flot.<br>• <span class=\"highlight\">5 nœuds</span> dans la partie marnante.",
         secu_current_title: "⚠️ Courant à la porte",
-        secu_current_text: "À l’ouverture de la porte, un <span class=\"highlight\">fort courant</span> peut se produire pendant 15 à 30 min (selon les coefficients). Soyez vigilant lors du passage !",
+        secu_current_text: "À l'ouverture de la porte, un <span class=\"highlight\">fort courant</span> peut se produire pendant 15 à 30 min (selon les coefficients). Soyez vigilant lors du passage !",
         secu_precision_title: "Précisions horaires",
         secu_precision_text1: "Les heures sont exprimées en <span style=\"font-weight:700;\">heure légale française</span>.",
         secu_precision_text2: "Des fluctuations de <span class=\"highlight\">+/- 30 min</span> peuvent survenir (pression, vent, coefficients). Ces données sont indicatives et n'engagent pas la responsabilité du Port.",
@@ -212,7 +211,6 @@ const translations = {
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
         next_big_tides: "Next spring tides",
-        moon_phase: "Moon phase",
         ht_maree: "Tide ht.",
         currents_title: "Ocean Currents",
         currents_hint: "👆 Touch the map to explore the area.",
@@ -239,7 +237,7 @@ const translations = {
         change_port: "CHANGE PORT",
         select_port_title: "⚓ Select Port",
         
-        sponsor_lestran_index: "L’Estran Carteret - Bakery & Pastry Shop",
+        sponsor_lestran_index: "L'Estran Carteret - Bakery & Pastry Shop",
         sponsor_comptoir_index: "Le Comptoir de Carteret - Grocery Store",
         
         desc_lestran: "Bakery - Pastry Shop",
