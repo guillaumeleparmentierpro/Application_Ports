@@ -338,8 +338,10 @@
             </div>
         </div>
         
+        <!-- ✅ MODIFICATION : Phase lunaire sans le label "Phase lunaire", emoji + nom de la phase -->
         <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.75rem; font-weight: 700; color: var(--marine-blue);">
-            <span data-i18n="moon_phase">Phase lunaire</span> : <span id="moon-phase-badge" style="font-size: 1.2rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15));"></span>
+            <span id="moon-phase-badge" style="font-size: 1.4rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15));"></span>
+            <span id="moon-phase-label" style="font-style: italic; color: #475569; font-size: 0.75rem;"></span>
         </div>
     </div>
 
@@ -482,7 +484,7 @@
         else if (hour === 8) {
             const rot = minute % 3; 
             if (rot === 0) finalHTML = getPartnerHTML("utile", "utile.png", t.sponsor_utile || "UTILE Barneville-Carteret");
-            else if (rot === 1) finalHTML = getPartnerHTML("lestran", "lestran.png", t.sponsor_lestran_index || "L’Estran Carteret - Boulangerie");
+            else if (rot === 1) finalHTML = getPartnerHTML("lestran", "lestran.png", t.sponsor_lestran_index || "L'Estran Carteret - Boulangerie");
             else finalHTML = getPartnerHTML("comptoir", "comptoir.png", t.sponsor_comptoir_index || "Le Comptoir de Carteret");
         }
         else if (hour === 9) {
@@ -599,7 +601,7 @@
         const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
         document.getElementById('current-date').innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
         
-        // --- CALCUL FIABLE DE LA PHASE DE LUNE ---
+        // --- ✅ MODIFICATION : CALCUL PHASE DE LUNE AVEC NOM ---
         try {
             const cycleLunaireMs = 2551442877; 
             const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57); 
@@ -608,19 +610,40 @@
             const phase = ((maintenantMs - referenceNouvelleLuneMs) % cycleLunaireMs) / cycleLunaireMs;
             
             let moonEmoji = "";
-            if (phase < 0.03 || phase > 0.97) moonEmoji = "🌑";
-            else if (phase < 0.22) moonEmoji = "🌒";
-            else if (phase < 0.28) moonEmoji = "🌓";
-            else if (phase < 0.47) moonEmoji = "🌔";
-            else if (phase < 0.53) moonEmoji = "🌕";
-            else if (phase < 0.72) moonEmoji = "🌖";
-            else if (phase < 0.78) moonEmoji = "🌗";
-            else moonEmoji = "🌘";
+            let moonName = "";
+
+            if (phase < 0.03 || phase > 0.97) {
+                moonEmoji = "🌑";
+                moonName = currentLang === 'en' ? "New Moon" : "Nouvelle Lune";
+            } else if (phase < 0.22) {
+                moonEmoji = "🌒";
+                moonName = currentLang === 'en' ? "Waxing Crescent" : "Premier Croissant";
+            } else if (phase < 0.28) {
+                moonEmoji = "🌓";
+                moonName = currentLang === 'en' ? "First Quarter" : "Premier Quartier";
+            } else if (phase < 0.47) {
+                moonEmoji = "🌔";
+                moonName = currentLang === 'en' ? "Waxing Gibbous" : "Gibbeuse Croissante";
+            } else if (phase < 0.53) {
+                moonEmoji = "🌕";
+                moonName = currentLang === 'en' ? "Full Moon" : "Pleine Lune";
+            } else if (phase < 0.72) {
+                moonEmoji = "🌖";
+                moonName = currentLang === 'en' ? "Waning Gibbous" : "Gibbeuse Décroissante";
+            } else if (phase < 0.78) {
+                moonEmoji = "🌗";
+                moonName = currentLang === 'en' ? "Last Quarter" : "Dernier Quartier";
+            } else {
+                moonEmoji = "🌘";
+                moonName = currentLang === 'en' ? "Waning Crescent" : "Dernier Croissant";
+            }
             
             const moonBadge = document.getElementById('moon-phase-badge');
-            if(moonBadge) {
-                moonBadge.innerText = moonEmoji;
-            }
+            if (moonBadge) moonBadge.innerText = moonEmoji;
+
+            const moonLabel = document.getElementById('moon-phase-label');
+            if (moonLabel) moonLabel.innerText = moonName;
+
         } catch (error) {
             console.log("Erreur calcul lune :", error);
         }
@@ -643,7 +666,6 @@
                 let day = parseInt(parts[2], 10);
 
                 let portesArray = dData.portes || [];
-                // Support ancien format si besoin
                 if (!dData.portes) {
                     for(let i=1; i<=4; i++) {
                         if(dData["ouv"+i] && dData["ferm"+i]) {
@@ -699,7 +721,6 @@
             }
         });
 
-        // TRI DE SÉCURITÉ ABSOLU
         allPortes.sort((a, b) => a.sO - b.sO);
         allTides.sort((a, b) => a.dateObj - b.dateObj);
 
