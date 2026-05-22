@@ -238,9 +238,12 @@
 </div>
 <div id="holiday-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border-top: 6px solid var(--marine-blue);">
+        
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('holiday-modal').style.display='none'">×</span>
+        
         <h3 id="holiday-title" style="margin: 0 0 10px 0; color: var(--marine-blue); font-weight: 800; font-size: 1.2rem;">--</h3>
         <p id="holiday-message" style="margin: 0 0 20px 0; font-size: 0.85rem; color: #475569; line-height: 1.5; font-weight: 600;">--</p>
+        
         <button onclick="document.getElementById('holiday-modal').style.display='none'" style="background: var(--marine-blue); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Merci, fermer</button>
     </div>
 </div>
@@ -338,7 +341,6 @@
             </div>
         </div>
         
-        <!-- ✅ MODIFICATION : Phase lunaire sans le label "Phase lunaire", emoji + nom de la phase -->
         <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.75rem; font-weight: 700; color: var(--marine-blue);">
             <span id="moon-phase-badge" style="font-size: 1.4rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15));"></span>
             <span id="moon-phase-label" style="font-style: italic; color: #475569; font-size: 0.75rem;"></span>
@@ -484,7 +486,7 @@
         else if (hour === 8) {
             const rot = minute % 3; 
             if (rot === 0) finalHTML = getPartnerHTML("utile", "utile.png", t.sponsor_utile || "UTILE Barneville-Carteret");
-            else if (rot === 1) finalHTML = getPartnerHTML("lestran", "lestran.png", t.sponsor_lestran_index || "L'Estran Carteret - Boulangerie");
+            else if (rot === 1) finalHTML = getPartnerHTML("lestran", "lestran.png", t.sponsor_lestran_index || "L’Estran Carteret - Boulangerie");
             else finalHTML = getPartnerHTML("comptoir", "comptoir.png", t.sponsor_comptoir_index || "Le Comptoir de Carteret");
         }
         else if (hour === 9) {
@@ -519,7 +521,9 @@
             else finalHTML = getPartnerHTML("coralie-renouf", "coralierenouf.jpg", "Coralie Renouf - Photographe");
         }
         else if (hour === 13) {
-            finalHTML = getPartnerHTML("lamaison", "lamaison.fr.webp", "Lamaison.fr - Bricolage & Déco");
+            const rot = minute % 2;
+            if (rot === 0) finalHTML = getPartnerHTML("lamaison", "lamaison.fr.webp", "Lamaison.fr - Bricolage & Déco");
+            else finalHTML = getPartnerHTML("lunetterie-fine", "lalunetteriefine.png", "La Lunetterie Fine - Opticien");
         }
         else if (hour === 14) {
             finalHTML = getPartnerHTML("esprit-marin", "espritmarin.png", t.sponsor_esprit_marin || "Esprit Marin - Concept store");
@@ -576,7 +580,7 @@
         ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
     }
 
-    // --- NOUVEAU PARSEUR ROBUSTE POUR SÉCURISER LES DONNÉES ---
+    // --- PARSEUR ROBUSTE POUR SÉCURISER LES DONNÉES ---
     function parseTime(tStr) {
         if (!tStr) return null;
         let s = String(tStr).trim().toLowerCase().replace('h', ':').replace('.', ':');
@@ -601,7 +605,7 @@
         const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
         document.getElementById('current-date').innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
         
-        // --- ✅ MODIFICATION : CALCUL PHASE DE LUNE AVEC NOM ---
+        // --- CALCUL FIABLE DE LA PHASE DE LUNE ---
         try {
             const cycleLunaireMs = 2551442877; 
             const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57); 
@@ -666,6 +670,7 @@
                 let day = parseInt(parts[2], 10);
 
                 let portesArray = dData.portes || [];
+                // Support ancien format si besoin
                 if (!dData.portes) {
                     for(let i=1; i<=4; i++) {
                         if(dData["ouv"+i] && dData["ferm"+i]) {
@@ -721,6 +726,7 @@
             }
         });
 
+        // TRI DE SÉCURITÉ ABSOLU
         allPortes.sort((a, b) => a.sO - b.sO);
         allTides.sort((a, b) => a.dateObj - b.dateObj);
 
