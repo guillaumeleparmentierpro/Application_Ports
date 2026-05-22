@@ -4,6 +4,13 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        desc_bouteille_mer: "Large choix de vins, spiritueux, bières et produits du terroir. Location de tireuses à bières.",
+        time_bouteille_mer: "⏱️ Sponsor de 10h00 à 11h00",
+        desc_effet_papillon: "L'essentiel du bien-être.",
+        time_effet_papillon: "⏱️ Sponsor de 17h00 à 18h00",
+        sched_effet_papillon: "Ouvert du Mardi au Samedi :<br>10h00 - 12h30 / 15h00 - 18h30",
+        desc_mer_boire: "Pub-Bar à vin sur le port de Diélette proposant des bières normandes, spiritueux, mets à grignoter...",
+        time_mer_boire: "⏱️ Sponsor de 19h00 à 20h00",
         desc_mille_marin: "Accompagnement de l'achat à la vente, de l'entretien au stockage de votre bateau.",
         time_mille_marin: "⏱️ Sponsor de 09h00 à 10h00",
         
@@ -230,6 +237,13 @@ const translations = {
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        desc_bouteille_mer: "Large selection of wines, spirits, beers and local products. Beer dispenser rental available.",
+        time_bouteille_mer: "⏱️ Sponsor from 10:00 AM to 11:00 AM",
+        desc_effet_papillon: "The essential of well-being.",
+        time_effet_papillon: "⏱️ Sponsor from 5:00 PM to 6:00 PM",
+        sched_effet_papillon: "Open Tuesday to Saturday:<br>10:00 AM - 12:30 PM / 3:00 PM - 6:30 PM",
+        desc_mer_boire: "Pub-Wine bar on Diélette harbor offering Normandy beers, spirits, snacks...",
+        time_mer_boire: "⏱️ Sponsor from 7:00 PM to 8:00 PM",
         desc_mille_marin: "Support from purchase to sale, maintenance to storage of your boat.",
         time_mille_marin: "⏱️ Sponsor from 9:00 AM to 10:00 AM",
         
