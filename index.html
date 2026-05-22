@@ -247,7 +247,18 @@
         <button onclick="document.getElementById('holiday-modal').style.display='none'" style="background: var(--marine-blue); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Merci, fermer</button>
     </div>
 </div>
-    
+    <div id="warning-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10002; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
+    <div style="background: #fef2f2; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border: 2px solid #ef4444;">
+        <div style="font-size: 2.5rem; margin-bottom: 10px;">⚠️</div>
+        <div style="color: #991b1b; font-size: 0.85rem; font-weight: 600; line-height: 1.5; margin-bottom: 20px;" data-i18n="index_disclaimer">
+            <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button onclick="acceptWarning()" style="background: #10b981; color: white; border: none; padding: 12px; font-size: 0.85rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: 'Montserrat', sans-serif; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);" data-i18n="btn_understood">J'AI COMPRIS</button>
+            <a href="securite.html" style="background: #ef4444; color: white; text-decoration: none; padding: 12px; font-size: 0.75rem; border-radius: 8px; font-weight: 700; display: block; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">SÉCURITÉ ET RAPPEL</a>
+        </div>
+    </div>
+</div>
 <div class="app-container">
 
     <div class="sticky-header">
@@ -1064,6 +1075,32 @@
 
     document.addEventListener('DOMContentLoaded', fetchSunTimes);
 </script>
+<script>
+    // Vérifie si l'avertissement a déjà été validé aujourd'hui
+    function checkDailyWarning() {
+        const now = new Date();
+        const todayStr = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
+        const lastAccepted = localStorage.getItem('warning_accepted_date');
 
+        // Si la date enregistrée n'est pas celle d'aujourd'hui, on affiche le popup
+        if (lastAccepted !== todayStr) {
+            document.getElementById('warning-modal').style.display = 'flex';
+        }
+    }
+
+    // Action quand on clique sur "J'AI COMPRIS"
+    function acceptWarning() {
+        const now = new Date();
+        const todayStr = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
+        
+        // On enregistre la date du jour dans le navigateur
+        localStorage.setItem('warning_accepted_date', todayStr);
+        // On cache le popup
+        document.getElementById('warning-modal').style.display = 'none';
+    }
+
+    // Lance la vérification au chargement de la page
+    document.addEventListener('DOMContentLoaded', checkDailyWarning);
+</script>
 </body>
 </html>
