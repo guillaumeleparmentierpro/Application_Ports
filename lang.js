@@ -30,8 +30,7 @@ const translations = {
                 
         desc_lenbarquai: "Bistronomique, Cuisine du monde, Burger et plats du jour.",
         time_lenbarquai: "⏱️ Sponsor de 18h00 à 19h00",
-        sponsor_lenbarquai: "L'Epicerie Fine - Épicerie Fine & Cave à vin",  
-        
+          
         change_port: "CHANGER DE PORT",
         select_port_title: "⚓ Choix du port",
         
@@ -237,6 +236,9 @@ const translations = {
         desc_epicerie_fine: "Delicatessen / Wine cellar.",
         time_epicerie_fine: "⏱️ Sponsor from 5:00 PM to 6:00 PM",
         sponsor_epicerie_fine: "L'Epicerie Fine - Delicatessen & Wine Cellar",   
+                        
+        desc_lenbarquai: "Bistronomic, World Cuisine, Burgers and Daily Specials.",
+        time_lenbarquai: "⏱️ Sponsor from 6:00 PM to 7:00 PM",
         
         change_port: "CHANGE PORT",
         select_port_title: "⚓ Select Port",
