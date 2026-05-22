@@ -4,6 +4,23 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        desc_mille_marin: "Accompagnement de l'achat à la vente, de l'entretien au stockage de votre bateau.",
+        time_mille_marin: "⏱️ Sponsor de 09h00 à 10h00",
+        
+        desc_atelier_b: "Magasin de vélo à Barneville-Carteret. Spécialiste de la vente, réparation et entretien.",
+        time_atelier_b: "⏱️ Sponsor de 10h00 à 11h00",
+        
+        desc_lunetterie_fine: "Opticien indépendant - Créateur de regards.",
+        time_lunetterie_fine: "⏱️ Sponsor de 13h00 à 14h00",
+        
+        desc_carpe_diem: "Vente de boissons, glaces, gaufres et grignotage salé au bord de la plage.",
+        time_carpe_diem: "⏱️ Sponsor de 15h00 à 16h00",
+        
+        desc_cave_cellier: "Caviste - Sélection de vins et spiritueux.",
+        time_cave_cellier: "⏱️ Sponsor de 17h00 à 18h00",
+        
+        desc_lenbarquai: "Bistronomique, Cuisine du monde, Burger et plats du jour.",
+        time_lenbarquai: "⏱️ Sponsor de 18h00 à 19h00",
         next_big_tides: "Prochaines grandes marées",
         ht_maree: "Ht. marée",
         currents_title: "Courants marins",
@@ -213,6 +230,23 @@ const translations = {
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        desc_mille_marin: "Support from purchase to sale, maintenance to storage of your boat.",
+        time_mille_marin: "⏱️ Sponsor from 9:00 AM to 10:00 AM",
+        
+        desc_atelier_b: "Bike shop in Barneville-Carteret. Specialist in sales, repair and maintenance.",
+        time_atelier_b: "⏱️ Sponsor from 10:00 AM to 11:00 AM",
+        
+        desc_lunetterie_fine: "Independent optician - Eye style creator.",
+        time_lunetterie_fine: "⏱️ Sponsor from 1:00 PM to 2:00 PM",
+        
+        desc_carpe_diem: "Sale of drinks, ice cream, waffles and salty snacks by the beach.",
+        time_carpe_diem: "⏱️ Sponsor from 3:00 PM to 4:00 PM",
+        
+        desc_cave_cellier: "Wine merchant - Selection of wines and spirits.",
+        time_cave_cellier: "⏱️ Sponsor from 5:00 PM to 6:00 PM",
+        
+        desc_lenbarquai: "Bistronomic, World cuisine, Burgers and daily specials.",
+        time_lenbarquai: "⏱️ Sponsor from 6:00 PM to 7:00 PM",
         next_big_tides: "Next spring tides",
         ht_maree: "Tide ht.",
         currents_title: "Ocean Currents",
