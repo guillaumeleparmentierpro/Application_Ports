@@ -312,7 +312,7 @@ const translations = {
         sponsor_delizia: "Deliziafoodtruck, Italian Food - ",
         sponsor_default: "Your ad here! Click to contact us.",
         
-        sponsor_label: "PARTNERS",
+        sponsor_label: "OUR LOCAL PARTNERS",
         
         loc_service: "In service!",
         loc_denneville: "Today in Denneville",
