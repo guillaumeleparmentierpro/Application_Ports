@@ -4,6 +4,7 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        radar_title: "Radar de pluie en direct",
         btn_install: "📱 INSTALLER",
         desc_bouteille_mer: "Large choix de vins, spiritueux, bières et produits du terroir. Location de tireuses à bières.",
         time_bouteille_mer: "⏱️ Sponsor de 10h00 à 11h00",
@@ -113,7 +114,7 @@ const translations = {
         secu_resp_text2: "Les informations fournies par cette application sont purement indicatives. L'éditeur décline toute responsabilité en cas d'erreur ou d'incident survenu suite à l'utilisation de ces données. Seuls les documents et signaux officiels font foi.",
         
         // --- WEBCAM ---
-        btn_webcam: "📷 WEBCAM",
+        btn_webcam: "WEBCAM",
         webcam_main_title: "WEBCAM EN DIRECT",
         webcam_module_title: "Vue de la gare maritime",
         webcam_desc: "Observez les conditions en temps réel à l'entrée du port de Barneville-Carteret.",
@@ -238,6 +239,7 @@ const translations = {
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        radar_title: "Live rain radar",
         btn_install: "📱 INSTALL",
         desc_bouteille_mer: "Large selection of wines, spirits, beers and local products. Beer dispenser rental available.",
         time_bouteille_mer: "⏱️ Sponsor from 10:00 AM to 11:00 AM",
@@ -347,7 +349,7 @@ const translations = {
         secu_resp_text2: "The information provided by this application is purely indicative. The publisher declines all responsibility for any error or incident arising from the use of this data. Only official documents and signals are legally binding.",
         
         // --- WEBCAM ---
-        btn_webcam: "📷 WEBCAM",
+        btn_webcam: "WEBCAM",
         webcam_main_title: "LIVE WEBCAM",
         webcam_module_title: "View of the maritime station",
         webcam_desc: "Check the real-time conditions at the entrance of Barneville-Carteret port.",
