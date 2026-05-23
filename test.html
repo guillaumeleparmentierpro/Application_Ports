@@ -51,6 +51,7 @@
     <script src="lang.js"></script>
     
     <style>
+        /* --- NOUVEAU DESIGN DE LA BANNIÈRE TOP SPONSOR --- */
         .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 10px 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
         .sponsor-label { background: var(--marine-blue); color: white; font-size: 0.55rem; padding: 4px 6px; border-radius: 4px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; flex-shrink: 0; align-self: center; }
         .sponsor-text { font-size: 0.75rem; font-weight: 600; line-height: 1.3; flex-grow: 1; display: flex; align-items: center; justify-content: flex-end; text-align: right; }
@@ -71,6 +72,7 @@
         .lang-btn.active { opacity: 1; transform: scale(1.15); }
         .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .btn-action:active { transform: scale(0.95); }
+        .btn-planning { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
         .status-box { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
         .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
         .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
@@ -78,7 +80,9 @@
         .status-box.closed { background: var(--closed-color); border: 5px solid var(--danger-dark); }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
         .status-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; opacity: 0.9; margin-bottom: 2px; }
+        
         .status-value { font-size: 1.4rem; font-weight: 900; margin: 5px 0; letter-spacing: -0.5px; line-height: 1.1; padding: 0 5px; text-align: center; }
+        
         .status-box.warning .status-value, .status-box.danger .status-value { font-size: 1.15rem; letter-spacing: -1px; }
         .progress-wrapper { margin: 10px 0; display: none; }
         .progress-container { width: 100%; height: 34px; border-radius: 17px; overflow: hidden; position: relative; background: var(--open-light); transition: background 0.5s ease; }
@@ -94,42 +98,113 @@
         
         .slots-container { background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
         .slot-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        
         .slot-title { font-size: 0.6rem; font-weight: 700; color: var(--marine-blue); line-height: 1.3; margin-right: 5px; text-transform: uppercase; flex: 1; }
         .slot-title.secondary { color: #64748b; }
+        
         .slot-pills { display: flex; gap: 5px; flex-shrink: 0; }
         .slot-badge { width: 72px; padding: 5px 0; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 3px; color: white; }
         .slot-badge span { font-size: 0.45rem; text-transform: uppercase; font-weight: 600; opacity: 0.9; }
         .slot-badge b { font-size: 0.75rem; font-weight: 700; }
+        
         .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
         .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
         
         .tide-full-module { background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; padding: 15px 10px; margin: 0 12px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; position: relative; }
         .tide-header-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; font-weight: 700; color: var(--marine-blue); }
+        
         .tide-column { flex: 1; flex-basis: 33.33%; min-width: 0; } 
+        
         #tideCanvasLarge { width: 100%; height: 80px; cursor: pointer; }
         .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
         
-        /* Modifié pour le widget Radar */
-        .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 350px; border: 1px solid #e2e8f0; }
+        .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 270px; border: 1px solid #e2e8f0; }
+        .ad-module { border: 2px dashed #cbd5e1; background: #fdfdfd; color: #64748b; font-size: 0.65rem; text-align: center; padding: 10px; font-weight: 600; }
         
+        /* --- STYLES POUR LE NOUVEAU BLOC PREMIUM --- */
         .premium-sponsor {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white; border-radius: 12px; padding: 20px 15px; text-align: center;
-            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.2); margin: 0 15px 15px 15px;
-            position: relative; overflow: hidden;
+            color: white;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.2);
+            margin: 0 15px 15px 15px;
+            position: relative;
+            overflow: hidden;
         }
-        .premium-badge { background: #fbbf24; color: #991b1b; font-size: 0.6rem; font-weight: 800; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; display: inline-block; margin-bottom: 8px; letter-spacing: 1px; }
-        .premium-title { font-size: 1.1rem; font-weight: 800; margin: 5px 0 10px 0; line-height: 1.2; }
-        .premium-desc { font-size: 0.75rem; opacity: 0.9; margin-bottom: 15px; line-height: 1.4; }
-        .btn-premium { background: white; color: var(--marine-blue) !important; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 800; font-size: 0.75rem; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .premium-badge {
+            background: #fbbf24;
+            color: #991b1b;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .premium-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 5px 0 10px 0;
+            line-height: 1.2;
+        }
+        .premium-desc {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .btn-premium {
+            background: white;
+            color: var(--marine-blue) !important;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
         .btn-premium:active { transform: scale(0.95); }
 
-        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* --- EFFET REVEAL ON SCROLL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        .sun-times-container { display: flex; justify-content: center; gap: 15px; margin-top: 12px; font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); }
-        .sun-badge { display: flex; align-items: center; gap: 6px; background: #f8fafc; padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .sun-badge span.emoji { font-size: 1.1rem; }
+        /* --- STYLE POUR LES HORAIRES DU SOLEIL --- */
+        .sun-times-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--marine-blue);
+        }
+        .sun-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f8fafc;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .sun-badge span.emoji {
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 <body>
@@ -156,25 +231,43 @@
             </a>
 
             <div style="display: block; background: #f8fafc; color: #94a3b8; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.85rem; border: 1px dashed #cbd5e1; cursor: not-allowed;">
-                Port Port-Bail (Prochainement)
+                Port Port-Bail (Prochainement)(Voir Carteret)
+            </div>
+            
+            <div style="display: block; background: #f8fafc; color: #94a3b8; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.85rem; border: 1px dashed #cbd5e1; cursor: not-allowed;">
+                Port Granville (Prochainement)
             </div>
         </div>
     </div>
 </div>
 <div id="holiday-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border-top: 6px solid var(--marine-blue);">
+        
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('holiday-modal').style.display='none'">×</span>
+        
         <h3 id="holiday-title" style="margin: 0 0 10px 0; color: var(--marine-blue); font-weight: 800; font-size: 1.2rem;">--</h3>
         <p id="holiday-message" style="margin: 0 0 20px 0; font-size: 0.85rem; color: #475569; line-height: 1.5; font-weight: 600;">--</p>
+        
         <button onclick="document.getElementById('holiday-modal').style.display='none'" style="background: var(--marine-blue); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Merci, fermer</button>
     </div>
 </div>
-    
+    <div id="warning-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10002; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
+    <div style="background: #fef2f2; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border: 2px solid #ef4444;">
+        <div style="font-size: 2.5rem; margin-bottom: 10px;">⚠️</div>
+        <div style="color: #991b1b; font-size: 0.85rem; font-weight: 600; line-height: 1.5; margin-bottom: 20px;" data-i18n="index_disclaimer">
+            <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button onclick="acceptWarning()" style="background: #10b981; color: white; border: none; padding: 12px; font-size: 0.85rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: 'Montserrat', sans-serif; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);" data-i18n="btn_understood">J'AI COMPRIS</button>
+            <a href="securite.html" style="background: #ef4444; color: white; text-decoration: none; padding: 12px; font-size: 0.75rem; border-radius: 8px; font-weight: 700; display: block; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">SÉCURITÉ ET RAPPEL</a>
+        </div>
+    </div>
+</div>
 <div class="app-container">
 
     <div class="sticky-header">
         <div class="top-sponsor-banner" id="sponsor-banner">
-            <a href="partenaires.html" class="sponsor-label" style="text-decoration: none; color: white;" data-i18n="sponsor_label">PARTENAIRES</a>
+            <a href="partenaires.html" class="sponsor-label" style="text-decoration: none; color: white;" data-i18n="sponsor_label">NOS PARTENAIRES LOCAUX</a>
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
 
@@ -264,18 +357,19 @@
         </div>
         
         <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.75rem; font-weight: 700; color: var(--marine-blue);">
-            <span data-i18n="moon_phase">Phase de la lune</span> : <span id="moon-phase-badge" style="font-size: 1.2rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15));"></span>
+            <span id="moon-phase-badge" style="font-size: 1.4rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15));"></span>
+            <span id="moon-phase-label" style="font-style: italic; color: #475569; font-size: 0.75rem;"></span>
         </div>
     </div>
 
     <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Météo & Radar Pluie</div>
+            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
             <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">📷 WEBCAM</a>
         </div>
 
-        <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:350px;">
-            <iframe width="100%" height="350" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=%C2%B0C&radarRange=-1&overlay=rain&product=radar&level=surface&lat=49.381&lon=-1.850&zoom=9&detailLat=49.381&detailLon=-1.785&marker=true" frameborder="0" style="border:0;"></iframe>
+        <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
+            <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
         </div>
 
         <div class="sun-times-container">
@@ -297,28 +391,35 @@
         <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
             <iframe width="100%" height="300" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C&radarRange=-1&overlay=currents&product=copernicus&level=surface&lat=49.381&lon=-1.850&zoom=9&detailLat=49.381&detailLon=-1.785&marker=true" frameborder="0" style="border:0;"></iframe>
         </div>
-        <div style="font-size: 0.65rem; color: #64748b; text-align: center; margin-top: 8px;" data-i18n="currents_hint">
-            👆 Touchez la carte pour explorer la zone.
-        </div>
-    </div>
-    
-    <div class="module reveal" style="background: #fef2f2; border: 2px solid #ef4444; text-align: center; margin-top: 10px;">
-        <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
-        <div style="color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.5; margin-bottom: 15px;" data-i18n="index_disclaimer">
-            <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
-        </div>
-        <a href="securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
     </div>
 
+<div class="module reveal" style="margin-top: 15px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <div style="font-size: 0.85rem; font-weight: 700;">Radar de pluie en direct</div>
+    </div>
+    <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
+        <!-- Widget RainViewer avec zoom arrière (8) pour afficher Jersey à gauche -->
+        <iframe src="https://www.rainviewer.com/map.html?loc=49.381,-1.85,8&oColor=0&tColor=3&s=1&m=1&d=1&v=0&w=1&p=1&oc=0&g=1" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
+    </div>
+</div>
+    
     <div class="footer-module">
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         
         <div class="footer-buttons">
-            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES</a>
-            <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
+            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">NOS PARTENAIRES</a>
+            <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">LIENS UTILES</a>
             <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
         </div>
-
+<BR>
+        <div class="module reveal" style="background: #fef2f2; border: 2px solid #ef4444; text-align: center; margin-top: 10px;">
+        <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
+        <div style="color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.5; margin-bottom: 15px;" data-i18n="index_disclaimer">
+            <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+        </div>
+        <a href="securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">SÉCURITÉ ET RAPPEL</a>
+        </div>
+        
         <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" style="margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 8px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-decoration: none; transition: transform 0.2s; cursor: pointer;" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
             <img src="logo-cws.png" alt="Cotentin Web Studio" style="width: 50px; height: auto; filter: grayscale(20%); opacity: 0.9;">
             <div style="font-size: 0.65rem; color: #1e3a8a; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Montserrat', sans-serif;">
@@ -378,7 +479,7 @@
         }
     };
      
-    // --- FONCTION SPONSOR AVEC LOGOS GRAND FORMAT ---
+    // --- FONCTION SPONSOR AVEC LOGOS GRAND FORMAT ET TEXTE NON COUPÉ ---
     function updateSponsor() {
         const now = new Date();
         const hour = now.getHours();
@@ -442,7 +543,9 @@
             else finalHTML = getPartnerHTML("coralie-renouf", "coralierenouf.jpg", "Coralie Renouf - Photographe");
         }
         else if (hour === 13) {
-            finalHTML = getPartnerHTML("lamaison", "lamaison.fr.webp", "Lamaison.fr - Bricolage & Déco");
+            const rot = minute % 2;
+            if (rot === 0) finalHTML = getPartnerHTML("lamaison", "lamaison.fr.webp", "Lamaison.fr - Bricolage & Déco");
+            else finalHTML = getPartnerHTML("lunetterie-fine", "lalunetteriefine.png", "La Lunetterie Fine - Opticien");
         }
         else if (hour === 14) {
             finalHTML = getPartnerHTML("esprit-marin", "espritmarin.png", t.sponsor_esprit_marin || "Esprit Marin - Concept store");
@@ -461,7 +564,7 @@
             else finalHTML = getPartnerHTML("de-la-cave-au-cellier", "delacav.png", "De la Cave Au Cellier - Caviste");
         }
         else if (hour === 18) {
-            finalHTML = getPartnerHTML("lenbarquai", "lenbarqu.png", "L'En Bar Quai - Burger");
+            finalHTML = getPartnerHTML("lenbarquai", "lenbarqu.png", "L'En Bar Quai - Bistronomique");
         }
 
         sponsorText.innerHTML = finalHTML;
@@ -499,7 +602,7 @@
         ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
     }
 
-    // --- NOUVEAU PARSEUR ROBUSTE POUR SÉCURISER LES DONNÉES ---
+    // --- PARSEUR ROBUSTE POUR SÉCURISER LES DONNÉES ---
     function parseTime(tStr) {
         if (!tStr) return null;
         let s = String(tStr).trim().toLowerCase().replace('h', ':').replace('.', ':');
@@ -533,19 +636,40 @@
             const phase = ((maintenantMs - referenceNouvelleLuneMs) % cycleLunaireMs) / cycleLunaireMs;
             
             let moonEmoji = "";
-            if (phase < 0.03 || phase > 0.97) moonEmoji = "🌑";
-            else if (phase < 0.22) moonEmoji = "🌒";
-            else if (phase < 0.28) moonEmoji = "🌓";
-            else if (phase < 0.47) moonEmoji = "🌔";
-            else if (phase < 0.53) moonEmoji = "🌕";
-            else if (phase < 0.72) moonEmoji = "🌖";
-            else if (phase < 0.78) moonEmoji = "🌗";
-            else moonEmoji = "🌘";
+            let moonName = "";
+
+            if (phase < 0.03 || phase > 0.97) {
+                moonEmoji = "🌑";
+                moonName = currentLang === 'en' ? "New Moon" : "Nouvelle Lune";
+            } else if (phase < 0.22) {
+                moonEmoji = "🌒";
+                moonName = currentLang === 'en' ? "Waxing Crescent" : "Premier Croissant";
+            } else if (phase < 0.28) {
+                moonEmoji = "🌓";
+                moonName = currentLang === 'en' ? "First Quarter" : "Premier Quartier";
+            } else if (phase < 0.47) {
+                moonEmoji = "🌔";
+                moonName = currentLang === 'en' ? "Waxing Gibbous" : "Gibbeuse Croissante";
+            } else if (phase < 0.53) {
+                moonEmoji = "🌕";
+                moonName = currentLang === 'en' ? "Full Moon" : "Pleine Lune";
+            } else if (phase < 0.72) {
+                moonEmoji = "🌖";
+                moonName = currentLang === 'en' ? "Waning Gibbous" : "Gibbeuse Décroissante";
+            } else if (phase < 0.78) {
+                moonEmoji = "🌗";
+                moonName = currentLang === 'en' ? "Last Quarter" : "Dernier Quartier";
+            } else {
+                moonEmoji = "🌘";
+                moonName = currentLang === 'en' ? "Waning Crescent" : "Dernier Croissant";
+            }
             
             const moonBadge = document.getElementById('moon-phase-badge');
-            if(moonBadge) {
-                moonBadge.innerText = moonEmoji;
-            }
+            if (moonBadge) moonBadge.innerText = moonEmoji;
+
+            const moonLabel = document.getElementById('moon-phase-label');
+            if (moonLabel) moonLabel.innerText = moonName;
+
         } catch (error) {
             console.log("Erreur calcul lune :", error);
         }
@@ -965,6 +1089,32 @@
 
     document.addEventListener('DOMContentLoaded', fetchSunTimes);
 </script>
+<script>
+    // Vérifie si l'avertissement a déjà été validé aujourd'hui
+    function checkDailyWarning() {
+        const now = new Date();
+        const todayStr = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
+        const lastAccepted = localStorage.getItem('warning_accepted_date');
 
+        // Si la date enregistrée n'est pas celle d'aujourd'hui, on affiche le popup
+        if (lastAccepted !== todayStr) {
+            document.getElementById('warning-modal').style.display = 'flex';
+        }
+    }
+
+    // Action quand on clique sur "J'AI COMPRIS"
+    function acceptWarning() {
+        const now = new Date();
+        const todayStr = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
+        
+        // On enregistre la date du jour dans le navigateur
+        localStorage.setItem('warning_accepted_date', todayStr);
+        // On cache le popup
+        document.getElementById('warning-modal').style.display = 'none';
+    }
+
+    // Lance la vérification au chargement de la page
+    document.addEventListener('DOMContentLoaded', checkDailyWarning);
+</script>
 </body>
 </html>
