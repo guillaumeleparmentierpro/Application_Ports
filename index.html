@@ -59,7 +59,50 @@
         :root { color-scheme: light; --primary-bg: #f1f5f9; --card-bg: #ffffff; --open-light: #10b981; --open-dark: #067a5c; --warning-color: #fbbf24; --warning-dark: #d97706; --danger-color: #ef4444; --danger-dark: #991b1b; --closed-color: #ef4444; --marine-blue: #1e3a8a; --text-main: #1e293b; --tide-light-blue: #eff6ff; }
         body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
         .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; padding: 15px; box-sizing: border-box; padding-top: 0 !important; }
-        .footer-module { margin-top: 15px; padding-top: 20px; border-top: 1px dashed #cbd5e1; text-align: center; }
+        .footer-module { 
+            margin-top: 15px; 
+            padding-top: 20px; 
+            border-top: 1px dashed #cbd5e1; 
+            text-align: center; 
+        }
+        .footer-credits {
+            margin-top: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+            text-decoration: none;
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+        .footer-credits:hover {
+            transform: scale(1.03);
+        }
+        .footer-credits img {
+            width: 38px;
+            height: auto;
+            opacity: 0.85;
+            filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.05));
+        }
+        .footer-text-block {
+            text-align: left;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .footer-copyright {
+            font-size: 0.65rem;
+            color: #64748b;
+            font-weight: 500;
+            margin: 0;
+        }
+        .footer-studio {
+            font-size: 0.65rem;
+            color: var(--marine-blue);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 2px 0 0 0;
+        }
         .footer-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
         .btn-footer { width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; box-sizing: border-box; }
         .module { background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); border-bottom: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; }
@@ -420,10 +463,11 @@
         <a href="securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">SÉCURITÉ ET RAPPEL</a>
         </div>
         
-        <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" style="margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 8px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-decoration: none; transition: transform 0.2s; cursor: pointer;" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-            <img src="logo-cws.png" alt="Cotentin Web Studio" style="width: 50px; height: auto; filter: grayscale(20%); opacity: 0.9;">
-            <div style="font-size: 0.65rem; color: #1e3a8a; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Montserrat', sans-serif;" data-i18n="creationCWS">
-               © 2026 Portsducotentin.fr Tous droits réservés - Réalisé par Cotentin Web Studio
+       <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" class="footer-credits" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});">
+            <img src="logo-cws.png" alt="Cotentin Web Studio">
+            <div class="footer-text-block">
+                <p class="footer-copyright">© 2026 portsducotentin.fr · Tous droits réservés</p>
+                <p class="footer-studio">Créé par Cotentin Web Studio</p>
             </div>
         </a>
     </div>
