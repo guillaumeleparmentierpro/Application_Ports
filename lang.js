@@ -79,7 +79,7 @@ const translations = {
         sponsor_delizia: "Deliziafoodtruck, Cuisine Italienne - ",
         sponsor_default: "Votre publicité ici ! Cliquez pour nous contacter.",
         
-        sponsor_label: "PARTENAIRES",
+        sponsor_label: "NOS PARTENAIRES LOCAUX",
         
         loc_service: "En service !",
         loc_denneville: "Aujourd'hui à Denneville",
