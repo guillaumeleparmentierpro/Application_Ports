@@ -4,6 +4,8 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        footer_tdr: "© 2026 portsducotentin.fr · Tous droits réservés",
+        footer_cws: "Créé par Cotentin Web Studio",
         creationCWS: "© 2026 Portsducotentin.fr Tous droits réservés - Réalisé par Cotentin Web Studio",
         radar_title: "Radar de pluie en direct",
         btn_install: "📱 INSTALLER",
@@ -240,6 +242,8 @@ const translations = {
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        footer_tdr: "© 2026 portsducotentin.fr · All rights reserved",
+        footer_cws: "Created by Cotentin Web Studio",
         creationCWS: "© 2026 Portsducotentin.fr All rights reserved - Developed by Cotentin Web Studio",
         radar_title: "Live rain radar",
         btn_install: "📱 INSTALL",
