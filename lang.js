@@ -4,6 +4,7 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        creationCWS: "© 2026 Portsducotentin.fr Tous droits réservés - Réalisé par Cotentin Web Studio",
         radar_title: "Radar de pluie en direct",
         btn_install: "📱 INSTALLER",
         desc_bouteille_mer: "Large choix de vins, spiritueux, bières et produits du terroir. Location de tireuses à bières.",
@@ -239,6 +240,7 @@ const translations = {
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        creationCWS: "© 2026 Portsducotentin.fr All rights reserved - Developed by Cotentin Web Studio",
         radar_title: "Live rain radar",
         btn_install: "📱 INSTALL",
         desc_bouteille_mer: "Large selection of wines, spirits, beers and local products. Beer dispenser rental available.",
