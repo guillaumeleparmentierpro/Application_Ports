@@ -4,6 +4,7 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        btn_install: "📱 INSTALLER",
         desc_bouteille_mer: "Large choix de vins, spiritueux, bières et produits du terroir. Location de tireuses à bières.",
         time_bouteille_mer: "⏱️ Sponsor de 10h00 à 11h00",
         desc_effet_papillon: "L'essentiel du bien-être.",
@@ -237,6 +238,7 @@ const translations = {
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        btn_install: "📱 INSTALL",
         desc_bouteille_mer: "Large selection of wines, spirits, beers and local products. Beer dispenser rental available.",
         time_bouteille_mer: "⏱️ Sponsor from 10:00 AM to 11:00 AM",
         desc_effet_papillon: "The essential of well-being.",
