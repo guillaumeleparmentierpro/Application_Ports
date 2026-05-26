@@ -1,7 +1,7 @@
 {
   "name": "Port de Carteret",
   "short_name": "Port Carteret",
-  "description": "Horaires de la porte et marées en temps réel.",
+  "description": "Consultez en temps réel l'état de la porte, les horaires des marées et la météo du port de Carteret.",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f8fafc",
