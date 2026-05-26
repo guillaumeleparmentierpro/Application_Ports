@@ -115,6 +115,28 @@
         .tide-header-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; font-weight: 700; color: var(--marine-blue); }
         
         .tide-column { flex: 1; flex-basis: 33.33%; min-width: 0; } 
+                .sun-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f8fafc;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .sun-badge span.emoji {
+            font-size: 1.1rem;
+        }
+                .sun-times-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--marine-blue);
+        }
         
         #tideCanvasLarge { width: 100%; height: 80px; cursor: pointer; }
         .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
@@ -317,13 +339,24 @@
             <span id="moon-phase-label" style="font-style: italic; color: #475569; font-size: 0.75rem;"></span>
         </div>
             </div>
-<div class="module">
+    
+    <div class="module">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
             <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">WEBCAM</a>
         </div>
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
            <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1180&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
+        </div>
+        <div class="sun-times-container">
+            <div class="sun-badge">
+                <span class="emoji">🌅</span>
+                <span id="sunrise-time">--:--</span>
+            </div>
+            <div class="sun-badge">
+                <span class="emoji">🌄</span>
+                <span id="sunset-time">--:--</span>
+            </div>
         </div>
     </div>
 
@@ -872,6 +905,31 @@ function updateSponsor() {
     }
 
     document.addEventListener('DOMContentLoaded', checkHolidayPopup);
+</script>
+    <script>
+    async function fetchSunTimes() {
+        try {
+            const lat = 49.551;
+            const lng = -1.850;
+            const response = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`);
+            const data = await response.json();
+
+            if (data.status === "OK") {
+                const sunrise = new Date(data.results.sunrise);
+                const sunset = new Date(data.results.sunset);
+
+                const options = { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' };
+                document.getElementById('sunrise-time').innerText = sunrise.toLocaleTimeString('fr-FR', options);
+                document.getElementById('sunset-time').innerText = sunset.toLocaleTimeString('fr-FR', options);
+            }
+        } catch (error) {
+            console.log("Erreur lors de la récupération des heures du soleil :", error);
+            document.getElementById('sunrise-time').innerText = "--:--";
+            document.getElementById('sunset-time').innerText = "--:--";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchSunTimes);
 </script>
 </body>
 </html>
