@@ -497,40 +497,48 @@
 </script>
 
 <script>
-    window.onload = function() {
+window.onload = function() {
         if (typeof data !== 'undefined') {
             updateApp();
             setInterval(updateApp, 1000);
         }
     };
      
-    // --- FONCTION SPONSOR AVEC LOGOS GRAND FORMAT ET TEXTE NON COUPÉ ---
-function updateSponsor() {
+    // --- FONCTION SPONSOR 100% SÉCURISÉE ---
+    function updateSponsor() {
         const now = new Date();
         const hour = now.getHours();
         
         const sponsorText = document.getElementById('sponsor-text');
         if (!sponsorText) return;
 
-        const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
-
         const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
-        const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+        // Sécurité anti-crash si lang.js est absent ou cassé
+        const t = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang] : {};
 
-        // Les textes spécifiques pour Diélette
-        const txtEffetPapillon = "🦋 L'Effet Papillon - L'essentiel du bien-être";
-        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
-
-        // Créneau de 17h00 à 18h00 pour L'Effet Papillon
-        if (hour === 17) {
-            sponsorText.innerHTML = `<a href="partenaires.html#effet-papillon" style="${linkStyle}">${txtEffetPapillon}</a>`;
-        } 
-        // Le reste de la journée, on affiche le message par défaut
-        else {
-            sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
+        function getPartnerHTML(anchorId, imgSrc, textContent) {
+            return `<a href="partenaires.html#${anchorId}" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; text-decoration: none; color: inherit; width: 100%;">
+                        <span style="text-align: right; line-height: 1.3; word-wrap: break-word; white-space: normal;">${textContent}</span>
+                        <img src="${imgSrc}" style="height: 50px; width: 50px; object-fit: contain; border-radius: 8px; background: white; padding: 3px; border: 1px solid #cbd5e1; flex-shrink: 0;" alt="Logo">
+                    </a>`;
         }
-    }
 
+        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+        let finalHTML = `<a href="../contact.html" style="text-decoration:none; color:inherit; display: flex; align-items: center; justify-content: flex-end; text-align: right; width:100%; white-space: normal;">${txtDefault}</a>`;
+        
+        // --- ROTATION DES PARTENAIRES EXCLUSIFS DE DIÉLETTE ---
+        if (hour === 10) {
+            finalHTML = getPartnerHTML("unebouteillealamer", "../bout.png", t.sponsor_bouteille_mer_index || "Une Bouteille A La Mer");
+        }
+        else if (hour === 17) {
+            finalHTML = getPartnerHTML("effet-papillon", "../effpap.png", t.sponsor_effet_papillon_index || "L’Effet Papillon Diélette");
+        }
+        else if (hour === 19) {
+            finalHTML = getPartnerHTML("lameraboire", "../merab.png", t.sponsor_mer_boire_index || "La Mer à Boire");
+        }
+
+        sponsorText.innerHTML = finalHTML;
+    }
 
     function drawTideGraph(percent, isDescending) {
         const canvas = document.getElementById('tideCanvasLarge');
@@ -564,7 +572,6 @@ function updateSponsor() {
         ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
     }
 
-    // --- PARSEUR ROBUSTE POUR SÉCURISER LES DONNÉES ---
     function parseTime(tStr) {
         if (!tStr) return null;
         let s = String(tStr).trim().toLowerCase().replace('h', ':').replace('.', ':');
@@ -589,49 +596,26 @@ function updateSponsor() {
         const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
         document.getElementById('current-date').innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
         
-        // --- CALCUL FIABLE DE LA PHASE DE LUNE ---
         try {
             const cycleLunaireMs = 2551442877; 
             const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57); 
             const maintenantMs = now.getTime();
-            
             const phase = ((maintenantMs - referenceNouvelleLuneMs) % cycleLunaireMs) / cycleLunaireMs;
             
-            let moonEmoji = "";
-            let moonName = "";
-
-            if (phase < 0.03 || phase > 0.97) {
-                moonEmoji = "🌑";
-                moonName = currentLang === 'en' ? "New Moon" : "Nouvelle Lune";
-            } else if (phase < 0.22) {
-                moonEmoji = "🌒";
-                moonName = currentLang === 'en' ? "Waxing Crescent" : "Premier Croissant";
-            } else if (phase < 0.28) {
-                moonEmoji = "🌓";
-                moonName = currentLang === 'en' ? "First Quarter" : "Premier Quartier";
-            } else if (phase < 0.47) {
-                moonEmoji = "🌔";
-                moonName = currentLang === 'en' ? "Waxing Gibbous" : "Gibbeuse Croissante";
-            } else if (phase < 0.53) {
-                moonEmoji = "🌕";
-                moonName = currentLang === 'en' ? "Full Moon" : "Pleine Lune";
-            } else if (phase < 0.72) {
-                moonEmoji = "🌖";
-                moonName = currentLang === 'en' ? "Waning Gibbous" : "Gibbeuse Décroissante";
-            } else if (phase < 0.78) {
-                moonEmoji = "🌗";
-                moonName = currentLang === 'en' ? "Last Quarter" : "Dernier Quartier";
-            } else {
-                moonEmoji = "🌘";
-                moonName = currentLang === 'en' ? "Waning Crescent" : "Dernier Croissant";
-            }
+            let moonEmoji = ""; let moonName = "";
+            if (phase < 0.03 || phase > 0.97) { moonEmoji = "🌑"; moonName = currentLang === 'en' ? "New Moon" : "Nouvelle Lune"; } 
+            else if (phase < 0.22) { moonEmoji = "🌒"; moonName = currentLang === 'en' ? "Waxing Crescent" : "Premier Croissant"; } 
+            else if (phase < 0.28) { moonEmoji = "🌓"; moonName = currentLang === 'en' ? "First Quarter" : "Premier Quartier"; } 
+            else if (phase < 0.47) { moonEmoji = "🌔"; moonName = currentLang === 'en' ? "Waxing Gibbous" : "Gibbeuse Croissante"; } 
+            else if (phase < 0.53) { moonEmoji = "🌕"; moonName = currentLang === 'en' ? "Full Moon" : "Pleine Lune"; } 
+            else if (phase < 0.72) { moonEmoji = "🌖"; moonName = currentLang === 'en' ? "Waning Gibbous" : "Gibbeuse Décroissante"; } 
+            else if (phase < 0.78) { moonEmoji = "🌗"; moonName = currentLang === 'en' ? "Last Quarter" : "Dernier Quartier"; } 
+            else { moonEmoji = "🌘"; moonName = currentLang === 'en' ? "Waning Crescent" : "Dernier Croissant"; }
             
             const moonBadge = document.getElementById('moon-phase-badge');
             if (moonBadge) moonBadge.innerText = moonEmoji;
-
             const moonLabel = document.getElementById('moon-phase-label');
             if (moonLabel) moonLabel.innerText = moonName;
-
         } catch (error) {
             console.log("Erreur calcul lune :", error);
         }
@@ -654,7 +638,6 @@ function updateSponsor() {
                 let day = parseInt(parts[2], 10);
 
                 let portesArray = dData.portes || [];
-                // Support ancien format si besoin
                 if (!dData.portes) {
                     for(let i=1; i<=4; i++) {
                         if(dData["ouv"+i] && dData["ferm"+i]) {
@@ -671,13 +654,7 @@ function updateSponsor() {
                         let sO = new Date(y, m, day, openTime.h, openTime.m, 0);
                         let sC = new Date(y, m, day, closeTime.h, closeTime.m, 0);
                         if (sC < sO) sC.setDate(sC.getDate() + 1);
-                        
-                        allPortes.push({ 
-                            sO: sO, 
-                            sC: sC, 
-                            openStr: openTime.clean, 
-                            closeStr: closeTime.clean 
-                        });
+                        allPortes.push({ sO: sO, sC: sC, openStr: openTime.clean, closeStr: closeTime.clean });
                     }
                 });
                 
@@ -693,24 +670,14 @@ function updateSponsor() {
                         let parsedRef = parseTime(t.refTime);
                         if (parsedRef) {
                             let refObj = new Date(y, m, day, parsedRef.h, parsedRef.m, 0);
-                            if (dObj < refObj) {
-                                dObj.setDate(dObj.getDate() + 1);
-                            }
+                            if (dObj < refObj) { dObj.setDate(dObj.getDate() + 1); }
                         }
-                        allTides.push({
-                            time: parsedTime.clean,
-                            h: t.h,
-                            type: t.type,
-                            label: t.label,
-                            c: t.c,
-                            dateObj: dObj
-                        });
+                        allTides.push({ time: parsedTime.clean, h: t.h, type: t.type, label: t.label, c: t.c, dateObj: dObj });
                     }
                 });
             }
         });
 
-        // TRI DE SÉCURITÉ ABSOLU
         allPortes.sort((a, b) => a.sO - b.sO);
         allTides.sort((a, b) => a.dateObj - b.dateObj);
 
@@ -722,11 +689,8 @@ function updateSponsor() {
         let lastPorteClose = pastPortes.length > 0 ? pastPortes[pastPortes.length - 1].sC : new Date(now.getTime() - (7 * 3600000));
 
         if (futurePortes.length > 0) {
-            if (now >= futurePortes[0].sO) {
-                activePorte = futurePortes[0];
-            } else {
-                nextPorte = futurePortes[0];
-            }
+            if (now >= futurePortes[0].sO) { activePorte = futurePortes[0]; } 
+            else { nextPorte = futurePortes[0]; }
         }
 
         const wrapper = document.getElementById('progress-wrapper');
@@ -734,7 +698,8 @@ function updateSponsor() {
         const pb = document.getElementById('progress-bar');
         wrapper.style.display = "block";
 
-        const t = translations[currentLang] || {}; 
+        // Sécurité anti-crash globale
+        const t = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang] : {}; 
 
         document.getElementById('label-ouv').innerText = t.pill_open || "OUV.";
         document.getElementById('label-ferm').innerText = t.pill_close || "FERM.";
@@ -831,7 +796,6 @@ function updateSponsor() {
             }
 
             let coeffText = prevTide.c && prevTide.c !== "-" ? prevTide.c : (nextTide.c && nextTide.c !== "-" ? nextTide.c : "--");
-            
             document.getElementById('coeff-display').innerText = coeffText;
             
             const leftLabelTrad = prevTide.type === "PM" ? (t.high_tide || "Pleine Mer") : (t.low_tide || "Basse Mer");
@@ -855,10 +819,21 @@ function updateSponsor() {
 
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            if (translations[lang] && translations[lang][key]) {
+            // Sécurité anti-crash
+            if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
                 el.innerHTML = translations[lang][key];
             }
         });
+
+        // Traduction manuelle du bouton 3 lignes
+        const sponsorLabelBtn = document.querySelector('#sponsor-banner .sponsor-label');
+        if (sponsorLabelBtn) {
+            if (lang === 'en') {
+                sponsorLabelBtn.innerHTML = "OUR<br>LOCAL<br>PARTNERS";
+            } else {
+                sponsorLabelBtn.innerHTML = "NOS<br>PARTENAIRES<br>LOCAUX";
+            }
+        }
 
         localStorage.setItem('preferredLang', lang);
 
