@@ -185,7 +185,7 @@
 
     <div class="sticky-header">
         <div class="top-sponsor-banner" id="sponsor-banner">
-            <a href="partenaires.html" class="sponsor-label" style="text-decoration: none; color: white; text-align: center; line-height: 1.2; padding: 4px 8px;">NOS<br>PARTENAIRES<br>LOCAUX</a>
+            <a href="partenaires.html" class="sponsor-label" id="sponsor-label-text" style="text-decoration: none; color: white; text-align: center; line-height: 1.2; padding: 4px 8px;">NOS<br>PARTENAIRES<br>LOCAUX</a>
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
 
@@ -330,6 +330,12 @@
         </a>
     </div>
 
+    <div class="premium-sponsor reveal" style="margin-top: 30px; margin-bottom: 20px;">
+        <div class="premium-badge" data-i18n="premium_badge">Sponsor Officiel 2026</div>
+        <h2 class="premium-title" data-i18n="premium_title">Espace Partenaire Premium</h2>
+        <p class="premium-desc" data-i18n="premium_desc">Affichez votre entreprise ici en grand format 24h/24 ! Contactez-nous pour réserver cet emplacement exclusif.</p>
+        <a href="contact.html" class="btn-premium" data-i18n="btn_premium">RÉSERVER CET ESPACE</a>
+    </div>
 </div>
 
 <script>
@@ -616,6 +622,8 @@
         localStorage.setItem('preferredLang', lang);
         const wisukiIframe = document.getElementById('wisuki-widget');
         if (wisukiIframe) wisukiIframe.src = `https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=${lang}`;
+        const sponsorLabel = document.getElementById("sponsor-label-text");
+        if (sponsorLabel) sponsorLabel.innerHTML = lang === "en" ? "OUR<br>LOCAL<br>PARTNERS" : "NOS<br>PARTENAIRES<br>LOCAUX";
         if (typeof updateApp === "function") updateApp();
     }
 
