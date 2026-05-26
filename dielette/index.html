@@ -326,17 +326,24 @@
         </div>
     </div>
 
-<div class="module">
+    <div class="module">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="currents_title">Courants marins</div>
         </div>
         <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
             <iframe width="100%" height="300" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C&radarRange=-1&overlay=currents&product=copernicus&level=surface&lat=49.558&lon=-1.860&zoom=10&detailLat=49.558&detailLon=-1.860&marker=true" frameborder="0" style="border:0;"></iframe>
         </div>
-        <div style="font-size: 0.65rem; color: #64748b; text-align: center; margin-top: 8px;" data-i18n="currents_hint">
-            👆 Touchez la carte pour explorer la zone.
-        </div>
     </div>
+
+<div class="module reveal" style="margin-top: 15px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="radar_title">Radar de pluie en direct</div>
+    </div>
+    <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
+        <!-- Widget RainViewer centré sur Diélette avec un zoom large (7) -->
+        <iframe src="https://www.rainviewer.com/map.html?loc=49.551,-1.85,7&oColor=0&tColor=3&s=1&m=1&d=1&v=0&w=1&p=1&oc=0&g=1" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
+    </div>
+</div>
     
     <div class="module" style="background: #fef2f2; border: 2px solid #ef4444; text-align: center; margin-top: 10px;">
         <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
@@ -350,8 +357,8 @@
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         
         <div class="footer-buttons">
-            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES</a>
-            <a href="../liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
+            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">NOS PARTENAIRES</a>
+            <a href="../liens.html" class="btn-action btn-footer" data-i18n="btn_links">LIENS UTILES</a>
             <a href="../contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
         </div>
 
