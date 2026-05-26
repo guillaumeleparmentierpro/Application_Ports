@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5LY18V5457');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Horaires de la porte et des marées</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="donnees.js"></script>
+<style>
+    :root {
+        color-scheme: light;
+        --primary-bg: #f8fafc;
+        --card-bg: #ffffff;
+        --marine-blue: #1e3a8a;
+        --text-main: #1e293b;
+        --border-color: #e2e8f0;
+        --matin-bg: #eff6ff;
+        --soir-bg: #fffbeb;
+        --weekend-color: #fef2f2;
+        --today-bg: #fef9c3;
+    }
+
+    body { 
+        font-family: 'Montserrat', sans-serif; 
+        background: var(--primary-bg); 
+        margin: 0; 
+        padding: 0; 
+        color: var(--text-main);
+        height: 100vh; 
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; 
+    }
+
+    .main-title {
+        font-size: 1.05rem; 
+        font-weight: 700; 
+        color: var(--marine-blue);
+        text-align: center;
+        margin: 5px 0 8px 0;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        line-height: 1.1;
+        white-space: nowrap; 
+        width: 100%;
+        display: block; 
+    }
+
+    .main-title sup { 
+        color: #b03a2e; 
+        font-size: 0.75rem; 
+        vertical-align: super; 
+    }
+
+    .sticky-header {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        background: var(--primary-bg);
+        z-index: 1000;
+        padding: 10px 15px 5px 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        margin-bottom: 10px;
+    }
+
+    .btn-action { 
+        text-decoration: none; 
+        background: var(--marine-blue);
+        color: #ffffff !important;
+        border: none; 
+        border-radius: 8px; 
+        padding: 6px 10px;
+        font-family: 'Montserrat', sans-serif; 
+        font-weight: 700; 
+        font-size: 0.6rem; 
+        display: inline-flex; 
+        align-items: center;
+        white-space: nowrap;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .page-title { font-size: 0.95rem; font-weight: 700; margin: 0; }
+    .page-title sup { color: #b03a2e; font-size: 0.6rem; }
+
+    /* --- STYLE MIS À JOUR : BLOC GRANDES MARÉES SUR UNE LIGNE --- */
+    .grandes-marees-box {
+        background: white;
+        border-left: 4px solid #ef4444;
+        border-radius: 8px;
+        margin: 0 15px 10px 15px;
+        padding: 8px 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+    .gm-title {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #991b1b;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .gm-list {
+        display: flex;
+        flex-wrap: nowrap; /* Interdit le passage à la ligne */
+        gap: 5px;
+        overflow-x: auto; /* Autorise le défilement horizontal si l'écran est trop petit */
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Cache la barre de scroll sur Firefox */
+        padding-bottom: 2px;
+    }
+    .gm-list::-webkit-scrollbar {
+        display: none; /* Cache la barre de scroll sur Chrome/Safari */
+    }
+    .gm-item {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        padding: 4px 6px; /* Marges réduites */
+        border-radius: 6px;
+        font-size: 0.65rem; /* Texte un tout petit peu plus petit */
+        font-weight: 700;
+        color: var(--marine-blue);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap; /* Le texte de chaque bloc ne se coupe pas */
+    }
+    .gm-coeff {
+        background: #ef4444;
+        color: white;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-weight: 800;
+    }
+
+    .table-container {
+        flex-grow: 1;
+        overflow: auto; 
+        -webkit-overflow-scrolling: touch;
+        background: var(--primary-bg);
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: max-content;
+        min-width: 100%;
+        background: var(--card-bg);
+    }
+
+    thead th {
+        position: sticky;
+        background-color: #f1f5f9 !important; 
+        color: var(--text-main);
+        padding: 10px 8px;
+        border-bottom: 1px solid var(--border-color);
+        border-right: 1px solid var(--border-color);
+        box-sizing: border-box;
+        z-index: 10;
+    }
+
+    thead tr:nth-child(1) th { top: 0; height: 45px; z-index: 110; }
+    thead tr:nth-child(2) th { top: 45px; height: 35px; z-index: 110; }
+
+    .sticky-col {
+        position: sticky;
+        left: 0;
+        background-color: white !important;
+        z-index: 20;
+        border-right: 2px solid var(--marine-blue) !important;
+        min-width: 60px; 
+    }
+
+    thead th.sticky-col { 
+        top: 0 !important;
+        height: 80px !important;
+        z-index: 300 !important; 
+    }
+
+    td { 
+        padding: 10px 4px; 
+        text-align: center; 
+        border-bottom: 1px solid var(--border-color); 
+        border-right: 1px solid var(--border-color); 
+        font-size: 0.75rem; 
+    }
+    
+    .group-header { font-weight: 700; text-transform: uppercase; font-size: 0.8rem; }
+    .sub-header { 
+        font-size: 0.6rem; 
+        color: #475569; 
+        font-weight: 700; 
+        text-transform: uppercase; 
+        line-height: 1.1;
+        white-space: normal; 
+        max-width: 65px;    
+        word-wrap: break-word;
+    }
+    
+    .matin-group { background-color: var(--matin-bg) !important; }
+    .soir-group { background-color: var(--soir-bg) !important; }
+
+    .today-row td { background-color: var(--today-bg) !important; }
+    .today-row .sticky-col { border-left: 5px solid var(--marine-blue) !important; }
+    
+    .weekend td:not(.sticky-col) { background-color: var(--weekend-color) !important; }
+    .weekend .sticky-col { background-color: #fee2e2 !important; } 
+
+    .month-separator td {
+        background: var(--marine-blue) !important;
+        color: white !important;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-align: left;
+        padding: 10px 15px;
+        position: sticky;
+        left: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        z-index: 15;
+    }
+
+    .porte-line { 
+        font-weight: 700; 
+        font-size: 0.7rem; 
+        display: block; 
+        white-space: nowrap; 
+    }
+    .sep { color: #cbd5e1; margin: 0 3px; font-weight: 400; }
+    .data-stack { display: flex; flex-direction: column; }
+    .data-main { font-weight: 700; font-size: 0.8rem; }
+    .data-sub { font-size: 0.65rem; color: #64748b; }
+    
+    .high-tide-text { color: #ef4444 !important; font-weight: 700; }
+    .coeff-badge { background: var(--marine-blue); color: white; padding: 3px 6px; border-radius: 4px; font-weight: 700; display: inline-block; }
+    .coeff-badge.high { background: #ef4444 !important; }
+    
+    /* Indication scrollable */
+    .scroll-hint { font-size: 0.75rem; text-align: center; color: var(--marine-blue); padding: 5px 0; font-weight: 600; background: #e0e7ff; margin-bottom: 5px; flex-shrink: 0; }
+
+    /* --- NOUVEAU POP-UP D'AVERTISSEMENT --- */
+    .warning-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(30, 41, 59, 0.8);
+        z-index: 10000;
+        justify-content: center; align-items: center;
+        backdrop-filter: blur(3px);
+    }
+    .warning-modal-box {
+        background: #fef2f2;
+        width: 85%; max-width: 350px;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        border: 2px solid #ef4444;
+        text-align: center;
+    }
+    .warning-modal-text {
+        color: #991b1b;
+        font-size: 0.8rem;
+        font-weight: 600;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+    .btn-warning-ok {
+        background: #ef4444;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 700;
+        font-family: 'Montserrat', sans-serif;
+        cursor: pointer;
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+    }
+</style>
+    <link rel="canonical" href="https://portsducotentin.fr/dielette/planning.html" />
+</head>
+<body>
+
+    <div id="warning-modal" class="warning-modal-overlay">
+        <div class="warning-modal-box">
+            <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
+            <div class="warning-modal-text" data-i18n="planning_warning_text">
+                <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Chenalage à prévoir inférieur à 10 minutes. Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+            </div>
+            <button id="btn-close-warning" class="btn-warning-ok" data-i18n="btn_understood">J'AI COMPRIS</button>
+        </div>
+    </div>
+
+    <div class="sticky-header">
+<div class="top-nav" style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+            <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
+            <a href="calendrier.html" class="btn-action" style="background-color: #ef4444 data-i18n="calendrier">CALENDRIER DES MARÉES</a>
+        </div>
+        <h1 class="main-title" data-i18n="plan_main_title">Horaires de la porte et des marées<sup>*</sup></h1>
+    </div>
+
+    <div class="grandes-marees-box" id="grandes-marees-container" style="display: none;">
+        <div class="gm-title" data-i18n="next_big_tides">Prochaines grandes marées</div>
+        <div class="gm-list" id="gm-list-content">
+            </div>
+    </div>
+
+    <div class="scroll-hint" data-i18n="plan_scroll_hint">👉 Glissez le tableau vers la gauche pour voir le SOIR</div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="sticky-col" rowspan="2" data-i18n="plan_date">Date</th>
+                    <th class="group-header matin-group" colspan="4" data-i18n="plan_morning">☀️ MATIN</th>
+                    <th class="group-header soir-group" colspan="4" data-i18n="plan_evening">🌙 SOIR</th>
+                </tr>
+                <tr>
+                    <th class="sub-header matin-group" data-i18n="plan_gate_col">Porte (Ouv | Ferm)</th>
+                    <th class="sub-header matin-group" data-i18n="plan_high_tide">Pleine Mer</th>
+                    <th class="sub-header matin-group" data-i18n="plan_low_tide">Basse Mer</th>
+                    <th class="sub-header matin-group" data-i18n="plan_coeff">Coeff</th>
+                    <th class="sub-header soir-group" data-i18n="plan_gate_col">Porte (Ouv | Ferm)</th>
+                    <th class="sub-header soir-group" data-i18n="plan_high_tide">Pleine Mer</th>
+                    <th class="sub-header soir-group" data-i18n="plan_low_tide">Basse Mer</th>
+                    <th class="sub-header soir-group" data-i18n="plan_coeff">Coeff</th>
+                </tr>
+            </thead>
+            <tbody id="planning-body">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="../lang.js"></script>
+
+    <script>
+    // --- NOUVELLE FONCTION : CHERCHER LES GRANDES MARÉES ---
+    function findNextGrandesMarees() {
+        if (typeof data === 'undefined' || data.length === 0) return;
+        
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const todayStr = new Date(now - tzoffset).toISOString().split('T')[0];
+        
+        const currentLang = localStorage.getItem('preferredLang') || 'fr';
+        const locale = currentLang === 'en' ? 'en-GB' : 'fr-FR';
+        
+        let grandesMarees = [];
+        const seuilCoefficient = 100; // On cherche les coeff >= 100
+
+        // On parcourt les données
+        for (let i = 0; i < data.length; i++) {
+            let jour = data[i];
+            
+            // On ne regarde que les dates d'aujourd'hui ou futures
+            if (jour.date >= todayStr) {
+                let maxCoeff = Math.max(parseInt(jour.coeff1) || 0, parseInt(jour.coeff2) || 0);
+                
+                if (maxCoeff >= seuilCoefficient) {
+                    const dObj = new Date(jour.date);
+                    const dateFormatted = dObj.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' });
+                    grandesMarees.push({ date: dateFormatted, coeff: maxCoeff });
+                }
+            }
+            
+            // On s'arrête quand on a trouvé 3 jours différents
+            if (grandesMarees.length >= 3) break;
+        }
+
+        // Affichage dans le HTML
+        if (grandesMarees.length > 0) {
+            const container = document.getElementById('grandes-marees-container');
+            const listContent = document.getElementById('gm-list-content');
+            let htmlContent = "";
+            
+            grandesMarees.forEach(gm => {
+                htmlContent += `<div class="gm-item">${gm.date} <span class="gm-coeff">${gm.coeff}</span></div>`;
+            });
+            
+            listContent.innerHTML = htmlContent;
+            container.style.display = 'flex';
+        }
+    }
+
+
+    function generateTable() {
+        const tbody = document.getElementById('planning-body');
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const today = new Date(now - tzoffset).toISOString().split('T')[0];
+        
+        if (typeof data === 'undefined') return;
+        
+        let currentMonthStr = ""; 
+        let tableHTML = "";
+
+        const currentLang = localStorage.getItem('preferredLang') || 'fr';
+        const locale = currentLang === 'en' ? 'en-GB' : 'fr-FR';
+
+        data.forEach(jour => {
+            const d = new Date(jour.date);
+            const isToday = (jour.date === today);
+            const isWeekend = (d.getDay() === 0 || d.getDay() === 6);
+            
+            const monthName = d.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
+            
+            if (monthName !== currentMonthStr) {
+                const sepRow = `
+                    <tr class="month-separator">
+                        <td colspan="9">${monthName}</td>
+                    </tr>`;
+                tableHTML += sepRow;
+                currentMonthStr = monthName; 
+            }
+
+            const dayLabel = d.toLocaleDateString(locale, { weekday: 'short' }).toUpperCase();
+            const dayNum = d.toLocaleDateString(locale, { day: '2-digit', month: 'short' });
+            
+            const p1 = jour.portes && jour.portes[0] ? jour.portes[0] : {open:"--", close:"--"};
+            const p2 = jour.portes && jour.portes[1] ? jour.portes[1] : {open:"--", close:"--"};
+
+            const isHigh1 = parseInt(jour.coeff1) >= 90;
+            const isHigh2 = parseInt(jour.coeff2) >= 90;
+
+            const row = `
+                <tr class="${isWeekend ? 'weekend' : ''} ${isToday ? 'today-row' : ''}" ${isToday ? 'id="today-marker"' : ''}>
+                    <td class="sticky-col">
+                        <div class="data-stack"><span class="data-main">${dayLabel}</span><span class="data-sub">${dayNum}</span></div>
+                    </td>
+                    
+                    <td class="matin-group">
+                        <div class="porte-line">
+                            <span style="color: #067a5c;">${p1.open}</span> <span class="sep">|</span> <span style="color: #991b1b;">${p1.close}</span>
+                        </div>
+                    </td>
+                    <td class="matin-group ${isHigh1 ? 'high-tide-text' : ''}">
+                        <div class="data-stack"><span class="data-main">${jour.pm1 || '--'}</span><span class="data-sub">${jour.pm1_h ? jour.pm1_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="matin-group">
+                        <div class="data-stack"><span class="data-main">${jour.bm1 || '--'}</span><span class="data-sub">${jour.bm1_h ? jour.bm1_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="matin-group">
+                        <span class="coeff-badge ${isHigh1 ? 'high' : ''}">${jour.coeff1 || '--'}</span>
+                    </td>
+
+                    <td class="soir-group">
+                        <div class="porte-line">
+                            <span style="color: #067a5c;">${p2.open}</span> <span class="sep">|</span> <span style="color: #991b1b;">${p2.close}</span>
+                        </div>
+                    </td>
+                    <td class="soir-group ${isHigh2 ? 'high-tide-text' : ''}">
+                        <div class="data-stack"><span class="data-main">${jour.pm2 || '--'}</span><span class="data-sub">${jour.pm2_h ? jour.pm2_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="soir-group">
+                        <div class="data-stack"><span class="data-main">${jour.bm2 || '--'}</span><span class="data-sub">${jour.bm2_h ? jour.bm2_h + 'm' : '-'}</span></div>
+                    </td>
+                    <td class="soir-group">
+                        <span class="coeff-badge ${isHigh2 ? 'high' : ''}">${jour.coeff2 || '--'}</span>
+                    </td>
+                </tr>`;
+            
+            tableHTML += row;
+        });
+
+        tbody.innerHTML = tableHTML;
+
+        setTimeout(() => {
+            const container = document.querySelector('.table-container');
+            const todayEl = document.getElementById('today-marker');
+            if (container && todayEl) {
+                const topPos = todayEl.offsetTop - 100;
+                container.scrollTo({ top: topPos, behavior: 'smooth' });
+            }
+        }, 100);
+    }
+    </script>
+
+    <script>
+// --- GESTION DU POP-UP À CHAQUE VISITE ---
+        function checkWarningPopup() {
+            // On affiche systématiquement le pop-up au chargement de la page
+            document.getElementById('warning-modal').style.display = 'flex';
+        }
+
+        // Événement pour simplement fermer le pop-up
+        document.getElementById('btn-close-warning').addEventListener('click', () => {
+            document.getElementById('warning-modal').style.display = 'none';
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language.substring(0, 2);
+            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[savedLang] && translations[savedLang][key]) {
+                    el.innerHTML = translations[savedLang][key]; 
+                }
+            });
+
+            generateTable();
+            findNextGrandesMarees(); // On appelle la nouvelle fonction
+            checkWarningPopup();
+        });
+    </script>
+</body>
+</html>
