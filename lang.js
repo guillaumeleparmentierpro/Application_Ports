@@ -4,6 +4,8 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        sponsor_bouteille_mer_index: "Une Bouteille A La Mer",
+        sponsor_mer_boire_index: "La Mer à Boire",
         footer_tdr: "© 2026 portsducotentin.fr · Tous droits réservés",
         footer_cws: "Créé par Cotentin Web Studio",
         creationCWS: "© 2026 Portsducotentin.fr Tous droits réservés - Réalisé par Cotentin Web Studio",
@@ -242,6 +244,8 @@ const translations = {
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        sponsor_bouteille_mer_index: "Une Bouteille A La Mer",
+        sponsor_mer_boire_index: "La Mer à Boire",
         footer_tdr: "© 2026 portsducotentin.fr · All rights reserved",
         footer_cws: "Created by Cotentin Web Studio",
         creationCWS: "© 2026 Portsducotentin.fr All rights reserved - Developed by Cotentin Web Studio",
