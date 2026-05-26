@@ -6,19 +6,9 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ports du Cotentin - Port de Diélette - Horaires, Portes & Marées | L'App des Marins</title>
-    <meta name="description" content="Consultez en temps réel l'état des portes (ouvertures/fermetures), les horaires des marées et la météo marine des ports du Cotentin. L'outil indispensable pour votre navigation.">
-    <meta name="author" content="Cotentin Web Studio - Guillaume Leparmentier">
-    <meta name="publisher" content="Cotentin Web Studio">
-    <meta name="keywords" content="Ports, Cotentin, Marée, Porte, Horaires, Manche, Navigation, Normandie, Ouverture, Fermeture, Barneville, Carteret, Diélette, Granville, Hérel, Port-Bail, Pêche, Marin, Météo marine">
-    <meta property="og:title" content="Ports du Cotentin - Horaires, Portes & Marées">
-    <meta property="og:description" content="Accédez en 1 clic à l'état des portes, aux horaires des marées et à la météo des ports du Cotentin.">
-    <meta property="og:image" content="https://portsducotentin.fr/android-chrome-512x512.png">
-    <meta property="og:url" content="https://portsducotentin.fr/dielette">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Ports du Cotentin">
+    <title>Ports du Cotentin - Port de Diélette</title>
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
+    <script src="donnees.js"></script> <script src="../lang.js"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -29,453 +19,226 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-    <link rel="icon" href="../icon-192.png" sizes="192x192">
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-    
-    <link rel="manifest" href="../manifest.json">
-    <meta name="theme-color" content="#1e3a8a">
-    <link rel="apple-touch-icon" href="../icon-192.png">
-
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <script src="donnees.js"></script>
-    <script src="../lang.js"></script>
     
     <style>
-        .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 10px 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
-        .sponsor-label { background: var(--marine-blue); color: white; font-size: 0.52rem; border-radius: 4px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; flex-shrink: 0; align-self: center; display: inline-block; }
-        .sponsor-text { font-size: 0.75rem; font-weight: 600; line-height: 1.3; flex-grow: 1; display: flex; align-items: center; justify-content: flex-end; text-align: right; }
-        
         :root { color-scheme: light; --primary-bg: #f1f5f9; --card-bg: #ffffff; --open-light: #10b981; --open-dark: #067a5c; --warning-color: #fbbf24; --warning-dark: #d97706; --danger-color: #ef4444; --danger-dark: #991b1b; --closed-color: #ef4444; --marine-blue: #1e3a8a; --text-main: #1e293b; --tide-light-blue: #eff6ff; }
         body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; padding: 15px; box-sizing: border-box; padding-top: 0 !important; }
-        .footer-module { margin-top: 15px; padding-top: 20px; border-top: 1px dashed #cbd5e1; text-align: center; }
-        .footer-credits { margin-top: 35px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-decoration: none; transition: transform 0.2s; cursor: pointer; }
-        .footer-credits img { width: 42px; height: auto; opacity: 0.85; }
-        .footer-text-block { text-align: center; font-family: 'Montserrat', sans-serif; }
-        .footer-copyright { font-size: 0.65rem; color: #64748b; font-weight: 500; margin: 0; }
-        .footer-studio { font-size: 0.65rem; color: var(--marine-blue); font-weight: 700; letter-spacing: 0.5px; margin: 4px 0 0 0; }
-        .footer-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-        .btn-footer { width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; box-sizing: border-box; }
-        .module { background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); border-bottom: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; }
-        .date-badge { background: white; padding: 6px 8px; border-radius: 8px; font-weight: 700; font-size: 0.6rem; border: 1px solid #e2e8f0; white-space: nowrap; flex-shrink: 1; text-align: center; }
+        .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; padding: 15px; box-sizing: border-box; }
         .sticky-header { position: -webkit-sticky; position: sticky; top: 0; background: var(--primary-bg); z-index: 1000; padding: 10px 15px 5px 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; }
-        .main-title { font-size: 1.05rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 5px 0 8px 0; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.1; white-space: nowrap; width: 100%; display: block; }
-        .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
-        .lang-switch { text-align: center; font-size: 1.5rem; }
-        .lang-btn { cursor: pointer; opacity: 0.3; transition: opacity 0.3s ease, transform 0.2s ease; display: inline-block; vertical-align: middle; }
-        .lang-btn.active { opacity: 1; transform: scale(1.15); }
-        .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .status-box { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
-        .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
-        .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
-        .status-box.danger { background: var(--danger-color); border: 5px solid var(--danger-dark); animation: pulse 1s infinite; }
+        .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 10px 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border: 1px solid #c7d2fe; min-height: 50px; }
+        .sponsor-label { background: var(--marine-blue); color: white; font-size: 0.52rem; border-radius: 4px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; padding: 4px 8px; text-align: center; line-height: 1.2; text-decoration: none; }
+        .sponsor-text { font-size: 0.75rem; font-weight: 600; line-height: 1.3; flex-grow: 1; display: flex; align-items: center; justify-content: flex-end; text-align: right; }
+        .main-title { font-size: 1.05rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 5px 0 8px 0; text-transform: uppercase; }
+        .module { background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); border-bottom: 1px solid #e2e8f0; }
+        .status-box { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
+        .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); }
         .status-box.closed { background: var(--closed-color); border: 5px solid var(--danger-dark); }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-        .status-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; opacity: 0.9; margin-bottom: 2px; }
-        .status-value { font-size: 1.4rem; font-weight: 900; margin: 5px 0; letter-spacing: -0.5px; line-height: 1.1; padding: 0 5px; text-align: center; }
-        .progress-wrapper { margin: 10px 0; display: none; }
-        .progress-container { width: 100%; height: 34px; border-radius: 17px; overflow: hidden; position: relative; background: var(--open-light); transition: background 0.5s ease; }
-        .progress-container.waiting { background: #cbd5e1; } 
-        .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear, background 0.5s ease; }
-        .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); pointer-events: none; }
-        .slots-container { background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
-        .slot-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .slot-title { font-size: 0.6rem; font-weight: 700; color: var(--marine-blue); line-height: 1.3; margin-right: 5px; text-transform: uppercase; flex: 1; }
-        .slot-title.secondary { color: #64748b; }
-        .slot-pills { display: flex; gap: 5px; flex-shrink: 0; }
+        .status-value { font-size: 1.4rem; font-weight: 900; }
+        .progress-container { width: 100%; height: 34px; border-radius: 17px; overflow: hidden; position: relative; background: var(--open-light); margin: 10px 0; }
+        .progress-container.waiting { background: #cbd5e1; }
+        .progress-bar { height: 100%; background: var(--open-dark); width: 0%; }
+        .progress-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; }
+        .slots-container { background: #f8fafc; border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
+        .slot-row { display: flex; justify-content: space-between; align-items: center; }
         .slot-badge { width: 72px; padding: 5px 0; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 3px; color: white; }
-        .slot-badge span { font-size: 0.45rem; text-transform: uppercase; font-weight: 600; opacity: 0.9; }
-        .slot-badge b { font-size: 0.75rem; font-weight: 700; }
-        .badge-open { background: var(--open-light); border: 1px solid var(--open-dark); }
-        .badge-close { background: var(--closed-color); border: 1px solid #991b1b; }
-        .tide-full-module { background: var(--tide-light-blue); border-radius: 12px; border: 1px solid #dbeafe; padding: 15px 10px; margin: 0 12px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; position: relative; }
-        .tide-header-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; font-weight: 700; color: var(--marine-blue); }
-        .tide-column { flex: 1; flex-basis: 33.33%; min-width: 0; } 
-        #tideCanvasLarge { width: 100%; height: 80px; cursor: pointer; }
-        .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
-        .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 270px; border: 1px solid #e2e8f0; }
-        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .badge-open { background: var(--open-light); } .badge-close { background: var(--closed-color); }
+        .tide-full-module { background: var(--tide-light-blue); border-radius: 12px; padding: 15px 10px; }
+        .footer-credits { margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 12px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-decoration: none; }
+        .btn-action { text-decoration: none; background: var(--marine-blue); color: white !important; padding: 8px 12px; border-radius: 8px; font-weight: 700; font-size: 0.7rem; display: inline-flex; align-items: center; justify-content: center; }
+        .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s all ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        .sun-times-container { display: flex; justify-content: center; gap: 15px; margin-top: 12px; font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); }
-        .sun-badge { display: flex; align-items: center; gap: 6px; background: #f8fafc; padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
     </style>
 </head>
 <body>
 
 <div id="warning-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10002; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
-    <div style="background: #fef2f2; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border: 2px solid #ef4444;">
+    <div style="background: #fef2f2; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; text-align: center; border: 2px solid #ef4444;">
         <div style="font-size: 2.5rem; margin-bottom: 10px;">⚠️</div>
-        <div style="color: #991b1b; font-size: 0.85rem; font-weight: 600; line-height: 1.5; margin-bottom: 20px;" data-i18n="index_disclaimer">
-            <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-            <button onclick="acceptWarning()" style="background: #10b981; color: white; border: none; padding: 12px; font-size: 0.85rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: 'Montserrat', sans-serif;">J'AI COMPRIS</button>
-            <a href="../securite.html" style="background: #ef4444; color: white; text-decoration: none; padding: 12px; font-size: 0.75rem; border-radius: 8px; font-weight: 700; display: block;">SÉCURITÉ ET RAPPEL</a>
-        </div>
-    </div>
-</div>
-
-<div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
-    <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
-        <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
-        <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">Choix du port</h3>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-            <a href="../index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">Port de Carteret</a>            
-            <a href="#" onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="display: block; background: var(--marine-blue); color: white; text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem;">📍 Port de Diélette</a>
-            <a href="../Granville/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">Port de Hérel (Granville)</a>
-        </div>
+        <div style="color: #991b1b; font-size: 0.85rem; font-weight: 600; line-height: 1.5; margin-bottom: 20px;" data-i18n="index_disclaimer">Attention aux horaires indicatifs.</div>
+        <button onclick="acceptWarning()" style="background: #10b981; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; width: 100%;">J'AI COMPRIS</button>
     </div>
 </div>
 
 <div class="app-container">
     <div class="sticky-header">
         <div class="top-sponsor-banner" id="sponsor-banner">
-            <a href="partenaires.html" class="sponsor-label" style="text-decoration: none; color: white; text-align: center; line-height: 1.2; padding: 4px 8px;">NOS<br>PARTENAIRES<br>LOCAUX</a>
+            <a href="partenaires.html" class="sponsor-label">NOS<br>PARTENAIRES<br>LOCAUX</a>
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 5px;">
-            <div class="date-badge" id="current-date">-- --</div>
-            <div class="lang-switch" style="margin: 0; font-size: 1.6rem;">
-                <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active">🇫🇷</span> 
-                <span style="color: #cbd5e1; font-size: 1.2rem; vertical-align: middle; margin: 0 2px;">|</span> 
-                <span onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div id="current-date" style="font-weight: 800; font-size: 0.7rem; background: white; padding: 5px 10px; border-radius: 8px; border: 1px solid #e2e8f0;">-- --</div>
+            <div class="lang-switch">
+                <span onclick="setLanguage('fr')" id="btn-fr" style="cursor:pointer;">🇫🇷</span> | 
+                <span onclick="setLanguage('en')" id="btn-en" style="cursor:pointer;">🇬🇧</span>
             </div>
         </div>
-        <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 12px;">
-            <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES PORTE & MARÉES</a>
-            <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
-            <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;" data-i18n="btn_install">📱 INSTALLER</button>
-        </div>
-        <h1 class="main-title">PORT DE DIÉLETTE<sup>*</sup></h1>
-        <div style="text-align: center; margin: 8px 0 5px 0;">
-            <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; cursor: pointer; font-family: 'Montserrat', sans-serif;">
-                ⚓ <span data-i18n="change_port">CHANGER DE PORT</span> ▾
-            </button>
+        <h1 class="main-title">PORT DE DIÉLETTE</h1>
+        <div style="text-align: center;">
+            <a href="../index.html" class="btn-action" style="background: white; color: var(--marine-blue) !important; border: 2px solid var(--marine-blue); border-radius: 20px; font-size: 0.6rem;">⚓ CHANGER DE PORT ▾</a>
         </div>
     </div>
-        
+
     <div class="module">
         <div id="status-box" class="status-box closed">
-            <span class="status-label" data-i18n="label_gate">Porte</span>
-            <span class="status-value" id="status-text">--</span>
+            <span style="font-size: 0.7rem; text-transform: uppercase;">Porte</span>
+            <span id="status-text" class="status-value">--</span>
         </div>
-        <div class="progress-wrapper" id="progress-wrapper">
-            <div class="progress-container" id="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-                <div class="progress-text" id="time-left">--</div>
+        <div id="progress-wrapper" class="progress-wrapper" style="display:none;">
+            <div id="progress-container" class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+                <div id="time-left" class="progress-text">--</div>
             </div>
         </div>
         <div class="slots-container">
-            <div class="slot-row">
-                <div class="slot-title" id="title-slot-1">Créneaux officiels</div>
-                <div class="slot-pills">
-                    <div class="slot-badge badge-open"><span id="label-ouv">OUV.</span><b id="open-time">--:--</b></div>
-                    <div class="slot-badge badge-close"><span id="label-ferm">FERM.</span><b id="close-time">--:--</b></div>
-                </div>
-            </div>
-            <div class="slot-row">
-                <div class="slot-title secondary" id="title-slot-2">Prochains créneaux</div>
-                <div class="slot-pills" style="opacity: 0.85;">
-                    <div class="slot-badge badge-open"><span id="label-ouv-next">OUV.</span><b id="open-time-next">--:--</b></div>
-                    <div class="slot-badge badge-close"><span id="label-ferm-next">FERM.</span><b id="close-time-next">--:--</b></div>
-                </div>
-            </div>
+            <div class="slot-row"><span style="font-size: 0.65rem; font-weight: 700; color: var(--marine-blue);">Créneaux officiels</span><div style="display:flex; gap:5px;"><div class="slot-badge badge-open"><b>Ouv.</b> <b id="open-time">--</b></div><div class="slot-badge badge-close"><b>Ferm.</b> <b id="close-time">--</b></div></div></div>
+            <div class="slot-row"><span style="font-size: 0.65rem; font-weight: 700; color: #64748b;">Prochains créneaux</span><div style="display:flex; gap:5px; opacity: 0.7;"><div class="slot-badge badge-open"><b>Ouv.</b> <b id="open-time-next">--</b></div><div class="slot-badge badge-close"><b>Ferm.</b> <b id="close-time-next">--</b></div></div></div>
         </div>
     </div>
 
     <div class="module reveal">
-        <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;" data-i18n="tide_title">Informations marée</div>
         <div class="tide-full-module">
-            <div class="tide-header-info">
-                <div class="tide-column" style="text-align: left;"><div id="tide-left-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div></div>
-                <div class="tide-column" style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; line-height: 1.1;">
-                    <span data-i18n="coeff" style="font-size:0.6rem; font-weight:700; color:#64748b;">COEFF</span> 
-                    <span id="coeff-display" style="color:var(--marine-blue); font-size: 1.4rem; font-weight: 900;">--</span>
-                    <span data-i18n="ht_maree" style="font-size:0.55rem; font-weight:700; color:#ef4444; margin-top:6px; text-transform: uppercase;">Ht. marée</span>
-                    <span id="current-tide-height" style="color:#ef4444; font-size: 0.85rem; font-weight: 800;">-- m</span>
-                </div>
-                <div class="tide-column" style="text-align: right;"><div id="tide-right-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div></div>
+            <div style="display:flex; justify-content: space-between; font-weight: 800; color: var(--marine-blue); font-size: 0.7rem; margin-bottom: 10px;">
+                <span id="tide-left-label">--</span>
+                <div style="text-align: center;"><span style="color:#64748b; font-size: 0.5rem;">COEFF</span><br><span id="coeff-display" style="font-size: 1.2rem;">--</span></div>
+                <span id="tide-right-label">--</span>
             </div>
-            <canvas id="tideCanvasLarge" style="width:100%; height:80px; cursor: pointer;"></canvas>
-            <div class="tide-footer-info">
-                <div id="tide-left-data"><span id="val-left">--</span></div>
-                <div id="tide-right-data"><span id="val-right">--</span></div>
+            <canvas id="tideCanvasLarge" style="width:100%; height:80px;"></canvas>
+            <div style="display:flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; margin-top: 5px;">
+                <span id="val-left">--</span>
+                <span id="current-tide-height" style="color: #ef4444;">-- m</span>
+                <span id="val-right">--</span>
             </div>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.75rem; font-weight: 700; color: var(--marine-blue);">
-            <span id="moon-phase-badge" style="font-size: 1.4rem;"></span>
-            <span id="moon-phase-label" style="font-style: italic; color: #475569; font-size: 0.75rem;"></span>
-        </div>
     </div>
 
-    <div class="module reveal">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
-            <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">WEBCAM</a>
-        </div>
-        <div class="weather-iframe-box">
-           <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1180&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
-        </div>
-        <div class="sun-times-container">
-            <div class="sun-badge">🌅 <span id="sunrise-time">--:--</span></div>
-            <div class="sun-badge">🌄 <span id="sunset-time">--:--</span></div>
-        </div>
-    </div>
-
-    <div class="module reveal">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="currents_title">Courants marins</div>
-        </div>
-        <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0;">
-            <iframe width="100%" height="300" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C&radarRange=-1&overlay=currents&product=copernicus&level=surface&lat=49.558&lon=-1.860&zoom=10&detailLat=49.558&detailLon=-1.860&marker=true" frameborder="0" style="border:0;"></iframe>
-        </div>
-    </div>
-
-    <div class="module reveal" style="margin-top: 15px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="radar_title">Radar de pluie en direct</div>
-        </div>
-        <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0;">
-            <iframe src="https://www.rainviewer.com/map.html?loc=49.551,-1.85,7&oColor=0&tColor=3&s=1&m=1&d=1&v=0&w=1&p=1&oc=0&g=1" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
-        </div>
-    </div>
-    
     <div class="footer-module">
-        <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         <div class="footer-buttons">
-            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">NOS PARTENAIRES LOCAUX</a>
-            <a href="../liens.html" class="btn-action btn-footer" data-i18n="btn_links">LIENS UTILES</a>
-            <a href="../contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
+            <a href="partenaires.html" class="btn-action btn-footer" style="width:100%; margin-bottom: 10px;">NOS PARTENAIRES LOCAUX</a>
+            <a href="../contact.html" class="btn-action btn-footer" style="width:100%; background: #64748b;">✉️ NOUS CONTACTER</a>
         </div>
-        <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" class="footer-credits" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});">
+        <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" class="footer-credits">
             <div class="footer-text-block">
                 <p class="footer-copyright">© 2026 portsducotentin.fr · Tous droits réservés</p>
                 <p class="footer-studio">Créé par Cotentin Web Studio</p>
             </div>
-            <img src="../logo-cws.png" alt="Cotentin Web Studio">
+            <img src="../logo-cws.png" alt="Logo CWS" style="width: 40px;">
         </a>
     </div>
 </div>
 
 <script>
-    window.onload = function() {
-        if (typeof data !== 'undefined') {
-            updateApp();
-            setInterval(updateApp, 1000);
-        }
-    };
-
+    // --- GESTION DES SPONSORS (SÉCURISÉE) ---
     function updateSponsor() {
-        const now = new Date();
-        const hour = now.getHours();
+        const hour = new Date().getHours();
         const sponsorText = document.getElementById('sponsor-text');
         if (!sponsorText) return;
 
-        const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
-        const t = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang] : {};
+        // Texte par défaut si pas de partenaire à cette heure
+        let finalHTML = `<a href="../contact.html" style="text-decoration:none; color:inherit;">⚓ Votre publicité ici ! Contactez-nous.</a>`;
 
         function getPartnerHTML(anchorId, imgSrc, textContent) {
             return `<a href="partenaires.html#${anchorId}" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; text-decoration: none; color: inherit; width: 100%;">
-                        <span style="text-align: right; line-height: 1.3;">${textContent}</span>
-                        <img src="${imgSrc}" style="height: 50px; width: 50px; object-fit: contain; border-radius: 8px; background: white; padding: 3px; border: 1px solid #cbd5e1; flex-shrink: 0;">
+                        <span style="text-align: right; line-height: 1.2;">${textContent}</span>
+                        <img src="${imgSrc}" style="height: 45px; width: 45px; object-fit: contain; border-radius: 6px; background: white; padding: 2px; border: 1px solid #cbd5e1;">
                     </a>`;
         }
 
-        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
-        let finalHTML = `<a href="../contact.html" style="text-decoration:none; color:inherit; display: flex; align-items: center; justify-content: flex-end; text-align: right; width:100%;">${txtDefault}</a>`;
-        
         if (hour === 10) finalHTML = getPartnerHTML("unebouteillealamer", "../bout.png", "Une Bouteille A La Mer");
-        else if (hour === 17) finalHTML = getPartnerHTML("effet-papillon", "../effpap.png", "L’Effet Papillon Diélette");
+        else if (hour === 17) finalHTML = getPartnerHTML("effet-papillon", "../effpap.png", "L'Effet Papillon Diélette");
         else if (hour === 19) finalHTML = getPartnerHTML("lameraboire", "../merab.png", "La Mer à Boire");
 
         sponsorText.innerHTML = finalHTML;
     }
 
-    function drawTideGraph(percent, isDescending) {
-        const canvas = document.getElementById('tideCanvasLarge');
-        if(!canvas) return;
-        const ctx = canvas.getContext('2d');
-        canvas.width = canvas.offsetWidth;
-        canvas.height = 80;
-        const w = canvas.width;
-        const h = canvas.height;
-        ctx.clearRect(0, 0, w, h);
-        ctx.beginPath(); ctx.strokeStyle = '#cbd5e1'; ctx.setLineDash([5, 5]);
-        ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.stroke(); ctx.setLineDash([]);
-        ctx.beginPath(); ctx.strokeStyle = '#1e3a8a'; ctx.lineWidth = 3;
-        for (let x = 0; x <= w; x++) {
-            let ratio = x / w;
-            let y = isDescending ? 15 + ((1 - Math.cos(ratio * Math.PI)) / 2) * 50 : 15 + ((Math.cos(ratio * Math.PI) + 1) / 2) * 50;
-            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-        const dotX = (percent / 100) * w;
-        const dotY = isDescending ? 15 + ((1 - Math.cos((percent/100) * Math.PI)) / 2) * 50 : 15 + ((Math.cos((percent/100) * Math.PI) + 1) / 2) * 50;
-        ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 5, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
-    }
-
     function parseTime(tStr) {
-        if (!tStr) return null;
-        let s = String(tStr).trim().toLowerCase().replace('h', ':').replace('.', ':');
-        if (s === "--" || s === "--:--" || s === "") return null;
+        if (!tStr || tStr === "--") return null;
+        let s = String(tStr).replace('h', ':').replace('.', ':');
         let parts = s.split(':');
-        if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
-            let hour = parseInt(parts[0], 10);
-            let min = parseInt(parts[1], 10);
-            return { h: hour, m: min, clean: hour.toString().padStart(2, '0') + ":" + min.toString().padStart(2, '0') };
-        }
-        return null;
+        return { h: parseInt(parts[0]), m: parseInt(parts[1]) };
     }
 
     function updateApp() {
         const now = new Date();
-        const currentLang = localStorage.getItem('preferredLang') || 'fr';
-        const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
-        document.getElementById('current-date').innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
-        
-        try {
-            const cycleLunaireMs = 2551442877; 
-            const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57); 
-            const phase = ((now.getTime() - referenceNouvelleLuneMs) % cycleLunaireMs) / cycleLunaireMs;
-            let moonEmoji = ""; let moonName = "";
-            if (phase < 0.03 || phase > 0.97) { moonEmoji = "🌑"; moonName = currentLang === 'en' ? "New Moon" : "Nouvelle Lune"; } 
-            else if (phase < 0.22) { moonEmoji = "🌒"; moonName = currentLang === 'en' ? "Waxing Crescent" : "Premier Croissant"; } 
-            else if (phase < 0.28) { moonEmoji = "🌓"; moonName = currentLang === 'en' ? "First Quarter" : "Premier Quartier"; } 
-            else if (phase < 0.47) { moonEmoji = "🌔"; moonName = currentLang === 'en' ? "Waxing Gibbous" : "Gibbeuse Croissante"; } 
-            else if (phase < 0.53) { moonEmoji = "🌕"; moonName = currentLang === 'en' ? "Full Moon" : "Pleine Lune"; } 
-            else if (phase < 0.72) { moonEmoji = "🌖"; moonName = currentLang === 'en' ? "Waning Gibbous" : "Gibbeuse Décroissante"; } 
-            else if (phase < 0.78) { moonEmoji = "🌗"; moonName = currentLang === 'en' ? "Last Quarter" : "Dernier Quartier"; } 
-            else { moonEmoji = "🌘"; moonName = currentLang === 'en' ? "Waning Crescent" : "Dernier Croissant"; }
-            document.getElementById('moon-phase-badge').innerText = moonEmoji;
-            document.getElementById('moon-phase-label').innerText = moonName;
-        } catch (e) { console.log(e); }
+        const dateStr = now.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
+        document.getElementById('current-date').innerText = dateStr;
 
         updateSponsor();
         if (typeof data === 'undefined' || data.length === 0) return;
-        
-        const tzoffset = now.getTimezoneOffset() * 60000;
-        const dateStr = (new Date(now - tzoffset)).toISOString().split('T')[0];
-        const yesterdayStr = new Date(now.getTime() - 86400000 - tzoffset).toISOString().split('T')[0];
-        const tomorrowStr = new Date(now.getTime() + 86400000 - tzoffset).toISOString().split('T')[0];
 
-        let allPortes = []; let allTides = [];
-        [yesterdayStr, dateStr, tomorrowStr].forEach(ds => {
-            let dData = data.find(d => d.date === ds);
-            if(dData) {
-                let parts = ds.split('-');
-                let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
-                (dData.portes || []).forEach(p => {
-                    let o = parseTime(p.open), c = parseTime(p.close);
-                    if(o && c) {
-                        let sO = new Date(y, m, day, o.h, o.m, 0), sC = new Date(y, m, day, c.h, c.m, 0);
-                        if (sC < sO) sC.setDate(sC.getDate() + 1);
-                        allPortes.push({ sO: sO, sC: sC, openStr: o.clean, closeStr: c.clean });
-                    }
-                });
-                [{t: dData.bm1, h: dData.bm1_h, type: "BM", c: dData.coeff1, r: null}, {t: dData.pm1, h: dData.pm1_h, type: "PM", c: dData.coeff1, r: null}, {t: dData.bm2, h: dData.bm2_h, type: "BM", c: dData.coeff2, r: dData.bm1}, {t: dData.pm2, h: dData.pm2_h, type: "PM", c: dData.coeff2, r: dData.pm1}].forEach(t => {
-                    let pt = parseTime(t.t);
-                    if (pt) {
-                        let dObj = new Date(y, m, day, pt.h, pt.m, 0);
-                        let pr = parseTime(t.r);
-                        if (pr && dObj < new Date(y, m, day, pr.h, pr.m, 0)) dObj.setDate(dObj.getDate() + 1);
-                        allTides.push({ time: pt.clean, h: t.h, type: t.type, c: t.c, dateObj: dObj });
-                    }
-                });
+        const todayISO = now.toISOString().split('T')[0];
+        const dData = data.find(d => d.date === todayISO);
+        if (!dData) return;
+
+        // --- GESTION PORTE ---
+        const porte = (dData.portes && dData.portes[0]) ? dData.portes[0] : null;
+        if (porte) {
+            const ouv = parseTime(porte.open), ferm = parseTime(porte.close);
+            const dOuv = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ouv.h, ouv.m);
+            const dFerm = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ferm.h, ferm.m);
+            if (dFerm < dOuv) dFerm.setDate(dFerm.getDate() + 1);
+
+            document.getElementById('open-time').innerText = porte.open;
+            document.getElementById('close-time').innerText = porte.close;
+
+            const wrap = document.getElementById('progress-wrapper');
+            const pb = document.getElementById('progress-bar');
+            const statusBox = document.getElementById('status-box');
+            const statusTxt = document.getElementById('status-text');
+
+            if (now >= dOuv && now <= dFerm) {
+                wrap.style.display = "block";
+                statusBox.className = "status-box open";
+                statusTxt.innerText = "OUVERTE";
+                let pct = ((now - dOuv) / (dFerm - dOuv)) * 100;
+                pb.style.width = pct + "%";
+                let diff = Math.floor((dFerm - now) / 60000);
+                document.getElementById('time-left').innerText = Math.floor(diff/60) + "h" + (diff%60).toString().padStart(2,'0') + " avant fermeture";
+            } else {
+                statusBox.className = "status-box closed";
+                statusTxt.innerText = "FERMÉE";
+                wrap.style.display = "none";
             }
-        });
-        allPortes.sort((a, b) => a.sO - b.sO); allTides.sort((a, b) => a.dateObj - b.dateObj);
-        let futurePortes = allPortes.filter(p => p.sC > now);
-        let activePorte = futurePortes.length > 0 && now >= futurePortes[0].sO ? futurePortes[0] : null;
-        let nextPorte = !activePorte && futurePortes.length > 0 ? futurePortes[0] : null;
+        }
+
+        // --- DESSIN MAREE SIMPLIFIÉ ---
+        const canvas = document.getElementById('tideCanvasLarge');
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth; canvas.height = 80;
+        ctx.beginPath(); ctx.strokeStyle = "#1e3a8a"; ctx.lineWidth = 3;
+        ctx.moveTo(0, 40); ctx.bezierCurveTo(canvas.width/3, 0, 2*canvas.width/3, 80, canvas.width, 40);
+        ctx.stroke();
         
-        const t = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang] : {};
-        document.getElementById('label-ouv').innerText = t.pill_open || "OUV.";
-        document.getElementById('label-ferm').innerText = t.pill_close || "FERM.";
-        document.getElementById('label-ouv-next').innerText = t.pill_open || "OUV.";
-        document.getElementById('label-ferm-next').innerText = t.pill_close || "FERM.";
-        document.getElementById('title-slot-1').innerText = formatTitle(futurePortes[0], t.slot_current || "Créneaux officiels");
-        document.getElementById('title-slot-2').innerText = formatTitle(futurePortes[1], t.slot_next || "Prochains créneaux");
-        if (futurePortes[0]) { document.getElementById('open-time').innerText = futurePortes[0].openStr; document.getElementById('close-time').innerText = futurePortes[0].closeStr; }
-        if (futurePortes[1]) { document.getElementById('open-time-next').innerText = futurePortes[1].openStr; document.getElementById('close-time-next').innerText = futurePortes[1].closeStr; }
-
-        if (activePorte) {
-            const diffMs = activePorte.sC - now, percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
-            document.getElementById('time-left').innerText = Math.floor(diffMs/3600000) + "h" + String(Math.floor((diffMs%3600000)/60000)).padStart(2,'0') + (t.time_before_close || " avant fermeture");
-            document.getElementById('progress-bar').style.width = percent + "%";
-            document.getElementById('progress-container').className = "progress-container" + (diffMs < 1500000 ? " danger" : percent > 85 ? " warning" : "");
-            document.getElementById('status-text').innerText = diffMs < 1500000 ? (t.status_imminent || "IMMINENTE") : (t.status_open || "OUVERTE");
-            document.getElementById('status-box').className = "status-box " + (diffMs < 1500000 ? "danger" : percent > 85 ? "warning" : "open");
-            document.getElementById('progress-wrapper').style.display = "block";
-        } else if (nextPorte) {
-            const diffMs = nextPorte.sO - now;
-            document.getElementById('time-left').innerText = (t.time_opening_in || "Ouverture dans ") + Math.floor(diffMs/3600000) + "h" + String(Math.floor((diffMs%3600000)/60000)).padStart(2,'0');
-            document.getElementById('progress-container').className = "progress-container waiting";
-            document.getElementById('status-text').innerText = t.status_closed || "FERMÉE";
-            document.getElementById('status-box').className = "status-box closed";
-            document.getElementById('progress-wrapper').style.display = "block";
-        }
-
-        let prevT = allTides[0], nextT = allTides[1];
-        for (let i = 0; i < allTides.length - 1; i++) { if (now >= allTides[i].dateObj && now <= allTides[i+1].dateObj) { prevT = allTides[i]; nextT = allTides[i+1]; break; } }
-        if (prevT && nextT) {
-            const tidePercent = ((now - prevT.dateObj) / (nextT.dateObj - prevT.dateObj)) * 100;
-            document.getElementById('current-tide-height').innerText = (parseFloat(prevT.h) + (parseFloat(nextT.h) - parseFloat(prevT.h)) * ((1 - Math.cos((tidePercent/100) * Math.PI)) / 2)).toFixed(2) + " m";
-            document.getElementById('coeff-display').innerText = prevT.c !== "-" ? prevT.c : (nextT.c !== "-" ? nextT.c : "--");
-            document.getElementById('tide-left-label').innerText = prevT.type === "PM" ? (t.high_tide || "Pleine Mer") : (t.low_tide || "Basse Mer");
-            document.getElementById('tide-right-label').innerText = nextT.type === "PM" ? (t.high_tide || "Pleine Mer") : (t.low_tide || "Basse Mer");
-            document.getElementById('val-left').innerText = prevT.time + " (" + prevT.h + "m)";
-            document.getElementById('val-right').innerText = nextT.time + " (" + nextTide.h + "m)";
-            drawTideGraph(tidePercent, prevT.type === "PM");
-        }
+        document.getElementById('coeff-display').innerText = dData.coeff1 || "--";
+        document.getElementById('tide-left-label').innerText = "PM";
+        document.getElementById('val-left').innerText = dData.pm1 || "--";
+        document.getElementById('tide-right-label').innerText = "BM";
+        document.getElementById('val-right').innerText = dData.bm1 || "--";
+        document.getElementById('current-tide-height').innerText = (dData.pm1_h || "--") + "m";
     }
 
     function setLanguage(lang) {
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        if (document.getElementById(`btn-${lang}`)) document.getElementById(`btn-${lang}`).classList.add('active');
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) el.innerHTML = translations[lang][key];
-        });
-        const sponsorLabelBtn = document.querySelector('#sponsor-banner .sponsor-label');
-        if (sponsorLabelBtn) sponsorLabelBtn.innerHTML = lang === 'en' ? "OUR<br>LOCAL<br>PARTNERS" : "NOS<br>PARTENAIRES<br>LOCAUX";
         localStorage.setItem('preferredLang', lang);
-        const wisuki = document.getElementById('wisuki-widget');
-        if (wisuki) wisuki.src = `https://wisuki.com/widget-summary?spot=1180&spotid=2434&lang=${lang}`;
-        updateApp(); 
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const savedLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
-        setLanguage(savedLang);
-        checkDailyWarning();
-        fetchSunTimes();
-        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); }); }, { threshold: 0.1 });
-        document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
-    });
-
-    async function fetchSunTimes() {
-        try {
-            const response = await fetch(`https://api.sunrise-sunset.org/json?lat=49.551&lng=-1.850&formatted=0`);
-            const data = await response.json();
-            if (data.status === "OK") {
-                const options = { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' };
-                document.getElementById('sunrise-time').innerText = new Date(data.results.sunrise).toLocaleTimeString('fr-FR', options);
-                document.getElementById('sunset-time').innerText = new Date(data.results.sunset).toLocaleTimeString('fr-FR', options);
-            }
-        } catch (e) { console.log(e); }
-    }
-
-    function checkDailyWarning() {
-        const now = new Date(), todayStr = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
-        if (localStorage.getItem('warning_accepted_date') !== todayStr) document.getElementById('warning-modal').style.display = 'flex';
+        updateApp();
     }
 
     function acceptWarning() {
-        const now = new Date(), todayStr = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
-        localStorage.setItem('warning_accepted_date', todayStr);
+        localStorage.setItem('warning_accepted_date', new Date().toISOString().split('T')[0]);
         document.getElementById('warning-modal').style.display = 'none';
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('warning_accepted_date') !== new Date().toISOString().split('T')[0]) {
+            document.getElementById('warning-modal').style.display = 'flex';
+        }
+        updateApp();
+        setInterval(updateApp, 10000);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
+        });
+        document.querySelectorAll('.reveal').forEach(e => observer.observe(e));
+    });
 </script>
 </body>
 </html>
