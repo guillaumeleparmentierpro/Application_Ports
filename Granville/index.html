@@ -506,96 +506,23 @@
     };
      
     // --- FONCTION SPONSOR AVEC LOGOS GRAND FORMAT ET TEXTE NON COUPÉ ---
-    function updateSponsor() {
-        const now = new Date();
-        const hour = now.getHours();
-        const minute = now.getMinutes();
-        const day = now.getDay(); 
-        
-        const sponsorText = document.getElementById('sponsor-text');
-        if (!sponsorText) return;
+function updateSponsor() {
+    const now = new Date();
+    
+    const sponsorText = document.getElementById('sponsor-text');
+    if (!sponsorText) return;
 
-        const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
-        const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+    const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
+    const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
 
-        function getPartnerHTML(anchorId, imgSrc, textContent) {
-            return `<a href="partenaires.html#${anchorId}" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; text-decoration: none; color: inherit; width: 100%;">
-                        <span style="text-align: right; line-height: 1.3; word-wrap: break-word; white-space: normal;">${textContent}</span>
-                        <img src="${imgSrc}" style="height: 50px; width: 50px; object-fit: contain; border-radius: 8px; background: white; padding: 3px; border: 1px solid #cbd5e1; flex-shrink: 0;" alt="Logo">
-                    </a>`;
-        }
+    // Message par défaut pour inciter les commerces de Granville à devenir partenaires
+    const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+    
+    // Pas encore de partenaires sur Granville, on affiche l'appel à l'action en continu
+    let finalHTML = `<a href="contact.html" style="text-decoration:none; color:inherit; display: flex; align-items: center; justify-content: flex-end; text-align: right; width:100%; white-space: normal;">${txtDefault}</a>`;
 
-        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
-        let finalHTML = `<a href="contact.html" style="text-decoration:none; color:inherit; display: flex; align-items: center; justify-content: flex-end; text-align: right; width:100%; white-space: normal;">${txtDefault}</a>`;
-        
-        if (hour === 7) {
-            finalHTML = getPartnerHTML("maison-renard", "renard.png", t.sponsor_maison_renard_index || "Boulangerie Maison Renard");
-        }
-        else if (hour === 8) {
-            const rot = minute % 3; 
-            if (rot === 0) finalHTML = getPartnerHTML("utile", "utile.png", t.sponsor_utile || "UTILE Barneville-Carteret");
-            else if (rot === 1) finalHTML = getPartnerHTML("lestran", "lestran.png", t.sponsor_lestran_index || "L’Estran Carteret - Boulangerie");
-            else finalHTML = getPartnerHTML("comptoir", "comptoir.png", t.sponsor_comptoir_index || "Le Comptoir de Carteret");
-        }
-        else if (hour === 9) {
-            const rot = minute % 3; 
-            if (rot === 0) finalHTML = getPartnerHTML("or-coiffure", "lorcoiffure.jpg", t.sponsor_or_coiffure || "L'Or Coiffure");
-            else if (rot === 1) finalHTML = getPartnerHTML("century21", "century21.png", t.sponsor_century21 || "Century 21 Chevet Immobilier");
-            else finalHTML = getPartnerHTML("mille-marin", "millemar.webp", "Mille Marin Carteret");
-        } 
-        else if (hour === 10) {
-            const rot = minute % 2;
-            if (rot === 0) finalHTML = getPartnerHTML("carteret-marine", "carteretmarine.png", t.sponsor_carteret_marine || "Carteret Marine - Nautisme");
-            else finalHTML = getPartnerHTML("atelier-b", "atelierb.png", "L'Atelier B. - Vélos");
-        }
-        else if (hour === 11) {
-            const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
-            if (isFoodTruckDay && minute % 2 !== 0) {
-                let lieu = t.loc_service || "En service !";
-                if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
-                if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
-                if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres";
-                if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
-                if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles";
-                
-                finalHTML = getPartnerHTML("food-truck", "delizia.png", (t.sponsor_delizia || "Deliziafoodtruck - ") + lieu);
-            } else {
-                finalHTML = getPartnerHTML("la-cambuse", "lacambuse.png", t.sponsor_la_cambuse || "La Cambuse - Traiteur");
-            }
-        } 
-        else if (hour === 12) {
-            const rot = minute % 2;
-            if (rot === 0) finalHTML = getPartnerHTML("chalet-gourmand", "chaletgourmand.png", t.sponsor_chalet || "Au Chalet Gourmand");
-            else finalHTML = getPartnerHTML("coralie-renouf", "coralierenouf.jpg", "Coralie Renouf - Photographe");
-        }
-        else if (hour === 13) {
-            const rot = minute % 2;
-            if (rot === 0) finalHTML = getPartnerHTML("lamaison", "lamaison.fr.webp", "Lamaison.fr - Bricolage & Déco");
-            else finalHTML = getPartnerHTML("lunetterie-fine", "lalunetteriefine.png", "La Lunetterie Fine - Opticien");
-        }
-        else if (hour === 14) {
-            finalHTML = getPartnerHTML("esprit-marin", "espritmarin.png", t.sponsor_esprit_marin || "Esprit Marin - Concept store");
-        }
-        else if (hour === 15) {
-            const rot = minute % 2;
-            if (rot === 0) finalHTML = getPartnerHTML("comptoir", "comptoir.png", t.sponsor_comptoir_index || "Le Comptoir de Carteret");
-            else finalHTML = getPartnerHTML("carpe-diem", "carped.png", "Carpe Diem - Au bord de la plage");
-        }
-        else if (hour === 16) {
-            finalHTML = getPartnerHTML("lumieres-de-mer", "lumieresdemer.png", t.sponsor_lumieres || "Lumières de mer - Photographie");
-        }
-        else if (hour === 17) {
-            const rot = minute % 2;
-            if (rot === 0) finalHTML = getPartnerHTML("epicerie-fine", "epiceriefine.jpg", t.sponsor_epicerie_fine || "L'Epicerie Fine - Cave à vin");
-            else finalHTML = getPartnerHTML("de-la-cave-au-cellier", "delacav.png", "De la Cave Au Cellier - Caviste");
-        }
-        else if (hour === 18) {
-            finalHTML = getPartnerHTML("lenbarquai", "lenbarqu.png", "L'En Bar Quai - Bistronomique");
-        }
-
-        sponsorText.innerHTML = finalHTML;
-    }
-
+    sponsorText.innerHTML = finalHTML;
+}
     function drawTideGraph(percent, isDescending) {
         const canvas = document.getElementById('tideCanvasLarge');
         if(!canvas) return;
