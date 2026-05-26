@@ -1,32 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ports du Cotentin - Horaires, Portes & Marées | L'App des Marins</title>
-    <meta name="google-site-verification" content="_x0ggsxOKABcmc9deMHWXhKNlpuAGGgT-JBxV3xi2CE" />
-    <meta name="description" content="Consultez en temps réel l'état des portes (ouvertures/fermetures), les horaires des marées et la météo marine des ports du Cotentin (Carteret, Diélette). L'outil indispensable pour votre navigation.">
+    <title>Ports du Cotentin - Port de Diélette - Horaires, Portes & Marées | L'App des Marins</title>
+    <meta name="description" content="Consultez en temps réel l'état des portes (ouvertures/fermetures), les horaires des marées et la météo marine des ports du Cotentin. L'outil indispensable pour votre navigation.">
     <meta name="author" content="Cotentin Web Studio - Guillaume Leparmentier">
     <meta name="publisher" content="Cotentin Web Studio">
-    <meta name="keywords" content="Ports, Cotentin, Marée, Porte, Horaires, Manche, Navigation, Normandie, Ouverture, Fermeture, Barneville, Carteret, Diélette, Port-Bail, Pêche, Marin, Météo marine">
+    <meta name="keywords" content="Ports, Cotentin, Marée, Porte, Horaires, Manche, Navigation, Normandie, Ouverture, Fermeture, Barneville, Carteret, Diélette, Granville, Hérel, Port-Bail, Pêche, Marin, Météo marine">
     <meta property="og:title" content="Ports du Cotentin - Horaires, Portes & Marées">
-    <meta property="og:description" content="Accédez en 1 clic à l'état des portes, aux horaires des marées et à la météo des ports de Carteret et Diélette.">
+    <meta property="og:description" content="Accédez en 1 clic à l'état des portes, aux horaires des marées et à la météo des ports du Cotentin.">
     <meta property="og:image" content="https://portsducotentin.fr/android-chrome-512x512.png">
-    <meta property="og:url" content="https://portsducotentin.fr/">
+    <meta property="og:url" content="https://portsducotentin.fr/dielette">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Ports du Cotentin">
     
-    <script type="application/ld+json">
-    {
-      "@context" : "https://schema.org",
-      "@type" : "WebSite",
-      "name" : "Port Diélette",
-      "url" : "https://guillaumeleparmentierpro.github.io/Application_Ports/"
-    }
-    </script>
-
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -35,28 +26,74 @@
       gtag('config', 'G-5LY18V5457');
     </script>
     
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="icon" href="icon-192.png" sizes="192x192">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="icon" href="../icon-192.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#1e3a8a">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="../icon-192.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
     <script src="../lang.js"></script>
     
     <style>
-        .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
-        .sponsor-label { background: var(--marine-blue); color: white; font-size: 0.55rem; padding: 3px 6px; border-radius: 4px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; flex-shrink: 0; }
-        .sponsor-text { font-size: 0.7rem; font-weight: 600; line-height: 1.2; flex-grow: 1; text-align: right; }
+        /* --- NOUVEAU DESIGN DE LA BANNIÈRE TOP SPONSOR --- */
+        .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 10px 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
+       .sponsor-label { background: var(--marine-blue); color: white; font-size: 0.52rem; border-radius: 4px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; flex-shrink: 0; align-self: center; display: inline-block; }
+        .sponsor-text { font-size: 0.75rem; font-weight: 600; line-height: 1.3; flex-grow: 1; display: flex; align-items: center; justify-content: flex-end; text-align: right; }
+        
         :root { color-scheme: light; --primary-bg: #f1f5f9; --card-bg: #ffffff; --open-light: #10b981; --open-dark: #067a5c; --warning-color: #fbbf24; --warning-dark: #d97706; --danger-color: #ef4444; --danger-dark: #991b1b; --closed-color: #ef4444; --marine-blue: #1e3a8a; --text-main: #1e293b; --tide-light-blue: #eff6ff; }
         body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
         .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; padding: 15px; box-sizing: border-box; padding-top: 0 !important; }
-        .footer-module { margin-top: 15px; padding-top: 20px; border-top: 1px dashed #cbd5e1; text-align: center; }
+        .footer-module { 
+            margin-top: 15px; 
+            padding-top: 20px; 
+            border-top: 1px dashed #cbd5e1; 
+            text-align: center; 
+        }
+       .footer-credits {
+            margin-top: 35px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+            text-decoration: none;
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+        .footer-credits:hover {
+            transform: scale(1.03);
+        }
+        .footer-credits img {
+            width: 42px;
+            height: auto;
+            opacity: 0.85;
+            filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.05));
+        }
+        .footer-text-block {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .footer-copyright {
+            font-size: 0.65rem;
+            color: #64748b;
+            font-weight: 500;
+            margin: 0;
+        }
+        .footer-studio {
+            font-size: 0.65rem;
+            color: var(--marine-blue);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 4px 0 0 0;
+        }
         .footer-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
         .btn-footer { width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; box-sizing: border-box; }
         .module { background: var(--card-bg); border-radius: 12px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); border-bottom: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; }
@@ -167,6 +204,41 @@
             transition: transform 0.2s;
         }
         .btn-premium:active { transform: scale(0.95); }
+
+        /* --- EFFET REVEAL ON SCROLL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- STYLE POUR LES HORAIRES DU SOLEIL --- */
+        .sun-times-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--marine-blue);
+        }
+        .sun-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f8fafc;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .sun-badge span.emoji {
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 <body>
@@ -177,7 +249,6 @@
     <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
 </div>
 
-<!-- === MODAL CHOIX DU PORT === -->
 <div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
@@ -185,25 +256,22 @@
         <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">Choix du port</h3>
         
         <div style="display: flex; flex-direction: column; gap: 10px;">
-            <!-- Carteret : Retour au dossier parent -->
             <a href="../index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
-                Port Barneville-Carteret
-            </a>
-            
-            <!-- Diélette : Port actuel (Désactivé + Style Actif) -->
+                Port de Carteret 
+            </a>            
             <a href="#" onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="display: block; background: var(--marine-blue); color: white; text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem;">
-                📍  Port Diélette (Actuel)
+                📍  Port de Diélette
             </a>
-
-            <!-- Port-Bail : Prochainement -->
+            <a href="../Granville/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
+                Port de Hérel (Granville)
+            </a>
             <div style="display: block; background: #f8fafc; color: #94a3b8; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 0.85rem; border: 1px dashed #cbd5e1; cursor: not-allowed;">
-                Port Port-Bail (Prochainement)
+                Port Port-Bail (Prochainement)(Voir Carteret)
             </div>
+
         </div>
     </div>
 </div>
-<!-- =========================== -->
-
 <div id="holiday-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border-top: 6px solid var(--marine-blue);">
         
@@ -215,12 +283,23 @@
         <button onclick="document.getElementById('holiday-modal').style.display='none'" style="background: var(--marine-blue); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Merci, fermer</button>
     </div>
 </div>
-    
+    <div id="warning-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10002; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
+    <div style="background: #fef2f2; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border: 2px solid #ef4444;">
+        <div style="font-size: 2.5rem; margin-bottom: 10px;">⚠️</div>
+        <div style="color: #991b1b; font-size: 0.85rem; font-weight: 600; line-height: 1.5; margin-bottom: 20px;" data-i18n="index_disclaimer">
+            <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button onclick="acceptWarning()" style="background: #10b981; color: white; border: none; padding: 12px; font-size: 0.85rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: 'Montserrat', sans-serif; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);" data-i18n="btn_understood">J'AI COMPRIS</button>
+            <a href="../securite.html" style="background: #ef4444; color: white; text-decoration: none; padding: 12px; font-size: 0.75rem; border-radius: 8px; font-weight: 700; display: block; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">SÉCURITÉ ET RAPPEL</a>
+        </div>
+    </div>
+</div>
 <div class="app-container">
 
     <div class="sticky-header">
         <div class="top-sponsor-banner" id="sponsor-banner">
-            <a href="partenaires.html" class="sponsor-label" style="text-decoration: none; color: white;" data-i18n="sponsor_label">PARTENAIRES</a>
+            <a href="partenaires.html" class="sponsor-label" style="text-decoration: none; color: white; text-align: center; line-height: 1.2; padding: 4px 8px;">NOS<br>PARTENAIRES<br>LOCAUX</a>
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
 
@@ -236,10 +315,10 @@
         <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 12px;">
             <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES PORTE & MARÉES</a>
             <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
-            <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
+            <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;" data-i18n="btn_install">📱 INSTALLER</button>
         </div>
         
-        <h1 class="main-title">PORT DIÉLETTE 1<sup>*</sup></h1>
+        <h1 class="main-title">PORT DE DIÉLETTE<sup>*</sup></h1>
 
         <div style="text-align: center; margin: 8px 0 5px 0;">
             <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
@@ -279,13 +358,10 @@
         </div>
     </div>
 
-<!-- MODULE Informations marée -->
-<div class="module">
+    <div class="module reveal">
         <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;" data-i18n="tide_title">Informations marée</div>
         
-        <!-- === LE MODULE BLEU CLAIR === -->
         <div class="tide-full-module">
-            
             <div class="tide-header-info">
                 <div class="tide-column" style="text-align: left;">
                     <div id="tide-left-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div>
@@ -311,69 +387,77 @@
                 <div id="tide-right-data"><span id="val-right">--</span></div>
             </div>
         </div>
-        <!-- === FIN DU MODULE BLEU CLAIR === -->
-
-        <!-- === PHASES LUNAIRES JUSTE EN DESSOUS === -->
+        
         <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.75rem; font-weight: 700; color: var(--marine-blue);">
-            <span data-i18n="moon_phase">Phase lunaire</span> : <span id="moon-phase-badge" style="font-size: 1.2rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15));"></span>
+            <span id="moon-phase-badge" style="font-size: 1.4rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15));"></span>
+            <span id="moon-phase-label" style="font-style: italic; color: #475569; font-size: 0.75rem;"></span>
         </div>
-            </div>
-<!-- Conditions météo -->
-    <div class="module">
+    </div>
+
+    <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
-            <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">📷 WEBCAM</a>
+            <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">WEBCAM</a>
         </div>
+
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
-           <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1180&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
+            <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1175&amp;lang=fr" style="border: 0;" frameborder="0"></iframe>
+        </div>
+        
+        <div class="sun-times-container">
+            <div class="sun-badge">
+                <span class="emoji">🌅</span>
+                <span id="sunrise-time">--:--</span>
+            </div>
+            <div class="sun-badge">
+                <span class="emoji">🌄</span>
+                <span id="sunset-time">--:--</span>
+            </div>
         </div>
     </div>
 
-<!-- COURANTS MARINS (WINDY) -->
-    <div class="module">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="currents_title">Courants marins</div>
-        </div>
-        <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
-            <iframe width="100%" height="300" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C&radarRange=-1&overlay=currents&product=copernicus&level=surface&lat=49.558&lon=-1.860&zoom=10&detailLat=49.558&detailLon=-1.860&marker=true" frameborder="0" style="border:0;"></iframe>
-        </div>
-        <div style="font-size: 0.65rem; color: #64748b; text-align: center; margin-top: 8px;" data-i18n="currents_hint">
-            👆 Touchez la carte pour explorer la zone.
-        </div>
+<div class="module reveal">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="currents_title">Courants marins</div>
     </div>
+    <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
+        <iframe width="100%" height="300" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C&radarRange=-1&overlay=currents&product=copernicus&level=surface&lat=48.832&lon=-1.611&zoom=9&detailLat=48.832&detailLon=-1.611&marker=true" frameborder="0" style="border:0;"></iframe>
+    </div>
+</div>
+
+<div class="module reveal" style="margin-top: 15px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="radar_title">Radar de pluie en direct</div>
+    </div>
+    <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
+        <iframe src="https://www.rainviewer.com/map.html?loc=48.832,-1.611,7&oColor=0&tColor=3&s=1&m=1&d=1&v=0&w=1&p=1&oc=0&g=1" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
+    </div>
+</div>
     
-    <!-- NOUVEAU MODULE AVERTISSEMENT ET SÉCURITÉ -->
-    <div class="module" style="background: #fef2f2; border: 2px solid #ef4444; text-align: center; margin-top: 10px;">
-        <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
-        <div style="color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.5; margin-bottom: 15px;" data-i18n="index_disclaimer">
-            <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
-        </div>
-        <a href="../securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
-    </div>
-
-    <!-- FOOTER MIS À JOUR (Sans le bouton sécurité) -->
     <div class="footer-module">
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         
         <div class="footer-buttons">
-            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES</a>
-            <a href="../liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
+            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">NOS PARTENAIRES LOCAUX</a>
+            <a href="../liens.html" class="btn-action btn-footer" data-i18n="btn_links">LIENS UTILES</a>
             <a href="../contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
         </div>
-
-        <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" style="margin-top: 35px; display: flex; flex-direction: column; align-items: center; gap: 8px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-decoration: none; transition: transform 0.2s; cursor: pointer;" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-            <img src="logo-cws.png" alt="Cotentin Web Studio" style="width: 50px; height: auto; filter: grayscale(20%); opacity: 0.9;">
-            <div style="font-size: 0.65rem; color: #1e3a8a; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Montserrat', sans-serif;">
-               © 2026 - Cotentin Web Studio
+<BR>
+        <div class="module reveal" style="background: #fef2f2; border: 2px solid #ef4444; text-align: center; margin-top: 10px;">
+        <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
+        <div style="color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.5; margin-bottom: 15px;" data-i18n="index_disclaimer">
+            <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
+        </div>
+        <a href="../securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);" data-i18n="btn_security">SÉCURITÉ ET RAPPEL</a>
+        </div>
+        
+         <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" class="footer-credits" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});">
+            <div class="footer-text-block">
+                <p class="footer-copyright" data-i18n="footer_tdr">© 2026 portsducotentin.fr · Tous droits réservés</p>
+                <p class="footer-studio" data-i18n="footer_cws">Créé par Cotentin Web Studio</p>
             </div>
+            <img src="../logo-cws.png" alt="Cotentin Web Studio">
         </a>
-    </div>
-
-    <div class="premium-sponsor" style="margin-top: 30px; margin-bottom: 20px;">
-        <div class="premium-badge" data-i18n="premium_badge">Sponsor Officiel 2026</div>
-        <h2 class="premium-title" data-i18n="premium_title">Espace Partenaire Premium</h2>
-        <p class="premium-desc" data-i18n="premium_desc">Affichez votre entreprise ici en grand format 24h/24 ! Contactez-nous pour réserver cet emplacement exclusif.</p>
-        <a href="contact.html" class="btn-premium" data-i18n="btn_premium">RÉSERVER CET ESPACE</a>
     </div>
 </div>
 
@@ -420,6 +504,7 @@
         }
     };
      
+    // --- FONCTION SPONSOR AVEC LOGOS GRAND FORMAT ET TEXTE NON COUPÉ ---
     function updateSponsor() {
         const now = new Date();
         const hour = now.getHours();
@@ -429,47 +514,38 @@
         const sponsorText = document.getElementById('sponsor-text');
         if (!sponsorText) return;
 
-        const linkStyle = 'text-decoration:none; color:inherit; cursor:pointer; display:block; width:100%;';
-
         const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
         const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
 
-        const txtMaisonRenard = t.sponsor_maison_renard_index || "🥖 Boulangerie Maison Renard - Pains spéciaux, macarons & chocolats";
-        const txtUtile = t.sponsor_utile || "🛒 UTILE Barneville-Carteret - Alimentation, Dépôt de pain & Livraison";
-        const txtLestran = t.sponsor_lestran_index || "🥐 L’Estran Carteret - Boulangerie & Pâtisserie";
-        const txtComptoir = t.sponsor_comptoir_index || "🥫 Le Comptoir de Carteret - Épicerie";
-        const txtOrCoiffure = t.sponsor_or_coiffure || "✂️ L'Or Coiffure - Salon de coiffure";
-        const txtCentury21 = t.sponsor_century21 || "🏠 Century 21 Chevet Immobilier - Agence immobilière";
-        const txtCarteret = t.sponsor_carteret_marine || "🛥️ Carteret Marine - Rénovation, achat et accessoires nautiques";
-        const txtCambuse = t.sponsor_la_cambuse || "🍽️ La Cambuse - Traiteur salé & sucré";
-        const txtChalet = t.sponsor_chalet || "🦞 Au Chalet Gourmand - Terre et Mer";
-        const txtEsprit = t.sponsor_esprit_marin || "🛍️ Esprit Marin - Concept store sport chic & Déco";
-        const txtEpicerieFine = t.sponsor_epicerie_fine || "🍷 L'Epicerie Fine - Épicerie Fine & Cave à vin";
-        const txtLumieres = t.sponsor_lumieres || "📸 Lumières de mer - Photographie de Sébastien Rachine";
-        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+        function getPartnerHTML(anchorId, imgSrc, textContent) {
+            return `<a href="partenaires.html#${anchorId}" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; text-decoration: none; color: inherit; width: 100%;">
+                        <span style="text-align: right; line-height: 1.3; word-wrap: break-word; white-space: normal;">${textContent}</span>
+                        <img src="${imgSrc}" style="height: 50px; width: 50px; object-fit: contain; border-radius: 8px; background: white; padding: 3px; border: 1px solid #cbd5e1; flex-shrink: 0;" alt="Logo">
+                    </a>`;
+        }
 
+        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+        let finalHTML = `<a href="contact.html" style="text-decoration:none; color:inherit; display: flex; align-items: center; justify-content: flex-end; text-align: right; width:100%; white-space: normal;">${txtDefault}</a>`;
+        
         if (hour === 7) {
-            sponsorText.innerHTML = `<a href="partenaires.html#maison-renard" style="${linkStyle}">${txtMaisonRenard}</a>`;
+            finalHTML = getPartnerHTML("maison-renard", "renard.png", t.sponsor_maison_renard_index || "Boulangerie Maison Renard");
         }
         else if (hour === 8) {
-            const rotation = minute % 3; 
-            if (rotation === 0) {
-                sponsorText.innerHTML = `<a href="partenaires.html#utile" style="${linkStyle}">${txtUtile}</a>`;
-            } else if (rotation === 1) {
-                sponsorText.innerHTML = `<a href="partenaires.html#lestran" style="${linkStyle}">${txtLestran}</a>`;
-            } else {
-                sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
-            }
+            const rot = minute % 3; 
+            if (rot === 0) finalHTML = getPartnerHTML("utile", "utile.png", t.sponsor_utile || "UTILE Barneville-Carteret");
+            else if (rot === 1) finalHTML = getPartnerHTML("lestran", "lestran.png", t.sponsor_lestran_index || "L’Estran Carteret - Boulangerie");
+            else finalHTML = getPartnerHTML("comptoir", "comptoir.png", t.sponsor_comptoir_index || "Le Comptoir de Carteret");
         }
         else if (hour === 9) {
-            if (minute % 2 === 0) {
-                sponsorText.innerHTML = `<a href="partenaires.html#or-coiffure" style="${linkStyle}">${txtOrCoiffure}</a>`;
-            } else {
-                sponsorText.innerHTML = `<a href="partenaires.html#century21" style="${linkStyle}">${txtCentury21}</a>`;
-            }
+            const rot = minute % 3; 
+            if (rot === 0) finalHTML = getPartnerHTML("or-coiffure", "lorcoiffure.jpg", t.sponsor_or_coiffure || "L'Or Coiffure");
+            else if (rot === 1) finalHTML = getPartnerHTML("century21", "century21.png", t.sponsor_century21 || "Century 21 Chevet Immobilier");
+            else finalHTML = getPartnerHTML("mille-marin", "millemar.webp", "Mille Marin Carteret");
         } 
         else if (hour === 10) {
-            sponsorText.innerHTML = `<a href="partenaires.html#carteret-marine" style="${linkStyle}">${txtCarteret}</a>`;
+            const rot = minute % 2;
+            if (rot === 0) finalHTML = getPartnerHTML("carteret-marine", "carteretmarine.png", t.sponsor_carteret_marine || "Carteret Marine - Nautisme");
+            else finalHTML = getPartnerHTML("atelier-b", "atelierb.png", "L'Atelier B. - Vélos");
         }
         else if (hour === 11) {
             const isFoodTruckDay = [1, 2, 4, 5, 6].includes(day);
@@ -477,34 +553,46 @@
                 let lieu = t.loc_service || "En service !";
                 if (day === 1) lieu = t.loc_denneville || "Aujourd'hui à Denneville";
                 if (day === 2) lieu = t.loc_portbail || "Aujourd'hui à Port-Bail";
-                if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres (Barneville)";
+                if (day === 4) lieu = t.loc_barneville_flandres || "Aujourd'hui pl. Flandres";
                 if (day === 5) lieu = t.loc_pieux || "Aujourd'hui aux Pieux";
-                if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles (Barneville)";
+                if (day === 6) lieu = t.loc_barneville_ecoles || "Aujourd'hui rue des Écoles";
                 
-                const txtDelizia = (t.sponsor_delizia || "🍔 Deliziafoodtruck, Cuisine Italienne - ") + lieu;
-                sponsorText.innerHTML = `<a href="partenaires.html#food-truck" style="${linkStyle}">${txtDelizia}</a>`;
+                finalHTML = getPartnerHTML("food-truck", "delizia.png", (t.sponsor_delizia || "Deliziafoodtruck - ") + lieu);
             } else {
-                sponsorText.innerHTML = `<a href="partenaires.html#la-cambuse" style="${linkStyle}">${txtCambuse}</a>`;
+                finalHTML = getPartnerHTML("la-cambuse", "lacambuse.png", t.sponsor_la_cambuse || "La Cambuse - Traiteur");
             }
         } 
         else if (hour === 12) {
-            sponsorText.innerHTML = `<a href="partenaires.html#chalet-gourmand" style="${linkStyle}">${txtChalet}</a>`;
+            const rot = minute % 2;
+            if (rot === 0) finalHTML = getPartnerHTML("chalet-gourmand", "chaletgourmand.png", t.sponsor_chalet || "Au Chalet Gourmand");
+            else finalHTML = getPartnerHTML("coralie-renouf", "coralierenouf.jpg", "Coralie Renouf - Photographe");
+        }
+        else if (hour === 13) {
+            const rot = minute % 2;
+            if (rot === 0) finalHTML = getPartnerHTML("lamaison", "lamaison.fr.webp", "Lamaison.fr - Bricolage & Déco");
+            else finalHTML = getPartnerHTML("lunetterie-fine", "lalunetteriefine.png", "La Lunetterie Fine - Opticien");
         }
         else if (hour === 14) {
-            sponsorText.innerHTML = `<a href="partenaires.html#esprit-marin" style="${linkStyle}">${txtEsprit}</a>`;
+            finalHTML = getPartnerHTML("esprit-marin", "espritmarin.png", t.sponsor_esprit_marin || "Esprit Marin - Concept store");
         }
         else if (hour === 15) {
-            sponsorText.innerHTML = `<a href="partenaires.html#comptoir" style="${linkStyle}">${txtComptoir}</a>`;
+            const rot = minute % 2;
+            if (rot === 0) finalHTML = getPartnerHTML("comptoir", "comptoir.png", t.sponsor_comptoir_index || "Le Comptoir de Carteret");
+            else finalHTML = getPartnerHTML("carpe-diem", "carped.png", "Carpe Diem - Au bord de la plage");
         }
         else if (hour === 16) {
-            sponsorText.innerHTML = `<a href="partenaires.html#lumieres-de-mer" style="${linkStyle}">${txtLumieres}</a>`;
+            finalHTML = getPartnerHTML("lumieres-de-mer", "lumieresdemer.png", t.sponsor_lumieres || "Lumières de mer - Photographie");
         }
         else if (hour === 17) {
-            sponsorText.innerHTML = `<a href="partenaires.html#epicerie-fine" style="${linkStyle}">${txtEpicerieFine}</a>`;
+            const rot = minute % 2;
+            if (rot === 0) finalHTML = getPartnerHTML("epicerie-fine", "epiceriefine.jpg", t.sponsor_epicerie_fine || "L'Epicerie Fine - Cave à vin");
+            else finalHTML = getPartnerHTML("de-la-cave-au-cellier", "delacav.png", "De la Cave Au Cellier - Caviste");
         }
-        else {
-            sponsorText.innerHTML = `<a href="contact.html" style="${linkStyle}">${txtDefault}</a>`;
+        else if (hour === 18) {
+            finalHTML = getPartnerHTML("lenbarquai", "lenbarqu.png", "L'En Bar Quai - Bistronomique");
         }
+
+        sponsorText.innerHTML = finalHTML;
     }
 
     function drawTideGraph(percent, isDescending) {
@@ -539,6 +627,21 @@
         ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
     }
 
+    // --- PARSEUR ROBUSTE POUR SÉCURISER LES DONNÉES ---
+    function parseTime(tStr) {
+        if (!tStr) return null;
+        let s = String(tStr).trim().toLowerCase().replace('h', ':').replace('.', ':');
+        if (s === "--" || s === "--:--" || s === "") return null;
+        let parts = s.split(':');
+        if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+            let hour = parseInt(parts[0], 10);
+            let min = parseInt(parts[1], 10);
+            let cleanStr = hour.toString().padStart(2, '0') + ":" + min.toString().padStart(2, '0');
+            return { h: hour, m: min, clean: cleanStr };
+        }
+        return null;
+    }
+
     function updateApp() {
         const now = new Date();
         const tzoffset = now.getTimezoneOffset() * 60000;
@@ -549,7 +652,7 @@
         const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
         document.getElementById('current-date').innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
         
-        // --- NOUVEAU : CALCUL FIABLE DE LA PHASE DE LUNE ---
+        // --- CALCUL FIABLE DE LA PHASE DE LUNE ---
         try {
             const cycleLunaireMs = 2551442877; 
             const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57); 
@@ -558,24 +661,44 @@
             const phase = ((maintenantMs - referenceNouvelleLuneMs) % cycleLunaireMs) / cycleLunaireMs;
             
             let moonEmoji = "";
-            if (phase < 0.03 || phase > 0.97) moonEmoji = "🌑";
-            else if (phase < 0.22) moonEmoji = "🌒";
-            else if (phase < 0.28) moonEmoji = "🌓";
-            else if (phase < 0.47) moonEmoji = "🌔";
-            else if (phase < 0.53) moonEmoji = "🌕";
-            else if (phase < 0.72) moonEmoji = "🌖";
-            else if (phase < 0.78) moonEmoji = "🌗";
-            else moonEmoji = "🌘";
+            let moonName = "";
+
+            if (phase < 0.03 || phase > 0.97) {
+                moonEmoji = "🌑";
+                moonName = currentLang === 'en' ? "New Moon" : "Nouvelle Lune";
+            } else if (phase < 0.22) {
+                moonEmoji = "🌒";
+                moonName = currentLang === 'en' ? "Waxing Crescent" : "Premier Croissant";
+            } else if (phase < 0.28) {
+                moonEmoji = "🌓";
+                moonName = currentLang === 'en' ? "First Quarter" : "Premier Quartier";
+            } else if (phase < 0.47) {
+                moonEmoji = "🌔";
+                moonName = currentLang === 'en' ? "Waxing Gibbous" : "Gibbeuse Croissante";
+            } else if (phase < 0.53) {
+                moonEmoji = "🌕";
+                moonName = currentLang === 'en' ? "Full Moon" : "Pleine Lune";
+            } else if (phase < 0.72) {
+                moonEmoji = "🌖";
+                moonName = currentLang === 'en' ? "Waning Gibbous" : "Gibbeuse Décroissante";
+            } else if (phase < 0.78) {
+                moonEmoji = "🌗";
+                moonName = currentLang === 'en' ? "Last Quarter" : "Dernier Quartier";
+            } else {
+                moonEmoji = "🌘";
+                moonName = currentLang === 'en' ? "Waning Crescent" : "Dernier Croissant";
+            }
             
             const moonBadge = document.getElementById('moon-phase-badge');
-            if(moonBadge) {
-                moonBadge.innerText = moonEmoji;
-            }
+            if (moonBadge) moonBadge.innerText = moonEmoji;
+
+            const moonLabel = document.getElementById('moon-phase-label');
+            if (moonLabel) moonLabel.innerText = moonName;
+
         } catch (error) {
             console.log("Erreur calcul lune :", error);
         }
-        // -----------------------------------------
-        
+
         updateSponsor();
         if (typeof data === 'undefined' || data.length === 0) return;
 
@@ -588,16 +711,38 @@
         [yesterdayStr, dateStr, tomorrowStr].forEach(ds => {
             let dData = data.find(d => d.date === ds);
             if(dData) {
-                if(dData.portes) {
-                    dData.portes.forEach(p => {
-                        if(p.open !== "--" && p.open !== "--:--" && p.close !== "--" && p.close !== "--:--") {
-                            let sO = new Date(ds + "T" + p.open);
-                            let sC = new Date(ds + "T" + p.close);
-                            if (sC < sO) sC.setDate(sC.getDate() + 1);
-                            allPortes.push({ sO: sO, sC: sC, openStr: p.open, closeStr: p.close });
+                let parts = ds.split('-');
+                let y = parseInt(parts[0], 10);
+                let m = parseInt(parts[1], 10) - 1;
+                let day = parseInt(parts[2], 10);
+
+                let portesArray = dData.portes || [];
+                // Support ancien format si besoin
+                if (!dData.portes) {
+                    for(let i=1; i<=4; i++) {
+                        if(dData["ouv"+i] && dData["ferm"+i]) {
+                            portesArray.push({open: dData["ouv"+i], close: dData["ferm"+i]});
                         }
-                    });
+                    }
                 }
+
+                portesArray.forEach(p => {
+                    let openTime = parseTime(p.open);
+                    let closeTime = parseTime(p.close);
+                    
+                    if(openTime && closeTime) {
+                        let sO = new Date(y, m, day, openTime.h, openTime.m, 0);
+                        let sC = new Date(y, m, day, closeTime.h, closeTime.m, 0);
+                        if (sC < sO) sC.setDate(sC.getDate() + 1);
+                        
+                        allPortes.push({ 
+                            sO: sO, 
+                            sC: sC, 
+                            openStr: openTime.clean, 
+                            closeStr: closeTime.clean 
+                        });
+                    }
+                });
                 
                 [
                     { time: dData.bm1, h: dData.bm1_h, type: "BM", label: "Basse Mer", c: dData.coeff1, refTime: null },
@@ -605,15 +750,18 @@
                     { time: dData.bm2, h: dData.bm2_h, type: "BM", label: "Basse Mer", c: dData.coeff2, refTime: dData.bm1 },
                     { time: dData.pm2, h: dData.pm2_h, type: "PM", label: "Pleine Mer", c: dData.coeff2, refTime: dData.pm1 }
                 ].forEach(t => {
-                    if (t.time && t.time !== "--:--" && t.time !== "--") {
-                        let dObj = new Date(ds + "T" + t.time);
-                        if (t.refTime && t.refTime !== "--:--" && t.refTime !== "--") {
-                            if (t.time < t.refTime) {
+                    let parsedTime = parseTime(t.time);
+                    if (parsedTime) {
+                        let dObj = new Date(y, m, day, parsedTime.h, parsedTime.m, 0);
+                        let parsedRef = parseTime(t.refTime);
+                        if (parsedRef) {
+                            let refObj = new Date(y, m, day, parsedRef.h, parsedRef.m, 0);
+                            if (dObj < refObj) {
                                 dObj.setDate(dObj.getDate() + 1);
                             }
                         }
                         allTides.push({
-                            time: t.time,
+                            time: parsedTime.clean,
                             h: t.h,
                             type: t.type,
                             label: t.label,
@@ -625,6 +773,8 @@
             }
         });
 
+        // TRI DE SÉCURITÉ ABSOLU
+        allPortes.sort((a, b) => a.sO - b.sO);
         allTides.sort((a, b) => a.dateObj - b.dateObj);
 
         let futurePortes = allPortes.filter(p => p.sC > now); 
@@ -734,7 +884,6 @@
             const tidePercent = ((now - prevTide.dateObj) / (nextTide.dateObj - prevTide.dateObj)) * 100;
             const isDescending = (prevTide.type === "PM");
 
-            // --- NOUVEAU : CALCUL DE LA HAUTEUR D'EAU EN TEMPS RÉEL ---
             const h1 = parseFloat(prevTide.h);
             const h2 = parseFloat(nextTide.h);
             
@@ -743,7 +892,6 @@
                 const currentHeight = h1 + (h2 - h1) * ((1 - Math.cos(ratio * Math.PI)) / 2);
                 document.getElementById('current-tide-height').innerText = currentHeight.toFixed(2) + " m";
             }
-            // -----------------------------------------------------------
 
             let coeffText = prevTide.c && prevTide.c !== "-" ? prevTide.c : (nextTide.c && nextTide.c !== "-" ? nextTide.c : "--");
             
@@ -779,7 +927,7 @@
 
         const wisukiIframe = document.getElementById('wisuki-widget');
         if (wisukiIframe) {
-            wisukiIframe.src = `https://wisuki.com/widget-summary?spot=1180&spotid=2434&lang=${lang}`;
+            wisukiIframe.src = `https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=${lang}`;
         }
 
         if (typeof updateApp === "function") {
@@ -883,6 +1031,7 @@
         }
     });
 </script>
+
 <script>
     const joursFeries = {
         "01-01": { titre: "🎉 Bonne Année !", message: "Toute l'équipe vous souhaite une excellente année pleine de belles navigations !" },
@@ -917,6 +1066,80 @@
     }
 
     document.addEventListener('DOMContentLoaded', checkHolidayPopup);
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const elementsToReveal = document.querySelectorAll(".reveal");
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                    obs.unobserve(entry.target); 
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.1, 
+            rootMargin: "0px 0px -20px 0px"
+        });
+
+        elementsToReveal.forEach(el => observer.observe(el));
+    });
+</script>
+
+<script>
+    async function fetchSunTimes() {
+        try {
+            const lat = 48.832;
+            const lng = -1.611;
+            const response = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`);
+            const data = await response.json();
+
+            if (data.status === "OK") {
+                const sunrise = new Date(data.results.sunrise);
+                const sunset = new Date(data.results.sunset);
+
+                const options = { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' };
+                document.getElementById('sunrise-time').innerText = sunrise.toLocaleTimeString('fr-FR', options);
+                document.getElementById('sunset-time').innerText = sunset.toLocaleTimeString('fr-FR', options);
+            }
+        } catch (error) {
+            console.log("Erreur lors de la récupération des heures du soleil :", error);
+            document.getElementById('sunrise-time').innerText = "--:--";
+            document.getElementById('sunset-time').innerText = "--:--";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchSunTimes);
+</script>
+<script>
+    // Vérifie si l'avertissement a déjà été validé aujourd'hui
+    function checkDailyWarning() {
+        const now = new Date();
+        const todayStr = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
+        const lastAccepted = localStorage.getItem('warning_accepted_date');
+
+        // Si la date enregistrée n'est pas celle d'aujourd'hui, on affiche le popup
+        if (lastAccepted !== todayStr) {
+            document.getElementById('warning-modal').style.display = 'flex';
+        }
+    }
+
+    // Action quand on clique sur "J'AI COMPRIS"
+    function acceptWarning() {
+        const now = new Date();
+        const todayStr = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
+        
+        // On enregistre la date du jour dans le navigateur
+        localStorage.setItem('warning_accepted_date', todayStr);
+        // On cache le popup
+        document.getElementById('warning-modal').style.display = 'none';
+    }
+
+    // Lance la vérification au chargement de la page
+    document.addEventListener('DOMContentLoaded', checkDailyWarning);
 </script>
 </body>
 </html>
