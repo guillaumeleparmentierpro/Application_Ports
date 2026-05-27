@@ -18,8 +18,8 @@
     <meta property="og:url" content="https://portsducotentin.fr/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Ports du Cotentin">
-    <link rel="canonical" href="https://portsducotentin.fr/" />
-
+   <link rel="canonical" href="https://portsducotentin.fr/" />
+    
     <script type="application/ld+json">
     {
       "@context" : "https://schema.org",
@@ -36,12 +36,13 @@
       gtag('js', new Date());
       gtag('config', 'G-5LY18V5457');
     </script>
-
+    
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="icon" href="icon-192.png" sizes="192x192">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e3a8a">
     <link rel="apple-touch-icon" href="icon-192.png">
@@ -49,76 +50,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
     <script src="lang.js"></script>
-
+    
     <style>
-        /* =====================================================
-           BANDEAU VIGILANCE MÉTÉO
-           ===================================================== */
-        #meteo-vigilance-banner {
-            display: none; /* caché par défaut, JS l'affiche si alerte */
-            width: 100%;
-            padding: 10px 15px;
-            box-sizing: border-box;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 700;
-            line-height: 1.4;
-            cursor: pointer;
-            animation: vigilance-pulse 3s ease-in-out infinite;
-            position: relative;
-        }
-        #meteo-vigilance-banner .vigi-close {
-            position: absolute;
-            top: 6px;
-            right: 10px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            opacity: 0.7;
-            line-height: 1;
-        }
-        #meteo-vigilance-banner.vigi-jaune {
-            background: #fef9c3;
-            border: 2px solid #ca8a04;
-            color: #713f12;
-        }
-        #meteo-vigilance-banner.vigi-orange {
-            background: #fff7ed;
-            border: 2px solid #ea580c;
-            color: #7c2d12;
-        }
-        #meteo-vigilance-banner.vigi-rouge {
-            background: #fef2f2;
-            border: 2px solid #dc2626;
-            color: #7f1d1d;
-        }
-        @keyframes vigilance-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.85; }
-        }
-        .vigi-title {
-            font-size: 0.8rem;
-            font-weight: 900;
-            margin-bottom: 3px;
-        }
-        .vigi-detail {
-            font-size: 0.65rem;
-            font-weight: 600;
-            opacity: 0.9;
-        }
-        .vigi-link {
-            display: inline-block;
-            margin-top: 5px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-decoration: underline;
-            opacity: 0.8;
-        }
-
-        /* =====================================================
-           STYLES EXISTANTS (inchangés)
-           ===================================================== */
         .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 10px 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
         .sponsor-label { background: var(--marine-blue); color: white; font-size: 0.52rem; border-radius: 4px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; flex-shrink: 0; align-self: center; display: inline-block; }
         .sponsor-text { font-size: 0.75rem; font-weight: 600; line-height: 1.3; flex-grow: 1; display: flex; align-items: center; justify-content: flex-end; text-align: right; }
@@ -190,7 +123,7 @@
         .sun-times-container { display: flex; justify-content: center; gap: 15px; margin-top: 12px; font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); }
         .sun-badge { display: flex; align-items: center; gap: 6px; background: #f8fafc; padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
 
-        /* POPUP AVERTISSEMENT QUOTIDIEN */
+        /* --- POPUP AVERTISSEMENT QUOTIDIEN --- */
         #warning-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.85); z-index: 10002; justify-content: center; align-items: center; backdrop-filter: blur(3px); }
         .warning-modal-box { background: #fef2f2; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center; border-top: 6px solid #ef4444; }
         .warning-modal-icon { font-size: 2.2rem; margin-bottom: 10px; }
@@ -221,6 +154,7 @@
     <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
 </div>
 
+<!-- ✅ PORT SELECTOR MIS À JOUR : Granville actif, Port-Bail retiré -->
 <div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
@@ -235,7 +169,7 @@
             <a href="Granville/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
                 Port de Hérel (Granville)
             </a>
-            <a href="saintvaast/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
+            <a href="../saintvaast/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
                 Port de Saint-Vaast-la-Hougue
             </a>
         </div>
@@ -254,22 +188,6 @@
 <div class="app-container">
 
     <div class="sticky-header">
-
-        <!-- =====================================================
-             BANDEAU VIGILANCE MÉTÉO — placé sous le sponsor,
-             au-dessus de la date et des boutons de navigation.
-             Il s'affiche automatiquement si alerte jaune/orange/rouge
-             sur le département 50 (Manche).
-             ===================================================== -->
-        <div id="meteo-vigilance-banner">
-            <span class="vigi-close" onclick="document.getElementById('meteo-vigilance-banner').style.display='none'">×</span>
-            <div class="vigi-title" id="vigi-title">⚠️ Vigilance météo</div>
-            <div class="vigi-detail" id="vigi-detail">Alerte en cours sur la Manche (50)</div>
-            <a href="https://vigilance.meteofrance.fr/fr/manche" target="_blank" class="vigi-link" id="vigi-link">
-                → Voir sur Météo-France
-            </a>
-        </div>
-
         <div class="top-sponsor-banner" id="sponsor-banner">
             <a href="partenaires.html" class="sponsor-label" id="sponsor-label-text" style="text-decoration: none; color: white; text-align: center; line-height: 1.2; padding: 4px 8px;">NOS<br>PARTENAIRES<br>LOCAUX</a>
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
@@ -358,6 +276,73 @@
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
             <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">WEBCAM</a>
         </div>
+        <div id="api-weather-banner" style="display: none; margin: 10px 15px;">
+    <a href="https://vigilance.meteofrance.fr/fr/manche" target="_blank" style="text-decoration: none;">
+        <div id="vigi-container" style="border-radius: 8px; padding: 12px 15px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 6px solid #ccc;">
+            <div id="vigi-icon" style="font-size: 1.5rem;">⚠️</div>
+            <div style="flex-grow: 1; text-align: left;">
+                <div id="vigi-title" style="font-size: 0.75rem; font-weight: 700; font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">Vigilance Météo (50)</div>
+                <div id="vigi-text" style="font-size: 0.65rem; font-weight: 600; font-family: 'Montserrat', sans-serif; line-height: 1.3; color: #475569;">Vérification en cours...</div>
+            </div>
+            <div style="font-weight: 700; font-size: 0.9rem;">➔</div>
+        </div>
+    </a>
+</div>
+
+<script>
+async function checkVigilance() {
+    const API_KEY = 'eyJ4NXQiOiJOelU0WTJJME9XRXhZVGt6WkdJM1kySTFaakZqWVRJeE4yUTNNalEyTkRRM09HRmtZalkzTURkbE9UZ3paakUxTURRNFltSTVPR1kyTURjMVkyWTBNdyIsImtpZCI6Ik56VTRZMkkwT1dFeFlUa3paR0kzWTJJMVpqRmpZVEl4TjJRM01qUTJORFEzT0dGa1lqWTNNRGRsT1RnelpqRTFNRFE0WW1JNU9HWTJNRGMxWTJZME13X1JTMjU2IiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhNmNkYWU4OC1mMmE2LTRkN2EtODQ1ZS02ZmVjOGRkMTM2ZjgiLCJhdXQiOiJBUFBMSUNBVElPTiIsImF1ZCI6Iml1WjZyazgwOXB0OTFtUjN2cTlrOWhlenNsb2EiLCJuYmYiOjE3Nzk5MDgxMjQsImF6cCI6Iml1WjZyazgwOXB0OTFtUjN2cTlrOWhlenNsb2EiLCJzY29wZSI6ImRlZmF1bHQiLCJpc3MiOiJodHRwczpcL1wvcG9ydGFpbC1hcGkubWV0ZW9mcmFuY2UuZnJcL29hdXRoMlwvdG9rZW4iLCJleHAiOjE3Nzk5MTE3MjQsImlhdCI6MTc3OTkwODEyNCwianRpIjoiMzFkYmNhYTEtNjg3ZC00OWIwLWI5MmMtYjYxNjg1MTZmMzlhIiwiY2xpZW50X2lkIjoiaXVaNnJrODA5cHQ5MW1SM3ZxOWs5aGV6c2xvYSJ9.HtaGaWzTuNia3GgRyfDXUF8NxVaNBHWPbXape99DIbY5EeLqgLz6wJy1aqAgOOP7GTyh0syq9G9AkbnH7mAIEipJWazsqUAnsdeUJI9yDO7VlkkfZiW_cz5zXg3zbwb-LFGhm7Bpj7np80x-yZEvvOR5eRQICsih7MNojfeqoyOcpnh_u1lncNf9IuaBtvHw1ebtamR1lTvViUKwK4rx9jWNaytzZHz58J2xxp46MvsCUwmGN2rKZYzD9JjphUcpxSVdbx5DCUo9I5mIk2Px5yxZXA4hFOHnW8e-eaIYH7VFMBT5nBnaJ-NZW2hqHYHTK80DFlazV6Kt6lPqv4T1SQ'; // <--- REMPLACE PAR TA CLÉ D'API
+    const banner = document.getElementById('api-weather-banner');
+    const container = document.getElementById('vigi-container');
+    const textEl = document.getElementById('vigi-text');
+    const titleEl = document.getElementById('vigi-title');
+
+    try {
+        const response = await fetch('https://public-api.meteofrance.fr/public/DPVigilance/v1/caracteristiques?domain=50', {
+            method: 'GET',
+            headers: { 
+                'apikey': API_KEY,
+                'accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+        const colorCode = data.max_color; // 1: Vert, 2: Jaune, 3: Orange, 4: Rouge
+
+        if (colorCode > 1) {
+            banner.style.display = 'block';
+            let colorHex, textColor, msg;
+
+            if (colorCode === 2) {
+                colorHex = '#fbbf24'; // Jaune
+                textColor = '#92400e';
+                msg = "Alerte JAUNE : Soyez attentif si vous pratiquez des activités sensibles au risque météorologique.";
+            } else if (colorCode === 3) {
+                colorHex = '#f97316'; // Orange
+                textColor = '#7c2d12';
+                msg = "Alerte ORANGE : Soyez très vigilant, des phénomènes dangereux sont prévus.";
+            } else {
+                colorHex = '#ef4444'; // Rouge
+                textColor = '#7f1d1d';
+                msg = "ALERTE ROUGE : Une vigilance absolue s'impose. Phénomènes dangereux d'intensité exceptionnelle.";
+            }
+
+            container.style.backgroundColor = colorHex + '15'; // Fond léger (15% opacité)
+            container.style.borderColor = colorHex;
+            titleEl.style.color = textColor;
+            textEl.style.color = textColor;
+            textEl.innerText = msg;
+        }
+    } catch (error) {
+        console.error("Erreur API Vigilance:", error);
+    }
+}
+
+// Lancement au chargement de la page
+document.addEventListener('DOMContentLoaded', checkVigilance);
+</script>
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
             <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
         </div>
@@ -376,6 +361,7 @@
         </div>
     </div>
 
+    <!-- ✅ MODULE RADAR PLUIE (harmonisé avec Diélette) -->
     <div class="module reveal" style="margin-top: 15px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="radar_title">Radar de pluie en direct</div>
@@ -393,6 +379,7 @@
             <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
         </div>
 
+        <!-- MODULE AVERTISSEMENT sous "Nous contacter" -->
         <div class="reveal" style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 12px; text-align: center; margin-top: 20px; padding: 15px;">
             <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
             <div style="color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.5; margin-bottom: 15px;" data-i18n="index_disclaimer">
@@ -402,14 +389,15 @@
         </div>
 
         <div class="reveal" style="text-align: center; margin-top: 30px; padding: 0 20px;">
-            <p style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Vu dans la presse</p>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
-                <a href="https://actu.fr/societe/ce-manchois-cree-une-nouvelle-application-pour-faciliter-les-acces-aux-ports-du-cotentin_64308095.html" target="_blank" style="text-decoration: none; color: #64748b; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 5px; filter: grayscale(1); opacity: 0.8; transition: 0.3s;">
-                    <span style="border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px;">La Presse de la Manche</span>
-                </a>
-            </div>
+    <p style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Vu dans la presse</p>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <a href="https://actu.fr/societe/ce-manchois-cree-une-nouvelle-application-pour-faciliter-les-acces-aux-ports-du-cotentin_64308095.html" target="_blank" style="text-decoration: none; color: #64748b; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 5px; filter: grayscale(1); opacity: 0.8; transition: 0.3s;">
+            <span style="border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px;">La Presse de la Manche</span>
+        </a>
         </div>
+</div>
 
+        <!-- ✅ FOOTER CREDITS harmonisé avec Diélette -->
         <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" class="footer-credits" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});">
             <div class="footer-text-block">
                 <p class="footer-copyright" data-i18n="footer_tdr">© 2026 portsducotentin.fr · Tous droits réservés</p>
@@ -420,129 +408,8 @@
     </div>
 </div>
 
-<!-- =====================================================
-     SCRIPT VIGILANCE MÉTÉO FRANCE — DÉPARTEMENT 50
-     Source : flux RSS public Météo-France via proxy CORS
-     Rechargement automatique toutes les 30 minutes.
-     Aucune clé API requise.
-     ===================================================== -->
 <script>
-    // Noms des phénomènes météo (codes Météo-France)
-    const PHENOMENES = {
-        "1":  { nom: "Vent violent",         emoji: "💨" },
-        "2":  { nom: "Pluie-inondation",     emoji: "🌧️" },
-        "3":  { nom: "Orages",               emoji: "⛈️" },
-        "4":  { nom: "Crues",                emoji: "🌊" },
-        "5":  { nom: "Neige-verglas",        emoji: "❄️" },
-        "6":  { nom: "Canicule",             emoji: "🌡️" },
-        "7":  { nom: "Grand froid",          emoji: "🥶" },
-        "8":  { nom: "Avalanches",           emoji: "⛰️" },
-        "9":  { nom: "Vagues-submersion",    emoji: "🌊" },
-        "10": { nom: "Pluie-inondation",     emoji: "🌧️" }
-    };
-
-    const COULEURS_LABEL = {
-        "2": "Jaune",
-        "3": "Orange",
-        "4": "Rouge"
-    };
-
-    const COULEURS_CLASS = {
-        "2": "vigi-jaune",
-        "3": "vigi-orange",
-        "4": "vigi-rouge"
-    };
-
-    const COULEURS_EMOJI = {
-        "2": "🟡",
-        "3": "🟠",
-        "4": "🔴"
-    };
-
-    // URL du flux RSS Vigilance Météo-France pour le département 50
-    // Passé par un proxy CORS public pour être lisible depuis le navigateur
-    const RSS_VIGI_URL = "https://api.allorigins.win/raw?url=" +
-        encodeURIComponent("https://vigilance.meteofrance.fr/data/NXFR33_LFPW_.xml");
-
-    async function checkVigilanceMeteo() {
-        const banner  = document.getElementById('meteo-vigilance-banner');
-        const title   = document.getElementById('vigi-title');
-        const detail  = document.getElementById('vigi-detail');
-
-        try {
-            const response = await fetch(RSS_VIGI_URL);
-            if (!response.ok) throw new Error("Erreur réseau");
-            const xmlText = await response.text();
-
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-
-            // Le XML Météo-France contient des éléments <DV> (Département Vigilance)
-            // avec un attribut dep="50" pour la Manche
-            // et des sous-éléments <EC> avec ech (phénomène) et niv (niveau : 1=vert, 2=jaune, 3=orange, 4=rouge)
-            const departements = xmlDoc.querySelectorAll("DV");
-
-            let maxNiveau   = 1;   // 1 = vert = aucune alerte
-            let alertesTrouvees = [];
-
-            departements.forEach(dv => {
-                const dep = dv.getAttribute("dep");
-                if (dep !== "50") return; // On ne regarde que la Manche
-
-                const echeances = dv.querySelectorAll("EC");
-                echeances.forEach(ec => {
-                    const niv = parseInt(ec.getAttribute("niv") || "1", 10);
-                    const ech = ec.getAttribute("ech") || "";
-
-                    if (niv >= 2) { // Jaune ou plus
-                        if (niv > maxNiveau) maxNiveau = niv;
-                        const phenomene = PHENOMENES[ech] || { nom: "Phénomène météo", emoji: "⚠️" };
-                        alertesTrouvees.push(phenomene.emoji + " " + phenomene.nom + " " + (COULEURS_LABEL[String(niv)] || ""));
-                    }
-                });
-            });
-
-            if (maxNiveau >= 2 && alertesTrouvees.length > 0) {
-                // Il y a une ou plusieurs alertes actives
-                const couleurClass = COULEURS_CLASS[String(maxNiveau)] || "vigi-jaune";
-                const couleurEmoji = COULEURS_EMOJI[String(maxNiveau)] || "🟡";
-                const couleurLabel = COULEURS_LABEL[String(maxNiveau)] || "Jaune";
-
-                // Supprimer les doublons
-                const alertesUniques = [...new Set(alertesTrouvees)];
-
-                title.innerHTML  = couleurEmoji + " Vigilance Météo " + couleurLabel + " — Manche (50)";
-                detail.innerHTML = alertesUniques.join(" · ");
-
-                // Appliquer la bonne couleur au bandeau
-                banner.className = "";
-                banner.classList.add(couleurClass);
-
-                banner.style.display = "block";
-
-            } else {
-                // Pas d'alerte active : on cache le bandeau
-                banner.style.display = "none";
-            }
-
-        } catch (err) {
-            // En cas d'erreur réseau ou de proxy indisponible : on cache silencieusement
-            // (on ne veut pas afficher une fausse alerte)
-            banner.style.display = "none";
-            console.log("Vigilance météo : impossible de récupérer les données.", err);
-        }
-    }
-
-    // Lancement au chargement de la page
-    document.addEventListener('DOMContentLoaded', () => {
-        checkVigilanceMeteo();
-        // Rechargement automatique toutes les 30 minutes
-        setInterval(checkVigilanceMeteo, 30 * 60 * 1000);
-    });
-</script>
-
-<script>
-    // POPUP AVERTISSEMENT QUOTIDIEN
+    // ✅ POPUP AVERTISSEMENT QUOTIDIEN (harmonisé)
     function closeWarningModal() {
         document.getElementById('warning-modal').style.display = 'none';
         localStorage.setItem('warning_seen', new Date().toISOString().split('T')[0]);
@@ -840,7 +707,7 @@
 </script>
 
 <script>
-    // Easter eggs
+    // Easter eggs (inchangés)
     document.getElementById('status-box').addEventListener('click', function(e) {
         const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋', '🐬', '☀️'];
         for(let i = 0; i < 8; i++) {
