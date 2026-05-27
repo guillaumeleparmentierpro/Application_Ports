@@ -209,7 +209,19 @@
         </div>
 
         <h1 class="main-title">PORT DE CARTERET<sup>*</sup></h1>
-
+<div class="reveal" style="margin: 10px 0;">
+    <div style="border-radius: 12px; overflow: hidden; border: 1px solid #cbd5e1; background: white; height: 180px; position: relative;">
+        <iframe 
+            src="https://vigilance.meteofrance.fr/fr/manche" 
+            style="width: 100%; height: 600px; border: none; margin-top: -165px;" 
+            scrolling="no"
+            title="Vigilance Météo France Manche">
+        </iframe>
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(255,255,255,0.9); padding: 5px; text-align: center; font-size: 0.6rem; font-weight: 700; color: #1e3a8a; border-top: 1px solid #e2e8f0;">
+            ⚠️ VIGILANCE MÉTÉO-FRANCE (50)
+        </div>
+    </div>
+</div>
         <div style="text-align: center; margin: 8px 0 5px 0;">
             <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
                 ⚓ <span data-i18n="change_port">CHANGER DE PORT</span> ▾
@@ -321,13 +333,13 @@
             <a href="securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239,68,68,0.3);" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
         </div>
 
-<div class="reveal" style="text-align: center; margin-top: 30px; padding: 0 20px;">
+        <div class="reveal" style="text-align: center; margin-top: 30px; padding: 0 20px;">
     <p style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Vu dans la presse</p>
     <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
         <a href="https://actu.fr/societe/ce-manchois-cree-une-nouvelle-application-pour-faciliter-les-acces-aux-ports-du-cotentin_64308095.html" target="_blank" style="text-decoration: none; color: #64748b; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 5px; filter: grayscale(1); opacity: 0.8; transition: 0.3s;">
             <span style="border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px;">La Presse de la Manche</span>
         </a>
-    </div>
+        </div>
 </div>
 
         <!-- ✅ FOOTER CREDITS harmonisé avec Diélette -->
@@ -339,7 +351,6 @@
             <img src="logo-cws.png" alt="Cotentin Web Studio">
         </a>
     </div>
-
 </div>
 
 <script>
