@@ -6,18 +6,19 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ports du Cotentin - Horaires, Portes & Marées | L'App des Marins</title>
+    <title>PortsduCotentin.fr - Carteret - Horaires, Portes & Marées | L'App des Marins</title>
     <meta name="google-site-verification" content="_x0ggsxOKABcmc9deMHWXhKNlpuAGGgT-JBxV3xi2CE" />
-    <meta name="description" content="Consultez en temps réel l'état des portes (ouvertures/fermetures), les horaires des marées et la météo marine des ports du Cotentin (Carteret, Diélette). L'outil indispensable pour votre navigation.">
+    <meta name="description" content="Consultez en temps réel l'état des portes (ouvertures/fermetures), les horaires des marées et la météo marine des ports du Cotentin. L'outil indispensable pour votre navigation.">
     <meta name="author" content="Cotentin Web Studio - Guillaume Leparmentier">
     <meta name="publisher" content="Cotentin Web Studio">
     <meta name="keywords" content="Ports, Cotentin, Marée, Porte, Horaires, Manche, Navigation, Normandie, Ouverture, Fermeture, Barneville, Carteret, Diélette, Port-Bail, Pêche, Marin, Météo marine">
     <meta property="og:title" content="Ports du Cotentin - Horaires, Portes & Marées">
-    <meta property="og:description" content="Accédez en 1 clic à l'état des portes, aux horaires des marées et à la météo des ports de Carteret et Diélette.">
+    <meta property="og:description" content="Accédez en 1 clic à l'état des portes, aux horaires des marées et à la météo des ports du Cotentin.">
     <meta property="og:image" content="https://portsducotentin.fr/android-chrome-512x512.png">
     <meta property="og:url" content="https://portsducotentin.fr/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Ports du Cotentin">
+   <link rel="canonical" href="https://portsducotentin.fr/" />
     
     <script type="application/ld+json">
     {
@@ -141,7 +142,7 @@
             <strong>* Attention :</strong> Les horaires peuvent varier selon météo et marée (+/- 30 min). Toutes les données du site sont à titre indicatif. L'éditeur décline toute responsabilité en cas d'erreur. Le capitaine est responsable de sa navigation.
         </div>
         <div class="warning-modal-buttons">
-            <a href="securite.html" class="btn-action" style="background: #ef4444; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px;" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
+            <a href="securite.html" class="btn-action" style="background: #ef4444; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px;" data-i18n="btn_security">SÉCURITÉ ET RAPPEL</a>
             <button class="btn-understood" onclick="closeWarningModal()" data-i18n="btn_understood">✅ J'AI COMPRIS</button>
         </div>
     </div>
@@ -160,13 +161,16 @@
         <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">Choix du port</h3>
         <div style="display: flex; flex-direction: column; gap: 10px;">
             <a href="#" onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="display: block; background: var(--marine-blue); color: white; text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem;">
-                📍 Port de Carteret (Actuel) / Portbail
+                📍 Port de Carteret
             </a>
             <a href="dielette/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
                 Port de Diélette
             </a>
             <a href="Granville/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
                 Port de Hérel (Granville)
+            </a>
+            <a href="../saintvaast/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
+                Port de Saint-Vaast-la-Hougue
             </a>
         </div>
     </div>
@@ -204,7 +208,7 @@
             <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;" data-i18n="btn_install">📱 INSTALLER</button>
         </div>
 
-        <h1 class="main-title">PORT BARNEVILLE-CARTERET<sup>*</sup></h1>
+        <h1 class="main-title">PORT DE CARTERET<sup>*</sup></h1>
 
         <div style="text-align: center; margin: 8px 0 5px 0;">
             <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
@@ -270,7 +274,7 @@
     <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
-            <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">📷 WEBCAM</a>
+            <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">WEBCAM</a>
         </div>
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
             <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
@@ -296,15 +300,15 @@
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="radar_title">Radar de pluie en direct</div>
         </div>
         <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
-            <iframe src="https://www.rainviewer.com/map.html?loc=49.381,-1.85,8&oColor=0&tColor=3&s=1&m=1&d=1&v=0&w=1&p=1&oc=0&g=1" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
+            <iframe src="https://www.rainviewer.com/map.html?loc=49.381,-1.85,7&oColor=0&tColor=3&s=1&m=1&d=1&v=0&w=1&p=1&oc=0&g=1" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
         </div>
     </div>
 
     <div class="footer-module">
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         <div class="footer-buttons">
-            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">🤝 NOS PARTENAIRES LOCAUX</a>
-            <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">⚓ LIENS UTILES</a>
+            <a href="partenaires.html" class="btn-action btn-footer" data-i18n="btn_partners">NOS PARTENAIRES LOCAUX</a>
+            <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">LIENS UTILES</a>
             <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
         </div>
 
@@ -326,6 +330,14 @@
             <img src="logo-cws.png" alt="Cotentin Web Studio">
         </a>
     </div>
+    <div class="reveal" style="text-align: center; margin-top: 30px; padding: 0 20px;">
+    <p style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Vu dans la presse</p>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <a href="https://actu.fr/societe/ce-manchois-cree-une-nouvelle-application-pour-faciliter-les-acces-aux-ports-du-cotentin_64308095.html" target="_blank" style="text-decoration: none; color: #64748b; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 5px; filter: grayscale(1); opacity: 0.8; transition: 0.3s;">
+            <span style="border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px;">La Presse de la Manche</span>
+        </a>
+        </div>
+</div>
 </div>
 
 <script>
