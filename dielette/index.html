@@ -18,7 +18,7 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Ports du Cotentin">
     <link rel="canonical" href="https://portsducotentin.fr/dielette/" />
-    
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -26,7 +26,7 @@
       gtag('js', new Date());
       gtag('config', 'G-5LY18V5457');
     </script>
-    
+
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,7 +39,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
     <script src="../lang.js"></script>
-    
+
     <style>
         .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 10px 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
         .sponsor-label { background: var(--marine-blue); color: white; font-size: 0.52rem; border-radius: 4px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; flex-shrink: 0; align-self: center; display: inline-block; }
@@ -48,8 +48,9 @@
         body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
         .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; padding: 15px; box-sizing: border-box; padding-top: 0 !important; }
         .footer-module { margin-top: 15px; padding-top: 20px; border-top: 1px dashed #cbd5e1; text-align: center; }
-        .footer-credits { margin-top: 35px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-decoration: none; transition: transform 0.2s; cursor: pointer; }
-        .footer-credits img { width: 42px; height: auto; opacity: 0.85; }
+        .footer-credits { margin-top: 35px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-decoration: none; transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); cursor: pointer; }
+        .footer-credits:hover { transform: scale(1.03); }
+        .footer-credits img { width: 42px; height: auto; opacity: 0.85; filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.05)); }
         .footer-text-block { text-align: center; font-family: 'Montserrat', sans-serif; }
         .footer-copyright { font-size: 0.65rem; color: #64748b; font-weight: 500; margin: 0; }
         .footer-studio { font-size: 0.65rem; color: var(--marine-blue); font-weight: 700; letter-spacing: 0.5px; margin: 4px 0 0 0; }
@@ -63,6 +64,7 @@
         .lang-btn { cursor: pointer; opacity: 0.3; transition: opacity 0.3s ease, transform 0.2s ease; display: inline-block; vertical-align: middle; }
         .lang-btn.active { opacity: 1; transform: scale(1.15); }
         .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn-action:active { transform: scale(0.95); }
         .status-box { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: all 0.5s ease; }
         .status-box.open { background: var(--open-light); border: 5px solid var(--open-dark); animation: pulse 2s infinite; }
         .status-box.warning { background: var(--warning-color); border: 5px solid var(--warning-dark); animation: pulse 2s infinite; }
@@ -71,12 +73,13 @@
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
         .status-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; opacity: 0.9; margin-bottom: 2px; }
         .status-value { font-size: 1.4rem; font-weight: 900; margin: 5px 0; letter-spacing: -0.5px; line-height: 1.1; padding: 0 5px; text-align: center; }
+        .status-box.warning .status-value, .status-box.danger .status-value { font-size: 1.15rem; letter-spacing: -1px; }
         .progress-wrapper { margin: 10px 0; display: none; }
         .progress-container { width: 100%; height: 34px; border-radius: 17px; overflow: hidden; position: relative; background: var(--open-light); transition: background 0.5s ease; }
         .progress-container.warning { background: var(--warning-color); }
         .progress-container.danger { background: var(--danger-color); }
         .progress-container.waiting { background: #cbd5e1; }
-        .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear; }
+        .progress-bar { height: 100%; background: var(--open-dark); width: 0%; transition: width 1s linear, background 0.5s ease; }
         .progress-container.warning .progress-bar { background: var(--warning-dark); }
         .progress-container.danger .progress-bar { background: var(--danger-dark); animation: blink 1s infinite; }
         .progress-container.waiting .progress-bar { background: var(--marine-blue); }
@@ -102,6 +105,8 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
         .sun-times-container { display: flex; justify-content: center; gap: 15px; margin-top: 12px; font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); }
         .sun-badge { display: flex; align-items: center; gap: 6px; background: #f8fafc; padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+
+        /* --- POPUP AVERTISSEMENT QUOTIDIEN --- */
         #warning-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.85); z-index: 10002; justify-content: center; align-items: center; backdrop-filter: blur(3px); }
         .warning-modal-box { background: #fef2f2; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center; border-top: 6px solid #ef4444; }
         .warning-modal-icon { font-size: 2.2rem; margin-bottom: 10px; }
@@ -146,6 +151,7 @@
 </head>
 <body>
 
+<!-- POPUP AVERTISSEMENT QUOTIDIEN -->
 <div id="warning-modal">
     <div class="warning-modal-box">
         <div class="warning-modal-icon">⚠️</div>
@@ -159,6 +165,13 @@
     </div>
 </div>
 
+<div id="ios-install-popup" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; border: 2px solid #fbbf24; padding: 15px 15px 20px 15px; border-radius: 12px; z-index: 9999; width: 85%; max-width: 350px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); text-align: center; color: white;">
+    <span style="position: absolute; top: 2px; right: 12px; cursor: pointer; font-weight: bold; color: #94a3b8; font-size: 1.5rem;" onclick="document.getElementById('ios-install-popup').style.display='none'">×</span>
+    <p style="font-size: 0.9rem; margin: 0; font-weight: 800; color: #fbbf24;">🍎 Installer sur iPhone / iPad</p>
+    <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
+</div>
+
+<!-- PORT SELECTOR harmonisé, Port-Bail retiré -->
 <div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
@@ -174,28 +187,43 @@
     </div>
 </div>
 
+<div id="holiday-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
+    <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border-top: 6px solid var(--marine-blue);">
+        <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('holiday-modal').style.display='none'">×</span>
+        <h3 id="holiday-title" style="margin: 0 0 10px 0; color: var(--marine-blue); font-weight: 800; font-size: 1.2rem;">--</h3>
+        <p id="holiday-message" style="margin: 0 0 20px 0; font-size: 0.85rem; color: #475569; line-height: 1.5; font-weight: 600;">--</p>
+        <button onclick="document.getElementById('holiday-modal').style.display='none'" style="background: var(--marine-blue); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Merci, fermer</button>
+    </div>
+</div>
+
 <div class="app-container">
+
     <div class="sticky-header">
         <div class="top-sponsor-banner" id="sponsor-banner">
-            <a href="partenaires.html" class="sponsor-label" style="text-decoration: none; color: white; text-align: center; line-height: 1.2; padding: 4px 8px;" id="sponsor-label-text">NOS<br>PARTENAIRES<br>LOCAUX</a>
+            <!-- ✅ id="sponsor-label-text" pour la traduction FR/EN -->
+            <a href="partenaires.html" class="sponsor-label" id="sponsor-label-text" style="text-decoration: none; color: white; text-align: center; line-height: 1.2; padding: 4px 8px;">NOS<br>PARTENAIRES<br>LOCAUX</a>
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
+
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 5px;">
             <div class="date-badge" id="current-date">-- --</div>
             <div class="lang-switch" style="margin: 0; font-size: 1.6rem;">
-                <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active">🇫🇷</span>
+                <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span>
                 <span style="color: #cbd5e1; font-size: 1.2rem; vertical-align: middle; margin: 0 2px;">|</span>
-                <span onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧</span>
+                <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
             </div>
         </div>
+
         <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 12px;">
             <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES PORTE & MARÉES</a>
             <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
-            <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
+            <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;" data-i18n="btn_install">📱 INSTALLER</button>
         </div>
+
         <h1 class="main-title">PORT DE DIÉLETTE<sup>*</sup></h1>
+
         <div style="text-align: center; margin: 8px 0 5px 0;">
-            <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; cursor: pointer; font-family: 'Montserrat', sans-serif;">
+            <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
                 ⚓ <span data-i18n="change_port">CHANGER DE PORT</span> ▾
             </button>
         </div>
@@ -326,41 +354,61 @@
 </div>
 
 <script>
+    // ✅ POPUP AVERTISSEMENT QUOTIDIEN — clé propre
     function closeWarningModal() {
         document.getElementById('warning-modal').style.display = 'none';
         localStorage.setItem('warning_seen_dielette', new Date().toISOString().split('T')[0]);
     }
+
     function checkWarningPopup() {
         const today = new Date().toISOString().split('T')[0];
         if (localStorage.getItem('warning_seen_dielette') !== today) {
             setTimeout(() => { document.getElementById('warning-modal').style.display = 'flex'; }, 800);
         }
     }
+</script>
 
-    function updateSponsor() {
-        const now = new Date();
-        const hour = now.getHours();
-        const sponsorText = document.getElementById('sponsor-text');
-        if (!sponsorText) return;
-        const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
-        const t = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang] : {};
-        function getPartnerHTML(anchorId, imgSrc, textContent) {
-            return `<a href="partenaires.html#${anchorId}" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; text-decoration: none; color: inherit; width: 100%;">
-                        <span style="text-align: right; line-height: 1.3; word-wrap: break-word; white-space: normal;">${textContent}</span>
-                        <img src="${imgSrc}" style="height: 50px; width: 50px; object-fit: contain; border-radius: 8px; background: white; padding: 3px; border: 1px solid #cbd5e1; flex-shrink: 0;" alt="Logo">
-                    </a>`;
+<script>
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
+    const iosPopup = document.getElementById('ios-install-popup');
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (isStandalone) installBtn.style.display = 'none';
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (!isStandalone) installBtn.style.display = 'inline-flex';
+    });
+
+    installBtn.addEventListener('click', async () => {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) { iosPopup.style.display = 'block'; return; }
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+        } else {
+            alert("Pour installer l'application, ouvrez le menu de votre navigateur et choisissez 'Ajouter à l'écran d'accueil'.");
         }
-        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
-        let finalHTML = `<a href="../contact.html" style="text-decoration:none; color:inherit; display: flex; align-items: center; justify-content: flex-end; text-align: right; width:100%; white-space: normal;">${txtDefault}</a>`;
-        if (hour === 10) finalHTML = getPartnerHTML("unebouteillealamer", "bout.png", "Une Bouteille À La Mer");
-        else if (hour === 17) finalHTML = getPartnerHTML("effet-papillon", "effpap.png", "L'Effet Papillon Diélette");
-        else if (hour === 19) finalHTML = getPartnerHTML("lameraboire", "merab.png", "La Mer à Boire");
-        sponsorText.innerHTML = finalHTML;
-    }
+    });
+</script>
 
+<script>
     window.onload = function() {
         if (typeof data !== 'undefined') { updateApp(); setInterval(updateApp, 1000); }
     };
+
+    // ✅ PAS DE PARTENAIRES POUR L'INSTANT — appel à l'action uniquement
+    function updateSponsor() {
+        const sponsorText = document.getElementById('sponsor-text');
+        if (!sponsorText) return;
+        const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
+        const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+        sponsorText.innerHTML = `<a href="../contact.html" style="text-decoration:none; color:inherit; display: flex; align-items: center; justify-content: flex-end; text-align: right; width:100%; white-space: normal;">${txtDefault}</a>`;
+    }
 
     function drawTideGraph(percent, isDescending) {
         const canvas = document.getElementById('tideCanvasLarge');
@@ -396,18 +444,15 @@
         return null;
     }
 
-    function formatTitle(p, baseLabel) {
-        if (!p) return baseLabel;
-        const now = new Date();
-        if (p.sO.getDate() !== now.getDate()) return baseLabel + " (Demain)";
-        return baseLabel;
-    }
-
     function updateApp() {
         const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const localISOTime = (new Date(now - tzoffset)).toISOString().slice(0, -1);
+        const dateStr = localISOTime.split('T')[0];
         const currentLang = localStorage.getItem('preferredLang') || 'fr';
         const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
         document.getElementById('current-date').innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
+
         try {
             const cycleLunaireMs = 2551442877;
             const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57);
@@ -421,15 +466,15 @@
             else if (phase < 0.72)              { moonEmoji = "🌖"; moonName = currentLang === 'en' ? "Waning Gibbous" : "Gibbeuse Décroissante"; }
             else if (phase < 0.78)              { moonEmoji = "🌗"; moonName = currentLang === 'en' ? "Last Quarter" : "Dernier Quartier"; }
             else                                { moonEmoji = "🌘"; moonName = currentLang === 'en' ? "Waning Crescent" : "Dernier Croissant"; }
-            document.getElementById('moon-phase-badge').innerText = moonEmoji;
-            document.getElementById('moon-phase-label').innerText = moonName;
-        } catch(e) { console.log(e); }
+            const moonBadge = document.getElementById('moon-phase-badge');
+            if (moonBadge) moonBadge.innerText = moonEmoji;
+            const moonLabel = document.getElementById('moon-phase-label');
+            if (moonLabel) moonLabel.innerText = moonName;
+        } catch (error) { console.log("Erreur calcul lune :", error); }
 
         updateSponsor();
         if (typeof data === 'undefined' || data.length === 0) return;
 
-        const tzoffset = now.getTimezoneOffset() * 60000;
-        const dateStr = (new Date(now - tzoffset)).toISOString().split('T')[0];
         const yesterdayStr = new Date(now.getTime() - 86400000 - tzoffset).toISOString().split('T')[0];
         const tomorrowStr = new Date(now.getTime() + 86400000 - tzoffset).toISOString().split('T')[0];
         let allPortes = [], allTides = [];
@@ -439,26 +484,28 @@
             if (dData) {
                 let parts = ds.split('-');
                 let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
-                (dData.portes || []).forEach(p => {
-                    let o = parseTime(p.open), c = parseTime(p.close);
-                    if (o && c) {
-                        let sO = new Date(y, m, day, o.h, o.m, 0), sC = new Date(y, m, day, c.h, c.m, 0);
+                let portesArray = dData.portes || [];
+                if (!dData.portes) { for(let i=1; i<=4; i++) { if(dData["ouv"+i] && dData["ferm"+i]) portesArray.push({open: dData["ouv"+i], close: dData["ferm"+i]}); } }
+                portesArray.forEach(p => {
+                    let openTime = parseTime(p.open), closeTime = parseTime(p.close);
+                    if (openTime && closeTime) {
+                        let sO = new Date(y, m, day, openTime.h, openTime.m, 0), sC = new Date(y, m, day, closeTime.h, closeTime.m, 0);
                         if (sC < sO) sC.setDate(sC.getDate() + 1);
-                        allPortes.push({ sO, sC, openStr: o.clean, closeStr: c.clean });
+                        allPortes.push({ sO, sC, openStr: openTime.clean, closeStr: closeTime.clean });
                     }
                 });
                 [
-                    { t: dData.bm1, h: dData.bm1_h, type: "BM", c: dData.coeff1, r: null },
-                    { t: dData.pm1, h: dData.pm1_h, type: "PM", c: dData.coeff1, r: null },
-                    { t: dData.bm2, h: dData.bm2_h, type: "BM", c: dData.coeff2, r: dData.bm1 },
-                    { t: dData.pm2, h: dData.pm2_h, type: "PM", c: dData.coeff2, r: dData.pm1 }
-                ].forEach(tide => {
-                    let pt = parseTime(tide.t);
-                    if (pt) {
-                        let dObj = new Date(y, m, day, pt.h, pt.m, 0);
-                        let pr = parseTime(tide.r);
-                        if (pr && dObj < new Date(y, m, day, pr.h, pr.m, 0)) dObj.setDate(dObj.getDate() + 1);
-                        allTides.push({ time: pt.clean, h: tide.h, type: tide.type, c: tide.c, dateObj: dObj });
+                    { time: dData.bm1, h: dData.bm1_h, type: "BM", c: dData.coeff1, refTime: null },
+                    { time: dData.pm1, h: dData.pm1_h, type: "PM", c: dData.coeff1, refTime: null },
+                    { time: dData.bm2, h: dData.bm2_h, type: "BM", c: dData.coeff2, refTime: dData.bm1 },
+                    { time: dData.pm2, h: dData.pm2_h, type: "PM", c: dData.coeff2, refTime: dData.pm1 }
+                ].forEach(t => {
+                    let parsedTime = parseTime(t.time);
+                    if (parsedTime) {
+                        let dObj = new Date(y, m, day, parsedTime.h, parsedTime.m, 0);
+                        let parsedRef = parseTime(t.refTime);
+                        if (parsedRef) { let refObj = new Date(y, m, day, parsedRef.h, parsedRef.m, 0); if (dObj < refObj) dObj.setDate(dObj.getDate() + 1); }
+                        allTides.push({ time: parsedTime.clean, h: t.h, type: t.type, c: t.c, dateObj: dObj });
                     }
                 });
             }
@@ -466,17 +513,30 @@
 
         allPortes.sort((a, b) => a.sO - b.sO);
         allTides.sort((a, b) => a.dateObj - b.dateObj);
+
         let futurePortes = allPortes.filter(p => p.sC > now);
         let pastPortes = allPortes.filter(p => p.sC <= now);
-        let activePorte = futurePortes.length > 0 && now >= futurePortes[0].sO ? futurePortes[0] : null;
-        let nextPorte = !activePorte && futurePortes.length > 0 ? futurePortes[0] : null;
+        let activePorte = null, nextPorte = null;
         let lastPorteClose = pastPortes.length > 0 ? pastPortes[pastPortes.length - 1].sC : new Date(now.getTime() - 7 * 3600000);
+        if (futurePortes.length > 0) { if (now >= futurePortes[0].sO) activePorte = futurePortes[0]; else nextPorte = futurePortes[0]; }
 
-        const t = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang] : {};
+        const wrapper = document.getElementById('progress-wrapper');
+        const pbContainer = document.getElementById('progress-container');
+        const pb = document.getElementById('progress-bar');
+        wrapper.style.display = "block";
+
+        const t = translations[currentLang] || {};
         document.getElementById('label-ouv').innerText = t.pill_open || "OUV.";
         document.getElementById('label-ferm').innerText = t.pill_close || "FERM.";
         document.getElementById('label-ouv-next').innerText = t.pill_open || "OUV.";
         document.getElementById('label-ferm-next').innerText = t.pill_close || "FERM.";
+
+        function formatTitle(p, baseLabel) {
+            if (!p) return baseLabel;
+            if (p.sO.getDate() !== now.getDate()) return baseLabel + " (" + (t.tomorrow || "Demain") + ")";
+            return baseLabel;
+        }
+
         document.getElementById('title-slot-1').innerText = formatTitle(futurePortes[0], t.slot_current || "Créneaux officiels");
         document.getElementById('title-slot-2').innerText = formatTitle(futurePortes[1], t.slot_next || "Prochains créneaux");
         if (futurePortes[0]) { document.getElementById('open-time').innerText = futurePortes[0].openStr; document.getElementById('close-time').innerText = futurePortes[0].closeStr; }
@@ -484,16 +544,11 @@
         if (futurePortes[1]) { document.getElementById('open-time-next').innerText = futurePortes[1].openStr; document.getElementById('close-time-next').innerText = futurePortes[1].closeStr; }
         else { document.getElementById('open-time-next').innerText = "--:--"; document.getElementById('close-time-next').innerText = "--:--"; }
 
-        const wrapper = document.getElementById('progress-wrapper');
-        const pbContainer = document.getElementById('progress-container');
-        const pb = document.getElementById('progress-bar');
-        wrapper.style.display = "block";
-
         if (activePorte) {
             const diffMs = activePorte.sC - now;
             const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
-            const h = Math.floor(diffMs / 3600000), min = Math.floor((diffMs % 3600000) / 60000);
-            document.getElementById('time-left').innerText = h + "h" + (min < 10 ? "0" : "") + min + (t.time_before_close || " avant fermeture");
+            const h = Math.floor(diffMs / 3600000), m = Math.floor((diffMs % 3600000) / 60000);
+            document.getElementById('time-left').innerText = h + "h" + (m < 10 ? "0" : "") + m + (t.time_before_close || " avant fermeture");
             pb.style.width = percent + "%";
             let circleClass = "open", statusText = t.status_open || "OUVERTE", labelText = t.label_gate || "PORTE";
             if (diffMs < 25 * 60 * 1000) { pbContainer.className = "progress-container danger"; circleClass = "danger"; statusText = t.status_imminent || "IMMINENTE"; labelText = t.label_closing || "FERMETURE"; }
@@ -514,81 +569,66 @@
             document.getElementById('status-box').className = "status-box closed";
         }
 
-        let prevT = allTides[0], nextT = allTides[1];
+        let prevTide = allTides[0], nextTide = allTides[1];
         for (let i = 0; i < allTides.length - 1; i++) {
-            if (now >= allTides[i].dateObj && now <= allTides[i+1].dateObj) { prevT = allTides[i]; nextT = allTides[i+1]; break; }
+            if (now >= allTides[i].dateObj && now <= allTides[i+1].dateObj) { prevTide = allTides[i]; nextTide = allTides[i+1]; break; }
         }
-        if (prevT && nextT) {
-            const tidePercent = ((now - prevT.dateObj) / (nextT.dateObj - prevT.dateObj)) * 100;
-            const h1 = parseFloat(prevT.h), h2 = parseFloat(nextT.h);
+        if (prevTide && nextTide) {
+            const tidePercent = ((now - prevTide.dateObj) / (nextTide.dateObj - prevTide.dateObj)) * 100;
+            const isDescending = (prevTide.type === "PM");
+            const h1 = parseFloat(prevTide.h), h2 = parseFloat(nextTide.h);
             if (!isNaN(h1) && !isNaN(h2)) document.getElementById('current-tide-height').innerText = (h1 + (h2 - h1) * ((1 - Math.cos((tidePercent/100) * Math.PI)) / 2)).toFixed(2) + " m";
-            document.getElementById('coeff-display').innerText = prevT.c && prevT.c !== "-" ? prevT.c : (nextT.c && nextT.c !== "-" ? nextT.c : "--");
-            document.getElementById('tide-left-label').innerText = prevT.type === "PM" ? (t.high_tide || "Pleine Mer") : (t.low_tide || "Basse Mer");
-            document.getElementById('tide-right-label').innerText = nextT.type === "PM" ? (t.high_tide || "Pleine Mer") : (t.low_tide || "Basse Mer");
-            document.getElementById('val-left').innerText = prevT.time + " (" + prevT.h + "m)";
-            document.getElementById('val-right').innerText = nextT.time + " (" + nextT.h + "m)";
-            drawTideGraph(tidePercent, prevT.type === "PM");
+            document.getElementById('coeff-display').innerText = prevTide.c && prevTide.c !== "-" ? prevTide.c : (nextTide.c && nextTide.c !== "-" ? nextTide.c : "--");
+            document.getElementById('tide-left-label').innerText = prevTide.type === "PM" ? (t.high_tide || "Pleine Mer") : (t.low_tide || "Basse Mer");
+            document.getElementById('tide-right-label').innerText = nextTide.type === "PM" ? (t.high_tide || "Pleine Mer") : (t.low_tide || "Basse Mer");
+            document.getElementById('val-left').innerText = prevTide.time + " (" + prevTide.h + "m)";
+            document.getElementById('val-right').innerText = nextTide.time + " (" + nextTide.h + "m)";
+            drawTideGraph(tidePercent, isDescending);
         }
-    }
-
-    function setLanguage(lang) {
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        if (document.getElementById(`btn-${lang}`)) document.getElementById(`btn-${lang}`).classList.add('active');
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) el.innerHTML = translations[lang][key];
-        });
-        const sponsorLabel = document.getElementById('sponsor-label-text');
-        if (sponsorLabel) sponsorLabel.innerHTML = lang === 'en' ? "OUR<br>LOCAL<br>PARTNERS" : "NOS<br>PARTENAIRES<br>LOCAUX";
-        localStorage.setItem('preferredLang', lang);
-        const wisuki = document.getElementById('wisuki-widget');
-        if (wisuki) wisuki.src = `https://wisuki.com/widget-summary?spot=1180&spotid=2434&lang=${lang}`;
-        updateApp();
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const savedLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
-        setLanguage(savedLang);
-        checkWarningPopup();
-        fetchSunTimes();
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
-    });
-
-    async function fetchSunTimes() {
-        try {
-            const response = await fetch(`https://api.sunrise-sunset.org/json?lat=49.551&lng=-1.850&formatted=0`);
-            const data = await response.json();
-            if (data.status === "OK") {
-                const options = { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' };
-                document.getElementById('sunrise-time').innerText = new Date(data.results.sunrise).toLocaleTimeString('fr-FR', options);
-                document.getElementById('sunset-time').innerText = new Date(data.results.sunset).toLocaleTimeString('fr-FR', options);
-            }
-        } catch(e) { console.log(e); }
     }
 </script>
 
-<!-- ✅ EASTER EGGS — ajoutés, identiques à Carteret et Granville -->
 <script>
-    // 🐟 Clic sur le cercle de statut → émojis marins
+    function setLanguage(lang) {
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.getElementById(`btn-${lang}`);
+        if (activeBtn) activeBtn.classList.add('active');
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) el.innerHTML = translations[lang][key];
+        });
+        // ✅ Traduction du label sponsor
+        const sponsorLabel = document.getElementById('sponsor-label-text');
+        if (sponsorLabel) sponsorLabel.innerHTML = lang === 'en' ? "OUR<br>LOCAL<br>PARTNERS" : "NOS<br>PARTENAIRES<br>LOCAUX";
+        localStorage.setItem('preferredLang', lang);
+        const wisukiIframe = document.getElementById('wisuki-widget');
+        if (wisukiIframe) wisukiIframe.src = `https://wisuki.com/widget-summary?spot=1180&spotid=2434&lang=${lang}`;
+        if (typeof updateApp === "function") updateApp();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const browserLang = navigator.language.substring(0, 2);
+        const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+        setLanguage(savedLang);
+        checkWarningPopup();
+        fetchSunTimes();
+    });
+</script>
+
+<script>
+    // Easter eggs (inchangés)
     document.getElementById('status-box').addEventListener('click', function(e) {
         const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋', '🐬', '☀️'];
-        for (let i = 0; i < 8; i++) {
+        for(let i = 0; i < 8; i++) {
             let particle = document.createElement('div');
             particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
             particle.style.cssText = `position:fixed;left:${(e.clientX||window.innerWidth/2)-25}px;top:${(e.clientY||window.innerHeight/3)-25}px;font-size:3.5rem;pointer-events:none;z-index:9999;transition:transform 2s ease-out,opacity 2s ease-in;`;
             document.body.appendChild(particle);
-            setTimeout(() => {
-                particle.style.transform = `translate(${Math.random()*200-100}px,-${Math.random()*300+100}px) rotate(${Math.random()*360}deg)`;
-                particle.style.opacity = '0';
-            }, 50);
+            setTimeout(() => { particle.style.transform = `translate(${Math.random()*200-100}px,-${Math.random()*300+100}px) rotate(${Math.random()*360}deg)`; particle.style.opacity = '0'; }, 50);
             setTimeout(() => { particle.remove(); }, 2050);
         }
     });
 
-    // 🏴‍☠️ Clic x5 sur le titre → bateau pirate traversant l'écran
     let titleClickCount = 0;
     const mainTitle = document.querySelector('.main-title');
     if (mainTitle) {
@@ -606,7 +646,6 @@
         });
     }
 
-    // 🐙 Clic sur le graphe de marée → kraken
     const tideCanvas = document.getElementById('tideCanvasLarge');
     if (tideCanvas) {
         tideCanvas.addEventListener('click', function(e) {
@@ -625,11 +664,67 @@
             setTimeout(() => { kraken.remove(); }, 3000);
         });
     }
+</script>
 
-    // Mise à jour au retour sur l'onglet
+<script>
     document.addEventListener("visibilitychange", function() {
         if (document.visibilityState === 'visible' && typeof updateApp === "function") updateApp();
     });
+</script>
+
+<script>
+    const joursFeries = {
+        "01-01": { titre: "🎉 Bonne Année !", message: "Toute l'équipe vous souhaite une excellente année pleine de belles navigations !" },
+        "04-06": { titre: "🍫 Joyeuses Pâques !", message: "Bon Lundi de Pâques à tous ! Ne mangez pas trop de chocolat avant de prendre la mer." },
+        "05-01": { titre: "🌿 Bon 1er Mai !", message: "Joyeuse Fête du Travail. Profitez bien de ce jour férié (et de votre brin de muguet) !" },
+        "05-08": { titre: "🕊️ 8 Mai 1945", message: "Aujourd'hui, nous commémorons la Victoire du 8 mai 1945. Bonne journée à tous." },
+        "05-14": { titre: "🌤️ Jeudi de l'Ascension", message: "Profitez bien de ce jour de l'Ascension pour une belle sortie en mer !" },
+        "05-25": { titre: "⚓ Lundi de Pentecôte", message: "Bon Lundi de Pentecôte à tous les marins et plaisanciers." },
+        "07-14": { titre: "🎆 Fête Nationale", message: "Joyeux 14 Juillet ! Excellente journée de fête nationale et bonne navigation." },
+        "08-15": { titre: "⛵ L'Assomption", message: "Bon 15 août et très belle fête de la mer à tous les amoureux de la côte !" },
+        "11-01": { titre: "🍂 La Toussaint", message: "Passez un bon jour de la Toussaint, prudence si vous sortez en mer avec la météo d'automne." },
+        "11-11": { titre: "🏵️ 11 Novembre 1918", message: "Aujourd'hui, nous commémorons l'Armistice du 11 novembre 1918. Bonne journée à tous." },
+        "12-25": { titre: "🎄 Joyeux Noël !", message: "L'équipe vous souhaite d'excellentes fêtes de fin d'année auprès de vos proches !" }
+    };
+
+    function checkHolidayPopup() {
+        const now = new Date();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const todayKey = `${month}-${day}`;
+        const storageKey = `holiday_${now.getFullYear()}_${todayKey}`;
+        if (joursFeries[todayKey] && !localStorage.getItem(storageKey)) {
+            document.getElementById('holiday-title').innerText = joursFeries[todayKey].titre;
+            document.getElementById('holiday-message').innerText = joursFeries[todayKey].message;
+            setTimeout(() => { document.getElementById('holiday-modal').style.display = 'flex'; }, 500);
+            localStorage.setItem(storageKey, "true");
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', checkHolidayPopup);
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add("active"); obs.unobserve(entry.target); } });
+        }, { root: null, threshold: 0.1, rootMargin: "0px 0px -20px 0px" });
+        document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+    });
+</script>
+
+<script>
+    async function fetchSunTimes() {
+        try {
+            const response = await fetch(`https://api.sunrise-sunset.org/json?lat=48.832&lng=-1.611&formatted=0`);
+            const data = await response.json();
+            if (data.status === "OK") {
+                const options = { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' };
+                document.getElementById('sunrise-time').innerText = new Date(data.results.sunrise).toLocaleTimeString('fr-FR', options);
+                document.getElementById('sunset-time').innerText = new Date(data.results.sunset).toLocaleTimeString('fr-FR', options);
+            }
+        } catch (error) { console.log("Erreur soleil :", error); }
+    }
 </script>
 <script>
     const WORKER_URL = "https://meteovigilance.guillaume-leparmentier-pro.workers.dev/";
