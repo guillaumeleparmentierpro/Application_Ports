@@ -11,9 +11,8 @@
       gtag('js', new Date());
       gtag('config', 'G-5LY18V5457');
     </script>
-    <title>Partenaires - Port de Barneville-Carteret</title>
+    <title>Partenaires - Port de Carteret</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
-    
     <style>
         :root {
             --primary-bg: #f8fafc;
@@ -22,687 +21,775 @@
             --text-main: #1e293b;
             --border-color: #e2e8f0;
         }
-
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            background: var(--primary-bg); 
-            margin: 0; padding: 0; 
-            color: var(--text-main);
-            min-height: 100vh;
-        }
-
-        .app-container {
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-            padding-bottom: 30px;
-        }
-
-        .sticky-header {
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            background: var(--primary-bg);
-            z-index: 1000;
-            padding: 10px 15px 5px 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            margin-bottom: 15px;
-        }
-
+        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 0; color: var(--text-main); min-height: 100vh; }
+        .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; box-sizing: border-box; padding-bottom: 30px; }
+        .sticky-header { position: -webkit-sticky; position: sticky; top: 0; background: var(--primary-bg); z-index: 1000; padding: 10px 15px 5px 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; }
         .top-nav { display: flex; margin-bottom: 5px; }
-
-        .btn-action { 
-            text-decoration: none; 
-            background: var(--marine-blue);
-            color: #ffffff !important;
-            border: none; border-radius: 8px; 
-            padding: 6px 10px;
-            font-weight: 700; font-size: 0.6rem; 
-            display: inline-flex; align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .main-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--marine-blue);
-            text-align: center;
-            margin: 5px 0 15px 0;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-            line-height: 1.1;
-            white-space: nowrap;
-            width: 100%;
-            display: block;
-        }
+        .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .main-title { font-size: 1.05rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 5px 0 15px 0; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.1; white-space: nowrap; width: 100%; display: block; }
         .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
 
-        .marquee-container {
-            width: calc(100% - 30px);
-            margin: 0 15px 15px 15px;
-            overflow: hidden;
-            background: white;
-            padding: 12px 0;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--border-color);
-            position: relative;
-            box-sizing: border-box;
-        }
+        /* MARQUEE */
+        .marquee-container { width: calc(100% - 30px); margin: 0 15px 15px 15px; overflow: hidden; background: white; padding: 12px 0; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); position: relative; box-sizing: border-box; }
+        .marquee-container::before, .marquee-container::after { content: ""; position: absolute; top: 0; width: 30px; height: 100%; z-index: 2; pointer-events: none; }
+        .marquee-container::before { left: 0; background: linear-gradient(to right, white, transparent); }
+        .marquee-container::after { right: 0; background: linear-gradient(to left, white, transparent); }
+        .marquee-content { display: flex; gap: 15px; width: max-content; animation: scroll-marquee 35s linear infinite; padding: 0 15px; }
+        .marquee-content:hover { animation-play-state: paused; }
+        .marquee-item { width: 55px; height: 55px; border-radius: 10px; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center; padding: 4px; box-sizing: border-box; background: white; flex-shrink: 0; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; }
+        .marquee-item:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-color: var(--marine-blue); }
+        .marquee-item img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+        @keyframes scroll-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 7.5px)); } }
 
-        .marquee-container::before, .marquee-container::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            width: 30px;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-        .marquee-container::before {
-            left: 0;
-            background: linear-gradient(to right, white, transparent);
-        }
-        .marquee-container::after {
-            right: 0;
-            background: linear-gradient(to left, white, transparent);
-        }
+        /* MODULE */
+        .module { background: var(--card-bg); border-radius: 12px; padding: 15px; margin: 0 15px 15px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); border-bottom: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 12px; scroll-margin-top: 110px; }
+        .partner-header { display: flex; align-items: center; gap: 12px; }
+        .partner-logo { width: 60px; height: 60px; background: #ffffff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; overflow: hidden; border: 1px solid #e2e8f0; padding: 2px; box-sizing: border-box; }
+        .partner-logo img { width: 100%; height: 100%; object-fit: contain; }
+        .partner-info { text-align: left; flex: 1; }
+        .partner-name { font-size: 0.95rem; font-weight: 800; color: var(--marine-blue); margin: 0; letter-spacing: -0.5px; }
+        .partner-desc { font-size: 0.75rem; color: #64748b; line-height: 1.4; margin: 4px 0 0 0; font-weight: 500; }
+        .sponsor-time { display: inline-block; background: #e0e7ff; color: var(--marine-blue); font-size: 0.6rem; font-weight: 700; padding: 3px 6px; border-radius: 4px; margin-top: 6px; border: 1px solid #c7d2fe; }
 
-        .marquee-content {
-            display: flex;
-            gap: 15px;
-            width: max-content;
-            animation: scroll-marquee 35s linear infinite;
-            padding: 0 15px;
-        }
-        
-        .marquee-content:hover {
-            animation-play-state: paused;
-        }
-
-        .marquee-item {
-            width: 55px;
-            height: 55px;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4px;
-            box-sizing: border-box;
-            background: white;
-            flex-shrink: 0;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-        }
-
-        .marquee-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-color: var(--marine-blue);
-        }
-
-        .marquee-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 6px;
-        }
-
-        @keyframes scroll-marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-50% - 7.5px)); }
-        }
-
-        .module {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 0 15px 15px 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--marine-blue);
-            border-bottom: 1px solid #e2e8f0;
-            border-left: 1px solid #e2e8f0;
-            border-right: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            scroll-margin-top: 110px; 
-        }
-
-        .partner-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .partner-logo {
-            width: 60px;
-            height: 60px;
-            background: #ffffff;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-            overflow: hidden; 
-            border: 1px solid #e2e8f0;
-            padding: 2px;
-            box-sizing: border-box;
-        }
-
-        .partner-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .partner-info {
-            text-align: left;
-            flex: 1;
-        }
-
-        .partner-name {
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: var(--marine-blue);
-            margin: 0;
-            letter-spacing: -0.5px;
-        }
-
-        .partner-desc {
-            font-size: 0.75rem;
-            color: #64748b;
-            line-height: 1.4;
-            margin: 4px 0 0 0;
-            font-weight: 500;
-        }
-
-        .sponsor-time {
-            display: inline-block;
-            background: #e0e7ff;
-            color: var(--marine-blue);
-            font-size: 0.6rem;
-            font-weight: 700;
-            padding: 3px 6px;
-            border-radius: 4px;
-            margin-top: 6px;
-            border: 1px solid #c7d2fe;
-        }
-
-        .partner-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            width: 100%;
-        }
-
+        /* BOUTONS PARTENAIRES — 1 ligne, icônes SVG */
+        .partner-actions { display: flex; flex-wrap: nowrap; gap: 6px; width: 100%; }
         .btn-partner-link {
             text-decoration: none;
             background: #f8fafc;
             color: var(--marine-blue);
             border: 1px solid var(--border-color);
-            padding: 10px 4px;
+            padding: 9px 4px;
             border-radius: 8px;
-            font-size: 0.65rem;
+            font-size: 0.55rem;
             font-weight: 700;
             text-align: center;
-            transition: background 0.2s;
-            flex: 1 1 calc(50% - 4px);
+            transition: background 0.2s, transform 0.1s;
+            flex: 1;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 4px;
             box-sizing: border-box;
+            line-height: 1.2;
         }
+        .btn-partner-link svg { width: 18px; height: 18px; fill: var(--marine-blue); flex-shrink: 0; }
+        .btn-partner-link:active { transform: scale(0.97); background: #e2e8f0; }
 
-        .btn-partner-link:active { background: #e2e8f0; transform: scale(0.98); }
+        /* Couleurs réseau social */
+        .btn-facebook { color: #1877F2; border-color: #bfdbfe; background: #eff6ff; }
+        .btn-facebook svg { fill: #1877F2; }
+        .btn-instagram { color: #E1306C; border-color: #fecdd3; background: #fff1f2; }
+        .btn-instagram svg { fill: url(#ig-gradient); }
 
-        .disclaimer {
-            font-size: 0.65rem; color: #64748b; text-align: center; padding: 0 15px; margin-top: 10px;
-        }
+        /* Pleine largeur pour "Devenez partenaire" */
+        .btn-full { flex-basis: 100% !important; flex: none !important; width: 100%; }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
+<!-- Dégradé Instagram (invisible, référence SVG) -->
+<svg width="0" height="0" style="position:absolute">
+    <defs>
+        <linearGradient id="ig-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%"   style="stop-color:#f09433"/>
+            <stop offset="25%"  style="stop-color:#e6683c"/>
+            <stop offset="50%"  style="stop-color:#dc2743"/>
+            <stop offset="75%"  style="stop-color:#cc2366"/>
+            <stop offset="100%" style="stop-color:#bc1888"/>
+        </linearGradient>
+    </defs>
+</svg>
 
-        <div class="sticky-header">
-            <div class="top-nav">
-                <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
-            </div>
-            <h1 class="main-title"><span data-i18n="partners_title">NOS PARTENAIRES LOCAUX</span><sup>*</sup></h1>
-        </div>
+<div class="app-container">
 
-        <div class="marquee-container">
-            <div class="marquee-content">
-                <a href="#maison-renard" class="marquee-item"><img src="renard.png" alt="Renard"></a>
-                <a href="#utile" class="marquee-item"><img src="utile.png" alt="Utile"></a>
-                <a href="#lestran" class="marquee-item"><img src="lestran.png" alt="L'Estran"></a>
-                <a href="#comptoir" class="marquee-item"><img src="comptoir.png" alt="Comptoir"></a>
-                <a href="#or-coiffure" class="marquee-item"><img src="lorcoiffure.jpg" alt="Or Coiffure"></a>
-                <a href="#century21" class="marquee-item"><img src="century21.png" alt="Century 21"></a>
-                <a href="#mille-marin" class="marquee-item"><img src="millemar.webp" alt="Mille Marin"></a>
-                <a href="#atelier-b" class="marquee-item"><img src="atelierb.png" alt="L'Atelier B"></a>
-                <a href="#carteret-marine" class="marquee-item"><img src="carteretmarine.png" alt="Carteret Marine"></a>
-                <a href="#la-cambuse" class="marquee-item"><img src="lacambuse.png" alt="La Cambuse"></a>
-                <a href="#food-truck" class="marquee-item"><img src="delizia.png" alt="Delizia"></a>
-                <a href="#chalet-gourmand" class="marquee-item"><img src="chaletgourmand.png" alt="Chalet Gourmand"></a>
-                <a href="#coralie-renouf" class="marquee-item"><img src="coralierenouf.jpg" alt="Coralie Renouf"></a>
-                <a href="#lamaison" class="marquee-item"><img src="lamaison.fr.webp" alt="Lamaison.fr"></a>
-                <a href="#lunetterie-fine" class="marquee-item"><img src="lalunetteriefine.png" alt="La Lunetterie Fine"></a>
-                <a href="#esprit-marin" class="marquee-item"><img src="espritmarin.png" alt="Esprit Marin"></a>
-                <a href="#carpe-diem" class="marquee-item"><img src="carped.png" alt="Carpe Diem"></a>
-                <a href="#lumieres-de-mer" class="marquee-item"><img src="lumieresdemer.png" alt="Lumières de mer"></a>
-                <a href="#epicerie-fine" class="marquee-item"><img src="epiceriefine.jpg" alt="Epicerie Fine"></a>
-                <a href="#de-la-cave-au-cellier" class="marquee-item"><img src="delacav.png" alt="De la Cave Au Cellier"></a>
-                <a href="#lenbarquai" class="marquee-item"><img src="lenbarqu.png" alt="L'En Bar Quai"></a>
-
-                <a href="#maison-renard" class="marquee-item"><img src="renard.png" alt="Renard"></a>
-                <a href="#utile" class="marquee-item"><img src="utile.png" alt="Utile"></a>
-                <a href="#lestran" class="marquee-item"><img src="lestran.png" alt="L'Estran"></a>
-                <a href="#comptoir" class="marquee-item"><img src="comptoir.png" alt="Comptoir"></a>
-                <a href="#or-coiffure" class="marquee-item"><img src="lorcoiffure.jpg" alt="Or Coiffure"></a>
-                <a href="#century21" class="marquee-item"><img src="century21.png" alt="Century 21"></a>
-                <a href="#mille-marin" class="marquee-item"><img src="millemar.webp" alt="Mille Marin"></a>
-                <a href="#atelier-b" class="marquee-item"><img src="atelierb.png" alt="L'Atelier B"></a>
-                <a href="#carteret-marine" class="marquee-item"><img src="carteretmarine.png" alt="Carteret Marine"></a>
-                <a href="#la-cambuse" class="marquee-item"><img src="lacambuse.png" alt="La Cambuse"></a>
-                <a href="#food-truck" class="marquee-item"><img src="delizia.png" alt="Delizia"></a>
-                <a href="#chalet-gourmand" class="marquee-item"><img src="chaletgourmand.png" alt="Chalet Gourmand"></a>
-                <a href="#coralie-renouf" class="marquee-item"><img src="coralierenouf.jpg" alt="Coralie Renouf"></a>
-                <a href="#lamaison" class="marquee-item"><img src="lamaison.fr.webp" alt="Lamaison.fr"></a>
-                <a href="#lunetterie-fine" class="marquee-item"><img src="lalunetteriefine.png" alt="La Lunetterie Fine"></a>
-                <a href="#esprit-marin" class="marquee-item"><img src="espritmarin.png" alt="Esprit Marin"></a>
-                <a href="#carpe-diem" class="marquee-item"><img src="carped.png" alt="Carpe Diem"></a>
-                <a href="#lumieres-de-mer" class="marquee-item"><img src="lumieresdemer.png" alt="Lumières de mer"></a>
-                <a href="#epicerie-fine" class="marquee-item"><img src="epiceriefine.jpg" alt="Epicerie Fine"></a>
-                <a href="#de-la-cave-au-cellier" class="marquee-item"><img src="delacav.png" alt="De la Cave Au Cellier"></a>
-                <a href="#lenbarquai" class="marquee-item"><img src="lenbarqu.png" alt="L'En Bar Quai"></a>
-            </div>
+    <div class="sticky-header">
+        <div class="top-nav">
+            <a href="index.html" class="btn-action">◀ RETOUR</a>
         </div>
-
-        <div class="module" id="maison-renard">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="renard.png" alt="Maison Renard"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Boulangerie Maison Renard</h2>
-                    <p class="partner-desc" data-i18n="desc_maison_renard">Pains spéciaux, macarons, nos meilleurs chocolats et pâtisseries artisanales.</p>
-                    <div class="sponsor-time" data-i18n="time_maison_renard">⏱️ Sponsor de 07h00 à 08h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233046134" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:maisonrenard50@gmail.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=Boulangerie+Maison+Renard+Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/Boulangerie.MaisonRenard/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 FACEBOOK</a>
-            </div>
-        </div>
-
-        <div class="module" id="utile">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="utile.png" alt="UTILE"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">UTILE Barneville-Carteret</h2>
-                    <p class="partner-desc" data-i18n="desc_utile">Shopping et vente au détail, livraison à domicile, dépôt de pain, viennoiserie, pâtisserie.</p>
-                    <div class="sponsor-time" data-i18n="time_utile">⏱️ Sponsor de 08h00 à 09h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233952512" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:utile.barneville@systeme-u.fr" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=11+place+du+Docteur+Auvret,+Barneville" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/p/UTILE-Barneville-Carteret-100036393625812/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 FACEBOOK</a>
-            </div>
-        </div>
-
-        <div class="module" id="lestran">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="lestran.png" alt="L'Estran"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">L’Estran Carteret</h2>
-                    <p class="partner-desc" data-i18n="desc_lestran">Boulangerie - Pâtisserie</p>
-                    <div class="sponsor-time" data-i18n="time_lestran">⏱️ Sponsor de 08h00 à 09h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233538417" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:patisserielestran@gmail.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=6+rue+de+Paris,+Carteret,+France" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/profile.php?id=61582818483090" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 FACEBOOK</a>
-            </div>
-        </div>
-
-        <div class="module" id="comptoir">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="comptoir.png" alt="Comptoir"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Le Comptoir de Carteret</h2>
-                    <p class="partner-desc" data-i18n="desc_comptoir">Épicerie</p>
-                    <div class="sponsor-time" data-i18n="time_comptoir">⏱️ Sponsor de 08h00-09h00 & 15h00-16h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233538107" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:lecomptoirdecarteret@orange.fr" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=10+rue+Paris,+Carteret,+France" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/comptoirdecarteret/?locale=fr_FR" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 FACEBOOK</a>
-            </div>
-        </div>
-
-        <div class="module" id="or-coiffure">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="lorcoiffure.jpg" alt="Or Coiffure"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">L'Or Coiffure</h2>
-                    <p class="partner-desc" data-i18n="desc_or_coiffure">Salon de coiffure.</p>
-                    <div class="sponsor-time" data-i18n="time_or_coiffure">⏱️ Sponsor de 09h00 à 10h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233942579" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=23+place+de+l'église,+50270+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/lOrCoiffureBarneville/?locale=fr_FR" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" id="century21">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="century21.png" alt="Century 21"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Century 21 Chevet Immobilier</h2>
-                    <p class="partner-desc" data-i18n="desc_century21">Agence immobilière.</p>
-                    <div class="sponsor-time" data-i18n="time_century21">⏱️ Sponsor de 09h00 à 10h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233946906" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:chevet.immobilier@century21.fr" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/place/Century+21+Chevet+Immobilier/@49.3818114,-1.7531357,19.25z" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.century21-chevet-barneville.com/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" id="mille-marin">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="millemar.webp" alt="Mille Marin"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Mille Marin Carteret</h2>
-                    <p class="partner-desc" data-i18n="desc_mille_marin">Accompagnement de l'achat à la vente, de l'entretien au stockage de votre bateau.</p>
-                    <div class="sponsor-time" data-i18n="time_mille_marin">⏱️ Sponsor de 09h00 à 10h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233032896" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:contact@millemarincarteret.fr" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/place/Chantier+Naval+Mille+Marin+Carteret/@49.3826757,-1.7697111,17z/data=!3m1!4b1!4m6!3m5!1s0x480cf5fa85ce2f81:0x136b212433d10f6c!8m2!3d49.3826722!4d-1.7671362!16s%2Fg%2F11f5vrc4gm?authuser=0&entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://millemarincarteret.fr/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" id="carteret-marine">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="carteretmarine.png" alt="Carteret Marine"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Carteret Marine</h2>
-                    <p class="partner-desc" data-i18n="desc_carteret_marine">Accompagnement, rénovation, achat et accessoires nautiques.</p>
-                    <div class="sponsor-time" data-i18n="time_carteret_marine">⏱️ Sponsor de 10h00 à 11h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233012001" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=carteret+marine" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="http://www.carteret-marine.fr/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" id="atelier-b">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="atelierb.png" alt="L'Atelier B."></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">L'Atelier B.</h2>
-                    <p class="partner-desc" data-i18n="desc_atelier_b">Magasin de vélo à Barneville-Carteret. Spécialiste de la vente, réparation et entretien.</p>
-                    <div class="sponsor-time" data-i18n="time_atelier_b">⏱️ Sponsor de 10h00 à 11h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0683306032" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:latelierb50@gmail.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/place/L'Atelier+B./@49.3862193,-1.7603157,17z/data=!3m1!4b1!4m6!3m5!1s0x480c8bdff5c2c9a3:0xea87ff9428aea76b!8m2!3d49.3862193!4d-1.7603157!16s%2Fg%2F11w8nm6mth?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/profile.php?id=61566432796587" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 FACEBOOK</a>
-            </div>
-        </div>
-
-        <div class="module" id="la-cambuse">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="lacambuse.png" alt="La Cambuse"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">La Cambuse</h2>
-                    <p class="partner-desc" data-i18n="desc_la_cambuse">Boutique traiteur salé et sucré.</p>
-                    <div class="sponsor-time" data-i18n="time_la_cambuse">⏱️ Sponsor de 11h00 à 12h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233031852" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=La+Cambuse+Barneville-Carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/profile.php?id=100063477759757&sk=directory_contact_info" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" id="food-truck">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="delizia.png" alt="Delizia"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Delizia Food Truck</h2>
-                    <p class="partner-desc" data-i18n="desc_delizia">Food Truck spécialités italiennes - Commandez à emporter.</p>
-                    <div class="sponsor-time" data-i18n="time_delizia">⏱️ Sponsor de 11h00 à 12h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0631099136" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:deliziafoodtruck@gmail.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.instagram.com/deliziafoodtruck/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" id="chalet-gourmand">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="chaletgourmand.png" alt="Au Chalet Gourmand"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Au Chalet Gourmand</h2>
-                    <p class="partner-desc" data-i18n="desc_chalet">Plateaux de Fruits de Mer, Poissons - Crustacés, Fruits-Légumes de Pays.</p>
-                    <div class="sponsor-time" data-i18n="time_chalet">⏱️ Sponsor de 12h00 à 13h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233046140" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:chaletgourmand@orange.fr" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/place/Au+Chalet+Gourmand+-+Terre+et+Mer/@49.3858232,-1.7527837,17z" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/auchaletgourmand50/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 FACEBOOK</a>
-            </div>
-        </div>
-
-        <div class="module" id="coralie-renouf">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="coralierenouf.jpg" alt="Coralie Renouf"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Coralie Renouf Photographe</h2>
-                    <p class="partner-desc" data-i18n="desc_coralie_renouf">Photographe professionnelle.</p>
-                    <div class="sponsor-time" data-i18n="time_coralie_renouf">⏱️ Sponsor de 12h00 à 13h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0659402959" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:renoufcoralie@gmail.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/place/Coralie+Renouf+Photographe/@49.3778143,-1.7863634,18.68z/data=!4m6!3m5!1s0x480c6176a29d0909:0x724ca8b70a21dc3d!8m2!3d49.3777853!4d-1.7863015!16s%2Fg%2F11b6dhk2wf?authuser=0&entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.coralierenouf.com/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" id="lamaison">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="lamaison.fr.webp" alt="Lamaison.fr"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Lamaison.fr</h2>
-                    <p class="partner-desc" data-i18n="desc_lamaison">Vente et conseils en bricolage, jardin, décoration et animalerie.</p>
-                    <div class="sponsor-time" data-i18n="time_lamaison">⏱️ Sponsor de 13h00 à 14h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233875640" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:barnevillecarteret@lamaison.fr" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/place/LaMaison.fr/@49.3839926,-1.7526033,18.43z/data=!4m6!3m5!1s0x480c8b535197e509:0xb4ba6d23a2fb4ea8!8m2!3d49.384085!4d-1.7526004!16s%2Fg%2F11h6lm_4pk?authuser=0&entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/lamaison.fr.barneville/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 FACEBOOK</a>
-            </div>
-        </div>
-
-        <div class="module" id="lunetterie-fine">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="lalunetteriefine.png" alt="La Lunetterie Fine"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">La Lunetterie Fine</h2>
-                    <p class="partner-desc" data-i18n="desc_lunetterie_fine">Opticien indépendant - Créateur de regards.</p>
-                    <div class="sponsor-time" data-i18n="time_lunetterie_fine">⏱️ Sponsor de 13h00 à 14h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233412135" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:lalunetteriefine@gmail.com" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/place/La+lunetterie+fine/@49.3819753,-1.754572,20.5z/data=!4m6!3m5!1s0x480c8b2143427097:0xc3ef51bfe03b025a!8m2!3d49.3820707!4d-1.7545299!16s%2Fg%2F11g0gdqp8p?authuser=0&entry=ttu&g_ep=EgoyMDI2MDUxNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.lalunetteriefine.com/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" id="esprit-marin">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="espritmarin.png" alt="Esprit Marin"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Esprit Marin</h2>
-                    <p class="partner-desc" data-i18n="desc_esprit_marin">Concept store : mode sport chic, déco et produits locaux/made in France.</p>
-                    <div class="sponsor-time" data-i18n="time_esprit_marin">⏱️ Sponsor de 14h00 à 15h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233951284" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=esprit+marin+carteret" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.esprit-marin-carteret.fr/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" id="carpe-diem">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="carped.png" alt="Carpe Diem"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Carpe Diem</h2>
-                    <p class="partner-desc" data-i18n="desc_carpe_diem">Vente de boissons, glaces, gaufres et grignotage salé au bord de la plage.</p>
-                    <div class="sponsor-time" data-i18n="time_carpe_diem">⏱️ Sponsor de 15h00 à 16h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="https://www.google.com/maps/place/Carpe+Diem/@49.3673898,-1.7736412,17z/data=!3m1!4b1!4m6!3m5!1s0x480c8ab49fadc23f:0x1562cc05ae1289c4!8m2!3d49.3673863!4d-1.7710663!16s%2Fg%2F11fx95vlw5?authuser=0&entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/profile.php?id=100063675199159&sk=about&locale=fr_FR" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 FACEBOOK</a>
-            </div>
-        </div>
-
-        <div class="module" id="lumieres-de-mer">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="lumieresdemer.png" alt="Lumières de mer"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">Lumières de mer</h2>
-                    <p class="partner-desc" data-i18n="desc_lumieres">Photographie de Sébastien Rachine.</p>
-                    <div class="sponsor-time" data-i18n="time_lumieres">⏱️ Sponsor de 16h00 à 17h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0214144567" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="https://www.google.com/maps/place/lumi%C3%A8res+de+mer/@49.3776697,-1.7852348,20.5z/data=!4m6!3m5!1s0x480cf53a09b2859f:0x93b6a2be9ddebec9!8m2!3d49.377754!4d-1.785153!16s%2Fg%2F11hb68pcyp?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="http://www.lumieresdemer.fr/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-        
-        <div class="module" id="de-la-cave-au-cellier">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="delacav.png" alt="De la Cave Au Cellier"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">De la Cave Au Cellier</h2>
-                    <p class="partner-desc" data-i18n="desc_cave_cellier">Caviste - Sélection de vins et spiritueux.</p>
-                    <div class="sponsor-time" data-i18n="time_cave_cellier">⏱️ Sponsor de 17h00 à 18h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233214155" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:delacaveaucellier@orange.fr" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/place/De+la+Cave+Au+Cellier/@49.3812805,-1.7518677,20.75z/data=!4m6!3m5!1s0x480c8ac2a2ab9d89:0xcea574d5007736c5!8m2!3d49.3814143!4d-1.7519744!16s%2Fg%2F1tf_s81_?authuser=0&entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://delacaveaucellier.fr" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-
-        <div class="module" id="epicerie-fine">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="epiceriefine.jpg" alt="L'Epicerie Fine"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">L'Epicerie Fine</h2>
-                    <p class="partner-desc" data-i18n="desc_epicerie_fine">Épicerie Fine / Cave à vin.</p>
-                    <div class="sponsor-time" data-i18n="time_epicerie_fine">⏱️ Sponsor de 17h00 à 18h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0973518894" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="https://www.google.com/maps/place/L'Epicerie+Fine,+Epicerie+Fine+%2F+Cave+%C3%A0+vin/@49.3779049,-1.7851897,20.5z/data=!4m6!3m5!1s0x480cf53a09e4536b:0x7bcd2e0f5560f296!8m2!3d49.3779326!4d-1.7852628!16s%2Fg%2F11b7llv2rm?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.lepicerie-fine-carteret.com/" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 SITE WEB</a>
-            </div>
-        </div>
-        
-        <div class="module" id="lenbarquai">
-            <div class="partner-header">
-                <div class="partner-logo"><img src="lenbarqu.png" alt="L'En Bar Quai"></div>
-                <div class="partner-info">
-                    <h2 class="partner-name">L'En Bar Quai</h2>
-                    <p class="partner-desc" data-i18n="desc_lenbarquai">Bistronomique, Cuisine du monde, Burger et plats du jour.</p>
-                    <div class="sponsor-time" data-i18n="time_lenbarquai">⏱️ Sponsor de 18h00 à 19h00</div>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="tel:0233417415" class="btn-partner-link" data-i18n="btn_call">📞 APPELER</a>
-                <a href="mailto:lenbarquai50@outlook.fr" class="btn-partner-link" data-i18n="btn_email">✉️ E-MAIL</a>
-                <a href="https://www.google.com/maps/place/L'EN+BAR+QUAI/@49.3813585,-1.7523608,21z/data=!4m6!3m5!1s0x480c8b9764ca6129:0x2aed57eafe76e8a9!8m2!3d49.3813935!4d-1.7523585!16s%2Fg%2F11h4xksm_x?authuser=0&entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-partner-link" data-i18n="btn_directions">📍 ITINÉRAIRE</a>
-                <a href="https://www.facebook.com/Barneville/?locale=fr_FR" target="_blank" class="btn-partner-link" data-i18n="btn_website">🌐 FACEBOOK</a>
-            </div>
-        </div>
-
-        <div class="module" style="background: #eff6ff; border-top-color: #3b82f6;">
-            <div class="partner-header">
-                <div class="partner-logo" style="background: white; border: none;">🤝</div>
-                <div class="partner-info">
-                    <h2 class="partner-name" data-i18n="become_partner_title">Devenez Partenaire</h2>
-                    <p class="partner-desc" data-i18n="become_partner_desc">Soutenez l'application et affichez votre enseigne sur l'application web.</p>
-                </div>
-            </div>
-            <div class="partner-actions">
-                <a href="contact.html" class="btn-partner-link" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); flex-basis: 100%;" data-i18n="btn_contact_us">NOUS CONTACTER</a>
-            </div>
-        </div>
-
+        <h1 class="main-title">NOS PARTENAIRES LOCAUX<sup>*</sup></h1>
     </div>
 
-    <script src="lang.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const browserLang = navigator.language.substring(0, 2);
-            const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
-            
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[savedLang] && translations[savedLang][key]) {
-                    el.innerHTML = translations[savedLang][key]; 
-                }
-            });
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <a href="#maison-renard" class="marquee-item"><img src="renard.png" alt="Renard"></a>
+            <a href="#utile" class="marquee-item"><img src="utile.png" alt="Utile"></a>
+            <a href="#lestran" class="marquee-item"><img src="lestran.png" alt="L'Estran"></a>
+            <a href="#comptoir" class="marquee-item"><img src="comptoir.png" alt="Comptoir"></a>
+            <a href="#or-coiffure" class="marquee-item"><img src="lorcoiffure.jpg" alt="Or Coiffure"></a>
+            <a href="#century21" class="marquee-item"><img src="century21.png" alt="Century 21"></a>
+            <a href="#mille-marin" class="marquee-item"><img src="millemar.webp" alt="Mille Marin"></a>
+            <a href="#atelier-b" class="marquee-item"><img src="atelierb.png" alt="L'Atelier B"></a>
+            <a href="#carteret-marine" class="marquee-item"><img src="carteretmarine.png" alt="Carteret Marine"></a>
+            <a href="#la-cambuse" class="marquee-item"><img src="lacambuse.png" alt="La Cambuse"></a>
+            <a href="#food-truck" class="marquee-item"><img src="delizia.png" alt="Delizia"></a>
+            <a href="#chalet-gourmand" class="marquee-item"><img src="chaletgourmand.png" alt="Chalet Gourmand"></a>
+            <a href="#coralie-renouf" class="marquee-item"><img src="coralierenouf.jpg" alt="Coralie Renouf"></a>
+            <a href="#lamaison" class="marquee-item"><img src="lamaison.fr.webp" alt="Lamaison.fr"></a>
+            <a href="#lunetterie-fine" class="marquee-item"><img src="lalunetteriefine.png" alt="La Lunetterie Fine"></a>
+            <a href="#esprit-marin" class="marquee-item"><img src="espritmarin.png" alt="Esprit Marin"></a>
+            <a href="#carpe-diem" class="marquee-item"><img src="carped.png" alt="Carpe Diem"></a>
+            <a href="#lumieres-de-mer" class="marquee-item"><img src="lumieresdemer.png" alt="Lumières de mer"></a>
+            <a href="#epicerie-fine" class="marquee-item"><img src="epiceriefine.jpg" alt="Epicerie Fine"></a>
+            <a href="#de-la-cave-au-cellier" class="marquee-item"><img src="delacav.png" alt="De la Cave Au Cellier"></a>
+            <a href="#lenbarquai" class="marquee-item"><img src="lenbarqu.png" alt="L'En Bar Quai"></a>
+            <!-- Doublon boucle infinie -->
+            <a href="#maison-renard" class="marquee-item"><img src="renard.png" alt="Renard"></a>
+            <a href="#utile" class="marquee-item"><img src="utile.png" alt="Utile"></a>
+            <a href="#lestran" class="marquee-item"><img src="lestran.png" alt="L'Estran"></a>
+            <a href="#comptoir" class="marquee-item"><img src="comptoir.png" alt="Comptoir"></a>
+            <a href="#or-coiffure" class="marquee-item"><img src="lorcoiffure.jpg" alt="Or Coiffure"></a>
+            <a href="#century21" class="marquee-item"><img src="century21.png" alt="Century 21"></a>
+            <a href="#mille-marin" class="marquee-item"><img src="millemar.webp" alt="Mille Marin"></a>
+            <a href="#atelier-b" class="marquee-item"><img src="atelierb.png" alt="L'Atelier B"></a>
+            <a href="#carteret-marine" class="marquee-item"><img src="carteretmarine.png" alt="Carteret Marine"></a>
+            <a href="#la-cambuse" class="marquee-item"><img src="lacambuse.png" alt="La Cambuse"></a>
+            <a href="#food-truck" class="marquee-item"><img src="delizia.png" alt="Delizia"></a>
+            <a href="#chalet-gourmand" class="marquee-item"><img src="chaletgourmand.png" alt="Chalet Gourmand"></a>
+            <a href="#coralie-renouf" class="marquee-item"><img src="coralierenouf.jpg" alt="Coralie Renouf"></a>
+            <a href="#lamaison" class="marquee-item"><img src="lamaison.fr.webp" alt="Lamaison.fr"></a>
+            <a href="#lunetterie-fine" class="marquee-item"><img src="lalunetteriefine.png" alt="La Lunetterie Fine"></a>
+            <a href="#esprit-marin" class="marquee-item"><img src="espritmarin.png" alt="Esprit Marin"></a>
+            <a href="#carpe-diem" class="marquee-item"><img src="carped.png" alt="Carpe Diem"></a>
+            <a href="#lumieres-de-mer" class="marquee-item"><img src="lumieresdemer.png" alt="Lumières de mer"></a>
+            <a href="#epicerie-fine" class="marquee-item"><img src="epiceriefine.jpg" alt="Epicerie Fine"></a>
+            <a href="#de-la-cave-au-cellier" class="marquee-item"><img src="delacav.png" alt="De la Cave Au Cellier"></a>
+            <a href="#lenbarquai" class="marquee-item"><img src="lenbarqu.png" alt="L'En Bar Quai"></a>
+        </div>
+    </div>
+
+    <!-- SVG réutilisables en macros -->
+    <!-- 📞 tél | ✉️ email | 📍 carte | 🌐 web | 📘 fb | 📸 ig -->
+
+    <!-- MAISON RENARD -->
+    <div class="module" id="maison-renard">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="renard.png" alt="Maison Renard"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Boulangerie Maison Renard</h2>
+                <p class="partner-desc">Pains spéciaux, macarons, nos meilleurs chocolats et pâtisseries artisanales.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 07h00 à 08h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233046134" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:maisonrenard50@gmail.com" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Boulangerie+Maison+Renard+Carteret" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.facebook.com/Boulangerie.MaisonRenard/" target="_blank" class="btn-partner-link btn-facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z"/></svg>
+                FACEBOOK
+            </a>
+        </div>
+    </div>
+
+    <!-- UTILE -->
+    <div class="module" id="utile">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="utile.png" alt="UTILE"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">UTILE Barneville-Carteret</h2>
+                <p class="partner-desc">Shopping et vente au détail, livraison à domicile, dépôt de pain, viennoiserie, pâtisserie.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 08h00 à 09h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233952512" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:utile.barneville@systeme-u.fr" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=11+place+du+Docteur+Auvret,+Barneville" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.facebook.com/p/UTILE-Barneville-Carteret-100036393625812/" target="_blank" class="btn-partner-link btn-facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z"/></svg>
+                FACEBOOK
+            </a>
+        </div>
+    </div>
+
+    <!-- L'ESTRAN -->
+    <div class="module" id="lestran">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="lestran.png" alt="L'Estran"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">L'Estran Carteret</h2>
+                <p class="partner-desc">Boulangerie - Pâtisserie</p>
+                <div class="sponsor-time">⏱️ Sponsor de 08h00 à 09h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233538417" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:patisserielestran@gmail.com" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=6+rue+de+Paris,+Carteret,+France" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61582818483090" target="_blank" class="btn-partner-link btn-facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z"/></svg>
+                FACEBOOK
+            </a>
+        </div>
+    </div>
+
+    <!-- COMPTOIR -->
+    <div class="module" id="comptoir">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="comptoir.png" alt="Comptoir"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Le Comptoir de Carteret</h2>
+                <p class="partner-desc">Épicerie</p>
+                <div class="sponsor-time">⏱️ Sponsor de 08h00-09h00 & 15h00-16h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233538107" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:lecomptoirdecarteret@orange.fr" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=10+rue+Paris,+Carteret,+France" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.facebook.com/comptoirdecarteret/?locale=fr_FR" target="_blank" class="btn-partner-link btn-facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z"/></svg>
+                FACEBOOK
+            </a>
+        </div>
+    </div>
+
+    <!-- OR COIFFURE -->
+    <div class="module" id="or-coiffure">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="lorcoiffure.jpg" alt="Or Coiffure"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">L'Or Coiffure</h2>
+                <p class="partner-desc">Salon de coiffure.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 09h00 à 10h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233942579" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=23+place+de+l'église,+50270+Barneville-Carteret" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.facebook.com/lOrCoiffureBarneville/?locale=fr_FR" target="_blank" class="btn-partner-link btn-facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z"/></svg>
+                FACEBOOK
+            </a>
+        </div>
+    </div>
+
+    <!-- CENTURY 21 -->
+    <div class="module" id="century21">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="century21.png" alt="Century 21"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Century 21 Chevet Immobilier</h2>
+                <p class="partner-desc">Agence immobilière.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 09h00 à 10h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233946906" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:chevet.immobilier@century21.fr" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/place/Century+21+Chevet+Immobilier/@49.3818114,-1.7531357,19.25z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.century21-chevet-barneville.com/" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                SITE WEB
+            </a>
+        </div>
+    </div>
+
+    <!-- MILLE MARIN -->
+    <div class="module" id="mille-marin">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="millemar.webp" alt="Mille Marin"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Mille Marin Carteret</h2>
+                <p class="partner-desc">Accompagnement de l'achat à la vente, de l'entretien au stockage de votre bateau.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 09h00 à 10h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233032896" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:contact@millemarincarteret.fr" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/place/Chantier+Naval+Mille+Marin+Carteret/@49.3826757,-1.7697111,17z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://millemarincarteret.fr/" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                SITE WEB
+            </a>
+        </div>
+    </div>
+
+    <!-- CARTERET MARINE -->
+    <div class="module" id="carteret-marine">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="carteretmarine.png" alt="Carteret Marine"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Carteret Marine</h2>
+                <p class="partner-desc">Accompagnement, rénovation, achat et accessoires nautiques.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 10h00 à 11h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233012001" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=carteret+marine" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="http://www.carteret-marine.fr/" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                SITE WEB
+            </a>
+        </div>
+    </div>
+
+    <!-- ATELIER B -->
+    <div class="module" id="atelier-b">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="atelierb.png" alt="L'Atelier B."></div>
+            <div class="partner-info">
+                <h2 class="partner-name">L'Atelier B.</h2>
+                <p class="partner-desc">Magasin de vélo à Barneville-Carteret. Spécialiste de la vente, réparation et entretien.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 10h00 à 11h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0683306032" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="https://www.google.com/maps/place/L'Atelier+B./@49.3862193,-1.7603157,17z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61566432796587" target="_blank" class="btn-partner-link btn-facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z"/></svg>
+                FACEBOOK
+            </a>
+            <a href="https://www.instagram.com/latelierb_velo/" target="_blank" class="btn-partner-link btn-instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                INSTAGRAM
+            </a>
+        </div>
+    </div>
+
+    <!-- LA CAMBUSE -->
+    <div class="module" id="la-cambuse">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="lacambuse.png" alt="La Cambuse"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">La Cambuse</h2>
+                <p class="partner-desc">Boutique traiteur salé et sucré.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 11h00 à 12h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233031852" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:cambuse.barneville@yahoo.com" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=La+Cambuse+Barneville-Carteret" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100063477759757" target="_blank" class="btn-partner-link btn-facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z"/></svg>
+                FACEBOOK
+            </a>
+        </div>
+    </div>
+
+    <!-- DELIZIA -->
+    <div class="module" id="food-truck">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="delizia.png" alt="Delizia"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Delizia Food Truck</h2>
+                <p class="partner-desc">Food Truck spécialités italiennes - Commandez à emporter.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 11h00 à 12h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0631099136" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:deliziafoodtruck@gmail.com" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.instagram.com/deliziafoodtruck/" target="_blank" class="btn-partner-link btn-instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                INSTAGRAM
+            </a>
+        </div>
+    </div>
+
+    <!-- CHALET GOURMAND -->
+    <div class="module" id="chalet-gourmand">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="chaletgourmand.png" alt="Au Chalet Gourmand"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Au Chalet Gourmand</h2>
+                <p class="partner-desc">Plateaux de Fruits de Mer, Poissons - Crustacés, Fruits-Légumes de Pays.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 12h00 à 13h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233046140" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:chaletgourmand@orange.fr" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/place/Au+Chalet+Gourmand+-+Terre+et+Mer/@49.3858232,-1.7527837,17z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.facebook.com/auchaletgourmand50/" target="_blank" class="btn-partner-link btn-facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z"/></svg>
+                FACEBOOK
+            </a>
+        </div>
+    </div>
+
+    <!-- CORALIE RENOUF -->
+    <div class="module" id="coralie-renouf">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="coralierenouf.jpg" alt="Coralie Renouf"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Coralie Renouf Photographe</h2>
+                <p class="partner-desc">Photographe professionnelle.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 12h00 à 13h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0659402959" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:renoufcoralie@gmail.com" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/place/Coralie+Renouf+Photographe/@49.3778143,-1.7863634,18.68z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.coralierenouf.com/" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                SITE WEB
+            </a>
+        </div>
+    </div>
+
+    <!-- LAMAISON -->
+    <div class="module" id="lamaison">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="lamaison.fr.webp" alt="Lamaison.fr"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Lamaison.fr</h2>
+                <p class="partner-desc">Vente et conseils en bricolage, jardin, décoration et animalerie.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 13h00 à 14h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233875640" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:barnevillecarteret@lamaison.fr" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/place/LaMaison.fr/@49.3839926,-1.7526033,18.43z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.facebook.com/lamaison.fr.barneville/" target="_blank" class="btn-partner-link btn-facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z"/></svg>
+                FACEBOOK
+            </a>
+        </div>
+    </div>
+
+    <!-- LUNETTERIE FINE -->
+    <div class="module" id="lunetterie-fine">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="lalunetteriefine.png" alt="La Lunetterie Fine"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">La Lunetterie Fine</h2>
+                <p class="partner-desc">Opticien indépendant - Créateur de regards.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 13h00 à 14h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233412135" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:lalunetteriefine@gmail.com" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/place/La+lunetterie+fine/@49.3819753,-1.754572,20.5z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.lalunetteriefine.com/" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                SITE WEB
+            </a>
+        </div>
+    </div>
+
+    <!-- ESPRIT MARIN -->
+    <div class="module" id="esprit-marin">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="espritmarin.png" alt="Esprit Marin"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Esprit Marin</h2>
+                <p class="partner-desc">Concept store : mode sport chic, déco et produits locaux/made in France.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 14h00 à 15h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233951284" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=esprit+marin+carteret" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.esprit-marin-carteret.fr/" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                SITE WEB
+            </a>
+        </div>
+    </div>
+
+    <!-- CARPE DIEM -->
+    <div class="module" id="carpe-diem">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="carped.png" alt="Carpe Diem"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Carpe Diem</h2>
+                <p class="partner-desc">Vente de boissons, glaces, gaufres et grignotage salé au bord de la plage.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 15h00 à 16h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="https://www.google.com/maps/place/Carpe+Diem/@49.3673898,-1.7736412,17z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100063675199159" target="_blank" class="btn-partner-link btn-facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z"/></svg>
+                FACEBOOK
+            </a>
+        </div>
+    </div>
+
+    <!-- LUMIERES DE MER -->
+    <div class="module" id="lumieres-de-mer">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="lumieresdemer.png" alt="Lumières de mer"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Lumières de mer</h2>
+                <p class="partner-desc">Photographie de Sébastien Rachine.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 16h00 à 17h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0214144567" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="https://www.google.com/maps/place/lumières+de+mer/@49.3776697,-1.7852348,20.5z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="http://www.lumieresdemer.fr/" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                SITE WEB
+            </a>
+        </div>
+    </div>
+
+    <!-- DE LA CAVE AU CELLIER -->
+    <div class="module" id="de-la-cave-au-cellier">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="delacav.png" alt="De la Cave Au Cellier"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">De la Cave Au Cellier</h2>
+                <p class="partner-desc">Caviste - Sélection de vins et spiritueux.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 17h00 à 18h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233214155" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:delacaveaucellier@orange.fr" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/place/De+la+Cave+Au+Cellier/@49.3812805,-1.7518677,20.75z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://delacaveaucellier.fr" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                SITE WEB
+            </a>
+        </div>
+    </div>
+
+    <!-- EPICERIE FINE -->
+    <div class="module" id="epicerie-fine">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="epiceriefine.jpg" alt="L'Epicerie Fine"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">L'Epicerie Fine</h2>
+                <p class="partner-desc">Épicerie Fine / Cave à vin.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 17h00 à 18h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0973518894" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="https://www.google.com/maps/place/L'Epicerie+Fine/@49.3779049,-1.7851897,20.5z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.lepicerie-fine-carteret.com/" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                SITE WEB
+            </a>
+        </div>
+    </div>
+
+    <!-- L'EN BAR QUAI -->
+    <div class="module" id="lenbarquai">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="lenbarqu.png" alt="L'En Bar Quai"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">L'En Bar Quai</h2>
+                <p class="partner-desc">Bistronomique, Cuisine du monde, Burger et plats du jour.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 18h00 à 19h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233417415" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="mailto:lenbarquai50@outlook.fr" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                E-MAIL
+            </a>
+            <a href="https://www.google.com/maps/place/L'EN+BAR+QUAI/@49.3813585,-1.7523608,21z" target="_blank" class="btn-partner-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+            <a href="https://www.facebook.com/Barneville/?locale=fr_FR" target="_blank" class="btn-partner-link btn-facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z"/></svg>
+                FACEBOOK
+            </a>
+        </div>
+    </div>
+
+    <!-- DEVENEZ PARTENAIRE -->
+    <div class="module" style="background: #eff6ff; border-top-color: #3b82f6;">
+        <div class="partner-header">
+            <div class="partner-logo" style="background: white; border: none; font-size: 1.8rem;">🤝</div>
+            <div class="partner-info">
+                <h2 class="partner-name">Devenez Partenaire</h2>
+                <p class="partner-desc">Soutenez l'application et affichez votre enseigne sur l'application web.</p>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="contact.html" class="btn-partner-link btn-full" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); padding: 12px;">
+                <svg viewBox="0 0 24 24" style="fill:white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                NOUS CONTACTER
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<script src="lang.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const browserLang = navigator.language.substring(0, 2);
+        const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[savedLang] && translations[savedLang][key]) {
+                el.innerHTML = translations[savedLang][key];
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>
