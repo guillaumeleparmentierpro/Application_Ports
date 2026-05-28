@@ -808,38 +808,56 @@
 
             let maxRiskCode = 1;
             let maxEndTime  = null;
-
-            // On stocke les phénomènes par niveau : { riskCode: Set(noms) }
             const phenomenesParNiveau = {};
 
             blocs.forEach(bloc => {
                 (bloc.bloc_items || []).forEach(blocItem => {
                     (blocItem.text_items || []).forEach(textItem => {
                         (textItem.term_items || []).forEach(termItem => {
+
+                            // Deux façons d'être concerné par la Manche (50) :
+                            // 1. Le bloc est national (FRA) → s'applique à tous
+                            // 2. Le texte mentionne explicitement "Manche (50)"
                             let concerneManche = (bloc.domain_id === "FRA");
+                            let mentionneManche = false;
+
                             (termItem.subdivision_text || []).forEach(subdiv => {
                                 (subdiv.text || []).forEach(t => {
-                                    if (typeof t === 'string' && t.includes("Manche (50)")) concerneManche = true;
+                                    if (typeof t === 'string' && t.includes("Manche (50)")) {
+                                        concerneManche = true;
+                                        mentionneManche = true;
+                                    }
                                 });
                             });
+
+                            // Pour les blocs zonaux (ZDF_*) sans mention explicite
+                            // de la Manche, on vérifie si la zone Ouest est concernée
+                            // (ZDF_OUEST couvre la Manche)
+                            if (!concerneManche && bloc.domain_id === "ZDF_OUEST") {
+                                // On inclut seulement si pas de liste de départements
+                                // (= alerte sur toute la zone)
+                                const aListeDepts = (termItem.subdivision_text || []).some(subdiv =>
+                                    (subdiv.text || []).some(t =>
+                                        typeof t === 'string' && /\(\d{2}\)/.test(t)
+                                    )
+                                );
+                                if (!aListeDepts) concerneManche = true;
+                            }
 
                             if (concerneManche) {
                                 const riskCode = parseInt(termItem.risk_code || "1", 10);
                                 const hazardCode = textItem.hazard_code;
 
-                                // Mettre à jour le niveau max et sa date de fin
                                 if (riskCode > maxRiskCode) {
                                     maxRiskCode = riskCode;
                                     maxEndTime  = termItem.end_time || null;
                                 }
 
-                                // Collecter TOUS les phénomènes >= 2 (jaune ou plus)
                                 if (hazardCode && riskCode >= 2) {
                                     if (!phenomenesParNiveau[riskCode]) {
                                         phenomenesParNiveau[riskCode] = new Set();
                                     }
-                                    const nom = PHENOMENES[hazardCode] || "Phénomène ⚠️";
-                                    phenomenesParNiveau[riskCode].add(nom);
+                                    phenomenesParNiveau[riskCode].add(PHENOMENES[hazardCode] || "Phénomène ⚠️");
                                 }
                             }
                         });
@@ -848,7 +866,6 @@
             });
 
             if (maxRiskCode >= 2) {
-                // Couleur du bandeau = niveau le plus élevé
                 let bgColor, borderColor, textColor, niveauLabel, niveauEmoji;
                 if (maxRiskCode === 2) {
                     bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE"; niveauEmoji="🟡";
@@ -860,9 +877,8 @@
 
                 titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
 
-                // Construire la ligne détail : phénomènes du plus grave au moins grave
-                // Format : "🌡️ Canicule Orange · ⛈️ Orages Jaune"
-                const LABELS_NIVEAU = { "4": "Rouge 🔴", "3": "Orange 🟠", "2": "Jaune 🟡" };
+                // Ligne 2 : tous les phénomènes du plus grave au moins grave
+                const LABELS_NIVEAU = { "4":"Rouge 🔴", "3":"Orange 🟠", "2":"Jaune 🟡" };
                 let detailParts = [];
                 [4, 3, 2].forEach(niveau => {
                     if (phenomenesParNiveau[niveau]) {
@@ -872,7 +888,6 @@
                     }
                 });
 
-                // Ajouter la fin de l'alerte la plus grave
                 let finTexte = "";
                 if (maxEndTime) {
                     const fin = new Date(maxEndTime);
