@@ -208,7 +208,17 @@
             <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;" data-i18n="btn_install">📱 INSTALLER</button>
         </div>
 
-        <h1 class="main-title">PORT DE CARTERET<sup>*</sup></h1>
+<h1 class="main-title">PORT DE CARTERET<sup>*</sup></h1>
+
+<!-- BANDEAU VIGILANCE MÉTÉO — à insérer ici -->
+<div id="meteo-vigilance-banner" style="display:none; margin: 8px 0 5px 0; border-radius: 8px; padding: 10px 12px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 700; line-height: 1.4; position: relative; cursor: pointer;" onclick="window.open('https://vigilance.meteofrance.fr/fr/manche','_blank')">
+    <span onclick="event.stopPropagation(); this.parentElement.style.display='none';" style="position:absolute; top:5px; right:8px; font-size:1rem; opacity:0.6; cursor:pointer;">×</span>
+    <div id="vigi-title" style="font-weight:900; font-size:0.75rem; margin-bottom:3px;"></div>
+    <div id="vigi-detail" style="font-size:0.63rem; font-weight:600; opacity:0.9;"></div>
+    <div style="font-size:0.6rem; margin-top:4px; text-decoration:underline; opacity:0.7;">→ Voir sur Météo-France</div>
+</div>
+
+<div style="text-align: center; margin: 8px 0 5px 0;">
 
         <div style="text-align: center; margin: 8px 0 5px 0;">
             <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
@@ -276,73 +286,6 @@
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
             <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">WEBCAM</a>
         </div>
-        <div id="api-weather-banner" style="display: none; margin: 10px 15px;">
-    <a href="https://vigilance.meteofrance.fr/fr/manche" target="_blank" style="text-decoration: none;">
-        <div id="vigi-container" style="border-radius: 8px; padding: 12px 15px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 6px solid #ccc;">
-            <div id="vigi-icon" style="font-size: 1.5rem;">⚠️</div>
-            <div style="flex-grow: 1; text-align: left;">
-                <div id="vigi-title" style="font-size: 0.75rem; font-weight: 700; font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">Vigilance Météo (50)</div>
-                <div id="vigi-text" style="font-size: 0.65rem; font-weight: 600; font-family: 'Montserrat', sans-serif; line-height: 1.3; color: #475569;">Vérification en cours...</div>
-            </div>
-            <div style="font-weight: 700; font-size: 0.9rem;">➔</div>
-        </div>
-    </a>
-</div>
-
-<script>
-async function checkVigilance() {
-    const API_KEY = 'eyJ4NXQiOiJOelU0WTJJME9XRXhZVGt6WkdJM1kySTFaakZqWVRJeE4yUTNNalEyTkRRM09HRmtZalkzTURkbE9UZ3paakUxTURRNFltSTVPR1kyTURjMVkyWTBNdyIsImtpZCI6Ik56VTRZMkkwT1dFeFlUa3paR0kzWTJJMVpqRmpZVEl4TjJRM01qUTJORFEzT0dGa1lqWTNNRGRsT1RnelpqRTFNRFE0WW1JNU9HWTJNRGMxWTJZME13X1JTMjU2IiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhNmNkYWU4OC1mMmE2LTRkN2EtODQ1ZS02ZmVjOGRkMTM2ZjgiLCJhdXQiOiJBUFBMSUNBVElPTiIsImF1ZCI6Iml1WjZyazgwOXB0OTFtUjN2cTlrOWhlenNsb2EiLCJuYmYiOjE3Nzk5MDgxMjQsImF6cCI6Iml1WjZyazgwOXB0OTFtUjN2cTlrOWhlenNsb2EiLCJzY29wZSI6ImRlZmF1bHQiLCJpc3MiOiJodHRwczpcL1wvcG9ydGFpbC1hcGkubWV0ZW9mcmFuY2UuZnJcL29hdXRoMlwvdG9rZW4iLCJleHAiOjE3Nzk5MTE3MjQsImlhdCI6MTc3OTkwODEyNCwianRpIjoiMzFkYmNhYTEtNjg3ZC00OWIwLWI5MmMtYjYxNjg1MTZmMzlhIiwiY2xpZW50X2lkIjoiaXVaNnJrODA5cHQ5MW1SM3ZxOWs5aGV6c2xvYSJ9.HtaGaWzTuNia3GgRyfDXUF8NxVaNBHWPbXape99DIbY5EeLqgLz6wJy1aqAgOOP7GTyh0syq9G9AkbnH7mAIEipJWazsqUAnsdeUJI9yDO7VlkkfZiW_cz5zXg3zbwb-LFGhm7Bpj7np80x-yZEvvOR5eRQICsih7MNojfeqoyOcpnh_u1lncNf9IuaBtvHw1ebtamR1lTvViUKwK4rx9jWNaytzZHz58J2xxp46MvsCUwmGN2rKZYzD9JjphUcpxSVdbx5DCUo9I5mIk2Px5yxZXA4hFOHnW8e-eaIYH7VFMBT5nBnaJ-NZW2hqHYHTK80DFlazV6Kt6lPqv4T1SQ'; // <--- REMPLACE PAR TA CLÉ D'API
-    const banner = document.getElementById('api-weather-banner');
-    const container = document.getElementById('vigi-container');
-    const textEl = document.getElementById('vigi-text');
-    const titleEl = document.getElementById('vigi-title');
-
-    try {
-        const response = await fetch('https://public-api.meteofrance.fr/public/DPVigilance/v1/caracteristiques?domain=50', {
-            method: 'GET',
-            headers: { 
-                'apikey': API_KEY,
-                'accept': 'application/json'
-            }
-        });
-
-        if (!response.ok) return;
-
-        const data = await response.json();
-        const colorCode = data.max_color; // 1: Vert, 2: Jaune, 3: Orange, 4: Rouge
-
-        if (colorCode > 1) {
-            banner.style.display = 'block';
-            let colorHex, textColor, msg;
-
-            if (colorCode === 2) {
-                colorHex = '#fbbf24'; // Jaune
-                textColor = '#92400e';
-                msg = "Alerte JAUNE : Soyez attentif si vous pratiquez des activités sensibles au risque météorologique.";
-            } else if (colorCode === 3) {
-                colorHex = '#f97316'; // Orange
-                textColor = '#7c2d12';
-                msg = "Alerte ORANGE : Soyez très vigilant, des phénomènes dangereux sont prévus.";
-            } else {
-                colorHex = '#ef4444'; // Rouge
-                textColor = '#7f1d1d';
-                msg = "ALERTE ROUGE : Une vigilance absolue s'impose. Phénomènes dangereux d'intensité exceptionnelle.";
-            }
-
-            container.style.backgroundColor = colorHex + '15'; // Fond léger (15% opacité)
-            container.style.borderColor = colorHex;
-            titleEl.style.color = textColor;
-            textEl.style.color = textColor;
-            textEl.innerText = msg;
-        }
-    } catch (error) {
-        console.error("Erreur API Vigilance:", error);
-    }
-}
-
-// Lancement au chargement de la page
-document.addEventListener('DOMContentLoaded', checkVigilance);
-</script>
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
             <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
         </div>
@@ -817,6 +760,74 @@ document.addEventListener('DOMContentLoaded', checkVigilance);
         } catch (error) { console.log("Erreur soleil :", error); }
     }
 </script>
+<script>
+    const WORKER_URL = "https://meteovigilance.guillaume-leparmentier-pro.workers.dev/";
+    const PHENOMENES = { "1":"Vent violent 💨","2":"Pluies-inondations 🌧️","3":"Orages ⛈️","4":"Crues 🌊","5":"Neige-verglas ❄️","6":"Canicule 🌡️","7":"Grand froid 🥶","8":"Avalanches ⛰️","9":"Vagues-submersion 🌊","10":"Pluies-inondations 🌧️" };
 
+    async function checkVigilanceMeteo() {
+        const banner   = document.getElementById('meteo-vigilance-banner');
+        const titleEl  = document.getElementById('vigi-title');
+        const detailEl = document.getElementById('vigi-detail');
+        if (!banner) return;
+        try {
+            const response = await fetch(WORKER_URL);
+            if (!response.ok) throw new Error("Erreur réseau");
+            const data = await response.json();
+            const blocs = data?.product?.text_bloc_items || [];
+            let maxRiskCode = 1;
+            let phenomenesTrouves = [];
+
+            blocs.forEach(bloc => {
+                (bloc.bloc_items || []).forEach(blocItem => {
+                    (blocItem.text_items || []).forEach(textItem => {
+                        (textItem.term_items || []).forEach(termItem => {
+                            const subdivs = termItem.subdivision_text || [];
+                            let concerneManche = bloc.domain_id === "FRA";
+                            subdivs.forEach(subdiv => {
+                                (subdiv.text || []).forEach(t => {
+                                    if (typeof t === 'string' && t.includes("Manche (50)")) concerneManche = true;
+                                });
+                            });
+                            if (concerneManche) {
+                                const riskCode = parseInt(termItem.risk_code || "1", 10);
+                                if (riskCode > maxRiskCode) maxRiskCode = riskCode;
+                                const hazardCode = textItem.hazard_code;
+                                if (hazardCode && riskCode >= 2) {
+                                    const nom = (PHENOMENES[hazardCode] || "Phénomène ⚠️") + " " + (termItem.risk_name || "");
+                                    if (!phenomenesTrouves.includes(nom)) phenomenesTrouves.push(nom);
+                                }
+                            }
+                        });
+                    });
+                });
+            });
+
+            if (maxRiskCode >= 2) {
+                let bgColor, borderColor, textColor, niveauLabel, niveauEmoji;
+                if (maxRiskCode === 2) { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE"; niveauEmoji="🟡"; }
+                else if (maxRiskCode === 3) { bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠"; }
+                else { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE"; niveauEmoji="🔴"; }
+
+                titleEl.innerHTML  = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
+                detailEl.innerHTML = phenomenesTrouves.length > 0 ? phenomenesTrouves.join(" · ") : "Phénomène dangereux prévu";
+                banner.style.background  = bgColor;
+                banner.style.border      = "2px solid " + borderColor;
+                banner.style.color       = textColor;
+                banner.style.display     = "block";
+            } else {
+                banner.style.display = "none";
+            }
+        } catch (err) {
+            banner.style.display = "none";
+            console.log("Vigilance météo :", err);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        checkVigilanceMeteo();
+        setInterval(checkVigilanceMeteo, 30 * 60 * 1000);
+    });
+</script>
+</body>
 </body>
 </html>
