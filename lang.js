@@ -125,7 +125,7 @@ const translations = {
         webcam_desc: "Observez les conditions en temps réel à l'entrée du port de Barneville-Carteret.",
         webcam_module_title_d: "Vue Plage de Siouville",
         webcam_desc_d: "Observez les conditions en temps réel à proximité du port de Diélette (Plage de Siouville).",
-        webcam_disclaimer: "<strong style=\"color:#b03a2e;\">* Attention :</strong> Le flux vidéo est fourni à titre indicatif par Viewsurf et peut subir des décalages.",
+        webcam_disclaimer: "<strong style=\"color:#b03a2e;\">* Attention :</strong> Le flux vidéo est fourni à titre indicatif et peut subir des décalages.",
         
         // --- PAGE PARTAGE ---
         share_link_title: "Envoyer le lien",
@@ -365,7 +365,7 @@ const translations = {
         webcam_desc: "Check the real-time conditions at the entrance of Barneville-Carteret port.",
         webcam_module_title_d: "View of Siouville Beach",
         webcam_desc_d: "Observe the real-time conditions near the port of Diélette (Siouville Beach).",
-        webcam_disclaimer: "<strong style=\"color:#b03a2e;\">* Warning:</strong> The video feed is provided for informational purposes by Viewsurf and may experience delays.",
+        webcam_disclaimer: "<strong style=\"color:#b03a2e;\">* Warning:</strong> The video feed is provided for informational and may experience delays.",
         
         // --- PAGE PARTAGE ---
         share_link_title: "Send the link",
