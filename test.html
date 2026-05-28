@@ -804,6 +804,7 @@
             const response = await fetch(WORKER_URL);
             if (!response.ok) throw new Error("Erreur réseau");
             const data = await response.json();
+            console.log("BLOCS:", JSON.stringify(data.product.text_bloc_items.map(b => ({id: b.domain_id, items: (b.bloc_items||[]).flatMap(bi => (bi.text_items||[]).flatMap(ti => (ti.term_items||[]).map(tr => ({hazard: ti.hazard_code, risk: tr.risk_code, subdivs: (tr.subdivision_text||[]).flatMap(s => s.text||[])}))))})), null, 2));
             const blocs = data?.product?.text_bloc_items || [];
 
             let maxRiskCode = 1;
