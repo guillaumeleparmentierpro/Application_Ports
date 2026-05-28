@@ -200,7 +200,12 @@
             </button>
         </div>
     </div>
-
+<!-- BANDEAU VIGILANCE MÉTÉO -->
+<div id="meteo-vigilance-banner" style="display:none; margin: 0 0 15px 0; border-radius: 8px; padding: 8px 30px 8px 12px; font-family: 'Montserrat', sans-serif; position: relative; cursor: pointer;" onclick="window.open('https://vigilance.meteofrance.fr/fr/manche','_blank')">
+    <span onclick="event.stopPropagation(); this.parentElement.style.display='none';" style="position:absolute; top:6px; right:8px; font-size:1rem; opacity:0.6; cursor:pointer;">×</span>
+    <div id="vigi-title" style="font-weight:900; font-size:0.72rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
+    <div id="vigi-detail" style="font-size:0.60rem; font-weight:600; opacity:0.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
+</div>
     <div class="module">
         <div id="status-box" class="status-box closed">
             <span class="status-label" data-i18n="label_gate">Porte</span>
@@ -694,6 +699,74 @@
         } catch (error) { console.log("Erreur soleil :", error); }
     }
 </script>
+<script>
+    const WORKER_URL = "https://meteovigilance.guillaume-leparmentier-pro.workers.dev/";
+    const PHENOMENES = { "1":"Vent violent 💨","2":"Pluies-inondations 🌧️","3":"Orages ⛈️","4":"Crues 🌊","5":"Neige-verglas ❄️","6":"Canicule 🌡️","7":"Grand froid 🥶","8":"Avalanches ⛰️","9":"Vagues-submersion 🌊","10":"Pluies-inondations 🌧️" };
 
+    async function checkVigilanceMeteo() {
+        const banner   = document.getElementById('meteo-vigilance-banner');
+        const titleEl  = document.getElementById('vigi-title');
+        const detailEl = document.getElementById('vigi-detail');
+        if (!banner) return;
+        try {
+            const response = await fetch(WORKER_URL);
+            if (!response.ok) throw new Error("Erreur réseau");
+            const data = await response.json();
+            const blocs = data?.product?.text_bloc_items || [];
+            let maxRiskCode = 1;
+            let phenomenesTrouves = [];
+
+            blocs.forEach(bloc => {
+                (bloc.bloc_items || []).forEach(blocItem => {
+                    (blocItem.text_items || []).forEach(textItem => {
+                        (textItem.term_items || []).forEach(termItem => {
+                            const subdivs = termItem.subdivision_text || [];
+                            let concerneManche = bloc.domain_id === "FRA";
+                            subdivs.forEach(subdiv => {
+                                (subdiv.text || []).forEach(t => {
+                                    if (typeof t === 'string' && t.includes("Manche (50)")) concerneManche = true;
+                                });
+                            });
+                            if (concerneManche) {
+                                const riskCode = parseInt(termItem.risk_code || "1", 10);
+                                if (riskCode > maxRiskCode) maxRiskCode = riskCode;
+                                const hazardCode = textItem.hazard_code;
+                                if (hazardCode && riskCode >= 2) {
+                                    const nom = (PHENOMENES[hazardCode] || "Phénomène ⚠️") + " " + (termItem.risk_name || "");
+                                    if (!phenomenesTrouves.includes(nom)) phenomenesTrouves.push(nom);
+                                }
+                            }
+                        });
+                    });
+                });
+            });
+
+            if (maxRiskCode >= 2) {
+                let bgColor, borderColor, textColor, niveauLabel, niveauEmoji;
+                if (maxRiskCode === 2) { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE"; niveauEmoji="🟡"; }
+                else if (maxRiskCode === 3) { bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠"; }
+                else { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE"; niveauEmoji="🔴"; }
+
+                titleEl.innerHTML  = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
+                detailEl.innerHTML = phenomenesTrouves.length > 0 ? phenomenesTrouves.join(" · ") : "Phénomène dangereux prévu";
+                banner.style.background  = bgColor;
+                banner.style.border      = "2px solid " + borderColor;
+                banner.style.color       = textColor;
+                banner.style.display     = "block";
+            } else {
+                banner.style.display = "none";
+            }
+        } catch (err) {
+            banner.style.display = "none";
+            console.log("Vigilance météo :", err);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        checkVigilanceMeteo();
+        setInterval(checkVigilanceMeteo, 30 * 60 * 1000);
+    });
+</script>
+</body>
 </body>
 </html>
