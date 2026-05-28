@@ -210,16 +210,6 @@
 
 <h1 class="main-title">PORT DE CARTERET<sup>*</sup></h1>
 
-<!-- BANDEAU VIGILANCE MÉTÉO — à insérer ici -->
-<div id="meteo-vigilance-banner" style="display:none; margin: 8px 0 5px 0; border-radius: 8px; padding: 10px 12px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 700; line-height: 1.4; position: relative; cursor: pointer;" onclick="window.open('https://vigilance.meteofrance.fr/fr/manche','_blank')">
-    <span onclick="event.stopPropagation(); this.parentElement.style.display='none';" style="position:absolute; top:5px; right:8px; font-size:1rem; opacity:0.6; cursor:pointer;">×</span>
-    <div id="vigi-title" style="font-weight:900; font-size:0.75rem; margin-bottom:3px;"></div>
-    <div id="vigi-detail" style="font-size:0.63rem; font-weight:600; opacity:0.9;"></div>
-    <div style="font-size:0.6rem; margin-top:4px; text-decoration:underline; opacity:0.7;">→ Voir sur Météo-France</div>
-</div>
-
-<div style="text-align: center; margin: 8px 0 5px 0;">
-
         <div style="text-align: center; margin: 8px 0 5px 0;">
             <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
                 ⚓ <span data-i18n="change_port">CHANGER DE PORT</span> ▾
@@ -227,6 +217,14 @@
         </div>
     </div>
 
+<!-- BANDEAU VIGILANCE MÉTÉO — à insérer ici -->
+<div id="meteo-vigilance-banner" style="display:none; margin: 8px 0 5px 0; border-radius: 8px; padding: 10px 12px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 700; line-height: 1.4; position: relative; cursor: pointer;" onclick="window.open('https://vigilance.meteofrance.fr/fr/manche','_blank')">
+    <span onclick="event.stopPropagation(); this.parentElement.style.display='none';" style="position:absolute; top:5px; right:8px; font-size:1rem; opacity:0.6; cursor:pointer;">×</span>
+    <div id="vigi-title" style="font-weight:900; font-size:0.75rem; margin-bottom:3px;"></div>
+    <div id="vigi-detail" style="font-size:0.63rem; font-weight:600; opacity:0.9;"></div>
+    <div style="font-size:0.6rem; margin-top:4px; text-decoration:underline; opacity:0.7;">→ Voir sur Météo-France</div>
+</div>
+    
     <div class="module">
         <div id="status-box" class="status-box closed">
             <span class="status-label" data-i18n="label_gate">Porte</span>
