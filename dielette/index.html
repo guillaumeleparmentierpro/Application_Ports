@@ -108,6 +108,40 @@
         .warning-modal-text { color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.6; margin-bottom: 18px; }
         .warning-modal-buttons { display: flex; flex-direction: column; gap: 10px; }
         .btn-understood { background: #ef4444; color: white; border: none; border-radius: 8px; padding: 11px 20px; font-weight: 700; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; cursor: pointer; width: 100%; }
+               #btn-top {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 15px;
+    z-index: 9998;
+    background: var(--marine-blue);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(30,58,138,0.35);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.2s ease;
+}
+#btn-top.visible {
+    display: flex;
+    opacity: 1;
+}
+#btn-top:active { transform: scale(0.92); }
+#btn-top::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-top: 3px solid white;
+    border-right: 3px solid white;
+    transform: rotate(-45deg) translateY(2px) translateX(-2px);
+    border-radius: 1px;
+}
     </style>
 </head>
 <body>
@@ -675,6 +709,21 @@
     document.addEventListener('DOMContentLoaded', () => {
         checkVigilanceMeteo();
         setInterval(checkVigilanceMeteo, 30 * 60 * 1000);
+    });
+</script>
+    <button id="btn-top" title="Retour en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})"></button>
+<script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btnTop.style.display = 'flex';
+            setTimeout(() => btnTop.classList.add('visible'), 10);
+        } else {
+            btnTop.classList.remove('visible');
+            setTimeout(() => {
+                if (!btnTop.classList.contains('visible')) btnTop.style.display = 'none';
+            }, 400);
+        }
     });
 </script>
 </body>
