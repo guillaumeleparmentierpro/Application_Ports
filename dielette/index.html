@@ -612,6 +612,7 @@
             const data = await response.json();
             const blocs = data?.product?.text_bloc_items || [];
             let maxRiskCode = 1;
+            let maxEndTime = null;
             let phenomenesTrouves = [];
 
             blocs.forEach(bloc => {
@@ -627,10 +628,13 @@
                             });
                             if (concerneManche) {
                                 const riskCode = parseInt(termItem.risk_code || "1", 10);
-                                if (riskCode > maxRiskCode) maxRiskCode = riskCode;
+                                if (riskCode > maxRiskCode) {
+                                    maxRiskCode = riskCode;
+                                    maxEndTime = termItem.end_time || null;
+                                }
                                 const hazardCode = textItem.hazard_code;
                                 if (hazardCode && riskCode >= 2) {
-                                    const nom = (PHENOMENES[hazardCode] || "Phénomène ⚠️") + " " + (termItem.risk_name || "");
+                                    const nom = PHENOMENES[hazardCode] || "Phénomène ⚠️";
                                     if (!phenomenesTrouves.includes(nom)) phenomenesTrouves.push(nom);
                                 }
                             }
@@ -645,12 +649,20 @@
                 else if (maxRiskCode === 3) { bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠"; }
                 else { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE"; niveauEmoji="🔴"; }
 
-                titleEl.innerHTML  = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
-                detailEl.innerHTML = phenomenesTrouves.length > 0 ? phenomenesTrouves.join(" · ") : "Phénomène dangereux prévu";
-                banner.style.background  = bgColor;
-                banner.style.border      = "2px solid " + borderColor;
-                banner.style.color       = textColor;
-                banner.style.display     = "block";
+                titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
+
+                let finTexte = "";
+                if (maxEndTime) {
+                    const fin = new Date(maxEndTime);
+                    const options = { weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit', timeZone:'Europe/Paris' };
+                    finTexte = " · fin prévue " + fin.toLocaleString('fr-FR', options);
+                }
+                detailEl.innerHTML = (phenomenesTrouves.length > 0 ? phenomenesTrouves.join(" · ") : "Phénomène dangereux prévu") + finTexte;
+
+                banner.style.background = bgColor;
+                banner.style.border     = "2px solid " + borderColor;
+                banner.style.color      = textColor;
+                banner.style.display    = "block";
             } else {
                 banner.style.display = "none";
             }
@@ -665,6 +677,5 @@
         setInterval(checkVigilanceMeteo, 30 * 60 * 1000);
     });
 </script>
-</body>
 </body>
 </html>
