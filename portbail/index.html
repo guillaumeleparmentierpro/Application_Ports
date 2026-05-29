@@ -748,28 +748,31 @@
             if (!response.ok) throw new Error("Erreur réseau");
             const data = await response.json();
             const blocs = data?.product?.text_bloc_items || [];
-            let maxRiskCode = 1, maxEndTime = null;
-            const phenomenesParNiveau = {};
+            let maxRiskCode = 1;
+            let maxEndTime = null;
+            let phenomenesTrouves = [];
 
             blocs.forEach(bloc => {
-                const blocId = bloc.domain_id || '';
-                const inclure = (blocId === 'FRA' || blocId === '50');
                 (bloc.bloc_items || []).forEach(blocItem => {
                     (blocItem.text_items || []).forEach(textItem => {
                         (textItem.term_items || []).forEach(termItem => {
-                            let concerneManche = inclure;
-                            (termItem.subdivision_text || []).forEach(subdiv => {
+                            const subdivs = termItem.subdivision_text || [];
+                            let concerneManche = bloc.domain_id === "FRA";
+                            subdivs.forEach(subdiv => {
                                 (subdiv.text || []).forEach(t => {
                                     if (typeof t === 'string' && t.includes("Manche (50)")) concerneManche = true;
                                 });
                             });
                             if (concerneManche) {
                                 const riskCode = parseInt(termItem.risk_code || "1", 10);
+                                if (riskCode > maxRiskCode) {
+                                    maxRiskCode = riskCode;
+                                    maxEndTime = termItem.end_time || null;
+                                }
                                 const hazardCode = textItem.hazard_code;
-                                if (riskCode > maxRiskCode) { maxRiskCode = riskCode; maxEndTime = termItem.end_time || null; }
                                 if (hazardCode && riskCode >= 2) {
-                                    if (!phenomenesParNiveau[riskCode]) phenomenesParNiveau[riskCode] = new Set();
-                                    phenomenesParNiveau[riskCode].add(PHENOMENES[hazardCode] || "Phénomène ⚠️");
+                                    const nom = PHENOMENES[hazardCode] || "Phénomène ⚠️";
+                                    if (!phenomenesTrouves.includes(nom)) phenomenesTrouves.push(nom);
                                 }
                             }
                         });
@@ -779,20 +782,20 @@
 
             if (maxRiskCode >= 2) {
                 let bgColor, borderColor, textColor, niveauLabel, niveauEmoji;
-                if (maxRiskCode === 2)      { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE";  niveauEmoji="🟡"; }
+                if (maxRiskCode === 2) { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE"; niveauEmoji="🟡"; }
                 else if (maxRiskCode === 3) { bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠"; }
-                else                       { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE";  niveauEmoji="🔴"; }
+                else { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE"; niveauEmoji="🔴"; }
 
                 titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
-                const LABELS = {"4":"Rouge 🔴","3":"Orange 🟠","2":"Jaune 🟡"};
-                let parts = [];
-                [4,3,2].forEach(n => { if (phenomenesParNiveau[n]) phenomenesParNiveau[n].forEach(nom => parts.push(nom + ' ' + LABELS[n])); });
+
                 let finTexte = "";
                 if (maxEndTime) {
                     const fin = new Date(maxEndTime);
-                    finTexte = " · fin prévue " + fin.toLocaleString('fr-FR', { weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit', timeZone:'Europe/Paris' });
+                    const options = { weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit', timeZone:'Europe/Paris' };
+                    finTexte = " · fin prévue " + fin.toLocaleString('fr-FR', options);
                 }
-                detailEl.innerHTML = (parts.length > 0 ? parts.join(' · ') : "Phénomènes dangereux prévus") + finTexte;
+                detailEl.innerHTML = (phenomenesTrouves.length > 0 ? phenomenesTrouves.join(" · ") : "Phénomène dangereux prévu") + finTexte;
+
                 banner.style.background = bgColor;
                 banner.style.border     = "2px solid " + borderColor;
                 banner.style.color      = textColor;
