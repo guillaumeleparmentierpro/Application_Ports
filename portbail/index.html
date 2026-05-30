@@ -128,12 +128,12 @@
 <div id="warning-modal">
     <div class="warning-modal-box">
         <div class="warning-modal-icon">⚠️</div>
-        <div class="warning-modal-text">
+        <div class="warning-modal-text" id="warning-modal-text">
             <strong>* Attention :</strong> Port-Bail n'a pas de porte physique. L'accès dépend uniquement de la marée. Ces horaires sont indicatifs (+/- 30 min). Le capitaine est responsable de sa navigation.
         </div>
         <div class="warning-modal-buttons">
-            <a href="../securite.html" class="btn-action" style="background: #ef4444; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px;">SÉCURITÉ ET RAPPEL</a>
-            <button class="btn-understood" onclick="closeWarningModal()">✅ J'AI COMPRIS</button>
+            <a href="../securite.html" class="btn-action" id="warning-secu-btn" style="background: #ef4444; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px;" data-i18n="btn_security">SÉCURITÉ ET RAPPEL</a>
+            <button class="btn-understood" id="warning-understood-btn" onclick="closeWarningModal()" data-i18n="pb_warning_understood">✅ J'AI COMPRIS</button>
         </div>
     </div>
 </div>
@@ -148,7 +148,7 @@
 <div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
-        <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;">Choix du port</h3>
+        <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">⚓ Choix du port</h3>
         <div style="display: flex; flex-direction: column; gap: 10px;">
             <a href="../index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">Port de Carteret</a>
             <a href="../dielette/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">Port de Diélette</a>
@@ -188,12 +188,12 @@
         </div>
 
         <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 12px;">
-            <a href="planning.html" class="btn-action">HORAIRES ACCÈS & MARÉES</a>
-            <a href="partage.html" class="btn-action">PARTAGER</a>
-            <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;">📱 INSTALLER</button>
+            <a href="planning.html" class="btn-action" data-i18n="pb_btn_planning">HORAIRES ACCÈS & MARÉES</a>
+            <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
+            <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;" data-i18n="btn_install">📱 INSTALLER</button>
         </div>
 
-        <h1 class="main-title">PORT DE PORT-BAIL-SUR-MER<sup>*</sup></h1>
+        <h1 class="main-title" data-i18n="pb_main_title">PORT DE PORT-BAIL-SUR-MER<sup>*</sup></h1>
 
         <div style="text-align: center; margin: 8px 0 5px 0;">
             <button onclick="document.getElementById('port-selector-modal').style.display='flex'" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
@@ -212,7 +212,7 @@
     <!-- MODULE PRINCIPAL ACCÈS -->
     <div class="module">
         <div id="status-box" class="status-box closed">
-            <span class="status-label" id="status-label-text">ACCÈS</span>
+            <span class="status-label" id="status-label-text" data-i18n="pb_label_access">ACCÈS</span>
             <span class="status-value" id="status-text">--</span>
         </div>
         <div class="progress-wrapper">
@@ -223,24 +223,24 @@
         </div>
         <div class="slots-container">
             <div class="slot-row">
-                <div class="slot-title" id="title-slot-1">Fenêtre d'accès</div>
+                <div class="slot-title" id="title-slot-1" data-i18n="pb_slot_current">Fenêtre d'accès</div>
                 <div class="slot-pills">
-                    <div class="slot-badge badge-open"><span>DÉBUT</span><b id="open-time">--:--</b></div>
-                    <div class="slot-badge badge-close"><span>FIN</span><b id="close-time">--:--</b></div>
+                    <div class="slot-badge badge-open"><span data-i18n="pill_open">DÉBUT</span><b id="open-time">--:--</b></div>
+                    <div class="slot-badge badge-close"><span data-i18n="pill_close">FIN</span><b id="close-time">--:--</b></div>
                 </div>
             </div>
             <div class="slot-row">
-                <div class="slot-title secondary" id="title-slot-2">Prochaine fenêtre</div>
+                <div class="slot-title secondary" id="title-slot-2" data-i18n="pb_slot_next">Prochaine fenêtre</div>
                 <div class="slot-pills" style="opacity: 0.85;">
-                    <div class="slot-badge badge-open"><span>DÉBUT</span><b id="open-time-next">--:--</b></div>
-                    <div class="slot-badge badge-close"><span>FIN</span><b id="close-time-next">--:--</b></div>
+                    <div class="slot-badge badge-open"><span data-i18n="pill_open">DÉBUT</span><b id="open-time-next">--:--</b></div>
+                    <div class="slot-badge badge-close"><span data-i18n="pill_close">FIN</span><b id="close-time-next">--:--</b></div>
                 </div>
             </div>
         </div>
         <div class="tide-info-banner">
-            ⚠️ Port-Bail n'a <strong>pas de porte physique</strong>.<br>
-            Accès possible <strong>± 2h autour de la Pleine Mer</strong>.<br>
-            PM suivante : <strong id="next-pm-display">--:--</strong> · Coeff. <strong id="next-pm-coeff">--</strong>
+            ⚠️ <span data-i18n="pb_no_gate_text">Port-Bail n'a <strong>pas de porte physique</strong>.<br>
+            Accès possible <strong>± 2h autour de la Pleine Mer</strong>.</span><br>
+            <span data-i18n="pb_next_pm_label">PM suivante :</span> <strong id="next-pm-display">--:--</strong> · <span data-i18n="pb_coeff_label">Coeff.</span> <strong id="next-pm-coeff">--</strong>
         </div>
     </div>
 
@@ -299,10 +299,9 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="radar_title">Radar de pluie en direct</div>
         </div>
-<div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
-    <!-- Widget RainViewer centré sur Port-Bail-sur-Mer (49.332, -1.710) avec un zoom de 11 pour bien voir le havre -->
-    <iframe src="https://www.rainviewer.com/map.html?loc=49.332,-1.710,11&oColor=0&tColor=3&s=1&m=1&d=1&v=0&w=1&p=1&oc=0&g=1" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
-</div>
+        <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
+            <iframe src="https://www.rainviewer.com/map.html?loc=49.332,-1.710,11&oColor=0&tColor=3&s=1&m=1&d=1&v=0&w=1&p=1&oc=0&g=1" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
+        </div>
     </div>
 
     <div class="footer-module">
@@ -313,13 +312,13 @@
         </div>
         <div class="reveal" style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 12px; text-align: center; margin-top: 20px; padding: 15px;">
             <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
-            <div style="color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.5; margin-bottom: 15px;">
+            <div style="color: #991b1b; font-size: 0.75rem; font-weight: 600; line-height: 1.5; margin-bottom: 15px;" data-i18n="pb_footer_warning">
                 <strong>* Attention :</strong> Port-Bail n'a pas de porte. L'accès dépend de la marée. Horaires indicatifs (+/- 30 min). Le capitaine est responsable de sa navigation.
             </div>
             <a href="../securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239,68,68,0.3);" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
         </div>
         <div class="reveal" style="text-align: center; margin-top: 30px; padding: 0 20px;">
-            <p style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Vu dans la presse</p>
+            <p style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;" data-i18n="pb_press_seen">Vu dans la presse</p>
             <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
                 <a href="https://actu.fr/societe/ce-manchois-cree-une-nouvelle-application-pour-faciliter-les-acces-aux-ports-du-cotentin_64308095.html" target="_blank" style="text-decoration: none; color: #64748b; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 5px; filter: grayscale(1); opacity: 0.8; transition: 0.3s;">
                     <span style="border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px;">La Presse de la Manche</span>
@@ -508,6 +507,9 @@
         const statusLabel = document.getElementById('status-label-text');
         const timeLeft    = document.getElementById('time-left');
 
+        // Récupération des traductions actives
+        const t = translations[currentLang] || translations['fr'];
+
         if (fenetreActive) {
             const diffMs  = fenetreActive.fin - now;
             const percent = ((now - fenetreActive.debut) / (FENETRE_MS * 2)) * 100;
@@ -517,26 +519,27 @@
             if (diffMs <= ALERTE_MS) {
                 statusBox.className = 'status-box warning';
                 pbContainer.className = 'progress-container warning';
-                statusText.innerText = 'FIN PROCHE';
+                statusText.innerText = t.pb_status_warning || 'FIN PROCHE';
             } else {
                 statusBox.className = 'status-box open';
                 pbContainer.className = 'progress-container';
-                statusText.innerText = 'POSSIBLE';
+                statusText.innerText = t.pb_status_open || 'POSSIBLE';
             }
-            statusLabel.innerText = 'ACCÈS';
+            statusLabel.innerText = t.pb_label_access || 'ACCÈS';
             pb.style.width = Math.min(100, percent) + '%';
-            timeLeft.innerText = hLeft + 'h' + (mLeft < 10 ? '0' : '') + mLeft + ' avant fin';
+            timeLeft.innerText = hLeft + 'h' + (mLeft < 10 ? '0' : '') + mLeft + (t.pb_time_before_end || ' avant fin');
 
-            document.getElementById('title-slot-1').innerText  = 'Fenêtre en cours';
+            const isNextDay = prochaineFenetre && prochaineFenetre.debut.getDate() !== now.getDate();
+            document.getElementById('title-slot-1').innerText  = t.pb_slot_active || 'Fenêtre en cours';
             document.getElementById('open-time').innerText     = formatHHMM(fenetreActive.debut);
             document.getElementById('close-time').innerText    = formatHHMM(fenetreActive.fin);
 
             if (prochaineFenetre) {
-                document.getElementById('title-slot-2').innerText    = prochaineFenetre.debut.getDate() !== now.getDate() ? 'Prochaine fenêtre (Demain)' : 'Prochaine fenêtre';
+                document.getElementById('title-slot-2').innerText    = isNextDay ? (t.pb_slot_next_tomorrow || 'Prochaine fenêtre (Demain)') : (t.pb_slot_next || 'Prochaine fenêtre');
                 document.getElementById('open-time-next').innerText  = formatHHMM(prochaineFenetre.debut);
                 document.getElementById('close-time-next').innerText = formatHHMM(prochaineFenetre.fin);
             } else {
-                document.getElementById('title-slot-2').innerText    = 'Prochaine fenêtre';
+                document.getElementById('title-slot-2').innerText    = t.pb_slot_next || 'Prochaine fenêtre';
                 document.getElementById('open-time-next').innerText  = '--:--';
                 document.getElementById('close-time-next').innerText = '--:--';
             }
@@ -556,20 +559,23 @@
             statusBox.className   = 'status-box closed';
             pbContainer.className = 'progress-container waiting';
             pb.style.width        = percentWait + '%';
-            statusText.innerText  = 'IMPOSSIBLE';
-            statusLabel.innerText = 'ACCÈS';
-            timeLeft.innerText    = 'Accès dans ' + hLeft + 'h' + (mLeft < 10 ? '0' : '') + mLeft;
+            statusText.innerText  = t.pb_status_closed || 'IMPOSSIBLE';
+            statusLabel.innerText = t.pb_label_access || 'ACCÈS';
+            timeLeft.innerText    = (t.pb_access_in || 'Accès dans ') + hLeft + 'h' + (mLeft < 10 ? '0' : '') + mLeft;
 
-            document.getElementById('title-slot-1').innerText  = prochaineFenetre.debut.getDate() !== now.getDate() ? 'Prochaine fenêtre (Demain)' : 'Prochaine fenêtre';
+            const isNextDay1 = prochaineFenetre.debut.getDate() !== now.getDate();
+            const isNextDay2 = fenetreSuivante && fenetreSuivante.debut.getDate() !== now.getDate();
+
+            document.getElementById('title-slot-1').innerText  = isNextDay1 ? (t.pb_slot_next_tomorrow || 'Prochaine fenêtre (Demain)') : (t.pb_slot_next || 'Prochaine fenêtre');
             document.getElementById('open-time').innerText     = formatHHMM(prochaineFenetre.debut);
             document.getElementById('close-time').innerText    = formatHHMM(prochaineFenetre.fin);
 
             if (fenetreSuivante) {
-                document.getElementById('title-slot-2').innerText    = fenetreSuivante.debut.getDate() !== now.getDate() ? 'Fenêtre suivante (Demain)' : 'Fenêtre suivante';
+                document.getElementById('title-slot-2').innerText    = isNextDay2 ? (t.pb_slot_following_tomorrow || 'Fenêtre suivante (Demain)') : (t.pb_slot_following || 'Fenêtre suivante');
                 document.getElementById('open-time-next').innerText  = formatHHMM(fenetreSuivante.debut);
                 document.getElementById('close-time-next').innerText = formatHHMM(fenetreSuivante.fin);
             } else {
-                document.getElementById('title-slot-2').innerText    = 'Fenêtre suivante';
+                document.getElementById('title-slot-2').innerText    = t.pb_slot_following || 'Fenêtre suivante';
                 document.getElementById('open-time-next').innerText  = '--:--';
                 document.getElementById('close-time-next').innerText = '--:--';
             }
@@ -589,8 +595,12 @@
             const h1 = parseFloat(prevTide.h), h2 = parseFloat(nextTide.h);
             if (!isNaN(h1) && !isNaN(h2)) document.getElementById('current-tide-height').innerText = (h1 + (h2 - h1) * ((1 - Math.cos((tidePercent/100) * Math.PI)) / 2)).toFixed(2) + ' m';
             document.getElementById('coeff-display').innerText    = (prevTide.c && prevTide.c !== '-') ? prevTide.c : (nextTide.c || '--');
-            document.getElementById('tide-left-label').innerText  = prevTide.type === 'PM' ? 'Pleine Mer' : 'Basse Mer';
-            document.getElementById('tide-right-label').innerText = nextTide.type === 'PM' ? 'Pleine Mer' : 'Basse Mer';
+
+            // Labels marée traduits
+            const pmLabel = currentLang === 'en' ? 'High Tide' : 'Pleine Mer';
+            const bmLabel = currentLang === 'en' ? 'Low Tide'  : 'Basse Mer';
+            document.getElementById('tide-left-label').innerText  = prevTide.type === 'PM' ? pmLabel : bmLabel;
+            document.getElementById('tide-right-label').innerText = nextTide.type === 'PM' ? pmLabel : bmLabel;
             document.getElementById('val-left').innerText  = prevTide.time + ' (' + prevTide.h + 'm)';
             document.getElementById('val-right').innerText = nextTide.time + ' (' + nextTide.h + 'm)';
             drawTideGraph(tidePercent, isDescending);
@@ -612,6 +622,16 @@
         if (wisukiIframe) wisukiIframe.src = 'https://wisuki.com/widget-summary?spot=1178&lang=' + lang;
         const sponsorLabel = document.getElementById("sponsor-label-text");
         if (sponsorLabel) sponsorLabel.innerHTML = lang === "en" ? "OUR<br>LOCAL<br>PARTNERS" : "NOS<br>PARTENAIRES<br>LOCAUX";
+
+        // Mise à jour popup avertissement
+        const t = translations[lang] || translations['fr'];
+        const warnText = document.getElementById('warning-modal-text');
+        if (warnText && t.pb_warning_text) warnText.innerHTML = t.pb_warning_text;
+
+        // Mise à jour title du bouton retour en haut
+        const btnTop = document.getElementById('btn-top');
+        if (btnTop) btnTop.title = t.pb_btn_top_title || 'Retour en haut';
+
         if (typeof updateApp === "function") updateApp();
     }
 
@@ -756,11 +776,6 @@
 
             blocs.forEach(bloc => {
                 const blocId = bloc.domain_id || bloc.id || "";
-
-                // On ne traite QUE le bloc département 50 (Manche)
-                // Le bloc FRA est volontairement exclu : il s'applique à toute
-                // la France et ferait remonter des alertes qui ne concernent
-                // plus spécifiquement la Manche une fois celle-ci levée.
                 if (blocId !== "50") return;
 
                 (bloc.bloc_items || []).forEach(blocItem => {
@@ -790,7 +805,6 @@
 
                 titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
 
-                // Phénomènes du plus grave au moins grave
                 const LABELS = { "4":"Rouge 🔴", "3":"Orange 🟠", "2":"Jaune 🟡" };
                 let parts = [];
                 [4, 3, 2].forEach(n => {
