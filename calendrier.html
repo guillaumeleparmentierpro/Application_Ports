@@ -14,52 +14,41 @@
             --marine-blue: #1e3a8a;
             --text-main: #1e293b;
         }
-
         body {
             font-family: 'Montserrat', sans-serif;
             background: var(--primary-bg);
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             color: var(--text-main);
         }
-
         .header {
-            position: sticky;
-            top: 0;
+            position: sticky; top: 0;
             background: var(--primary-bg);
             z-index: 1000;
             padding: 10px 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
-
         .btn-action {
             text-decoration: none;
             background: var(--marine-blue);
             color: #ffffff;
             border-radius: 8px;
             padding: 6px 10px;
-            font-weight: 700;
-            font-size: 0.7rem;
+            font-weight: 700; font-size: 0.7rem;
             display: inline-flex;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
         .main-title {
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-size: 1.1rem; font-weight: 700;
             color: var(--marine-blue);
             text-align: center;
             margin: 10px 0 5px 0;
             text-transform: uppercase;
         }
-
         .charts-container {
             padding: 15px;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
             gap: 30px;
         }
-
         .month-card {
             background: white;
             border-radius: 12px;
@@ -67,364 +56,324 @@
             border: 2px solid var(--marine-blue);
             overflow: hidden;
         }
-
-        /* Surbrillance mois courant */
         .month-card.current-month {
             border: 3px solid #ef4444;
-            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.25);
+            box-shadow: 0 4px 20px rgba(239,68,68,0.25);
         }
-
         .month-title {
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1rem; font-weight: 700;
             background-color: var(--marine-blue);
             color: white;
             text-transform: uppercase;
-            margin: 0;
-            text-align: center;
-            padding: 12px;
-            letter-spacing: 1px;
+            margin: 0; text-align: center;
+            padding: 12px; letter-spacing: 1px;
         }
-
         .month-card.current-month .month-title {
             background-color: #ef4444;
         }
-
         .chart-wrapper {
             padding: 10px;
             position: relative;
             height: 300px;
-            width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
-
         .chart-inner {
             min-width: 900px;
             height: 100%;
         }
-
-        /* Légende en bas */
         .legend-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 18px;
-            padding: 8px 12px 12px 12px;
-            font-size: 0.62rem;
-            font-weight: 700;
-            color: #475569;
-            flex-wrap: wrap;
+            display: flex; justify-content: center; align-items: center;
+            gap: 18px; padding: 8px 12px 12px 12px;
+            font-size: 0.62rem; font-weight: 700;
+            color: #475569; flex-wrap: wrap;
         }
         .legend-item { display: flex; align-items: center; gap: 5px; }
-        .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .legend-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
         .legend-line { width: 18px; height: 3px; border-radius: 2px; flex-shrink: 0; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <a href="planning.html" class="btn-action">◀ RETOUR AU TABLEAU</a>
-        <h1 class="main-title">Évolution des coefficients</h1>
-    </div>
+<div class="header">
+    <a href="planning.html" class="btn-action">◀ RETOUR AU TABLEAU</a>
+    <h1 class="main-title">Évolution des coefficients</h1>
+</div>
 
-    <div class="charts-container" id="charts-container"></div>
+<div class="charts-container" id="charts-container"></div>
 
-    <script>
-        Chart.register(ChartDataLabels);
+<script>
+Chart.register(ChartDataLabels);
 
-        // ============================================================
-        //  PHASE DE LUNE — algorithme JD précis (même base que index.html)
-        // ============================================================
-        function getMoonPhase(dateString) {
-            const date = new Date(dateString + 'T12:00:00');
-            const cycleLunaireMs   = 2551442877;
-            const referenceNLMs    = Date.UTC(2024, 0, 11, 11, 57); // NL connue
-            const phase = ((date.getTime() - referenceNLMs) % cycleLunaireMs) / cycleLunaireMs;
-            const p = ((phase % 1) + 1) % 1; // toujours [0,1)
+// ================================================================
+//  PHASE DE LUNE — calcul JD précis (même référence que index.html)
+// ================================================================
+function getMoonPhase(dateString) {
+    const date = new Date(dateString + 'T12:00:00');
+    const cycleLunaireMs = 2551442877;
+    const referenceNLMs  = Date.UTC(2024, 0, 11, 11, 57);
+    let phase = ((date.getTime() - referenceNLMs) % cycleLunaireMs) / cycleLunaireMs;
+    phase = ((phase % 1) + 1) % 1;
+    if      (phase < 0.03 || phase > 0.97) return '🌑';
+    else if (phase < 0.22)                 return '🌒';
+    else if (phase < 0.28)                 return '🌓';
+    else if (phase < 0.47)                 return '🌔';
+    else if (phase < 0.53)                 return '🌕';
+    else if (phase < 0.72)                 return '🌖';
+    else if (phase < 0.78)                 return '🌗';
+    else                                   return '🌘';
+}
 
-            if      (p < 0.03 || p > 0.97) return '🌑';
-            else if (p < 0.22)             return '🌒';
-            else if (p < 0.28)             return '🌓';
-            else if (p < 0.47)             return '🌔';
-            else if (p < 0.53)             return '🌕';
-            else if (p < 0.72)             return '🌖';
-            else if (p < 0.78)             return '🌗';
-            else                           return '🌘';
-        }
+// ================================================================
+//  PLUGIN INLINE : traits verticaux + badge "aujourd'hui"
+//  Déclaré directement dans le tableau plugins[] de chaque chart
+// ================================================================
+function makeInlinePlugin(todayIndex) {
+    return {
+        id: 'customOverlay',
+        afterDraw(chart) {
+            const { ctx, data, chartArea, scales } = chart;
+            const xScale = scales.x;
+            const yScale = scales.y;
 
-        // ============================================================
-        //  PLUGIN : traits verticaux du bas de l'axe X vers les points
-        // ============================================================
-        const verticalTickLinesPlugin = {
-            id: 'verticalTickLines',
-            afterDraw(chart) {
-                const { ctx, data, chartArea, scales } = chart;
-                const xScale = scales.x;
-                const yScale = scales.y;
-                const todayIndex = chart.config._todayIndex;
-
-                data.datasets[0].data.forEach((val, i) => {
-                    if (val === null) return;
-                    const x    = xScale.getPixelForIndex(i);
-                    const yPt  = yScale.getPixelForValue(val);
-                    const yBot = chartArea.bottom;
-
-                    const isToday = (i === todayIndex);
-
-                    ctx.save();
-                    ctx.setLineDash([4, 3]);
-                    ctx.lineWidth    = isToday ? 2 : 1;
-                    ctx.strokeStyle  = isToday ? 'rgba(239,68,68,0.7)' : 'rgba(148,163,184,0.5)';
-                    ctx.beginPath();
-                    ctx.moveTo(x, yPt + 13); // part juste sous le point
-                    ctx.lineTo(x, yBot);
-                    ctx.stroke();
-                    ctx.restore();
-                });
-            }
-        };
-
-        // ============================================================
-        //  PLUGIN : mise en couleur du tick du jour courant sur l'axe X
-        // ============================================================
-        const todayTickPlugin = {
-            id: 'todayTick',
-            afterDraw(chart) {
-                const { ctx, scales } = chart;
-                const xScale   = scales.x;
-                const todayIdx = chart.config._todayIndex;
-                if (todayIdx < 0) return;
-
-                const x   = xScale.getPixelForIndex(todayIdx);
-                const y   = xScale.top + 2;
-                const lbl = xScale.ticks[todayIdx];
-                if (!lbl) return;
-
-                // Badge rouge sous le numéro du jour
-                const dayStr  = String(lbl.label[0] ?? lbl.label);
-                const moonStr = String(lbl.label[1] ?? '');
-                const boxW = 28, boxH = 18, r = 5;
-                const bx = x - boxW / 2;
-                const by = y;
+            // 1) Traits verticaux pointillés de chaque point vers l'axe X
+            data.datasets[0].data.forEach((val, i) => {
+                if (val === null || val === undefined) return;
+                const x    = xScale.getPixelForIndex(i);
+                const yPt  = yScale.getPixelForValue(val);
+                const yBot = chartArea.bottom;
+                const isToday = (i === todayIndex);
 
                 ctx.save();
-                // Fond badge
+                ctx.setLineDash([4, 3]);
+                ctx.lineWidth   = isToday ? 2 : 1;
+                ctx.strokeStyle = isToday ? 'rgba(239,68,68,0.75)' : 'rgba(148,163,184,0.5)';
                 ctx.beginPath();
-                ctx.moveTo(bx + r, by);
-                ctx.lineTo(bx + boxW - r, by);
-                ctx.quadraticCurveTo(bx + boxW, by, bx + boxW, by + r);
-                ctx.lineTo(bx + boxW, by + boxH - r);
-                ctx.quadraticCurveTo(bx + boxW, by + boxH, bx + boxW - r, by + boxH);
-                ctx.lineTo(bx + r, by + boxH);
-                ctx.quadraticCurveTo(bx, by + boxH, bx, by + boxH - r);
-                ctx.lineTo(bx, by + r);
-                ctx.quadraticCurveTo(bx, by, bx + r, by);
-                ctx.closePath();
-                ctx.fillStyle = '#ef4444';
-                ctx.fill();
-
-                // Numéro du jour
-                ctx.fillStyle = 'white';
-                ctx.font = 'bold 10px Montserrat, sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(dayStr, x, by + boxH / 2);
+                ctx.moveTo(x, yPt + 14);
+                ctx.lineTo(x, yBot);
+                ctx.stroke();
                 ctx.restore();
+            });
 
-                // Emoji lune en dessous du badge (tick ligne 2)
-                if (moonStr) {
-                    ctx.save();
-                    ctx.font = '11px sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'top';
-                    ctx.fillText(moonStr, x, by + boxH + 3);
-                    ctx.restore();
-                }
+            // 2) Badge rouge sur l'axe X pour le jour courant
+            if (todayIndex < 0) return;
+            const tick = xScale.ticks[todayIndex];
+            if (!tick) return;
+
+            const x       = xScale.getPixelForIndex(todayIndex);
+            const labels  = Array.isArray(tick.label) ? tick.label : [tick.label, ''];
+            const dayStr  = String(labels[0] ?? '');
+            const moonStr = String(labels[1] ?? '');
+
+            const boxW = 28, boxH = 18, r = 5;
+            const bx = x - boxW / 2;
+            const by = xScale.top + 2;
+
+            ctx.save();
+            // Fond badge rouge arrondi
+            ctx.beginPath();
+            ctx.moveTo(bx + r, by);
+            ctx.lineTo(bx + boxW - r, by);
+            ctx.quadraticCurveTo(bx + boxW, by,         bx + boxW, by + r);
+            ctx.lineTo(bx + boxW, by + boxH - r);
+            ctx.quadraticCurveTo(bx + boxW, by + boxH,  bx + boxW - r, by + boxH);
+            ctx.lineTo(bx + r,   by + boxH);
+            ctx.quadraticCurveTo(bx, by + boxH,          bx, by + boxH - r);
+            ctx.lineTo(bx, by + r);
+            ctx.quadraticCurveTo(bx, by,                 bx + r, by);
+            ctx.closePath();
+            ctx.fillStyle = '#ef4444';
+            ctx.fill();
+
+            // Numéro du jour en blanc
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 10px Montserrat, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(dayStr, x, by + boxH / 2);
+            ctx.restore();
+
+            // Emoji lune sous le badge
+            if (moonStr) {
+                ctx.save();
+                ctx.font = '11px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                ctx.fillText(moonStr, x, by + boxH + 3);
+                ctx.restore();
             }
-        };
+        }
+    };
+}
 
-        // ============================================================
-        //  MAIN
-        // ============================================================
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof data === 'undefined' || data.length === 0) return;
+// ================================================================
+//  MAIN
+// ================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof data === 'undefined' || data.length === 0) return;
 
-            const container = document.getElementById('charts-container');
-            const now       = new Date();
-            const todayStr  = now.toISOString().split('T')[0];
+    const container = document.getElementById('charts-container');
+    const now       = new Date();
+    const todayStr  = now.toISOString().split('T')[0];
 
-            // Regrouper par mois
-            const groupedData = {};
-            data.forEach(jour => {
-                const d        = new Date(jour.date + 'T12:00:00');
-                const monthKey = d.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
-                if (!groupedData[monthKey]) groupedData[monthKey] = { labels: [], coeffs: [], dates: [] };
+    // Regrouper par mois
+    const groupedData = {};
+    data.forEach(jour => {
+        const d        = new Date(jour.date + 'T12:00:00');
+        const monthKey = d.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
+        if (!groupedData[monthKey]) groupedData[monthKey] = { labels: [], coeffs: [], dates: [] };
 
-                const dayNum   = d.getDate();
-                const moon     = getMoonPhase(jour.date);
-                const c1       = parseInt(jour.coeff1) || 0;
-                const c2       = parseInt(jour.coeff2) || 0;
-                const maxCoeff = Math.max(c1, c2);
+        const dayNum   = d.getDate();
+        const moon     = getMoonPhase(jour.date);
+        const c1       = parseInt(jour.coeff1) || 0;
+        const c2       = parseInt(jour.coeff2) || 0;
+        const maxCoeff = Math.max(c1, c2);
 
-                groupedData[monthKey].labels.push([`${dayNum}`, moon]);
-                groupedData[monthKey].coeffs.push(maxCoeff > 0 ? maxCoeff : null);
-                groupedData[monthKey].dates.push(jour.date);
-            });
+        groupedData[monthKey].labels.push([`${dayNum}`, moon]);
+        groupedData[monthKey].coeffs.push(maxCoeff > 0 ? maxCoeff : null);
+        groupedData[monthKey].dates.push(jour.date);
+    });
 
-            let firstCurrentMonthCard = null;
-            let todayScrollX = null;
+    let firstCurrentCard = null;
 
-            Object.keys(groupedData).forEach((month, index) => {
-                const monthData  = groupedData[month];
-                const todayIndex = monthData.dates.indexOf(todayStr);
-                const isCurrentMonth = monthData.dates.some(d => d.startsWith(todayStr.substring(0, 7)));
+    Object.keys(groupedData).forEach((month, index) => {
+        const monthData      = groupedData[month];
+        const todayIndex     = monthData.dates.indexOf(todayStr);
+        const isCurrentMonth = monthData.dates.some(d => d.startsWith(todayStr.substring(0, 7)));
 
-                // Carte
-                const card = document.createElement('div');
-                card.className = 'month-card' + (isCurrentMonth ? ' current-month' : '');
-                if (isCurrentMonth) firstCurrentMonthCard = card;
+        // Carte
+        const card = document.createElement('div');
+        card.className = 'month-card' + (isCurrentMonth ? ' current-month' : '');
+        if (isCurrentMonth && !firstCurrentCard) firstCurrentCard = card;
 
-                const title = document.createElement('h2');
-                title.className = 'month-title';
-                title.textContent = month;
+        const titleEl = document.createElement('h2');
+        titleEl.className = 'month-title';
+        titleEl.textContent = month;
 
-                const wrapper = document.createElement('div');
-                wrapper.className = 'chart-wrapper';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'chart-wrapper';
 
-                const inner = document.createElement('div');
-                inner.className = 'chart-inner';
+        const inner = document.createElement('div');
+        inner.className = 'chart-inner';
 
-                const canvas = document.createElement('canvas');
-                canvas.id = `chart-${index}`;
+        const canvas = document.createElement('canvas');
+        canvas.id = `chart-${index}`;
 
-                inner.appendChild(canvas);
-                wrapper.appendChild(inner);
-                card.appendChild(title);
+        inner.appendChild(canvas);
+        wrapper.appendChild(inner);
+        card.appendChild(titleEl);
 
-                // Légende
-                const legend = document.createElement('div');
-                legend.className = 'legend-row';
-                legend.innerHTML = `
-                    <div class="legend-item"><div class="legend-dot" style="background:#1e3a8a;"></div> Coeff normal</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> Grande marée (≥ 90)</div>
-                    <div class="legend-item"><div class="legend-line" style="background:rgba(239,68,68,0.5);"></div> Seuil 90</div>
-                    ${isCurrentMonth ? '<div class="legend-item"><div class="legend-dot" style="background:#ef4444; outline: 3px solid #fbbf24; outline-offset:1px;"></div> Aujourd\'hui</div>' : ''}
-                `;
+        // Légende
+        const legend = document.createElement('div');
+        legend.className = 'legend-row';
+        legend.innerHTML = `
+            <div class="legend-item"><div class="legend-dot" style="background:#1e3a8a;"></div> Coeff normal</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> Grande marée (≥ 90)</div>
+            <div class="legend-item"><div class="legend-line" style="background:rgba(239,68,68,0.5);"></div> Seuil 90</div>
+            ${isCurrentMonth ? '<div class="legend-item"><div class="legend-dot" style="background:#ef4444; outline: 3px solid #fbbf24; outline-offset:1px;"></div> Aujourd\'hui</div>' : ''}
+        `;
 
-                card.appendChild(wrapper);
-                card.appendChild(legend);
-                container.appendChild(card);
+        card.appendChild(wrapper);
+        card.appendChild(legend);
+        container.appendChild(card);
 
-                const ctx = canvas.getContext('2d');
+        // ── Construction du chart ─────────────────────────────────
+        const ctx = canvas.getContext('2d');
 
-                const chartConfig = {
-                    type: 'line',
-                    _todayIndex: todayIndex,
-                    data: {
-                        labels: monthData.labels,
-                        datasets: [{
-                            label: 'Coefficient Max',
-                            data: monthData.coeffs,
-                            borderColor: '#1e3a8a',
-                            backgroundColor: 'rgba(30, 58, 138, 0.05)',
-                            borderWidth: 3,
-                            pointBackgroundColor: (context) => {
-                                const i   = context.dataIndex;
-                                const val = context.dataset.data[i];
-                                if (i === todayIndex) return '#ef4444';
-                                return val >= 90 ? '#ef4444' : '#1e3a8a';
-                            },
-                            pointBorderColor: (context) => {
-                                const i   = context.dataIndex;
-                                const val = context.dataset.data[i];
-                                if (i === todayIndex) return '#fbbf24';
-                                return val >= 90 ? '#ef4444' : '#1e3a8a';
-                            },
-                            pointBorderWidth: (context) => context.dataIndex === todayIndex ? 3 : 1,
-                            pointRadius: (context) => context.dataIndex === todayIndex ? 14 : 11,
-                            pointHoverRadius: 14,
-                            fill: true,
-                            tension: 0.3
-                        }]
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: monthData.labels,
+                datasets: [{
+                    label: 'Coefficient Max',
+                    data: monthData.coeffs,
+                    borderColor: '#1e3a8a',
+                    backgroundColor: 'rgba(30, 58, 138, 0.05)',
+                    borderWidth: 3,
+                    pointBackgroundColor(context) {
+                        const i = context.dataIndex, v = context.dataset.data[i];
+                        if (i === todayIndex) return '#ef4444';
+                        return v >= 90 ? '#ef4444' : '#1e3a8a';
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        layout: {
-                            padding: { top: 25, bottom: 10, right: 40, left: 10 }
-                        },
-                        plugins: {
-                            legend: { display: false },
-                            datalabels: {
-                                color: (context) => {
-                                    const i = context.dataIndex;
-                                    return i === todayIndex ? 'white' : 'white';
-                                },
-                                font: {
-                                    family: 'Montserrat',
-                                    weight: 'bold',
-                                    size: (context) => context.dataIndex === todayIndex ? 10 : 9
-                                },
-                                align: 'center',
-                                anchor: 'center'
-                            }
-                        },
-                        scales: {
-                            y: {
-                                min: 20,
-                                max: 125,
-                                ticks: { display: false },
-                                grid: {
-                                    color: (context) => context.tick.value === 90
-                                        ? 'rgba(239, 68, 68, 0.5)'
-                                        : '#f1f5f9',
-                                    lineWidth: (context) => context.tick.value === 90 ? 2 : 1
-                                },
-                                border: { display: false }
-                            },
-                            x: {
-                                grid: { display: false },
-                                ticks: {
-                                    font: { size: 10, family: 'Montserrat' },
-                                    // On masque le tick natif du jour courant — on le redessine via plugin
-                                    color: (context) => context.index === todayIndex
-                                        ? 'transparent'
-                                        : '#1e293b',
-                                    padding: 4
-                                }
-                            }
-                        }
+                    pointBorderColor(context) {
+                        return context.dataIndex === todayIndex ? '#fbbf24' : 'transparent';
                     },
-                    plugins: [verticalTickLinesPlugin, todayTickPlugin]
-                };
-
-                const chart = new Chart(ctx, chartConfig);
-
-                // Mémoriser la position X du jour courant pour scroll horizontal
-                if (isCurrentMonth && todayIndex >= 0) {
-                    // On calcule après rendu
-                    setTimeout(() => {
-                        const xScale = chart.scales.x;
-                        if (xScale) {
-                            const xPx = xScale.getPixelForIndex(todayIndex);
-                            // Centrer le scroll horizontal sur le jour
-                            const wrapperWidth = wrapper.clientWidth;
-                            wrapper.scrollLeft = Math.max(0, xPx - wrapperWidth / 2);
+                    pointBorderWidth(context) {
+                        return context.dataIndex === todayIndex ? 3 : 0;
+                    },
+                    pointRadius(context) {
+                        return context.dataIndex === todayIndex ? 14 : 11;
+                    },
+                    pointHoverRadius: 14,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: { top: 25, bottom: 10, right: 40, left: 10 }
+                },
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        color: 'white',
+                        font: {
+                            family: 'Montserrat',
+                            weight: 'bold',
+                            size: 9
+                        },
+                        align: 'center',
+                        anchor: 'center'
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 20, max: 125,
+                        ticks: { display: false },
+                        grid: {
+                            color:     ctx => ctx.tick.value === 90 ? 'rgba(239,68,68,0.5)' : '#f1f5f9',
+                            lineWidth: ctx => ctx.tick.value === 90 ? 2 : 1
+                        },
+                        border: { display: false }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: {
+                            font: { size: 10, family: 'Montserrat' },
+                            // On rend transparent le tick natif du jour courant
+                            // (le plugin le redessine avec le badge rouge)
+                            color: ctx => ctx.index === todayIndex ? 'transparent' : '#1e293b',
+                            padding: 4
                         }
-                    }, 200);
+                    }
                 }
-            });
-
-            // Scroll vertical vers le mois courant
-            setTimeout(() => {
-                if (firstCurrentMonthCard) {
-                    const yOffset = -70;
-                    const y = firstCurrentMonthCard.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                    window.scrollTo({ top: y, behavior: 'smooth' });
-                }
-            }, 400);
+            },
+            // ← plugins ici, AU MÊME NIVEAU que data et options
+            plugins: [ makeInlinePlugin(todayIndex) ]
         });
-    </script>
+
+        // Scroll horizontal centré sur aujourd'hui
+        if (isCurrentMonth && todayIndex >= 0) {
+            setTimeout(() => {
+                const xScale = chart.scales.x;
+                if (xScale) {
+                    const xPx = xScale.getPixelForIndex(todayIndex);
+                    wrapper.scrollLeft = Math.max(0, xPx - wrapper.clientWidth / 2);
+                }
+            }, 250);
+        }
+    });
+
+    // Scroll vertical vers le mois courant
+    setTimeout(() => {
+        if (firstCurrentCard) {
+            const y = firstCurrentCard.getBoundingClientRect().top + window.pageYOffset - 70;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+    }, 400);
+});
+</script>
 </body>
 </html>
