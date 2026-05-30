@@ -4,6 +4,45 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+pb_main_title: "PORT DE PORT-BAIL-SUR-MER<sup>*</sup>",
+pb_btn_planning: "HORAIRES ACCÈS &amp; MARÉES",
+ 
+// Module accès — statuts circulaires
+pb_label_access: "ACCÈS",
+pb_status_open: "POSSIBLE",
+pb_status_closed: "IMPOSSIBLE",
+pb_status_warning: "FIN PROCHE",
+ 
+// Barre de progression
+pb_time_before_end: " avant fin",
+pb_access_in: "Accès dans ",
+ 
+// Titres des créneaux
+pb_slot_active: "Fenêtre en cours",
+pb_slot_next: "Prochaine fenêtre",
+pb_slot_next_tomorrow: "Prochaine fenêtre (Demain)",
+pb_slot_following: "Fenêtre suivante",
+pb_slot_following_tomorrow: "Fenêtre suivante (Demain)",
+ 
+// Pills début/fin (spécifique Port-Bail — sans porte, on parle de début/fin)
+pb_pill_start: "DÉBUT",
+pb_pill_end: "FIN",
+ 
+// Bannière info Port-Bail
+pb_no_gate_text: "Port-Bail n'a <strong>pas de porte physique</strong>.<br>Accès possible <strong>± 2h autour de la Pleine Mer</strong>.",
+pb_next_pm_label: "PM suivante :",
+pb_coeff_label: "Coeff.",
+ 
+// Popup avertissement quotidien
+pb_warning_text: "<strong>* Attention :</strong> Port-Bail n'a pas de porte physique. L'accès dépend uniquement de la marée. Ces horaires sont indicatifs (+/- 30 min). Le capitaine est responsable de sa navigation.",
+pb_warning_understood: "✅ J'AI COMPRIS",
+ 
+// Avertissement footer
+pb_footer_warning: "<strong>* Attention :</strong> Port-Bail n'a pas de porte. L'accès dépend de la marée. Horaires indicatifs (+/- 30 min). Le capitaine est responsable de sa navigation.",
+ 
+// Divers
+pb_press_seen: "Vu dans la presse",
+pb_btn_top_title: "Retour en haut",
         sponsor_bouteille_mer_index: "Une Bouteille A La Mer",
         sponsor_mer_boire_index: "La Mer à Boire",
         footer_tdr: "© 2026 portsducotentin.fr · Tous droits réservés",
@@ -244,6 +283,45 @@ const translations = {
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        pb_main_title: "PORT OF PORT-BAIL-SUR-MER<sup>*</sup>",
+pb_btn_planning: "ACCESS &amp; TIDE SCHEDULE",
+ 
+// Module accès — statuts circulaires
+pb_label_access: "ACCESS",
+pb_status_open: "POSSIBLE",
+pb_status_closed: "IMPOSSIBLE",
+pb_status_warning: "CLOSING SOON",
+ 
+// Barre de progression
+pb_time_before_end: " before end",
+pb_access_in: "Access in ",
+ 
+// Titres des créneaux
+pb_slot_active: "Current window",
+pb_slot_next: "Next window",
+pb_slot_next_tomorrow: "Next window (Tomorrow)",
+pb_slot_following: "Following window",
+pb_slot_following_tomorrow: "Following window (Tomorrow)",
+ 
+// Pills début/fin
+pb_pill_start: "START",
+pb_pill_end: "END",
+ 
+// Bannière info Port-Bail
+pb_no_gate_text: "Port-Bail has <strong>no physical gate</strong>.<br>Access possible <strong>± 2h around High Tide</strong>.",
+pb_next_pm_label: "Next HT:",
+pb_coeff_label: "Coeff.",
+ 
+// Popup avertissement quotidien
+pb_warning_text: "<strong>* Warning:</strong> Port-Bail has no physical gate. Access depends solely on the tide. These times are indicative (+/- 30 min). The skipper is responsible for their navigation.",
+pb_warning_understood: "✅ I UNDERSTAND",
+ 
+// Avertissement footer
+pb_footer_warning: "<strong>* Warning:</strong> Port-Bail has no gate. Access depends on the tide. Times are indicative (+/- 30 min). The skipper is responsible for their navigation.",
+ 
+// Divers
+pb_press_seen: "As seen in the press",
+pb_btn_top_title: "Back to top",
         sponsor_bouteille_mer_index: "Une Bouteille A La Mer",
         sponsor_mer_boire_index: "La Mer à Boire",
         footer_tdr: "© 2026 portsducotentin.fr · All rights reserved",
