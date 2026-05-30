@@ -1,6 +1,6 @@
 {
   "name": "Port de Hérel (Granville)",
-  "short_name": "Port Granville",
+  "short_name": "Port de Hérel ",
   "description": "Consultez en temps réel l'état de la porte, les horaires des marées et la météo du port de Hérel à Granville.",
   "start_url": "index.html",
   "display": "standalone",
