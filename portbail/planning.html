@@ -98,7 +98,6 @@
 
         .month-separator td { background: var(--marine-blue) !important; color: white !important; font-weight: 700; font-size: 0.9rem; text-align: left; padding: 10px 15px; position: sticky; left: 0; text-transform: uppercase; letter-spacing: 1px; z-index: 15; }
 
-        /* Colonne accès PM : affichage différent — pas une "porte" mais une "fenêtre" */
         .acces-line { font-weight: 700; font-size: 0.7rem; display: block; white-space: nowrap; }
         .acces-pm   { font-size: 0.6rem; color: #64748b; font-weight: 600; display: block; margin-top: 2px; }
         .sep { color: #cbd5e1; margin: 0 3px; font-weight: 400; }
@@ -111,7 +110,6 @@
         .coeff-badge       { background: var(--marine-blue); color: white; padding: 3px 6px; border-radius: 4px; font-weight: 700; display: inline-block; }
         .coeff-badge.high  { background: #ef4444 !important; }
 
-        /* Accès impossible (pas de PM) */
         .no-access { color: #94a3b8; font-size: 0.65rem; font-style: italic; }
 
         .scroll-hint { font-size: 0.75rem; text-align: center; color: var(--marine-blue); padding: 5px 0; font-weight: 600; background: #e0e7ff; margin-bottom: 5px; flex-shrink: 0; }
@@ -129,52 +127,52 @@
     <div id="warning-modal" class="warning-modal-overlay">
         <div class="warning-modal-box">
             <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
-            <div class="warning-modal-text">
+            <div class="warning-modal-text" data-i18n="pb_plan_warning_text">
                 <strong>* Attention :</strong> Port-Bail n'a <strong>pas de porte physique</strong>. Les créneaux indiqués correspondent à la fenêtre PM ± 2h, calculée à titre indicatif. Les conditions réelles peuvent varier (+/- 30 min selon météo et marée). Le capitaine est responsable de sa navigation.
             </div>
-            <button id="btn-close-warning" class="btn-warning-ok">J'AI COMPRIS</button>
+            <button id="btn-close-warning" class="btn-warning-ok" data-i18n="pb_warning_understood">J'AI COMPRIS</button>
         </div>
     </div>
 
     <div class="sticky-header">
         <div class="top-nav" style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-            <a href="index.html" class="btn-action">◀ RETOUR</a>
-            <a href="calendrier.html" class="btn-action" style="background-color: #ef4444;">CALENDRIER DES MARÉES</a>
+            <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
+            <a href="calendrier.html" class="btn-action" style="background-color: #ef4444;" data-i18n="pb_plan_btn_calendar">CALENDRIER DES MARÉES</a>
         </div>
-        <h1 class="main-title">Fenêtres d'accès et marées<sup>*</sup></h1>
+        <h1 class="main-title" data-i18n="pb_plan_main_title">Fenêtres d'accès et marées<sup>*</sup></h1>
     </div>
 
     <!-- INFO PORT-BAIL -->
-    <div class="portbail-info-box">
+    <div class="portbail-info-box" data-i18n="pb_plan_info_box">
         ⚓ <strong>Port-Bail-sur-Mer</strong> — pas de porte physique.<br>
         Accès possible <strong>± 2h autour de la Pleine Mer (PM)</strong>. Les créneaux sont calculés automatiquement.
     </div>
 
     <!-- GRANDES MARÉES -->
     <div class="grandes-marees-box" id="grandes-marees-container" style="display: none;">
-        <div class="gm-title">🌊 Prochaines grandes marées</div>
+        <div class="gm-title" data-i18n="next_big_tides">🌊 Prochaines grandes marées</div>
         <div class="gm-list" id="gm-list-content"></div>
     </div>
 
-    <div class="scroll-hint">👉 Glissez le tableau vers la gauche pour voir le SOIR</div>
+    <div class="scroll-hint" data-i18n="plan_scroll_hint">👉 Glissez le tableau vers la gauche pour voir le SOIR</div>
 
     <div class="table-container">
         <table>
             <thead>
                 <tr>
-                    <th class="sticky-col" rowspan="2">Date</th>
-                    <th class="group-header matin-group" colspan="4">☀️ MATIN</th>
-                    <th class="group-header soir-group"  colspan="4">🌙 SOIR</th>
+                    <th class="sticky-col" rowspan="2" data-i18n="plan_date">Date</th>
+                    <th class="group-header matin-group" colspan="4" data-i18n="plan_morning">☀️ MATIN</th>
+                    <th class="group-header soir-group"  colspan="4" data-i18n="plan_evening">🌙 SOIR</th>
                 </tr>
                 <tr>
-                    <th class="sub-header matin-group">Accès (Début | Fin)</th>
-                    <th class="sub-header matin-group">Pleine Mer</th>
-                    <th class="sub-header matin-group">Basse Mer</th>
-                    <th class="sub-header matin-group">Coeff</th>
-                    <th class="sub-header soir-group">Accès (Début | Fin)</th>
-                    <th class="sub-header soir-group">Pleine Mer</th>
-                    <th class="sub-header soir-group">Basse Mer</th>
-                    <th class="sub-header soir-group">Coeff</th>
+                    <th class="sub-header matin-group" data-i18n="pb_plan_access_col">Accès (Début | Fin)</th>
+                    <th class="sub-header matin-group" data-i18n="plan_high_tide">Pleine Mer</th>
+                    <th class="sub-header matin-group" data-i18n="plan_low_tide">Basse Mer</th>
+                    <th class="sub-header matin-group" data-i18n="plan_coeff">Coeff</th>
+                    <th class="sub-header soir-group"  data-i18n="pb_plan_access_col">Accès (Début | Fin)</th>
+                    <th class="sub-header soir-group"  data-i18n="plan_high_tide">Pleine Mer</th>
+                    <th class="sub-header soir-group"  data-i18n="plan_low_tide">Basse Mer</th>
+                    <th class="sub-header soir-group"  data-i18n="plan_coeff">Coeff</th>
                 </tr>
             </thead>
             <tbody id="planning-body"></tbody>
@@ -188,9 +186,6 @@
     //  UTILITAIRES TEMPS
     // ================================================================
 
-    /**
-     * Parse une chaîne "HH:MM" ou "HHhMM" → { h, m } ou null si invalide.
-     */
     function parseHHMM(str) {
         if (!str) return null;
         const s = String(str).trim().toLowerCase().replace('h', ':').replace('.', ':');
@@ -203,40 +198,22 @@
         return { h, m };
     }
 
-    /**
-     * Formate { h, m } → "HH:MM" en gérant les débordements 24h.
-     */
     function formatHHMM(h, m) {
-        // Normalisation des minutes
         h += Math.floor(m / 60);
         m = ((m % 60) + 60) % 60;
-        // Normalisation des heures (passage de minuit)
         h = ((h % 24) + 24) % 24;
         return h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0');
     }
 
-    /**
-     * Calcule la fenêtre d'accès ± 2h autour d'une PM.
-     * @param {string} pmStr  — heure PM au format "HH:MM" ou "HHhMM"
-     * @returns {{ debut: string, fin: string } | null}
-     */
     function calculerFenetreAcces(pmStr) {
         const pm = parseHHMM(pmStr);
         if (!pm) return null;
-
         const totalMinutes = pm.h * 60 + pm.m;
-        const debutMin = totalMinutes - 120; // PM - 2h
-        const finMin   = totalMinutes + 120; // PM + 2h
-
-        // Gestion passage minuit : on laisse formatHHMM normaliser
-        const debutH = Math.floor(debutMin / 60);
-        const debutM = ((debutMin % 60) + 60) % 60;
-        const finH   = Math.floor(finMin / 60);
-        const finM   = ((finMin % 60) + 60) % 60;
-
+        const debutMin = totalMinutes - 120;
+        const finMin   = totalMinutes + 120;
         return {
-            debut: formatHHMM(debutH, debutM),
-            fin:   formatHHMM(finH, finM)
+            debut: formatHHMM(Math.floor(debutMin / 60), ((debutMin % 60) + 60) % 60),
+            fin:   formatHHMM(Math.floor(finMin   / 60), ((finMin   % 60) + 60) % 60)
         };
     }
 
@@ -292,6 +269,10 @@
 
         const currentLang = localStorage.getItem('preferredLang') || 'fr';
         const locale = currentLang === 'en' ? 'en-GB' : 'fr-FR';
+        const t = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang] : {};
+
+        const pmLabel  = t.high_tide || 'Pleine Mer';
+        const bmLabel  = t.low_tide  || 'Basse Mer';
 
         let currentMonthStr = '';
         let tableHTML = '';
@@ -311,18 +292,16 @@
             const dayLabel = d.toLocaleDateString(locale, { weekday: 'short' }).toUpperCase();
             const dayNum   = d.toLocaleDateString(locale, { day: '2-digit', month: 'short' });
 
-            // ── Calcul des fenêtres d'accès ──────────────────────────────
             const fenetre1 = calculerFenetreAcces(jour.pm1);
             const fenetre2 = calculerFenetreAcces(jour.pm2);
 
-            // Rendu HTML de la fenêtre (colonne "Accès")
             function renderFenetre(fenetre, pmStr) {
                 if (!fenetre) {
                     return `<span class="no-access">--:-- | --:--</span>`;
                 }
                 const pm = parseHHMM(pmStr);
-                const pmLabel = pm
-                    ? `<span class="acces-pm">PM ${pm.h.toString().padStart(2,'0')}:${pm.m.toString().padStart(2,'0')}</span>`
+                const pmDisplay = pm
+                    ? `<span class="acces-pm">${pmLabel} ${pm.h.toString().padStart(2,'0')}:${pm.m.toString().padStart(2,'0')}</span>`
                     : '';
                 return `
                     <span class="acces-line">
@@ -330,7 +309,7 @@
                         <span class="sep">|</span>
                         <span style="color:#991b1b;">${fenetre.fin}</span>
                     </span>
-                    ${pmLabel}
+                    ${pmDisplay}
                 `;
             }
 
@@ -386,7 +365,6 @@
 
         tbody.innerHTML = tableHTML;
 
-        // Scroll auto vers aujourd'hui
         setTimeout(() => {
             const container = document.querySelector('.table-container');
             const todayEl   = document.getElementById('today-marker');
@@ -410,12 +388,14 @@
             const browserLang = navigator.language.substring(0, 2);
             const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
 
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (typeof translations !== 'undefined' && translations[savedLang] && translations[savedLang][key]) {
-                    el.innerHTML = translations[savedLang][key];
-                }
-            });
+            if (typeof translations !== 'undefined') {
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (translations[savedLang] && translations[savedLang][key]) {
+                        el.innerHTML = translations[savedLang][key];
+                    }
+                });
+            }
 
             generateTable();
             findNextGrandesMarees();
