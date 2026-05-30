@@ -4,7 +4,6 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
-pb_main_title: "PORT DE PORT-BAIL-SUR-MER<sup>*</sup>",
 pb_btn_planning: "HORAIRES ACCÈS &amp; MARÉES",
  
 // Module accès — statuts circulaires
@@ -283,7 +282,6 @@ pb_btn_top_title: "Retour en haut",
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
-        pb_main_title: "PORT OF PORT-BAIL-SUR-MER<sup>*</sup>",
 pb_btn_planning: "ACCESS &amp; TIDE SCHEDULE",
  
 // Module accès — statuts circulaires
