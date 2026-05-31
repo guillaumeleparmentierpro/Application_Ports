@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5LY18V5457');
+    </script>
+    <title>Partenaires - Port de Port-Bail sur Mer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --marine-blue: #1e3a8a;
+            --text-main: #1e293b;
+            --border-color: #e2e8f0;
+        }
+        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 0; color: var(--text-main); min-height: 100vh; }
+        .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; box-sizing: border-box; padding-bottom: 30px; }
+        .sticky-header { position: -webkit-sticky; position: sticky; top: 0; background: var(--primary-bg); z-index: 1000; padding: 10px 15px 5px 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        .top-nav { display: flex; margin-bottom: 5px; }
+        .btn-action { text-decoration: none; background: var(--marine-blue); color: #ffffff !important; border: none; border-radius: 8px; padding: 6px 10px; font-weight: 700; font-size: 0.6rem; display: inline-flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .main-title { font-size: 1.05rem; font-weight: 700; color: var(--marine-blue); text-align: center; margin: 5px 0 15px 0; text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.1; white-space: nowrap; width: 100%; display: block; }
+        .main-title sup { color: #b03a2e; font-size: 0.75rem; vertical-align: super; }
+
+        /* MARQUEE */
+        .marquee-container { width: calc(100% - 30px); margin: 0 15px 15px 15px; overflow: hidden; background: white; padding: 12px 0; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); position: relative; box-sizing: border-box; }
+        .marquee-container::before, .marquee-container::after { content: ""; position: absolute; top: 0; width: 30px; height: 100%; z-index: 2; pointer-events: none; }
+        .marquee-container::before { left: 0; background: linear-gradient(to right, white, transparent); }
+        .marquee-container::after { right: 0; background: linear-gradient(to left, white, transparent); }
+        .marquee-content { display: flex; gap: 15px; width: max-content; animation: scroll-marquee 20s linear infinite; padding: 0 15px; }
+        .marquee-content:hover { animation-play-state: paused; }
+        .marquee-item { width: 55px; height: 55px; border-radius: 10px; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center; padding: 4px; box-sizing: border-box; background: white; flex-shrink: 0; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; }
+        .marquee-item:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-color: var(--marine-blue); }
+        .marquee-item img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+        @keyframes scroll-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 7.5px)); } }
+
+        /* MODULE */
+        .module { background: var(--card-bg); border-radius: 12px; padding: 15px; margin: 0 15px 15px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--marine-blue); border-bottom: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 12px; scroll-margin-top: 110px; }
+        .partner-header { display: flex; align-items: center; gap: 12px; }
+        .partner-logo { width: 60px; height: 60px; background: #ffffff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; overflow: hidden; border: 1px solid #e2e8f0; padding: 2px; box-sizing: border-box; }
+        .partner-logo img { width: 100%; height: 100%; object-fit: contain; }
+        .partner-info { text-align: left; flex: 1; }
+        .partner-name { font-size: 0.95rem; font-weight: 800; color: var(--marine-blue); margin: 0; letter-spacing: -0.5px; }
+        .partner-desc { font-size: 0.75rem; color: #64748b; line-height: 1.4; margin: 4px 0 0 0; font-weight: 500; }
+        .sponsor-time { display: inline-block; background: #e0e7ff; color: var(--marine-blue); font-size: 0.6rem; font-weight: 700; padding: 3px 6px; border-radius: 4px; margin-top: 6px; border: 1px solid #c7d2fe; }
+
+        /* BOUTONS PARTENAIRES */
+        .partner-actions { display: flex; flex-wrap: nowrap; gap: 6px; width: 100%; }
+        .btn-partner-link {
+            text-decoration: none;
+            background: #f8fafc;
+            color: var(--marine-blue);
+            border: 1px solid var(--border-color);
+            padding: 9px 4px;
+            border-radius: 8px;
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-align: center;
+            transition: background 0.2s, transform 0.1s;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            box-sizing: border-box;
+            line-height: 1.2;
+        }
+        .btn-partner-link svg { width: 18px; height: 18px; fill: var(--marine-blue); flex-shrink: 0; }
+        .btn-partner-link:active { transform: scale(0.97); background: #e2e8f0; }
+        .btn-facebook { color: #1877F2; border-color: #bfdbfe; background: #eff6ff; }
+        .btn-facebook svg { fill: #1877F2; }
+        .btn-instagram { color: #E1306C; border-color: #fecdd3; background: #fff1f2; }
+        .btn-instagram svg { fill: url(#ig-gradient); }
+        .btn-full { flex-basis: 100% !important; flex: none !important; width: 100%; }
+
+        /* BOUTON RETOUR EN HAUT */
+        #btn-top { display: none; position: fixed; bottom: 20px; right: 15px; z-index: 9998; background: var(--marine-blue); color: white; border: none; border-radius: 12px; width: 42px; height: 42px; cursor: pointer; box-shadow: 0 4px 12px rgba(30,58,138,0.35); align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease, transform 0.2s ease; }
+        #btn-top.visible { display: flex; opacity: 1; }
+        #btn-top:active { transform: scale(0.92); }
+        #btn-top::before { content: ''; display: block; width: 10px; height: 10px; border-top: 3px solid white; border-right: 3px solid white; transform: rotate(-45deg) translateY(2px) translateX(-2px); border-radius: 1px; }
+    </style>
+</head>
+<body>
+
+<!-- Dégradé Instagram -->
+<svg width="0" height="0" style="position:absolute">
+    <defs>
+        <linearGradient id="ig-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%"   style="stop-color:#f09433"/>
+            <stop offset="25%"  style="stop-color:#e6683c"/>
+            <stop offset="50%"  style="stop-color:#dc2743"/>
+            <stop offset="75%"  style="stop-color:#cc2366"/>
+            <stop offset="100%" style="stop-color:#bc1888"/>
+        </linearGradient>
+    </defs>
+</svg>
+
+<div class="app-container">
+
+    <div class="sticky-header">
+        <div class="top-nav">
+            <a href="index.html" class="btn-action">◀ RETOUR</a>
+        </div>
+        <h1 class="main-title">NOS PARTENAIRES LOCAUX<sup>*</sup></h1>
+    </div>
+
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <a href="#portbail-plaisance" class="marquee-item"><img src="portbpl.jpg" alt="Portbail Plaisance"></a>
+            <!-- Doublon boucle infinie -->
+            <a href="#portbail-plaisance" class="marquee-item"><img src="portbpl.jpg" alt="Portbail Plaisance"></a>
+        </div>
+    </div>
+
+    <!-- PORTBAIL PLAISANCE -->
+    <div class="module" id="portbail-plaisance">
+        <div class="partner-header">
+            <div class="partner-logo"><img src="portbpl.jpg" alt="Portbail Plaisance"></div>
+            <div class="partner-info">
+                <h2 class="partner-name">Portbail Plaisance</h2>
+                <p class="partner-desc">Vêtements et chaussures homme, femme et enfant. Décoration, accastillage et matériel de pêche.</p>
+                <div class="sponsor-time">⏱️ Sponsor de 10h00 à 11h00</div>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="tel:0233520897" class="btn-partner-link" onclick="gtag('event','clic_appel',{'partenaire':'Portbail Plaisance'});">
+                <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                APPELER
+            </a>
+            <a href="https://www.google.com/maps/place/Portbail+Plaisance+SARL/@49.3347098,-1.6991905,21z" target="_blank" class="btn-partner-link" onclick="gtag('event','clic_itineraire',{'partenaire':'Portbail Plaisance'});">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                CARTE
+            </a>
+        </div>
+    </div>
+
+    <!-- DEVENEZ PARTENAIRE -->
+    <div class="module" style="background: #eff6ff; border-top-color: #3b82f6;">
+        <div class="partner-header">
+            <div class="partner-logo" style="background: white; border: none; font-size: 1.8rem;">🤝</div>
+            <div class="partner-info">
+                <h2 class="partner-name">Devenez Partenaire</h2>
+                <p class="partner-desc">Soutenez l'application et affichez votre enseigne sur l'application web.</p>
+            </div>
+        </div>
+        <div class="partner-actions">
+            <a href="../contact.html" class="btn-partner-link btn-full" style="background: var(--marine-blue); color: white; border-color: var(--marine-blue); padding: 12px;">
+                <svg viewBox="0 0 24 24" style="fill:white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                NOUS CONTACTER
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<script src="../lang.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const browserLang = navigator.language.substring(0, 2);
+        const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[savedLang] && translations[savedLang][key]) {
+                el.innerHTML = translations[savedLang][key];
+            }
+        });
+    });
+</script>
+
+<button id="btn-top" title="Retour en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})"></button>
+<script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btnTop.style.display = 'flex';
+            setTimeout(() => btnTop.classList.add('visible'), 10);
+        } else {
+            btnTop.classList.remove('visible');
+            setTimeout(() => {
+                if (!btnTop.classList.contains('visible')) btnTop.style.display = 'none';
+            }, 400);
+        }
+    });
+</script>
+</body>
+</html>
