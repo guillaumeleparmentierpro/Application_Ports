@@ -332,11 +332,13 @@
         </div>
     </div>
 
-    <div class="module reveal">
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-    <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_wind">Vents</div>
-        <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
-<iframe src="https://widget.windguru.cz/index.php?sc=48401&sty=m_default&fhours=48&vt=brands&ls=3&p=WINDSPD,GUST,SMER,TMPE,APCP1h" width="100%" height="200" frameborder="0" style="border:0; max-width: 100%;" scrolling="no"></iframe>
+    <!-- ✅ MODULE RADAR PLUIE (harmonisé avec Diélette) -->
+    <div class="module reveal" style="margin-top: 15px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="radar_title">Direcrtion du vent</div>
+        </div>
+        <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
+            <iframe src="https://widget.windguru.cz/index.php?sc=48401&sty=m_default&fhours=48&vt=brands&ls=3&p=WINDSPD,GUST,SMER,TMPE,APCP1h" width="100%" height="200" frameborder="0" style="border:0; max-width: 100%;" scrolling="no"></iframe>
         </div>
     </div>
     
