@@ -206,6 +206,9 @@
             <a href="../saintvaast/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
                 Port de Saint-Vaast-la-Hougue
             </a>
+            <a href="../portbail/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
+                Port de Port-Bail sur mer
+            </a>
         </div>
     </div>
 </div>
@@ -325,7 +328,13 @@
             <div class="sun-badge"><span class="emoji">🌄</span><span id="sunset-time">--:--</span></div>
         </div>
     </div>
-
+<div style="margin-top: 10px; padding: 15px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; text-align: center;">
+    <p style="margin: 0; font-size: 0.9em; color: #64748b;">💨 Relevés en direct du Cap de Carteret :</p>
+    <a href="https://www.meteociel.fr/temps-reel/obs_villes.php?code2=7034" target="_blank" style="display: inline-block; margin-top: 8px; padding: 8px 15px; background-color: #1e293b; color: white; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.85em;">
+        Consulter le vent réel (Météociel)
+    </a>
+    <p style="margin-top: 5px; font-size: 0.75em; color: #94a3b8;">(Station Météo-France 7034 - Mise à jour ttes les 10 min)</p>
+</div>
     <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="currents_title">Courants marins</div>
@@ -363,14 +372,14 @@
         </div>
 
         <div class="reveal" style="text-align: center; margin-top: 30px; padding: 0 20px;">
-    <p style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Vu dans la presse</p>
-    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
-        <a href="https://actu.fr/societe/ce-manchois-cree-une-nouvelle-application-pour-faciliter-les-acces-aux-ports-du-cotentin_64308095.html" target="_blank" style="text-decoration: none; color: #64748b; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 5px; filter: grayscale(1); opacity: 0.8; transition: 0.3s;">
-            <span style="border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px;">La Presse de la Manche</span>
-        </a>
+            <p style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;" data-i18n="pb_press_seen">Vu dans la presse</p>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+                <a href="https://actu.fr/societe/ce-manchois-cree-une-nouvelle-application-pour-faciliter-les-acces-aux-ports-du-cotentin_64308095.html" target="_blank" style="text-decoration: none; color: #64748b; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 5px; filter: grayscale(1); opacity: 0.8; transition: 0.3s;">
+                    <span style="border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px;">La Presse de la Manche</span>
+                </a>
+            </div>
         </div>
-</div>
-
+        
         <!-- ✅ FOOTER CREDITS harmonisé avec Diélette -->
         <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" class="footer-credits" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});">
             <div class="footer-text-block">
@@ -446,7 +455,7 @@
                     </a>`;
         }
 
-        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
+        const txtDefault = t.sponsor_default || "Votre publicité ici ! Cliquez pour nous contacter.";
         let finalHTML = `<a href="contact.html" style="text-decoration:none; color:inherit; display: flex; align-items: center; justify-content: flex-end; text-align: right; width:100%; white-space: normal;">${txtDefault}</a>`;
 
         if (hour === 7) { finalHTML = getPartnerHTML("maison-renard", "renard.png", t.sponsor_maison_renard_index || "Boulangerie Maison Renard"); }
@@ -804,7 +813,6 @@
             const response = await fetch(WORKER_URL);
             if (!response.ok) throw new Error("Erreur réseau");
             const data = await response.json();
-            console.log("BLOCS:", JSON.stringify(data.product.text_bloc_items.map(b => ({id: b.domain_id, items: (b.bloc_items||[]).flatMap(bi => (bi.text_items||[]).flatMap(ti => (ti.term_items||[]).map(tr => ({hazard: ti.hazard_code, risk: tr.risk_code, subdivs: (tr.subdivision_text||[]).flatMap(s => s.text||[])}))))})), null, 2));
             const blocs = data?.product?.text_bloc_items || [];
 
             let maxRiskCode = 1;
@@ -812,54 +820,27 @@
             const phenomenesParNiveau = {};
 
             blocs.forEach(bloc => {
+                const blocId = bloc.domain_id || bloc.id || "";
+
+                // On ne traite QUE le bloc département 50 (Manche)
+                // Le bloc FRA est volontairement exclu : il s'applique à toute
+                // la France et ferait remonter des alertes qui ne concernent
+                // plus spécifiquement la Manche une fois celle-ci levée.
+                if (blocId !== "50") return;
+
                 (bloc.bloc_items || []).forEach(blocItem => {
                     (blocItem.text_items || []).forEach(textItem => {
                         (textItem.term_items || []).forEach(termItem => {
+                            const riskCode   = parseInt(termItem.risk_code || "1", 10);
+                            const hazardCode = textItem.hazard_code;
 
-                            // Deux façons d'être concerné par la Manche (50) :
-                            // 1. Le bloc est national (FRA) → s'applique à tous
-                            // 2. Le texte mentionne explicitement "Manche (50)"
-                            let concerneManche = (bloc.domain_id === "FRA");
-                            let mentionneManche = false;
-
-                            (termItem.subdivision_text || []).forEach(subdiv => {
-                                (subdiv.text || []).forEach(t => {
-                                    if (typeof t === 'string' && t.includes("Manche (50)")) {
-                                        concerneManche = true;
-                                        mentionneManche = true;
-                                    }
-                                });
-                            });
-
-                            // Pour les blocs zonaux (ZDF_*) sans mention explicite
-                            // de la Manche, on vérifie si la zone Ouest est concernée
-                            // (ZDF_OUEST couvre la Manche)
-                            if (!concerneManche && bloc.domain_id === "ZDF_OUEST") {
-                                // On inclut seulement si pas de liste de départements
-                                // (= alerte sur toute la zone)
-                                const aListeDepts = (termItem.subdivision_text || []).some(subdiv =>
-                                    (subdiv.text || []).some(t =>
-                                        typeof t === 'string' && /\(\d{2}\)/.test(t)
-                                    )
-                                );
-                                if (!aListeDepts) concerneManche = true;
-                            }
-
-                            if (concerneManche) {
-                                const riskCode = parseInt(termItem.risk_code || "1", 10);
-                                const hazardCode = textItem.hazard_code;
-
+                            if (riskCode >= 2 && hazardCode) {
                                 if (riskCode > maxRiskCode) {
                                     maxRiskCode = riskCode;
                                     maxEndTime  = termItem.end_time || null;
                                 }
-
-                                if (hazardCode && riskCode >= 2) {
-                                    if (!phenomenesParNiveau[riskCode]) {
-                                        phenomenesParNiveau[riskCode] = new Set();
-                                    }
-                                    phenomenesParNiveau[riskCode].add(PHENOMENES[hazardCode] || "Phénomène ⚠️");
-                                }
+                                if (!phenomenesParNiveau[riskCode]) phenomenesParNiveau[riskCode] = new Set();
+                                phenomenesParNiveau[riskCode].add(PHENOMENES[hazardCode] || "Phénomène ⚠️");
                             }
                         });
                     });
@@ -868,24 +849,18 @@
 
             if (maxRiskCode >= 2) {
                 let bgColor, borderColor, textColor, niveauLabel, niveauEmoji;
-                if (maxRiskCode === 2) {
-                    bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE"; niveauEmoji="🟡";
-                } else if (maxRiskCode === 3) {
-                    bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠";
-                } else {
-                    bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE"; niveauEmoji="🔴";
-                }
+                if (maxRiskCode === 2)      { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE";  niveauEmoji="🟡"; }
+                else if (maxRiskCode === 3) { bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠"; }
+                else                       { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE";  niveauEmoji="🔴"; }
 
                 titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
 
-                // Ligne 2 : tous les phénomènes du plus grave au moins grave
-                const LABELS_NIVEAU = { "4":"Rouge 🔴", "3":"Orange 🟠", "2":"Jaune 🟡" };
-                let detailParts = [];
-                [4, 3, 2].forEach(niveau => {
-                    if (phenomenesParNiveau[niveau]) {
-                        phenomenesParNiveau[niveau].forEach(nom => {
-                            detailParts.push(nom + " " + LABELS_NIVEAU[niveau]);
-                        });
+                // Phénomènes du plus grave au moins grave
+                const LABELS = { "4":"Rouge 🔴", "3":"Orange 🟠", "2":"Jaune 🟡" };
+                let parts = [];
+                [4, 3, 2].forEach(n => {
+                    if (phenomenesParNiveau[n]) {
+                        phenomenesParNiveau[n].forEach(nom => parts.push(nom + " " + LABELS[n]));
                     }
                 });
 
@@ -896,13 +871,11 @@
                     finTexte = " · fin prévue " + fin.toLocaleString('fr-FR', options);
                 }
 
-                detailEl.innerHTML = (detailParts.length > 0 ? detailParts.join(" · ") : "Phénomènes dangereux prévus") + finTexte;
-
+                detailEl.innerHTML = (parts.length > 0 ? parts.join(" · ") : "Phénomènes dangereux prévus") + finTexte;
                 banner.style.background = bgColor;
                 banner.style.border     = "2px solid " + borderColor;
                 banner.style.color      = textColor;
                 banner.style.display    = "block";
-
             } else {
                 banner.style.display = "none";
             }
