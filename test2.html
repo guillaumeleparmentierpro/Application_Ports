@@ -846,11 +846,10 @@ async function checkVigilanceMeteo() {
 
     titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
 
-    const LABELS = { "4":"Rouge 🔴","3":"Orange 🟠","2":"Jaune 🟡" };
-    let parts = [];
-    [4, 3, 2].forEach(n => {
-      if (phenomenesParNiveau[n]) phenomenesParNiveau[n].forEach(nom => parts.push(nom + " " + LABELS[n]));
-    });
+let parts = [];
+[4, 3, 2].forEach(n => {
+  if (phenomenesParNiveau[n]) phenomenesParNiveau[n].forEach(nom => parts.push(nom));
+});
 
     let finTexte = "";
     if (maxEndTime) {
