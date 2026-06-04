@@ -799,12 +799,10 @@
 </script>
 <script>
 const WORKER_URL = "https://meteovigilance.guillaume-leparmentier-pro.workers.dev/";
-
 const PHENOMENES_CARTE = {
-  "1": "Vent violent 💨", "2": "Pluies-inondations 🌧️", "3": "Orages ⛈️",
-  "4": "Crues 🌊", "5": "Neige-verglas ❄️", "6": "Canicule 🌡️",
-  "7": "Grand froid 🥶", "8": "Avalanches ⛰️", "9": "Vagues-submersion 🌊",
-  "10": "Pluies-inondations 🌧️"
+  "1":"Vent violent 💨","2":"Pluies-inondations 🌧️","3":"Orages ⛈️",
+  "4":"Crues 🌊","5":"Neige-verglas ❄️","6":"Canicule 🌡️",
+  "7":"Grand froid 🥶","8":"Avalanches ⛰️","9":"Vagues-submersion 🌊","10":"Pluies-inondations 🌧️"
 };
 
 async function checkVigilanceMeteo() {
@@ -812,17 +810,14 @@ async function checkVigilanceMeteo() {
   const titleEl = document.getElementById('vigi-title');
   const detailEl = document.getElementById('vigi-detail');
   if (!banner) return;
-
   try {
     const response = await fetch(WORKER_URL);
     if (!response.ok) throw new Error("Erreur réseau");
-    const vigiData = await response.json(); // ✅ UNE seule fois, pas "data"
+    const vigiData = await response.json();
     const periodJ = (vigiData?.product?.periods || []).find(p => p.echeance === "J");
     if (!periodJ) { banner.style.display = "none"; return; }
-
     const dep50 = (periodJ?.timelaps?.domain_ids || []).find(d => d.domain_id === "50");
     if (!dep50) { banner.style.display = "none"; return; }
-
     const maxColorId = parseInt(dep50.max_color_id || "1", 10);
     if (maxColorId < 2) { banner.style.display = "none"; return; }
 
@@ -851,18 +846,16 @@ async function checkVigilanceMeteo() {
 
     titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
 
-    const LABELS = { "4": "Rouge 🔴", "3": "Orange 🟠", "2": "Jaune 🟡" };
-    let parts = [];
-    [4, 3, 2].forEach(n => {
-      if (phenomenesParNiveau[n]) phenomenesParNiveau[n].forEach(nom => parts.push(nom + " " + LABELS[n]));
-    });
+let parts = [];
+[4, 3, 2].forEach(n => {
+  if (phenomenesParNiveau[n]) phenomenesParNiveau[n].forEach(nom => parts.push(nom));
+});
 
     let finTexte = "";
     if (maxEndTime) {
       const fin = new Date(maxEndTime);
       finTexte = " · fin prévue " + fin.toLocaleString('fr-FR', {
-        weekday: 'short', day: 'numeric', month: 'short',
-        hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris'
+        weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit', timeZone:'Europe/Paris'
       });
     }
 
