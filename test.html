@@ -206,9 +206,6 @@
             <a href="../saintvaast/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
                 Port de Saint-Vaast-la-Hougue
             </a>
-            <a href="../portbail/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">
-                Port de Port-Bail sur mer
-            </a>
         </div>
     </div>
 </div>
@@ -316,13 +313,10 @@
     </div>
 
     <div class="module reveal">
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-    <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
-    <div style="display: flex; gap: 6px;">
-        <a href="https://www.spots.guru/..." class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_wind">VENT (Spotguru)</a>
-        <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">WEBCAM</a>
-    </div>
-</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
+            <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">WEBCAM</a>
+        </div>
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
             <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
         </div>
@@ -332,47 +326,6 @@
         </div>
     </div>
 
-    <!-- ✅ MODULE RADAR PLUIE (harmonisé avec Diélette) -->
-    <div class="module reveal" style="margin-top: 15px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="radar_wind">Direcrtion du vent</div>
-        </div>
-        <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
-            <script id="wg_fwdg_48401_100_1780244776154">
-(function (window, document) {
-  var loader = function () {
-    var arg = ["s=48401" ,"m=100","uid=wg_fwdg_48401_100_1780244776154" ,"wj=kmh" ,"tj=c" ,"waj=m" ,"tij=cm" ,"odh=0" ,"doh=24" ,"fhours=240" ,"hrsm=3" ,"vt=forecasts" ,"lng=fr" ,"idbs=1" ,"p=WINDSPD,GUST,SMER,TCDC"];
-    var script = document.createElement("script");
-    var tag = document.getElementsByTagName("script")[0];
-    script.src = "https://www.windguru.cz/js/widget.php?"+(arg.join("&"));
-    tag.parentNode.insertBefore(script, tag);
-  };
-  window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-})(window, document);
-</script>
-        </div>
-    </div>
-    
-    <div style="border-radius:10px; overflow:hidden; height:450px; border: 1px solid #e2e8f0; position: relative;">
-    <iframe src="https://www.spots.guru/station/carteret" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen></iframe>
-</div>
-
-    <div style="margin-top: 15px; padding: 20px; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 12px; color: white; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-    <div style="font-size: 0.8em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 10px;">Relevé Temps Réel</div>
-    <div style="font-weight: bold; font-size: 1.1em; margin-bottom: 15px;">🚩 Cap de Carteret</div>
-    <a href="https://www.spots.guru/station/carteret" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #38bdf8; color: #0f172a; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9em; transition: transform 0.2s;">
-        VOIR LE VENT ACTUEL
-    </a>
-    <p style="margin-top: 12px; font-size: 0.7em; opacity: 0.6;">Source : Spots.guru / Météo-France</p>
-</div>
-    
-<div style="margin-top: 10px; padding: 15px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; text-align: center;">
-    <p style="margin: 0; font-size: 0.9em; color: #64748b;">💨 Relevés en direct du Cap de Carteret :</p>
-    <a href="https://www.meteociel.fr/temps-reel/obs_villes.php?code2=7034" target="_blank" style="display: inline-block; margin-top: 8px; padding: 8px 15px; background-color: #1e293b; color: white; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.85em;">
-        Consulter le vent réel (Météociel)
-    </a>
-    <p style="margin-top: 5px; font-size: 0.75em; color: #94a3b8;">(Station Météo-France 7034 - Mise à jour ttes les 10 min)</p>
-</div>
     <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="currents_title">Courants marins</div>
@@ -410,14 +363,14 @@
         </div>
 
         <div class="reveal" style="text-align: center; margin-top: 30px; padding: 0 20px;">
-            <p style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;" data-i18n="pb_press_seen">Vu dans la presse</p>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
-                <a href="https://actu.fr/societe/ce-manchois-cree-une-nouvelle-application-pour-faciliter-les-acces-aux-ports-du-cotentin_64308095.html" target="_blank" style="text-decoration: none; color: #64748b; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 5px; filter: grayscale(1); opacity: 0.8; transition: 0.3s;">
-                    <span style="border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px;">La Presse de la Manche</span>
-                </a>
-            </div>
+    <p style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Vu dans la presse</p>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <a href="https://actu.fr/societe/ce-manchois-cree-une-nouvelle-application-pour-faciliter-les-acces-aux-ports-du-cotentin_64308095.html" target="_blank" style="text-decoration: none; color: #64748b; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 5px; filter: grayscale(1); opacity: 0.8; transition: 0.3s;">
+            <span style="border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px;">La Presse de la Manche</span>
+        </a>
         </div>
-        
+</div>
+
         <!-- ✅ FOOTER CREDITS harmonisé avec Diélette -->
         <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" class="footer-credits" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});">
             <div class="footer-text-block">
@@ -493,7 +446,7 @@
                     </a>`;
         }
 
-        const txtDefault = t.sponsor_default || "Votre publicité ici ! Cliquez pour nous contacter.";
+        const txtDefault = t.sponsor_default || "⚓ Votre publicité ici ! Cliquez pour nous contacter.";
         let finalHTML = `<a href="contact.html" style="text-decoration:none; color:inherit; display: flex; align-items: center; justify-content: flex-end; text-align: right; width:100%; white-space: normal;">${txtDefault}</a>`;
 
         if (hour === 7) { finalHTML = getPartnerHTML("maison-renard", "renard.png", t.sponsor_maison_renard_index || "Boulangerie Maison Renard"); }
@@ -852,33 +805,32 @@
             if (!response.ok) throw new Error("Erreur réseau");
             const data = await response.json();
             const blocs = data?.product?.text_bloc_items || [];
-
             let maxRiskCode = 1;
-            let maxEndTime  = null;
-            const phenomenesParNiveau = {};
+            let maxEndTime = null;
+            let phenomenesTrouves = [];
 
             blocs.forEach(bloc => {
-                const blocId = bloc.domain_id || bloc.id || "";
-
-                // On ne traite QUE le bloc département 50 (Manche)
-                // Le bloc FRA est volontairement exclu : il s'applique à toute
-                // la France et ferait remonter des alertes qui ne concernent
-                // plus spécifiquement la Manche une fois celle-ci levée.
-                if (blocId !== "50") return;
-
                 (bloc.bloc_items || []).forEach(blocItem => {
                     (blocItem.text_items || []).forEach(textItem => {
                         (textItem.term_items || []).forEach(termItem => {
-                            const riskCode   = parseInt(termItem.risk_code || "1", 10);
-                            const hazardCode = textItem.hazard_code;
-
-                            if (riskCode >= 2 && hazardCode) {
+                            const subdivs = termItem.subdivision_text || [];
+                            let concerneManche = bloc.domain_id === "FRA";
+                            subdivs.forEach(subdiv => {
+                                (subdiv.text || []).forEach(t => {
+                                    if (typeof t === 'string' && t.includes("Manche (50)")) concerneManche = true;
+                                });
+                            });
+                            if (concerneManche) {
+                                const riskCode = parseInt(termItem.risk_code || "1", 10);
                                 if (riskCode > maxRiskCode) {
                                     maxRiskCode = riskCode;
-                                    maxEndTime  = termItem.end_time || null;
+                                    maxEndTime = termItem.end_time || null;
                                 }
-                                if (!phenomenesParNiveau[riskCode]) phenomenesParNiveau[riskCode] = new Set();
-                                phenomenesParNiveau[riskCode].add(PHENOMENES[hazardCode] || "Phénomène ⚠️");
+                                const hazardCode = textItem.hazard_code;
+                                if (hazardCode && riskCode >= 2) {
+                                    const nom = PHENOMENES[hazardCode] || "Phénomène ⚠️";
+                                    if (!phenomenesTrouves.includes(nom)) phenomenesTrouves.push(nom);
+                                }
                             }
                         });
                     });
@@ -887,20 +839,11 @@
 
             if (maxRiskCode >= 2) {
                 let bgColor, borderColor, textColor, niveauLabel, niveauEmoji;
-                if (maxRiskCode === 2)      { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE";  niveauEmoji="🟡"; }
+                if (maxRiskCode === 2) { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE"; niveauEmoji="🟡"; }
                 else if (maxRiskCode === 3) { bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠"; }
-                else                       { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE";  niveauEmoji="🔴"; }
+                else { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE"; niveauEmoji="🔴"; }
 
                 titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
-
-                // Phénomènes du plus grave au moins grave
-                const LABELS = { "4":"Rouge 🔴", "3":"Orange 🟠", "2":"Jaune 🟡" };
-                let parts = [];
-                [4, 3, 2].forEach(n => {
-                    if (phenomenesParNiveau[n]) {
-                        phenomenesParNiveau[n].forEach(nom => parts.push(nom + " " + LABELS[n]));
-                    }
-                });
 
                 let finTexte = "";
                 if (maxEndTime) {
@@ -908,8 +851,8 @@
                     const options = { weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit', timeZone:'Europe/Paris' };
                     finTexte = " · fin prévue " + fin.toLocaleString('fr-FR', options);
                 }
+                detailEl.innerHTML = (phenomenesTrouves.length > 0 ? phenomenesTrouves.join(" · ") : "Phénomène dangereux prévu") + finTexte;
 
-                detailEl.innerHTML = (parts.length > 0 ? parts.join(" · ") : "Phénomènes dangereux prévus") + finTexte;
                 banner.style.background = bgColor;
                 banner.style.border     = "2px solid " + borderColor;
                 banner.style.color      = textColor;
