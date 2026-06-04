@@ -817,7 +817,8 @@ async function checkVigilanceMeteo() {
     const response = await fetch(WORKER_URL);
     if (!response.ok) throw new Error("Erreur réseau");
     const vigiData = await response.json(); // ✅ UNE seule fois, pas "data"
-
+const vigiData = await response.json();
+console.log("VIGI maxColorId dep50:", (vigiData?.product?.periods || []).find(p => p.echeance === "J")?.timelaps?.domain_ids?.find(d => d.domain_id === "50")?.max_color_id);
     const periodJ = (vigiData?.product?.periods || []).find(p => p.echeance === "J");
     if (!periodJ) { banner.style.display = "none"; return; }
 
