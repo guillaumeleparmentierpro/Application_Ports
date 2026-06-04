@@ -743,94 +743,83 @@
     }
 </script>
 <script>
-    const WORKER_URL = "https://meteovigilance.guillaume-leparmentier-pro.workers.dev/";
-    const PHENOMENES = { "1":"Vent violent 💨","2":"Pluies-inondations 🌧️","3":"Orages ⛈️","4":"Crues 🌊","5":"Neige-verglas ❄️","6":"Canicule 🌡️","7":"Grand froid 🥶","8":"Avalanches ⛰️","9":"Vagues-submersion 🌊","10":"Pluies-inondations 🌧️" };
+const WORKER_URL = "https://meteovigilance.guillaume-leparmentier-pro.workers.dev/";
+const PHENOMENES_CARTE = {
+  "1":"Vent violent 💨","2":"Pluies-inondations 🌧️","3":"Orages ⛈️",
+  "4":"Crues 🌊","5":"Neige-verglas ❄️","6":"Canicule 🌡️",
+  "7":"Grand froid 🥶","8":"Avalanches ⛰️","9":"Vagues-submersion 🌊","10":"Pluies-inondations 🌧️"
+};
 
-    async function checkVigilanceMeteo() {
-        const banner   = document.getElementById('meteo-vigilance-banner');
-        const titleEl  = document.getElementById('vigi-title');
-        const detailEl = document.getElementById('vigi-detail');
-        if (!banner) return;
-        try {
-            const response = await fetch(WORKER_URL);
-            if (!response.ok) throw new Error("Erreur réseau");
-            const data = await response.json();
-            const blocs = data?.product?.text_bloc_items || [];
+async function checkVigilanceMeteo() {
+  const banner  = document.getElementById('meteo-vigilance-banner');
+  const titleEl = document.getElementById('vigi-title');
+  const detailEl = document.getElementById('vigi-detail');
+  if (!banner) return;
+  try {
+    const response = await fetch(WORKER_URL);
+    if (!response.ok) throw new Error("Erreur réseau");
+    const vigiData = await response.json();
+    const periodJ = (vigiData?.product?.periods || []).find(p => p.echeance === "J");
+    if (!periodJ) { banner.style.display = "none"; return; }
+    const dep50 = (periodJ?.timelaps?.domain_ids || []).find(d => d.domain_id === "50");
+    if (!dep50) { banner.style.display = "none"; return; }
+    const maxColorId = parseInt(dep50.max_color_id || "1", 10);
+    if (maxColorId < 2) { banner.style.display = "none"; return; }
 
-            let maxRiskCode = 1;
-            let maxEndTime  = null;
-            const phenomenesParNiveau = {};
+    const phenomenesParNiveau = {};
+    (dep50.phenomenon_items || []).forEach(ph => {
+      const level = parseInt(ph.phenomenon_max_color_id || "1", 10);
+      if (level >= 2) {
+        if (!phenomenesParNiveau[level]) phenomenesParNiveau[level] = [];
+        phenomenesParNiveau[level].push(PHENOMENES_CARTE[ph.phenomenon_id] || "Phénomène ⚠️");
+      }
+    });
 
-            blocs.forEach(bloc => {
-                const blocId = bloc.domain_id || bloc.id || "";
-
-                // On ne traite QUE le bloc département 50 (Manche)
-                // Le bloc FRA est volontairement exclu : il s'applique à toute
-                // la France et ferait remonter des alertes qui ne concernent
-                // plus spécifiquement la Manche une fois celle-ci levée.
-                if (blocId !== "50") return;
-
-                (bloc.bloc_items || []).forEach(blocItem => {
-                    (blocItem.text_items || []).forEach(textItem => {
-                        (textItem.term_items || []).forEach(termItem => {
-                            const riskCode   = parseInt(termItem.risk_code || "1", 10);
-                            const hazardCode = textItem.hazard_code;
-
-                            if (riskCode >= 2 && hazardCode) {
-                                if (riskCode > maxRiskCode) {
-                                    maxRiskCode = riskCode;
-                                    maxEndTime  = termItem.end_time || null;
-                                }
-                                if (!phenomenesParNiveau[riskCode]) phenomenesParNiveau[riskCode] = new Set();
-                                phenomenesParNiveau[riskCode].add(PHENOMENES[hazardCode] || "Phénomène ⚠️");
-                            }
-                        });
-                    });
-                });
-            });
-
-            if (maxRiskCode >= 2) {
-                let bgColor, borderColor, textColor, niveauLabel, niveauEmoji;
-                if (maxRiskCode === 2)      { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE";  niveauEmoji="🟡"; }
-                else if (maxRiskCode === 3) { bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠"; }
-                else                       { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE";  niveauEmoji="🔴"; }
-
-                titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
-
-                // Phénomènes du plus grave au moins grave
-                const LABELS = { "4":"Rouge 🔴", "3":"Orange 🟠", "2":"Jaune 🟡" };
-                let parts = [];
-                [4, 3, 2].forEach(n => {
-                    if (phenomenesParNiveau[n]) {
-                        phenomenesParNiveau[n].forEach(nom => parts.push(nom + " " + LABELS[n]));
-                    }
-                });
-
-                let finTexte = "";
-                if (maxEndTime) {
-                    const fin = new Date(maxEndTime);
-                    const options = { weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit', timeZone:'Europe/Paris' };
-                    finTexte = " · fin prévue " + fin.toLocaleString('fr-FR', options);
-                }
-
-                detailEl.innerHTML = (parts.length > 0 ? parts.join(" · ") : "Phénomènes dangereux prévus") + finTexte;
-                banner.style.background = bgColor;
-                banner.style.border     = "2px solid " + borderColor;
-                banner.style.color      = textColor;
-                banner.style.display    = "block";
-            } else {
-                banner.style.display = "none";
-            }
-        } catch (err) {
-            banner.style.display = "none";
-            console.log("Vigilance météo :", err);
+    let maxEndTime = periodJ.end_validity_time || null;
+    (dep50.phenomenon_items || []).forEach(ph => {
+      (ph.timelaps_items || []).forEach(ti => {
+        if (parseInt(ti.color_id, 10) >= 2 && ti.end_time) {
+          if (!maxEndTime || new Date(ti.end_time) > new Date(maxEndTime)) maxEndTime = ti.end_time;
         }
+      });
+    });
+
+    let bgColor, borderColor, textColor, niveauLabel, niveauEmoji;
+    if      (maxColorId === 2) { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE";  niveauEmoji="🟡"; }
+    else if (maxColorId === 3) { bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠"; }
+    else                       { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE";  niveauEmoji="🔴"; }
+
+    titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
+
+let parts = [];
+[4, 3, 2].forEach(n => {
+  if (phenomenesParNiveau[n]) phenomenesParNiveau[n].forEach(nom => parts.push(nom));
+});
+
+    let finTexte = "";
+    if (maxEndTime) {
+      const fin = new Date(maxEndTime);
+      finTexte = " · fin prévue " + fin.toLocaleString('fr-FR', {
+        weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit', timeZone:'Europe/Paris'
+      });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        checkVigilanceMeteo();
-        setInterval(checkVigilanceMeteo, 30 * 60 * 1000);
-    });
+    detailEl.innerHTML = (parts.length > 0 ? parts.join(" · ") : "Phénomènes dangereux prévus") + finTexte;
+    banner.style.background = bgColor;
+    banner.style.border     = "2px solid " + borderColor;
+    banner.style.color      = textColor;
+    banner.style.display    = "block";
+
+  } catch (err) {
+    banner.style.display = "none";
+    console.log("Vigilance météo :", err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  checkVigilanceMeteo();
+  setInterval(checkVigilanceMeteo, 5 * 60 * 1000);
+});
 </script>
     
     <button id="btn-top" title="Retour en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})"></button>
