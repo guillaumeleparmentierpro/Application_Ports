@@ -823,7 +823,9 @@ async function checkVigilanceMeteo() {
     const response = await fetch(WORKER_URL);
     if (!response.ok) throw new Error("Erreur réseau");
     const data = await response.json();
-
+const data = await response.json();
+console.log("TYPE:", data?.product?.warning_type);
+console.log("DEP50:", JSON.stringify((data?.product?.periods?.[0]?.timelaps?.domain_ids || []).find(d => d.domain_id === "50")));
     // endpoint carte : periods[0] = J, periods[1] = J+1
     const periodJ = (data?.product?.periods || []).find(p => p.echeance === "J");
     if (!periodJ) { banner.style.display = "none"; return; }
