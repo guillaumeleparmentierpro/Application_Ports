@@ -799,11 +799,18 @@
 </script>
 <script>
 const WORKER_URL = "https://meteovigilance.guillaume-leparmentier-pro.workers.dev/";
-const PHENOMENES = {
-  "1":"Vent violent 💨","2":"Pluies-inondations 🌧️","3":"Orages ⛈️",
-  "4":"Crues 🌊","5":"Neige-verglas ❄️","6":"Canicule 🌡️",
-  "7":"Grand froid 🥶","8":"Avalanches ⛰️","9":"Vagues-submersion 🌊",
-  "10":"Pluies-inondations 🌧️"
+
+const PHENOMENES_CARTE = {
+  "1": "Vent violent 💨",
+  "2": "Pluies-inondations 🌧️",
+  "3": "Orages ⛈️",
+  "4": "Crues 🌊",
+  "5": "Neige-verglas ❄️",
+  "6": "Canicule 🌡️",
+  "7": "Grand froid 🥶",
+  "8": "Avalanches ⛰️",
+  "9": "Vagues-submersion 🌊",
+  "10": "Pluies-inondations 🌧️"
 };
 
 async function checkVigilanceMeteo() {
@@ -816,68 +823,69 @@ async function checkVigilanceMeteo() {
     const response = await fetch(WORKER_URL);
     if (!response.ok) throw new Error("Erreur réseau");
     const data = await response.json();
-    const blocs = data?.product?.text_bloc_items || [];
 
-    let maxRiskCode = 1;
-    let maxEndTime  = null;
-    const phenomenesParNiveau = {}; // { 3: Set["Orages ⛈️", "Vent 💨"], 2: Set[...] }
+    // endpoint carte : periods[0] = J, periods[1] = J+1
+    const periodJ = (data?.product?.periods || []).find(p => p.echeance === "J");
+    if (!periodJ) { banner.style.display = "none"; return; }
 
-    blocs.forEach(bloc => {
-      if (bloc.domain_id !== "50") return; // Manche uniquement
+    // Trouver le département 50 dans domain_ids (c'est un tableau)
+    const dep50 = (periodJ?.timelaps?.domain_ids || []).find(d => d.domain_id === "50");
+    if (!dep50) { banner.style.display = "none"; return; }
 
-      (bloc.bloc_items || []).forEach(blocItem => {
-        (blocItem.text_items || []).forEach(textItem => {
-          const hazardCode = textItem.hazard_code;
-          (textItem.term_items || []).forEach(termItem => {
-            const riskCode = parseInt(termItem.risk_code || "1", 10);
-            if (riskCode >= 2 && hazardCode) {
-              if (riskCode > maxRiskCode) {
-                maxRiskCode = riskCode;
-                maxEndTime  = termItem.end_time || null;
-              }
-              if (!phenomenesParNiveau[riskCode]) phenomenesParNiveau[riskCode] = new Set();
-              phenomenesParNiveau[riskCode].add(PHENOMENES[hazardCode] || "Phénomène ⚠️");
-            }
-          });
-        });
+    const maxColorId = parseInt(dep50.max_color_id || "1", 10);
+    if (maxColorId < 2) { banner.style.display = "none"; return; }
+
+    // Collecter les phénomènes actifs (phenomenon_max_color_id >= 2)
+    const phenomenesParNiveau = {};
+    (dep50.phenomenon_items || []).forEach(ph => {
+      const level = parseInt(ph.phenomenon_max_color_id || "1", 10);
+      if (level >= 2) {
+        if (!phenomenesParNiveau[level]) phenomenesParNiveau[level] = [];
+        phenomenesParNiveau[level].push(PHENOMENES_CARTE[ph.phenomenon_id] || "Phénomène ⚠️");
+      }
+    });
+
+    // Heure de fin : prendre la fin du dernier timelaps_item actif (color_id >= 2)
+    let maxEndTime = periodJ.end_validity_time || null;
+    (dep50.phenomenon_items || []).forEach(ph => {
+      (ph.timelaps_items || []).forEach(ti => {
+        if (parseInt(ti.color_id, 10) >= 2 && ti.end_time) {
+          if (!maxEndTime || new Date(ti.end_time) > new Date(maxEndTime)) {
+            maxEndTime = ti.end_time;
+          }
+        }
       });
     });
 
-    if (maxRiskCode >= 2) {
-      let bgColor, borderColor, textColor, niveauLabel, niveauEmoji;
-      if      (maxRiskCode === 2) { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE";  niveauEmoji="🟡"; }
-      else if (maxRiskCode === 3) { bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠"; }
-      else                        { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE";  niveauEmoji="🔴"; }
+    let bgColor, borderColor, textColor, niveauLabel, niveauEmoji;
+    if      (maxColorId === 2) { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE";  niveauEmoji="🟡"; }
+    else if (maxColorId === 3) { bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠"; }
+    else                       { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE";  niveauEmoji="🔴"; }
 
-      titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
+    titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
 
-      // Affiche TOUS les phénomènes, du plus grave au moins grave
-      const LABELS = { "4":"Rouge 🔴", "3":"Orange 🟠", "2":"Jaune 🟡" };
-      let parts = [];
-      [4, 3, 2].forEach(n => {
-        if (phenomenesParNiveau[n]) {
-          phenomenesParNiveau[n].forEach(nom => parts.push(nom + " " + LABELS[n]));
-        }
-      });
-
-      let finTexte = "";
-      if (maxEndTime) {
-        const fin = new Date(maxEndTime);
-        finTexte = " · fin prévue " + fin.toLocaleString('fr-FR', {
-          weekday:'short', day:'numeric', month:'short',
-          hour:'2-digit', minute:'2-digit', timeZone:'Europe/Paris'
-        });
+    const LABELS = { "4": "Rouge 🔴", "3": "Orange 🟠", "2": "Jaune 🟡" };
+    let parts = [];
+    [4, 3, 2].forEach(n => {
+      if (phenomenesParNiveau[n]) {
+        phenomenesParNiveau[n].forEach(nom => parts.push(nom + " " + LABELS[n]));
       }
+    });
 
-      detailEl.innerHTML = (parts.length > 0 ? parts.join(" · ") : "Phénomènes dangereux prévus") + finTexte;
-      banner.style.background = bgColor;
-      banner.style.border     = "2px solid " + borderColor;
-      banner.style.color      = textColor;
-      banner.style.display    = "block";
-
-    } else {
-      banner.style.display = "none";
+    let finTexte = "";
+    if (maxEndTime) {
+      const fin = new Date(maxEndTime);
+      finTexte = " · fin prévue " + fin.toLocaleString('fr-FR', {
+        weekday: 'short', day: 'numeric', month: 'short',
+        hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris'
+      });
     }
+
+    detailEl.innerHTML = (parts.length > 0 ? parts.join(" · ") : "Phénomènes dangereux prévus") + finTexte;
+    banner.style.background = bgColor;
+    banner.style.border     = "2px solid " + borderColor;
+    banner.style.color      = textColor;
+    banner.style.display    = "block";
 
   } catch (err) {
     banner.style.display = "none";
