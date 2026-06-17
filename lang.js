@@ -9,6 +9,8 @@ pb_plan_btn_calendar: "CALENDRIER DES MARÉES",
 pb_plan_info_box: "⚓ <strong>Port-Bail-sur-Mer</strong> — pas de porte physique.<br>Accès possible <strong>± 2h autour de la Pleine Mer (PM)</strong>. Les créneaux sont calculés automatiquement.",
 pb_plan_access_col: "Accès (Début | Fin)",
 pb_plan_warning_text: "<strong>* Attention :</strong> Port-Bail n'a <strong>pas de porte physique</strong>. Les créneaux indiqués correspondent à la fenêtre PM ± 2h, calculée à titre indicatif. Les conditions réelles peuvent varier (+/- 30 min selon météo et marée). Le capitaine est responsable de sa navigation.",
+pb_plan_warning_text_bar: "<strong>* Attention :</strong> Barfleur n'a <strong>pas de porte physique</strong>. Les créneaux indiqués correspondent à la fenêtre PM ± 2h, calculée à titre indicatif. Les conditions réelles peuvent varier (+/- 30 min selon météo et marée). Le capitaine est responsable de sa navigation.",
+pb_plan_info_box_bar: "⚓ <strong>Barfleur</strong> — pas de porte physique.<br>Accès possible <strong>± 2h autour de la Pleine Mer (PM)</strong>. Les créneaux sont calculés automatiquement.",
         
 pb_btn_planning: "HORAIRES ACCÈS &amp; MARÉES",
  
@@ -291,8 +293,10 @@ pb_btn_top_title: "Retour en haut",
 pb_plan_main_title: "Access windows &amp; tides<sup>*</sup>",
 pb_plan_btn_calendar: "TIDE CALENDAR",
 pb_plan_info_box: "⚓ <strong>Port-Bail-sur-Mer</strong> — no physical gate.<br>Access possible <strong>± 2h around High Tide (HT)</strong>. Windows are calculated automatically.",
+pb_plan_info_box_bar: "⚓ <strong>Barfleur</strong> — no physical gate.<br>Access possible <strong>± 2h around High Tide (HT)</strong>. Windows are calculated automatically.",
 pb_plan_access_col: "Access (Start | End)",
 pb_plan_warning_text: "<strong>* Warning:</strong> Port-Bail has <strong>no physical gate</strong>. The windows shown correspond to HT ± 2h, calculated for guidance only. Actual conditions may vary (+/- 30 min depending on weather and tide). The skipper is responsible for their navigation.",
+pb_plan_warning_text_bar: "<strong>* Warning:</strong> Barfleur has <strong>no physical gate</strong>. The windows shown correspond to HT ± 2h, calculated for guidance only. Actual conditions may vary (+/- 30 min depending on weather and tide). The skipper is responsible for their navigation.",
 pb_btn_planning: "ACCESS &amp; TIDE SCHEDULE",
  
 // Module accès — statuts circulaires
