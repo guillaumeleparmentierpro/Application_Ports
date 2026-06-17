@@ -37,11 +37,13 @@ pb_pill_end: "FIN",
  
 // Bannière info Port-Bail
 pb_no_gate_text: "Port-Bail n'a <strong>pas de porte physique</strong>.<br>Accès possible <strong>± 2h autour de la Pleine Mer</strong>.",
+pb_no_gate_text_bar: "Barfleur n'a <strong>pas de porte physique</strong>.<br>Accès possible <strong>± 2h autour de la Pleine Mer</strong>.",
 pb_next_pm_label: "PM suivante :",
 pb_coeff_label: "Coeff.",
  
 // Popup avertissement quotidien
 pb_warning_text: "<strong>* Attention :</strong> Port-Bail n'a pas de porte physique. L'accès dépend uniquement de la marée. Ces horaires sont indicatifs (+/- 30 min). Le capitaine est responsable de sa navigation.",
+pb_warning_text_bar: "<strong>* Attention :</strong> Barfleur n'a pas de porte physique. L'accès dépend uniquement de la marée. Ces horaires sont indicatifs (+/- 30 min). Le capitaine est responsable de sa navigation.",        
 pb_warning_understood: "✅ J'AI COMPRIS",
  
 // Avertissement footer
@@ -322,11 +324,13 @@ pb_pill_end: "END",
  
 // Bannière info Port-Bail
 pb_no_gate_text: "Port-Bail has <strong>no physical gate</strong>.<br>Access possible <strong>± 2h around High Tide</strong>.",
+pb_no_gate_text_bar: "Barfleur has <strong>no physical gate</strong>.<br>Access possible <strong>± 2h around High Tide</strong>.",
 pb_next_pm_label: "Next HT:",
 pb_coeff_label: "Coeff.",
  
 // Popup avertissement quotidien
 pb_warning_text: "<strong>* Warning:</strong> Port-Bail has no physical gate. Access depends solely on the tide. These times are indicative (+/- 30 min). The skipper is responsible for their navigation.",
+pb_warning_text_bar: "<strong>* Warning:</strong> Barfleur has no physical gate. Access depends solely on the tide. These times are indicative (+/- 30 min). The skipper is responsible for their navigation.",        
 pb_warning_understood: "✅ I UNDERSTAND",
  
 // Avertissement footer
