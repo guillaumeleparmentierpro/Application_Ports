@@ -7,7 +7,7 @@
     <title>Partager - Port de Port-Bail sur mer</title>
     <meta name="apple-mobile-web-app-title" content="Ports du Cotentin">
     <meta name="application-name" content="Ports du Cotentin">
-    <meta name="description" content="Découvre l'application du Port de Port-Bail sur mer. L'outil indispensable pour votre navigation. portsducotentin.fr/dielette">
+    <meta name="description" content="Découvre l'application du Port de Port-Bail sur mer. L'outil indispensable pour votre navigation. portsducotentin.fr/portbail">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
     <script>
@@ -98,11 +98,11 @@
         });
 
         function shareApp() {
-            const appUrl = "https://portsducotentin.fr/dielette";
+            const appUrl = "https://portsducotentin.fr/portbail";
             const lang = localStorage.getItem('preferredLang') || 'fr';
             const shareText = lang === 'en'
-                ? "Discover the Port de Port-Bail sur mer app! Gate schedules, tides & weather in real time. ⚓ portsducotentin.fr/dielette"
-                : "Découvre l'app du Port de Port-Bail sur mer ! Horaires de porte, marées & météo en temps réel. ⚓ portsducotentin.fr/dielette";
+                ? "Discover the Port de Port-Bail sur mer app! Gate schedules, tides & weather in real time. ⚓ portsducotentin.fr/portbail"
+                : "Découvre l'app du Port de Port-Bail sur mer ! Horaires de porte, marées & météo en temps réel. ⚓ portsducotentin.fr/portbail";
             if (navigator.share) {
                 navigator.share({ title: 'Port de Port-Bail sur mer', text: shareText, url: appUrl })
                     .catch(err => console.log("Partage annulé", err));
