@@ -48,6 +48,7 @@ pb_warning_understood: "✅ J'AI COMPRIS",
  
 // Avertissement footer
 pb_footer_warning: "<strong>* Attention :</strong> Port-Bail n'a pas de porte. L'accès dépend de la marée. Horaires indicatifs (+/- 30 min). Le capitaine est responsable de sa navigation.",
+pb_footer_warning_bar: "<strong>* Attention :</strong> Barfleur n'a pas de porte. L'accès dépend de la marée. Horaires indicatifs (+/- 30 min). Le capitaine est responsable de sa navigation.",
  
 // Divers
 pb_press_seen: "Vu dans la presse",
@@ -335,6 +336,7 @@ pb_warning_understood: "✅ I UNDERSTAND",
  
 // Avertissement footer
 pb_footer_warning: "<strong>* Warning:</strong> Port-Bail has no gate. Access depends on the tide. Times are indicative (+/- 30 min). The skipper is responsible for their navigation.",
+pb_footer_warning_bar: "<strong>* Warning:</strong> Barfleur has no gate. Access depends on the tide. Times are indicative (+/- 30 min). The skipper is responsible for their navigation.",        
  
 // Divers
 pb_press_seen: "As seen in the press",
