@@ -120,11 +120,12 @@
         .btn-premium:active { transform: scale(0.95); }
         .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-.astro-badges-row { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-.sun-badge { display: flex; align-items: center; gap: 4px; background: #f8fafc; padding: 5px 8px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); white-space: nowrap; flex-shrink: 0; font-size: 0.72rem; font-weight: 700; color: var(--marine-blue); }
-.sun-badge .emoji { font-size: 0.9rem; line-height: 1; }
-.moon-badge #moon-phase-badge { font-size: 1rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15)); line-height: 1; }
-.moon-badge #moon-phase-label { font-style: italic; color: #475569; font-size: 0.65rem; }
+.astro-badges-row { display: flex; justify-content: center; align-items: stretch; flex-wrap: nowrap; gap: clamp(4px, 1.5vw, 8px); margin-top: 12px; width: 100%; }
+.sun-badge { display: flex; align-items: center; justify-content: center; gap: 4px; background: #f8fafc; padding: 5px 6px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); font-size: 0.7rem; font-weight: 700; color: var(--marine-blue); flex: 0 0 auto; white-space: nowrap; }
+.sun-badge .emoji { font-size: 0.85rem; line-height: 1; flex-shrink: 0; }
+.moon-badge { flex: 1 1 auto; min-width: 0; gap: 5px; }
+.moon-badge #moon-phase-badge { font-size: 0.95rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15)); line-height: 1; flex-shrink: 0; }
+.moon-badge #moon-phase-label { font-style: italic; color: #475569; font-size: clamp(0.5rem, 2.4vw, 0.62rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
         /* --- POPUP AVERTISSEMENT QUOTIDIEN --- */
         #warning-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.85); z-index: 10002; justify-content: center; align-items: center; backdrop-filter: blur(3px); }
         .warning-modal-box { background: #fef2f2; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center; border-top: 6px solid #ef4444; }
