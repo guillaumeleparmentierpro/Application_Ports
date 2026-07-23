@@ -120,9 +120,12 @@
         .btn-premium:active { transform: scale(0.95); }
         .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        .sun-times-container { display: flex; justify-content: center; gap: 15px; margin-top: 12px; font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); }
-        .sun-badge { display: flex; align-items: center; gap: 6px; background: #f8fafc; padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-
+.astro-badges-row { display: flex; justify-content: center; align-items: stretch; flex-wrap: nowrap; gap: clamp(4px, 1.5vw, 8px); margin-top: 12px; width: 100%; }
+.sun-badge { display: flex; align-items: center; justify-content: center; gap: 4px; background: #f8fafc; padding: 5px 6px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); font-size: 0.7rem; font-weight: 700; color: var(--marine-blue); flex: 0 0 auto; white-space: nowrap; }
+.sun-badge .emoji { font-size: 0.85rem; line-height: 1; flex-shrink: 0; }
+.moon-badge { flex: 1 1 auto; min-width: 0; gap: 5px; }
+.moon-badge #moon-phase-badge { font-size: 0.95rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15)); line-height: 1; flex-shrink: 0; }
+.moon-badge #moon-phase-label { font-style: italic; color: #475569; font-size: clamp(0.5rem, 2.4vw, 0.62rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
         /* --- POPUP AVERTISSEMENT QUOTIDIEN --- */
         #warning-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.85); z-index: 10002; justify-content: center; align-items: center; backdrop-filter: blur(3px); }
         .warning-modal-box { background: #fef2f2; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center; border-top: 6px solid #ef4444; }
@@ -312,29 +315,51 @@
                 <div id="tide-right-data"><span id="val-right">--</span></div>
             </div>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.75rem; font-weight: 700; color: var(--marine-blue);">
-            <span id="moon-phase-badge" style="font-size: 1.4rem; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.15));"></span>
-            <span id="moon-phase-label" style="font-style: italic; color: #475569; font-size: 0.75rem;"></span>
+        <div class="astro-badges-row">
+            <div class="sun-badge moon-badge">
+                <span id="moon-phase-badge"></span>
+                <span id="moon-phase-label"></span>
+            </div>
+            <div class="sun-badge"><span class="emoji">🌅</span><span id="sunrise-time">--:--</span></div>
+            <div class="sun-badge"><span class="emoji">🌄</span><span id="sunset-time">--:--</span></div>
         </div>
     </div>
 
     <div class="module reveal">
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-    <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
+    <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title_JR">Conditions météo (jour)</div>
     <div style="display: flex; gap: 6px;">
-        <a href="https://www.spots.guru/" target="_blank" rel="noreferrer" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_wind">VENT (Spotguru)</a>
         <a href="webcam.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_webcam">WEBCAM</a>
     </div>
 </div>
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
             <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
         </div>
-        <div class="sun-times-container">
-            <div class="sun-badge"><span class="emoji">🌅</span><span id="sunrise-time">--:--</span></div>
-            <div class="sun-badge"><span class="emoji">🌄</span><span id="sunset-time">--:--</span></div>
-        </div>
     </div>
 
+    <div class="module reveal">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title_HR">Conditions météo (2h)</div>
+            <div style="display: flex; gap: 6px;">
+        <a href="https://www.spots.guru/" target="_blank" rel="noreferrer" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_wind">VENT (Spotguru)</a>
+           </div>
+        </div>
+        <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
+<script id="wg_fwdg_48401_52_1784791791049">
+(function (window, document) {
+  var loader = function () {
+    var arg = ["s=48401" ,"m=52","mw=46","uid=wg_fwdg_48401_52_1784791791049" ,"wj=kmh" ,"tj=c" ,"waj=m" ,"tij=m" ,"odh=0" ,"doh=24" ,"fhours=48" ,"hrsm=2" ,"vt=forecasts" ,"lng=fr" ,"p=SMER,WINDSPD,GUST,DIRPW,HTSGW,PERPW,TCDC,TMP,RH"];
+    var script = document.createElement("script");
+    var tag = document.getElementsByTagName("script")[0];
+    script.src = "https://www.windguru.cz/js/widget.php?"+(arg.join("&"));
+    tag.parentNode.insertBefore(script, tag);
+  };
+  window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+})(window, document);
+</script>
+        </div>
+    </div>
+    
     <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="currents_title">Courants marins</div>
