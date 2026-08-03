@@ -9,6 +9,7 @@
 
     <!-- Données réelles du port : ce fichier doit être présent dans le même dossier que cette page -->
     <script src="donnees.js"></script>
+    <script src="lang.js"></script>
 
     <style>
         :root {
@@ -18,6 +19,8 @@
             --marine-blue: #1e3a8a;
             --text-main: #1e293b;
             --today-bg: #fef9c3;
+            --spring-red: #ef4444;
+            --neap-gray: #94a3b8;
         }
 
         body {
@@ -49,7 +52,9 @@
         .top-nav {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 8px;
+            gap: 8px;
         }
 
         .btn-action {
@@ -67,6 +72,10 @@
             white-space: nowrap;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
+        .lang-switch { font-size: 1.3rem; flex-shrink: 0; }
+        .lang-btn { cursor: pointer; opacity: 0.3; transition: opacity 0.3s ease, transform 0.2s ease; display: inline-block; vertical-align: middle; }
+        .lang-btn.active { opacity: 1; transform: scale(1.15); }
 
         .main-title {
             font-size: 1.05rem;
@@ -118,6 +127,7 @@
             font-weight: 600;
             color: #64748b;
             text-transform: uppercase;
+            flex-wrap: wrap;
         }
 
         .tcv-legend span {
@@ -133,82 +143,24 @@
             display: inline-block;
         }
 
+        .tcv-scroll {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Bande de séparation de mois : identique à .month-separator de planning.html */
         .tcv-month {
             background: var(--marine-blue);
-            color: #fff;
+            color: #ffffff;
             font-weight: 700;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
+            text-align: left;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             padding: 8px 10px;
-            border-radius: 6px;
-            margin: 14px 0 6px 0;
-        }
-
-        .tcv-month:first-child {
-            margin-top: 0;
-        }
-
-        .tcv-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 4px;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .tcv-row:last-child {
-            border-bottom: none;
-        }
-
-        .tcv-row.tcv-today {
-            background: var(--today-bg);
-            border-radius: 8px;
-            padding-left: 8px;
-            padding-right: 8px;
-        }
-
-        .tcv-day {
-            width: 72px;
-            flex-shrink: 0;
-        }
-
-        .tcv-day-name {
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--text-main);
-            text-transform: capitalize;
-            line-height: 1.15;
-        }
-
-        .tcv-day-date {
-            font-size: 0.65rem;
-            color: #64748b;
-            font-weight: 600;
-        }
-
-        .tcv-svg {
-            flex-shrink: 0;
-        }
-
-        .tcv-events {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .tcv-ev {
-            font-size: 0.66rem;
-            color: var(--text-main);
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .tcv-coeff {
-            color: #64748b;
-            font-weight: 600;
+            box-sizing: border-box;
+            border-radius: 4px;
         }
 
         .tcv-empty {
@@ -226,36 +178,32 @@
 
     <div class="sticky-header">
         <div class="top-nav">
-            <a href="index.html" class="btn-action">◀ RETOUR</a>
-            <a href="planning.html" class="btn-action">HORAIRES PORTE</a>
+            <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
+            <div class="lang-switch">
+                <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span>
+                <span style="color:#cbd5e1;font-size:1rem;vertical-align:middle;margin:0 2px;">|</span>
+                <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
+            </div>
+            <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES PORTE</a>
         </div>
-        <h1 class="main-title">Calendrier des marées<sup>*</sup></h1>
+        <h1 class="main-title" data-i18n="cal_page_title">Calendrier des marées<sup>*</sup></h1>
         <div class="test-flag">⚠ Page de test — Carteret</div>
     </div>
 
     <div class="tcv-wrap">
         <div class="tcv-legend">
-            <span><i style="background:#1e3a8a"></i>moyenne</span>
-            <span><i style="background:#ef4444"></i>vive-eau</span>
-            <span><i style="background:#94a3b8"></i>morte-eau</span>
+            <span><i style="background:var(--marine-blue)"></i><span data-i18n="cal_legend_avg">moyenne</span></span>
+            <span><i style="background:var(--spring-red)"></i><span data-i18n="cal_legend_spring">vive-eau</span></span>
+            <span><i style="background:var(--neap-gray)"></i><span data-i18n="cal_legend_neap">morte-eau</span></span>
         </div>
-        <div id="tcv-list"></div>
+        <div class="tcv-scroll"><div id="tcv-root" style="position:relative;"></div></div>
     </div>
 
 </div>
 
 <script>
 (function(){
-    const container = document.getElementById('tcv-list');
-    if (!container) return;
-
-    if (typeof data === 'undefined' || !Array.isArray(data) || data.length === 0) {
-        container.innerHTML = '<div class="tcv-empty">donnees.js introuvable ou vide.<br>Vérifie que ce fichier est bien placé dans le même dossier que donnees.js (racine du site Carteret).</div>';
-        return;
-    }
-
-    const WEEKDAYS = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
-    const MONTHS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+    const WEEKDAY_KEY = 'preferredLang';
 
     function parseNum(v){
         if (v === undefined || v === null) return null;
@@ -265,98 +213,195 @@
         return isNaN(n) ? null : n;
     }
 
+    // Couleurs identiques à celles de coeff-badge / coeff-badge.high sur planning.html
+    const COLOR_AVG = '#1e3a8a';
+    const COLOR_SPRING = '#ef4444';
+    const COLOR_NEAP = '#94a3b8';
+
     function dayColor(maxCoeff){
-        if (maxCoeff === null) return '#1e3a8a';
-        if (maxCoeff >= 90) return '#ef4444';
-        if (maxCoeff <= 45) return '#94a3b8';
-        return '#1e3a8a';
+        if (maxCoeff === null) return COLOR_AVG;
+        if (maxCoeff >= 90) return COLOR_SPRING;   // seuil identique à isHigh1/isHigh2 dans planning.html
+        if (maxCoeff <= 45) return COLOR_NEAP;
+        return COLOR_AVG;
     }
 
-    function catmull(pts){
+    function straightRange(pts, s, e){
         let d = '';
-        for (let i = 0; i < pts.length - 1; i++){
-            const p0 = pts[i-1] || pts[i], p1 = pts[i], p2 = pts[i+1], p3 = pts[i+2] || p2;
-            const c1x = p1[0] + (p2[0]-p0[0])/6, c1y = p1[1] + (p2[1]-p0[1])/6;
-            const c2x = p2[0] - (p3[0]-p1[0])/6, c2y = p2[1] - (p3[1]-p1[1])/6;
-            if (i === 0) d += 'M'+p1[0].toFixed(1)+','+p1[1].toFixed(1)+' ';
-            d += 'C'+c1x.toFixed(1)+','+c1y.toFixed(1)+' '+c2x.toFixed(1)+','+c2y.toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1)+' ';
+        for (let i = s; i <= e; i++){
+            d += (i === s ? 'M' : 'L') + pts[i].x.toFixed(1) + ',' + pts[i].y.toFixed(1) + ' ';
         }
         return d;
     }
 
-    // Échelle de hauteur FIXE sur tout le jeu de données : c'est ce qui permet de voir
-    // visuellement qu'un jour à coeff 100 a une bien plus grande amplitude qu'un jour à coeff 50.
-    // Si on recalculait min/max jour par jour, chaque vague serait automatiquement étirée
-    // pour remplir toute la hauteur disponible, et on perdrait cette information.
-    let globalMin = Infinity, globalMax = -Infinity;
-    data.forEach(function(jour){
-        [jour.bm1_h, jour.pm1_h, jour.bm2_h, jour.pm2_h].forEach(function(v){
-            const n = parseNum(v);
-            if (n !== null){
-                if (n < globalMin) globalMin = n;
-                if (n > globalMax) globalMax = n;
-            }
-        });
-    });
-    if (!isFinite(globalMin) || !isFinite(globalMax)) { globalMin = 0; globalMax = 10; }
+    // Phase lunaire : formule identique à celle utilisée dans index.html, pour rester cohérent
+    function moonPhaseFraction(dateObj){
+        const cycleLunaireMs = 2551442877;
+        const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57);
+        const phase = ((dateObj.getTime() - referenceNouvelleLuneMs) % cycleLunaireMs) / cycleLunaireMs;
+        return phase < 0 ? phase + 1 : phase;
+    }
+    function circDist(a,b){ const d = Math.abs(a-b); return Math.min(d, 1-d); }
+    const dailyStep = 1 / 29.53059;
+    const MOON_TARGETS = [{t:0,e:'🌑'},{t:0.25,e:'🌓'},{t:0.5,e:'🌕'},{t:0.75,e:'🌓'}];
+    function moonEventEmoji(dateObj){
+        const p = moonPhaseFraction(dateObj);
+        let best = null, bestDist = Infinity;
+        MOON_TARGETS.forEach(m => { const d = circDist(p, m.t); if (d < bestDist) { bestDist = d; best = m.e; } });
+        return bestDist < dailyStep/2 ? best : '';
+    }
 
-    const now = new Date();
-    const tzoffset = now.getTimezoneOffset() * 60000;
-    const todayStr = new Date(now - tzoffset).toISOString().split('T')[0];
+    // Lignes resserrées verticalement, disposition élargie horizontalement (validé sur mobile réel)
+    const ROW = 34, DAYGAP = 8, MONTHGAP = 30;
+    const dayColX = 4, leftTimeRight = 116, laneLeft = 128, laneWidth = 92, rightTimeColX = 234, moonColX = 286;
+    const CONTENT_W = 312;
 
-    let lastMonthKey = '';
-    let html = '';
+    function renderCalendar(){
+        const root = document.getElementById('tcv-root');
+        if (!root) return;
 
-    data.forEach(function(jour){
-        const d = new Date(jour.date);
-        const monthKey = d.getFullYear() + '-' + d.getMonth();
-        if (monthKey !== lastMonthKey){
-            lastMonthKey = monthKey;
-            html += '<div class="tcv-month">' + MONTHS[d.getMonth()] + ' ' + d.getFullYear() + '</div>';
+        if (typeof data === 'undefined' || !Array.isArray(data) || data.length === 0) {
+            root.innerHTML = '<div class="tcv-empty">donnees.js introuvable ou vide.<br>Vérifie que ce fichier est bien placé dans le même dossier (racine Carteret).</div>';
+            return;
         }
 
-        const events = [
-            { t: jour.bm1, h: parseNum(jour.bm1_h), c: null },
-            { t: jour.pm1, h: parseNum(jour.pm1_h), c: parseNum(jour.coeff1) },
-            { t: jour.bm2, h: parseNum(jour.bm2_h), c: null },
-            { t: jour.pm2, h: parseNum(jour.pm2_h), c: parseNum(jour.coeff2) }
-        ].filter(e => e.t && e.t !== '-' && e.h !== null);
+        const currentLang = localStorage.getItem(WEEKDAY_KEY) || 'fr';
+        const locale = currentLang === 'en' ? 'en-GB' : 'fr-FR';
 
-        events.sort((a,b) => a.t.localeCompare(b.t));
-
-        if (events.length === 0) return;
-
-        const W = 96, H = 36, pad = 5;
+        // Échelle de hauteur FIXE calculée sur TOUT donnees.js (pas seulement les jours affichés),
+        // pour que l'amplitude visuelle soit toujours comparable, quelle que soit la période.
+        let globalMin = Infinity, globalMax = -Infinity;
+        data.forEach(function(jour){
+            [jour.bm1_h, jour.pm1_h, jour.bm2_h, jour.pm2_h].forEach(function(v){
+                const n = parseNum(v);
+                if (n !== null){
+                    if (n < globalMin) globalMin = n;
+                    if (n > globalMax) globalMax = n;
+                }
+            });
+        });
+        if (!isFinite(globalMin) || !isFinite(globalMax)) { globalMin = 0; globalMax = 10; }
         const range = (globalMax - globalMin) || 1;
-        const pts = events.map((e,i) => {
-            const x = events.length > 1 ? pad + (i/(events.length-1))*(W-2*pad) : W/2;
-            const y = pad + (1-((e.h-globalMin)/range))*(H-2*pad);
-            return [x,y];
+
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const todayStr = new Date(now - tzoffset).toISOString().split('T')[0];
+
+        // Construction des jours avec leurs événements triés par heure
+        const days = data.map(function(jour){
+            const dateObj = new Date(jour.date + 'T12:00:00');
+            const events = [
+                { t: jour.bm1, h: parseNum(jour.bm1_h), c: null },
+                { t: jour.pm1, h: parseNum(jour.pm1_h), c: parseNum(jour.coeff1) },
+                { t: jour.bm2, h: parseNum(jour.bm2_h), c: null },
+                { t: jour.pm2, h: parseNum(jour.pm2_h), c: parseNum(jour.coeff2) }
+            ].filter(e => e.t && e.t !== '-' && e.h !== null);
+            events.sort((a,b) => a.t.localeCompare(b.t));
+            return {
+                dateObj: dateObj,
+                dateStr: jour.date,
+                weekday: dateObj.toLocaleDateString(locale, { weekday: 'long' }),
+                dLabel: String(dateObj.getDate()).padStart(2,'0') + '/' + String(dateObj.getMonth()+1).padStart(2,'0'),
+                monthLabel: dateObj.toLocaleDateString(locale, { month: 'long', year: 'numeric' }),
+                ev: events,
+                today: jour.date === todayStr,
+                moon: moonEventEmoji(dateObj)
+            };
+        }).filter(d => d.ev.length > 0);
+
+        if (days.length === 0) {
+            root.innerHTML = '<div class="tcv-empty">Aucune donnée exploitable trouvée dans donnees.js.</div>';
+            return;
+        }
+
+        // Calcul des positions Y cumulées + points sur l'échelle globale
+        let allPts = [];
+        let y = 20;
+        let lastMonth = null;
+        days.forEach(function(day){
+            if (day.monthLabel !== lastMonth) { if (lastMonth !== null) y += MONTHGAP; lastMonth = day.monthLabel; }
+            day.startY = y;
+            day.ev.forEach(function(e){
+                allPts.push({ x:0, y:y, t:e.t, h:e.h, c:e.c });
+                y += ROW;
+            });
+            y += DAYGAP;
+        });
+        const totalH = y + 10;
+        allPts.forEach(p => { p.x = laneLeft + ((p.h - globalMin) / range) * laneWidth; });
+
+        root.style.width = CONTENT_W + 'px';
+        root.style.height = totalH + 'px';
+
+        let pathsSvg = '', pointsSvg = '', overlayHtml = '';
+        let pointGlobalIdx = 0, lastMonthBand = null;
+
+        days.forEach(function(day, di){
+            if (day.monthLabel !== lastMonthBand) {
+                lastMonthBand = day.monthLabel;
+                overlayHtml += '<div class="tcv-month" style="position:absolute;top:' + (day.startY-26) + 'px;left:0;width:' + CONTENT_W + 'px;">' + day.monthLabel + '</div>';
+            }
+
+            const coeffs = day.ev.map(e => e.c).filter(c => c !== null);
+            const color = dayColor(coeffs.length ? Math.max.apply(null, coeffs) : null);
+            const startIdx = pointGlobalIdx, endIdxIncl = pointGlobalIdx + day.ev.length - 1;
+            const segStart = di === 0 ? startIdx : startIdx - 1;
+            pathsSvg += '<path d="' + straightRange(allPts, segStart, endIdxIncl) + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>';
+
+            if (day.today){
+                overlayHtml += '<div style="position:absolute;top:' + (day.startY-4) + 'px;left:0;width:' + CONTENT_W + 'px;height:' + (day.ev.length*ROW+2) + 'px;background:var(--today-bg);z-index:0;"></div>';
+            }
+
+            const midY = day.startY + (day.ev.length*ROW)/2 - ROW/2;
+            overlayHtml += '<div style="position:absolute;top:' + (midY-3) + 'px;left:' + dayColX + 'px;width:66px;z-index:1;">' +
+                '<div style="font-size:11px;font-weight:500;text-transform:capitalize;">' + day.weekday + '</div>' +
+                '<div style="font-size:10px;color:#64748b;">' + day.dLabel + '</div></div>';
+            if (day.moon){
+                overlayHtml += '<div style="position:absolute;top:' + (midY-2) + 'px;left:' + moonColX + 'px;font-size:15px;z-index:1;">' + day.moon + '</div>';
+            }
+
+            day.ev.forEach(function(e){
+                const pt = allPts[pointGlobalIdx];
+                if (e.c !== null){
+                    overlayHtml += '<div style="position:absolute;top:' + (pt.y-6) + 'px;left:' + rightTimeColX + 'px;font-size:10.5px;color:#475569;white-space:nowrap;">' + e.t + '</div>';
+                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="10" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
+                    pointsSvg += '<text x="' + pt.x.toFixed(1) + '" y="' + pt.y.toFixed(1) + '" text-anchor="middle" dominant-baseline="central" font-size="8.5" font-weight="700" fill="#ffffff" font-family="Montserrat, sans-serif">' + e.c + '</text>';
+                } else {
+                    overlayHtml += '<div style="position:absolute;top:' + (pt.y-6) + 'px;left:0;width:' + leftTimeRight + 'px;text-align:right;font-size:10.5px;color:#475569;white-space:nowrap;">' + e.t + '</div>';
+                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="3.5" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
+                }
+                pointGlobalIdx++;
+            });
         });
 
-        const coeffs = events.map(e => e.c).filter(c => c !== null);
-        const maxCoeff = coeffs.length ? Math.max.apply(null, coeffs) : null;
-        const color = dayColor(maxCoeff);
-        const path = pts.length > 1 ? catmull(pts) : '';
-        const dots = pts.map(p => '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="2" fill="'+color+'"></circle>').join('');
-        const labels = events.map(e => '<div class="tcv-ev">'+e.t+(e.c !== null ? ' <span class="tcv-coeff">('+e.c+')</span>' : '')+'</div>').join('');
+        root.innerHTML = overlayHtml + '<svg width="' + CONTENT_W + '" height="' + totalH + '" style="position:absolute;top:0;left:0;z-index:0;" viewBox="0 0 ' + CONTENT_W + ' ' + totalH + '">' + pathsSvg + pointsSvg + '</svg>';
 
-        const isToday = jour.date === todayStr;
+        const todayEl = days.find(d => d.today);
+        if (todayEl) {
+            setTimeout(function(){
+                window.scrollTo({ top: root.getBoundingClientRect().top + window.scrollY + todayEl.startY - 150, behavior: 'smooth' });
+            }, 150);
+        }
+    }
 
-        html += '<div class="tcv-row'+(isToday ? ' tcv-today' : '')+'"'+(isToday ? ' id="tcv-today"' : '')+'>' +
-            '<div class="tcv-day"><div class="tcv-day-name">'+WEEKDAYS[d.getDay()]+'</div>' +
-            '<div class="tcv-day-date">'+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'</div></div>' +
-            '<svg width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" class="tcv-svg">' +
-            '<path d="'+path+'" fill="none" stroke="'+color+'" stroke-width="1.6" stroke-linecap="round"></path>'+dots+'</svg>' +
-            '<div class="tcv-events">'+labels+'</div></div>';
+    window.setLanguage = function(lang){
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.getElementById('btn-' + lang);
+        if (activeBtn) activeBtn.classList.add('active');
+        if (typeof translations !== 'undefined' && translations[lang]) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+        }
+        localStorage.setItem(WEEKDAY_KEY, lang);
+        renderCalendar();
+    };
+
+    document.addEventListener('DOMContentLoaded', function(){
+        const browserLang = navigator.language.substring(0, 2);
+        const savedLang = localStorage.getItem(WEEKDAY_KEY) || (browserLang === 'en' ? 'en' : 'fr');
+        setLanguage(savedLang);
     });
-
-    container.innerHTML = html || '<div class="tcv-empty">Aucune donnée exploitable trouvée dans donnees.js.</div>';
-
-    setTimeout(function(){
-        const todayEl = document.getElementById('tcv-today');
-        if (todayEl) todayEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 100);
 })();
 </script>
 
