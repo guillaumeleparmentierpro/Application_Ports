@@ -251,7 +251,7 @@
     }
 
     // Lignes resserrées verticalement, disposition élargie horizontalement (validé sur mobile réel)
-    const ROW = 34, DAYGAP = 8, MONTHGAP = 30;
+    const ROW = 26, DAYGAP = 5, MONTHGAP = 22;
     const dayColX = 4, leftTimeRight = 116, laneLeft = 128, laneWidth = 92, rightTimeColX = 234, moonColX = 286;
     const CONTENT_W = 312;
 
@@ -290,10 +290,10 @@
         const days = data.map(function(jour){
             const dateObj = new Date(jour.date + 'T12:00:00');
             const events = [
-                { t: jour.bm1, h: parseNum(jour.bm1_h), c: null },
-                { t: jour.pm1, h: parseNum(jour.pm1_h), c: parseNum(jour.coeff1) },
-                { t: jour.bm2, h: parseNum(jour.bm2_h), c: null },
-                { t: jour.pm2, h: parseNum(jour.pm2_h), c: parseNum(jour.coeff2) }
+                { t: jour.bm1, h: parseNum(jour.bm1_h), c: null, type: 'BM' },
+                { t: jour.pm1, h: parseNum(jour.pm1_h), c: parseNum(jour.coeff1), type: 'PM' },
+                { t: jour.bm2, h: parseNum(jour.bm2_h), c: null, type: 'BM' },
+                { t: jour.pm2, h: parseNum(jour.pm2_h), c: parseNum(jour.coeff2), type: 'PM' }
             ].filter(e => e.t && e.t !== '-' && e.h !== null);
             events.sort((a,b) => a.t.localeCompare(b.t));
             return {
@@ -361,13 +361,17 @@
 
             day.ev.forEach(function(e){
                 const pt = allPts[pointGlobalIdx];
-                if (e.c !== null){
+                if (e.type === 'PM'){
+                    // Pleine mer : toujours à droite, toujours un grand rond (même sans coeff, cas des jours à 3 marées)
                     overlayHtml += '<div style="position:absolute;top:' + (pt.y-6) + 'px;left:' + rightTimeColX + 'px;font-size:10.5px;color:#475569;white-space:nowrap;">' + e.t + '</div>';
-                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="10" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
-                    pointsSvg += '<text x="' + pt.x.toFixed(1) + '" y="' + pt.y.toFixed(1) + '" text-anchor="middle" dominant-baseline="central" font-size="8.5" font-weight="700" fill="#ffffff" font-family="Montserrat, sans-serif">' + e.c + '</text>';
+                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="9" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
+                    if (e.c !== null){
+                        pointsSvg += '<text x="' + pt.x.toFixed(1) + '" y="' + pt.y.toFixed(1) + '" text-anchor="middle" dominant-baseline="central" font-size="8" font-weight="700" fill="#ffffff" font-family="Montserrat, sans-serif">' + e.c + '</text>';
+                    }
                 } else {
+                    // Basse mer : toujours à gauche, petit point
                     overlayHtml += '<div style="position:absolute;top:' + (pt.y-6) + 'px;left:0;width:' + leftTimeRight + 'px;text-align:right;font-size:10.5px;color:#475569;white-space:nowrap;">' + e.t + '</div>';
-                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="3.5" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
+                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="3" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
                 }
                 pointGlobalIdx++;
             });
