@@ -9,7 +9,6 @@
 
     <!-- Données réelles du port : ce fichier doit être présent dans le même dossier que cette page -->
     <script src="donnees.js"></script>
-    <script src="lang.js"></script>
 
     <style>
         :root {
@@ -19,8 +18,9 @@
             --marine-blue: #1e3a8a;
             --text-main: #1e293b;
             --today-bg: #fef9c3;
-            --spring-red: #ef4444;
-            --neap-gray: #94a3b8;
+            --weekend-bg: #fef2f2;
+            --tide-high: #ef4444;
+            --tide-neap: #94a3b8;
         }
 
         body {
@@ -52,9 +52,7 @@
         .top-nav {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             margin-bottom: 8px;
-            gap: 8px;
         }
 
         .btn-action {
@@ -72,10 +70,6 @@
             white-space: nowrap;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
-        .lang-switch { font-size: 1.3rem; flex-shrink: 0; }
-        .lang-btn { cursor: pointer; opacity: 0.3; transition: opacity 0.3s ease, transform 0.2s ease; display: inline-block; vertical-align: middle; }
-        .lang-btn.active { opacity: 1; transform: scale(1.15); }
 
         .main-title {
             font-size: 1.05rem;
@@ -112,7 +106,7 @@
         .tcv-wrap {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 15px;
+            padding: 15px 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
             border-top: 4px solid var(--marine-blue);
@@ -121,12 +115,12 @@
 
         .tcv-legend {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 10px;
-            font-size: 0.62rem;
+            padding: 0 6px;
+            font-size: 0.6rem;
             font-weight: 600;
-            color: #64748b;
-            text-transform: uppercase;
+            color: #475569;
             flex-wrap: wrap;
         }
 
@@ -134,6 +128,7 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            white-space: nowrap;
         }
 
         .tcv-legend i {
@@ -141,26 +136,6 @@
             height: 9px;
             border-radius: 50%;
             display: inline-block;
-        }
-
-        .tcv-scroll {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        /* Bande de séparation de mois : identique à .month-separator de planning.html */
-        .tcv-month {
-            background: var(--marine-blue);
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-align: left;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 8px 10px;
-            box-sizing: border-box;
-            border-radius: 4px;
         }
 
         .tcv-empty {
@@ -178,32 +153,45 @@
 
     <div class="sticky-header">
         <div class="top-nav">
-            <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
-            <div class="lang-switch">
-                <span onclick="setLanguage('fr')" id="btn-fr" class="lang-btn active" title="Français">🇫🇷</span>
-                <span style="color:#cbd5e1;font-size:1rem;vertical-align:middle;margin:0 2px;">|</span>
-                <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
-            </div>
-            <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES PORTE</a>
+            <a href="index.html" class="btn-action">◀ RETOUR</a>
+            <a href="planning.html" class="btn-action">HORAIRES PORTE</a>
         </div>
-        <h1 class="main-title" data-i18n="cal_page_title">Calendrier des marées<sup>*</sup></h1>
+        <h1 class="main-title">Calendrier des marées<sup>*</sup></h1>
         <div class="test-flag">⚠ Page de test — Carteret</div>
     </div>
 
     <div class="tcv-wrap">
         <div class="tcv-legend">
-            <span><i style="background:var(--marine-blue)"></i><span data-i18n="cal_legend_avg">moyenne</span></span>
-            <span><i style="background:var(--spring-red)"></i><span data-i18n="cal_legend_spring">vive-eau</span></span>
-            <span><i style="background:var(--neap-gray)"></i><span data-i18n="cal_legend_neap">morte-eau</span></span>
+            <span><i style="background:#1e3a8a"></i>moyenne</span>
+            <span><i style="background:#ef4444"></i>vive-eau (coeff ≥ 90)</span>
+            <span><i style="background:#94a3b8"></i>morte-eau (coeff ≤ 45)</span>
         </div>
-        <div class="tcv-scroll"><div id="tcv-root" style="position:relative;"></div></div>
+        <div id="tcv-root" style="position:relative;width:100%;"></div>
     </div>
 
 </div>
 
 <script>
 (function(){
-    const WEEKDAY_KEY = 'preferredLang';
+    const wrap = document.getElementById('tcv-root');
+    if (!wrap) return;
+
+    if (typeof data === 'undefined' || !Array.isArray(data) || data.length === 0) {
+        wrap.innerHTML = '<div class="tcv-empty">donnees.js introuvable ou vide.<br>Vérifie que ce fichier est bien placé dans le même dossier que donnees.js (racine du site Carteret).</div>';
+        return;
+    }
+
+    const WEEKDAYS = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+    const MONTHS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+
+    // Mise en page verticale : constantes d'espacement (en px, coordonnées "logiques" = px réels du composant)
+    const ROW = 30;              // hauteur entre deux événements de marée
+    const DAYGAP = 10;           // espace entre deux jours
+    const MONTHGAP = 52;         // espace ajouté avant le début d'un nouveau mois
+    const BAND_OFFSET = 46;      // distance entre le haut de la bande de mois et le 1er point du mois (évite que le rond ne chevauche la bande)
+    const TOP_MARGIN = 6;        // marge tout en haut du calendrier
+    const CIRCLE_R_PM = 9.5;     // rayon des ronds "pleine mer" (avec coefficient affiché dedans)
+    const CIRCLE_R_BM = 3.5;     // rayon des points "basse mer"
 
     function parseNum(v){
         if (v === undefined || v === null) return null;
@@ -213,198 +201,178 @@
         return isNaN(n) ? null : n;
     }
 
-    // Couleurs identiques à celles de coeff-badge / coeff-badge.high sur planning.html
-    const COLOR_AVG = '#1e3a8a';
-    const COLOR_SPRING = '#ef4444';
-    const COLOR_NEAP = '#94a3b8';
-
+    // Couleurs et seuils identiques à planning.html (isHigh = coeff >= 90)
     function dayColor(maxCoeff){
-        if (maxCoeff === null) return COLOR_AVG;
-        if (maxCoeff >= 90) return COLOR_SPRING;   // seuil identique à isHigh1/isHigh2 dans planning.html
-        if (maxCoeff <= 45) return COLOR_NEAP;
-        return COLOR_AVG;
+        if (maxCoeff === null) return '#1e3a8a';
+        if (maxCoeff >= 90) return '#ef4444';
+        if (maxCoeff <= 45) return '#94a3b8';
+        return '#1e3a8a';
+    }
+    function textColorFor(bg){
+        return bg === '#94a3b8' ? '#1e293b' : '#ffffff';
+    }
+
+    // Phase de lune : algorithme identique à celui utilisé sur index.html (même référence de nouvelle lune)
+    function moonEmojiIfKeyPhase(dateObj){
+        const cycleLunaireMs = 2551442877;
+        const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57);
+        let phase = ((dateObj.getTime() - referenceNouvelleLuneMs) % cycleLunaireMs) / cycleLunaireMs;
+        if (phase < 0) phase += 1;
+        const threshold = 0.02; // ne retient que le jour le plus proche de chaque phase principale
+        function near(target){ let diff = Math.abs(phase - target); diff = Math.min(diff, 1 - diff); return diff <= threshold; }
+        if (near(0)) return '🌑';
+        if (near(0.25)) return '🌓';
+        if (near(0.5)) return '🌕';
+        if (near(0.75)) return '🌗';
+        return null;
     }
 
     function straightRange(pts, s, e){
         let d = '';
-        for (let i = s; i <= e; i++){
-            d += (i === s ? 'M' : 'L') + pts[i].x.toFixed(1) + ',' + pts[i].y.toFixed(1) + ' ';
-        }
+        for (let i = s; i <= e; i++){ d += (i === s ? 'M' : 'L') + pts[i].x.toFixed(1) + ',' + pts[i].y.toFixed(1) + ' '; }
         return d;
     }
 
-    // Phase lunaire : formule identique à celle utilisée dans index.html, pour rester cohérent
-    function moonPhaseFraction(dateObj){
-        const cycleLunaireMs = 2551442877;
-        const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57);
-        const phase = ((dateObj.getTime() - referenceNouvelleLuneMs) % cycleLunaireMs) / cycleLunaireMs;
-        return phase < 0 ? phase + 1 : phase;
-    }
-    function circDist(a,b){ const d = Math.abs(a-b); return Math.min(d, 1-d); }
-    const dailyStep = 1 / 29.53059;
-    const MOON_TARGETS = [{t:0,e:'🌑'},{t:0.25,e:'🌓'},{t:0.5,e:'🌕'},{t:0.75,e:'🌓'}];
-    function moonEventEmoji(dateObj){
-        const p = moonPhaseFraction(dateObj);
-        let best = null, bestDist = Infinity;
-        MOON_TARGETS.forEach(m => { const d = circDist(p, m.t); if (d < bestDist) { bestDist = d; best = m.e; } });
-        return bestDist < dailyStep/2 ? best : '';
-    }
+    const now = new Date();
+    const tzoffset = now.getTimezoneOffset() * 60000;
+    const todayStr = new Date(now - tzoffset).toISOString().split('T')[0];
 
-    // Lignes resserrées verticalement, disposition élargie horizontalement (validé sur mobile réel)
-    const ROW = 26, DAYGAP = 5, MONTHGAP = 22;
-    const dayColX = 4, leftTimeRight = 116, laneLeft = 128, laneWidth = 92, rightTimeColX = 234, moonColX = 286;
-    const CONTENT_W = 312;
-
-    function renderCalendar(){
-        const root = document.getElementById('tcv-root');
-        if (!root) return;
-
-        if (typeof data === 'undefined' || !Array.isArray(data) || data.length === 0) {
-            root.innerHTML = '<div class="tcv-empty">donnees.js introuvable ou vide.<br>Vérifie que ce fichier est bien placé dans le même dossier (racine Carteret).</div>';
-            return;
-        }
-
-        const currentLang = localStorage.getItem(WEEKDAY_KEY) || 'fr';
-        const locale = currentLang === 'en' ? 'en-GB' : 'fr-FR';
-
-        // Échelle de hauteur FIXE calculée sur TOUT donnees.js (pas seulement les jours affichés),
-        // pour que l'amplitude visuelle soit toujours comparable, quelle que soit la période.
-        let globalMin = Infinity, globalMax = -Infinity;
-        data.forEach(function(jour){
-            [jour.bm1_h, jour.pm1_h, jour.bm2_h, jour.pm2_h].forEach(function(v){
-                const n = parseNum(v);
-                if (n !== null){
-                    if (n < globalMin) globalMin = n;
-                    if (n > globalMax) globalMax = n;
-                }
-            });
+    // Échelle de hauteur FIXE sur tout donnees.js (pas seulement les jours affichés) :
+    // c'est ce qui permet de comparer visuellement une vive-eau et une morte-eau.
+    let globalMin = Infinity, globalMax = -Infinity;
+    data.forEach(function(jour){
+        [jour.bm1_h, jour.pm1_h, jour.bm2_h, jour.pm2_h].forEach(function(v){
+            const n = parseNum(v);
+            if (n !== null){
+                if (n < globalMin) globalMin = n;
+                if (n > globalMax) globalMax = n;
+            }
         });
-        if (!isFinite(globalMin) || !isFinite(globalMax)) { globalMin = 0; globalMax = 10; }
-        const range = (globalMax - globalMin) || 1;
+    });
+    if (!isFinite(globalMin) || !isFinite(globalMax)) { globalMin = 0; globalMax = 10; }
+    const globalRange = (globalMax - globalMin) || 1;
 
-        const now = new Date();
-        const tzoffset = now.getTimezoneOffset() * 60000;
-        const todayStr = new Date(now - tzoffset).toISOString().split('T')[0];
+    // Construction du jeu de jours à partir de donnees.js
+    const days = [];
+    data.forEach(function(jour){
+        const d = new Date(jour.date + 'T12:00:00');
+        if (isNaN(d.getTime())) return;
 
-        // Construction des jours avec leurs événements triés par heure
-        const days = data.map(function(jour){
-            const dateObj = new Date(jour.date + 'T12:00:00');
-            const events = [
-                { t: jour.bm1, h: parseNum(jour.bm1_h), c: null, type: 'BM' },
-                { t: jour.pm1, h: parseNum(jour.pm1_h), c: parseNum(jour.coeff1), type: 'PM' },
-                { t: jour.bm2, h: parseNum(jour.bm2_h), c: null, type: 'BM' },
-                { t: jour.pm2, h: parseNum(jour.pm2_h), c: parseNum(jour.coeff2), type: 'PM' }
-            ].filter(e => e.t && e.t !== '-' && e.h !== null);
-            events.sort((a,b) => a.t.localeCompare(b.t));
-            return {
-                dateObj: dateObj,
-                dateStr: jour.date,
-                weekday: dateObj.toLocaleDateString(locale, { weekday: 'long' }),
-                dLabel: String(dateObj.getDate()).padStart(2,'0') + '/' + String(dateObj.getMonth()+1).padStart(2,'0'),
-                monthLabel: dateObj.toLocaleDateString(locale, { month: 'long', year: 'numeric' }),
-                ev: events,
-                today: jour.date === todayStr,
-                moon: moonEventEmoji(dateObj)
-            };
-        }).filter(d => d.ev.length > 0);
+        const events = [
+            { t: jour.bm1, h: parseNum(jour.bm1_h), c: null },
+            { t: jour.pm1, h: parseNum(jour.pm1_h), c: parseNum(jour.coeff1) },
+            { t: jour.bm2, h: parseNum(jour.bm2_h), c: null },
+            { t: jour.pm2, h: parseNum(jour.pm2_h), c: parseNum(jour.coeff2) }
+        ].filter(e => e.t && e.t !== '-' && e.h !== null);
 
-        if (days.length === 0) {
-            root.innerHTML = '<div class="tcv-empty">Aucune donnée exploitable trouvée dans donnees.js.</div>';
-            return;
-        }
+        if (events.length === 0) return;
+        events.sort((a,b) => a.t.localeCompare(b.t));
 
-        // Calcul des positions Y cumulées + points sur l'échelle globale
+        days.push({
+            dateObj: d,
+            dateStr: jour.date,
+            j: WEEKDAYS[d.getDay()],
+            dLabel: String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0'),
+            m: MONTHS[d.getMonth()] + ' ' + d.getFullYear(),
+            ev: events,
+            isToday: jour.date === todayStr,
+            isWeekend: (d.getDay() === 0 || d.getDay() === 6),
+            moon: moonEmojiIfKeyPhase(d)
+        });
+    });
+
+    if (days.length === 0) {
+        wrap.innerHTML = '<div class="tcv-empty">Aucune donnée exploitable trouvée dans donnees.js.</div>';
+        return;
+    }
+
+    function render(){
+        const LOGICAL_W = Math.max(260, Math.round(wrap.parentElement.clientWidth));
+
+        // Colonnes calculées proportionnellement à la largeur réelle disponible (responsive, pas de valeur figée)
+        const dayColX = 4, dayColW = 60, moonColW = 20, timeColW = 44, gap = 6;
+        const laneLeft = dayColX + dayColW + gap;
+        const moonColX = LOGICAL_W - moonColW - 4;
+        const timeColX = moonColX - timeColW - gap;
+        const laneWidth = Math.max(50, timeColX - gap - laneLeft);
+
         let allPts = [];
-        let y = 20;
+        let y = TOP_MARGIN + BAND_OFFSET;
         let lastMonth = null;
-        days.forEach(function(day){
-            if (day.monthLabel !== lastMonth) { if (lastMonth !== null) y += MONTHGAP; lastMonth = day.monthLabel; }
+        days.forEach((day) => {
+            if (day.m !== lastMonth) { if (lastMonth !== null) y += MONTHGAP; lastMonth = day.m; }
             day.startY = y;
-            day.ev.forEach(function(e){
-                allPts.push({ x:0, y:y, t:e.t, h:e.h, c:e.c });
-                y += ROW;
-            });
+            day.ev.forEach((e) => { allPts.push({ x: 0, y, t: e.t, h: e.h, c: e.c }); y += ROW; });
             y += DAYGAP;
         });
         const totalH = y + 10;
-        allPts.forEach(p => { p.x = laneLeft + ((p.h - globalMin) / range) * laneWidth; });
 
-        root.style.width = CONTENT_W + 'px';
-        root.style.height = totalH + 'px';
+        allPts.forEach(p => { p.x = laneLeft + ((p.h - globalMin) / globalRange) * laneWidth; });
+
+        wrap.style.height = totalH + 'px';
 
         let pathsSvg = '', pointsSvg = '', overlayHtml = '';
         let pointGlobalIdx = 0, lastMonthBand = null;
 
-        days.forEach(function(day, di){
-            if (day.monthLabel !== lastMonthBand) {
-                lastMonthBand = day.monthLabel;
-                overlayHtml += '<div class="tcv-month" style="position:absolute;top:' + (day.startY-26) + 'px;left:0;width:' + CONTENT_W + 'px;">' + day.monthLabel + '</div>';
+        days.forEach((day, di) => {
+            const isFirstOfMonth = (day.m !== lastMonthBand);
+            if (isFirstOfMonth) {
+                lastMonthBand = day.m;
+                overlayHtml += '<div style="position:absolute;top:' + (day.startY - BAND_OFFSET) + 'px;left:0;right:0;background:var(--marine-blue);color:#ffffff;font-weight:700;font-size:0.78rem;text-align:left;padding:7px 12px;text-transform:uppercase;letter-spacing:1px;border-radius:6px;">' + day.m + '</div>';
             }
 
             const coeffs = day.ev.map(e => e.c).filter(c => c !== null);
             const color = dayColor(coeffs.length ? Math.max.apply(null, coeffs) : null);
-            const startIdx = pointGlobalIdx, endIdxIncl = pointGlobalIdx + day.ev.length - 1;
-            const segStart = di === 0 ? startIdx : startIdx - 1;
-            pathsSvg += '<path d="' + straightRange(allPts, segStart, endIdxIncl) + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>';
+            const startIdx = pointGlobalIdx, endIdxExcl = pointGlobalIdx + day.ev.length;
+            // La courbe ne se connecte pas d'un mois à l'autre : chaque mois repart de son propre 1er point
+            const segStart = isFirstOfMonth ? startIdx : startIdx - 1;
+            pathsSvg += '<path d="' + straightRange(allPts, segStart, endIdxExcl - 1) + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>';
 
-            if (day.today){
-                overlayHtml += '<div style="position:absolute;top:' + (day.startY-4) + 'px;left:0;width:' + CONTENT_W + 'px;height:' + (day.ev.length*ROW+2) + 'px;background:var(--today-bg);z-index:0;"></div>';
+            const rowH = day.ev.length * ROW + 2;
+            if (day.isToday) {
+                overlayHtml += '<div style="position:absolute;top:' + (day.startY - 4) + 'px;left:0;right:0;height:' + rowH + 'px;background:var(--today-bg);z-index:0;border-radius:6px;"></div>';
+            } else if (day.isWeekend) {
+                overlayHtml += '<div style="position:absolute;top:' + (day.startY - 4) + 'px;left:0;right:0;height:' + rowH + 'px;background:var(--weekend-bg);z-index:0;border-radius:6px;"></div>';
             }
 
-            const midY = day.startY + (day.ev.length*ROW)/2 - ROW/2;
-            overlayHtml += '<div style="position:absolute;top:' + (midY-3) + 'px;left:' + dayColX + 'px;width:66px;z-index:1;">' +
-                '<div style="font-size:11px;font-weight:500;text-transform:capitalize;">' + day.weekday + '</div>' +
-                '<div style="font-size:10px;color:#64748b;">' + day.dLabel + '</div></div>';
-            if (day.moon){
-                overlayHtml += '<div style="position:absolute;top:' + (midY-2) + 'px;left:' + moonColX + 'px;font-size:15px;z-index:1;">' + day.moon + '</div>';
+            const midY = day.startY + (day.ev.length * ROW) / 2 - ROW / 2;
+            overlayHtml += '<div style="position:absolute;top:' + midY + 'px;left:' + dayColX + 'px;width:' + dayColW + 'px;z-index:1;">' +
+                '<div style="font-size:0.66rem;font-weight:600;color:var(--text-main);text-transform:capitalize;line-height:1.15;">' + day.j + '</div>' +
+                '<div style="font-size:0.6rem;color:#64748b;font-weight:600;">' + day.dLabel + '</div></div>';
+            if (day.moon) {
+                overlayHtml += '<div style="position:absolute;top:' + (midY - 1) + 'px;left:' + moonColX + 'px;font-size:15px;z-index:1;">' + day.moon + '</div>';
             }
 
-            day.ev.forEach(function(e){
+            day.ev.forEach((e) => {
                 const pt = allPts[pointGlobalIdx];
-                if (e.type === 'PM'){
-                    // Pleine mer : toujours à droite, toujours un grand rond (même sans coeff, cas des jours à 3 marées)
-                    overlayHtml += '<div style="position:absolute;top:' + (pt.y-6) + 'px;left:' + rightTimeColX + 'px;font-size:10.5px;color:#475569;white-space:nowrap;">' + e.t + '</div>';
-                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="9" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
-                    if (e.c !== null){
-                        pointsSvg += '<text x="' + pt.x.toFixed(1) + '" y="' + pt.y.toFixed(1) + '" text-anchor="middle" dominant-baseline="central" font-size="8" font-weight="700" fill="#ffffff" font-family="Montserrat, sans-serif">' + e.c + '</text>';
-                    }
+                overlayHtml += '<div style="position:absolute;top:' + (pt.y - 6) + 'px;left:' + timeColX + 'px;font-size:0.63rem;color:#475569;font-weight:600;white-space:nowrap;z-index:1;">' + e.t + '</div>';
+                if (e.c !== null) {
+                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_PM + '" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
+                    pointsSvg += '<text x="' + pt.x.toFixed(1) + '" y="' + pt.y.toFixed(1) + '" text-anchor="middle" dominant-baseline="central" font-size="8" font-weight="700" fill="' + textColorFor(color) + '">' + e.c + '</text>';
                 } else {
-                    // Basse mer : toujours à gauche, petit point
-                    overlayHtml += '<div style="position:absolute;top:' + (pt.y-6) + 'px;left:0;width:' + leftTimeRight + 'px;text-align:right;font-size:10.5px;color:#475569;white-space:nowrap;">' + e.t + '</div>';
-                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="3" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
+                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_BM + '" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
                 }
                 pointGlobalIdx++;
             });
         });
 
-        root.innerHTML = overlayHtml + '<svg width="' + CONTENT_W + '" height="' + totalH + '" style="position:absolute;top:0;left:0;z-index:0;" viewBox="0 0 ' + CONTENT_W + ' ' + totalH + '">' + pathsSvg + pointsSvg + '</svg>';
+        wrap.innerHTML = overlayHtml + '<svg width="' + LOGICAL_W + '" height="' + totalH + '" style="position:absolute;top:0;left:0;z-index:0;" viewBox="0 0 ' + LOGICAL_W + ' ' + totalH + '">' + pathsSvg + pointsSvg + '</svg>';
 
-        const todayEl = days.find(d => d.today);
-        if (todayEl) {
+        const todayDay = days.find(d => d.isToday);
+        if (todayDay && todayDay._scrolled !== true) {
+            todayDay._scrolled = true;
             setTimeout(function(){
-                window.scrollTo({ top: root.getBoundingClientRect().top + window.scrollY + todayEl.startY - 150, behavior: 'smooth' });
+                window.scrollTo({ top: wrap.getBoundingClientRect().top + window.scrollY + todayDay.startY - 120, behavior: 'smooth' });
             }, 150);
         }
     }
 
-    window.setLanguage = function(lang){
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = document.getElementById('btn-' + lang);
-        if (activeBtn) activeBtn.classList.add('active');
-        if (typeof translations !== 'undefined' && translations[lang]) {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) el.innerHTML = translations[lang][key];
-            });
-        }
-        localStorage.setItem(WEEKDAY_KEY, lang);
-        renderCalendar();
-    };
+    render();
 
-    document.addEventListener('DOMContentLoaded', function(){
-        const browserLang = navigator.language.substring(0, 2);
-        const savedLang = localStorage.getItem(WEEKDAY_KEY) || (browserLang === 'en' ? 'en' : 'fr');
-        setLanguage(savedLang);
+    let resizeTimer = null;
+    window.addEventListener('resize', function(){
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(render, 200);
     });
 })();
 </script>
