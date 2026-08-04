@@ -914,14 +914,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let map = null;
     let markersLoaded = false;
     
-    // Coordonnées, liens et chemins vers les données de chaque port
+    // Coordonnées, liens exacts et chemins vers les données de chaque port
     const portsList = [
-        { name: "Carteret", lat: 49.3758, lng: -1.7964, url: "#", dataUrl: "donnees.js" },
-        { name: "Diélette", lat: 49.5517, lng: -1.8642, url: "dielette/index.html", dataUrl: "dielette/donnees.js" },
-        { name: "Granville", lat: 48.8354, lng: -1.6053, url: "Granville/index.html", dataUrl: "Granville/donnees.js" },
-        { name: "Saint-Vaast", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js" },
-        { name: "Port-Bail", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js" },
-        { name: "Barfleur", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js" }
+        { id: "carteret", name: "Port de Carteret", lat: 49.3758, lng: -1.7964, url: "#", dataUrl: "donnees.js" },
+        { id: "dielette", name: "Port de Diélette", lat: 49.5517, lng: -1.8642, url: "dielette/index.html", dataUrl: "dielette/donnees.js" },
+        { id: "granville", name: "Port de Hérel (Granville)", lat: 48.8354, lng: -1.6053, url: "Granville/index.html", dataUrl: "Granville/donnees.js" },
+        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", lat: 49.5857, lng: -1.2619, url: "saintvaast/index.html", dataUrl: "saintvaast/donnees.js" },
+        { id: "portbail", name: "Port de Port-Bail sur mer", lat: 49.3323, lng: -1.7169, url: "portbail/index.html", dataUrl: "portbail/donnees.js" },
+        { id: "barfleur", name: "Port de Barfleur", lat: 49.6713, lng: -1.2612, url: "barfleur/index.html", dataUrl: "barfleur/donnees.js" }
     ];
 
     // Fonction pour calculer la couleur en fonction des horaires du port
@@ -972,10 +972,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let color = '#1e3a8a'; // Bleu marine par défaut
             
             // Si c'est Carteret, on a déjà les données chargées sur la page
-            if (port.name === "Carteret" && typeof data !== 'undefined') {
+            if (port.id === "carteret" && typeof data !== 'undefined') {
                 color = getStatusColorFromData(data);
             } else {
-                // Magie noire de Dev : On va chercher discrètement les données des autres ports
+                // On va chercher discrètement les données des autres ports
                 try {
                     let res = await fetch(port.dataUrl);
                     if (res.ok) {
@@ -1002,16 +1002,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 iconAnchor: [17, 17]
             });
 
-            const marker = L.marker([port.lat, port.lng], { icon: portIcon }).addTo(map);
+            // Options du marqueur (On force Carteret à passer au premier plan avec zIndexOffset)
+            let markerOptions = { icon: portIcon };
+            if (port.id === "carteret") {
+                markerOptions.zIndexOffset = 1000;
+            }
+
+            const marker = L.marker([port.lat, port.lng], markerOptions).addTo(map);
             
             // Popup
             marker.bindPopup(`
-                <div style="text-align:center; font-family:'Montserrat',sans-serif; min-width: 140px;">
-                    <b style="color:var(--marine-blue); font-size:15px; display:block; margin-bottom:5px;">Port de ${port.name}</b>
+                <div style="text-align:center; font-family:'Montserrat',sans-serif; min-width: 150px;">
+                    <b style="color:var(--marine-blue); font-size:14px; display:block; margin-bottom:5px;">${port.name}</b>
                     <div style="margin-bottom:12px; font-size:12px; font-weight:900; color:${color};">
                         ${statusText}
                     </div>
-                    <a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2);">Accéder ➡️</a>
+                    <a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2);">Accéder</a>
                 </div>
             `);
         }
@@ -1022,8 +1028,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('port-selector-modal').style.display = 'flex';
         
         if (!map) {
-            // Initialisation de la carte
-            map = L.map('map-container').setView([49.450, -1.500], 9);
+            // Initialisation de la carte (Zoom reculé à 8, centrage plus au sud à 49.200)
+            map = L.map('map-container').setView([49.200, -1.500], 8);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap',
                 maxZoom: 14
