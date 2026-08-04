@@ -227,6 +227,40 @@
         return null;
     }
 
+    function timeToMinutes(t){
+        const parts = t.split(':');
+        return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+    }
+    function isValidTime(t){
+        return !!t && t !== '-' && t !== '--:--' && /^\d{1,2}:\d{2}$/.test(t);
+    }
+    // Construit les 4 événements d'un jour dans le bon ordre chronologique.
+    // Règle identique à celle déjà utilisée dans index.html : bm2 se cale sur bm1,
+    // pm2 se cale sur pm1 (sa "référence"), et ne bascule au jour suivant que si son
+    // horaire est plus petit que celui de sa référence. Sans cette règle, un pm2 comme
+    // "00:08" se retrouvait trié avant le début de journée au lieu d'après 18h35 (ou,
+    // sur les jours à 3 marées, un pm2 pouvait au contraire être poussé après bm2 alors
+    // qu'il doit rester entre bm1 et bm2).
+    function buildDayEvents(jour){
+        const raw = [
+            { t: jour.bm1, h: parseNum(jour.bm1_h), c: null, ref: null },
+            { t: jour.pm1, h: parseNum(jour.pm1_h), c: parseNum(jour.coeff1), ref: null },
+            { t: jour.bm2, h: parseNum(jour.bm2_h), c: null, ref: jour.bm1 },
+            { t: jour.pm2, h: parseNum(jour.pm2_h), c: parseNum(jour.coeff2), ref: jour.pm1 }
+        ];
+        const valid = raw.filter(e => isValidTime(e.t) && e.h !== null);
+        valid.forEach(e => {
+            let mins = timeToMinutes(e.t);
+            if (isValidTime(e.ref)) {
+                const refMins = timeToMinutes(e.ref);
+                if (mins < refMins) mins += 1440;
+            }
+            e.sortKey = mins;
+        });
+        valid.sort((a, b) => a.sortKey - b.sortKey);
+        return valid;
+    }
+
     function straightRange(pts, s, e){
         let d = '';
         for (let i = s; i <= e; i++){ d += (i === s ? 'M' : 'L') + pts[i].x.toFixed(1) + ',' + pts[i].y.toFixed(1) + ' '; }
@@ -258,15 +292,8 @@
         const d = new Date(jour.date + 'T12:00:00');
         if (isNaN(d.getTime())) return;
 
-        const events = [
-            { t: jour.bm1, h: parseNum(jour.bm1_h), c: null },
-            { t: jour.pm1, h: parseNum(jour.pm1_h), c: parseNum(jour.coeff1) },
-            { t: jour.bm2, h: parseNum(jour.bm2_h), c: null },
-            { t: jour.pm2, h: parseNum(jour.pm2_h), c: parseNum(jour.coeff2) }
-        ].filter(e => e.t && e.t !== '-' && e.h !== null);
-
+        const events = buildDayEvents(jour);
         if (events.length === 0) return;
-        events.sort((a,b) => a.t.localeCompare(b.t));
 
         days.push({
             dateObj: d,
