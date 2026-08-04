@@ -4,6 +4,8 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        gate_access_title: "Accès au port",
+btn_calendar: "CALENDRIER",
         cal_title: "Calendrier des marées",
 cal_legend_avg: "moyenne",
 cal_legend_high: "forte marée (coeff ≥ 95)",
@@ -301,6 +303,8 @@ pb_btn_top_title: "Retour en haut",
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        gate_access_title: "Port access",
+btn_calendar: "CALENDAR",
         cal_title: "Tide calendar",
 cal_legend_avg: "average",
 cal_legend_high: "spring tide (coeff ≥ 95)",
