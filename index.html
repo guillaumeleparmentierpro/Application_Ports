@@ -920,5 +920,18 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(checkVigilanceMeteo, 5 * 60 * 1000);
 });
 </script>
+    <button id="btn-top" title="Retour en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})"></button>
+<script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btnTop.style.display = 'flex';
+            setTimeout(() => btnTop.classList.add('visible'), 10);
+        } else {
+            btnTop.classList.remove('visible');
+            setTimeout(() => { if (!btnTop.classList.contains('visible')) btnTop.style.display = 'none'; }, 400);
+        }
+    });
+</script>
 </body>
 </html>
