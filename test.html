@@ -912,58 +912,131 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
     let map = null;
+    let markersLoaded = false;
     
-    // Coordonnées et liens des ports
+    // Coordonnées, liens et chemins vers les données de chaque port
     const portsList = [
-        { name: "Carteret", lat: 49.3758, lng: -1.7964, url: "#" },
-        { name: "Diélette", lat: 49.5517, lng: -1.8642, url: "dielette/index.html" },
-        { name: "Granville", lat: 48.8354, lng: -1.6053, url: "Granville/index.html" },
-        { name: "Saint-Vaast", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html" },
-        { name: "Port-Bail", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html" },
-        { name: "Barfleur", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html" }
+        { name: "Carteret", lat: 49.3758, lng: -1.7964, url: "#", dataUrl: "donnees.js" },
+        { name: "Diélette", lat: 49.5517, lng: -1.8642, url: "dielette/index.html", dataUrl: "dielette/donnees.js" },
+        { name: "Granville", lat: 48.8354, lng: -1.6053, url: "Granville/index.html", dataUrl: "Granville/donnees.js" },
+        { name: "Saint-Vaast", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js" },
+        { name: "Port-Bail", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js" },
+        { name: "Barfleur", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js" }
     ];
 
+    // Fonction pour calculer la couleur en fonction des horaires du port
+    function getStatusColorFromData(portData) {
+        if (!portData || !portData.length) return '#cbd5e1'; // Gris (inconnu)
+        
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const todayStr = (new Date(now - tzoffset)).toISOString().split('T')[0];
+        const yesterdayStr = new Date(now.getTime() - 86400000 - tzoffset).toISOString().split('T')[0];
+        const tomorrowStr = new Date(now.getTime() + 86400000 - tzoffset).toISOString().split('T')[0];
+        
+        let allPortes = [];
+        [yesterdayStr, todayStr, tomorrowStr].forEach(ds => {
+            let dData = portData.find(d => d.date === ds);
+            if (dData) {
+                let parts = ds.split('-');
+                let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
+                let portesArray = dData.portes || [];
+                if (!dData.portes) { 
+                    for(let i=1; i<=4; i++) { 
+                        if(dData["ouv"+i] && dData["ferm"+i]) portesArray.push({open: dData["ouv"+i], close: dData["ferm"+i]}); 
+                    } 
+                }
+                portesArray.forEach(p => {
+                    let openTime = parseTime(p.open), closeTime = parseTime(p.close);
+                    if (openTime && closeTime) {
+                        let sO = new Date(y, m, day, openTime.h, openTime.m, 0), sC = new Date(y, m, day, closeTime.h, closeTime.m, 0);
+                        if (sC < sO) sC.setDate(sC.getDate() + 1);
+                        allPortes.push({ sO, sC });
+                    }
+                });
+            }
+        });
+        
+        let activePorte = allPortes.find(p => now >= p.sO && now < p.sC);
+        if (activePorte) {
+            const diffMs = activePorte.sC - now;
+            if (diffMs < 25 * 60 * 1000) return '#fbbf24'; // Orange (Fermeture imminente)
+            return '#10b981'; // Vert (Ouvert)
+        } else {
+            return '#ef4444'; // Rouge (Fermé)
+        }
+    }
+
+    async function loadMapMarkers() {
+        for (let port of portsList) {
+            let color = '#1e3a8a'; // Bleu marine par défaut
+            
+            // Si c'est Carteret, on a déjà les données chargées sur la page
+            if (port.name === "Carteret" && typeof data !== 'undefined') {
+                color = getStatusColorFromData(data);
+            } else {
+                // Magie noire de Dev : On va chercher discrètement les données des autres ports
+                try {
+                    let res = await fetch(port.dataUrl);
+                    if (res.ok) {
+                        let text = await res.text();
+                        // On isole le tableau JSON contenu dans le fichier donnees.js
+                        let scriptBody = text.replace(/(const|let|var)\s+data\s*=/g, 'return ');
+                        let fetchFunc = new Function(scriptBody);
+                        let portData = fetchFunc();
+                        color = getStatusColorFromData(portData);
+                    }
+                } catch (e) {
+                    console.log("Impossible de charger les données pour " + port.name);
+                }
+            }
+
+            // Textes pour la popup
+            let statusText = color === '#10b981' ? '🟢 OUVERT' : (color === '#ef4444' ? '🔴 FERMÉ' : (color === '#fbbf24' ? '🟠 IMMINENT' : '⚪ INCONNU'));
+
+            // Création de l'icône colorée
+            const portIcon = L.divIcon({
+                className: 'custom-port-marker',
+                html: `<div style="background:${color}; color:white; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:3px solid white; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-size:16px; transition: transform 0.2s;">⚓</div>`,
+                iconSize: [34, 34],
+                iconAnchor: [17, 17]
+            });
+
+            const marker = L.marker([port.lat, port.lng], { icon: portIcon }).addTo(map);
+            
+            // Popup
+            marker.bindPopup(`
+                <div style="text-align:center; font-family:'Montserrat',sans-serif; min-width: 140px;">
+                    <b style="color:var(--marine-blue); font-size:15px; display:block; margin-bottom:5px;">Port de ${port.name}</b>
+                    <div style="margin-bottom:12px; font-size:12px; font-weight:900; color:${color};">
+                        ${statusText}
+                    </div>
+                    <a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2);">Accéder ➡️</a>
+                </div>
+            `);
+        }
+        markersLoaded = true;
+    }
+
     function openMapModal() {
-        // Afficher la modale
         document.getElementById('port-selector-modal').style.display = 'flex';
         
-        // Si la carte n'est pas encore créée, on l'initialise
         if (!map) {
-            // Centrage sur le Cotentin avec un zoom idéal (niveau 9)
-            map = L.map('map-container').setView([49.350, -1.500], 9);
-            
-            // Fond de carte OpenStreetMap
+            // Initialisation de la carte
+            map = L.map('map-container').setView([49.450, -1.500], 9);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap',
                 maxZoom: 14
             }).addTo(map);
 
-            // Ajout des marqueurs personnalisés
-            portsList.forEach(port => {
-                // Création d'une icône CSS custom (un rond bleu avec une ancre)
-                const portIcon = L.divIcon({
-                    className: 'custom-port-marker',
-                    html: `<div style="background:var(--marine-blue); color:white; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid white; box-shadow:0 3px 6px rgba(0,0,0,0.4); font-size:12px;">⚓</div>`,
-                    iconSize: [28, 28],
-                    iconAnchor: [14, 14]
-                });
-
-                const marker = L.marker([port.lat, port.lng], { icon: portIcon }).addTo(map);
-                
-                // Popup au clic
-                marker.bindPopup(`
-                    <div style="text-align:center; font-family:'Montserrat',sans-serif; min-width: 120px;">
-                        <b style="color:var(--marine-blue); font-size:14px; display:block; margin-bottom:8px;">Port de ${port.name}</b>
-                        <a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:8px 15px; border-radius:6px; font-size:12px; font-weight:bold; display:inline-block; width: 100%; box-sizing: border-box;">Y aller ➡️</a>
-                    </div>
-                `);
-            });
+            // Charger les marqueurs dynamiques
+            loadMapMarkers();
         }
         
-        // ⚠️ Très important : forcer Leaflet à recalculer sa taille après affichage
+        // Corriger l'affichage de Leaflet dans une modale
         setTimeout(() => {
             map.invalidateSize();
-        }, 100);
+        }, 150);
     }
 </script>
 
