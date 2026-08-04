@@ -4,6 +4,13 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        cal_title: "Calendrier des marées",
+cal_legend_avg: "moyenne",
+cal_legend_high: "forte marée (coeff ≥ 95)",
+cal_legend_neap: "morte-eau (coeff ≤ 45)",
+cal_low_tide_hint: "⟵ Basse mer",
+cal_high_tide_hint: "Pleine mer ⟶",
+cal_btn_today: "AUJOURD'HUI",
 pb_plan_main_title: "Fenêtres d'accès et marées<sup>*</sup>",
 pb_plan_btn_calendar: "CALENDRIER DES MARÉES",
 pb_plan_info_box: "⚓ <strong>Port-Bail-sur-Mer</strong> — pas de porte physique.<br>Accès possible <strong>± 2h autour de la Pleine Mer (PM)</strong>. Les créneaux sont calculés automatiquement.",
@@ -294,6 +301,13 @@ pb_btn_top_title: "Retour en haut",
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+        cal_title: "Tide calendar",
+cal_legend_avg: "average",
+cal_legend_high: "spring tide (coeff ≥ 95)",
+cal_legend_neap: "neap tide (coeff ≤ 45)",
+cal_low_tide_hint: "⟵ Low tide",
+cal_high_tide_hint: "High tide ⟶",
+cal_btn_today: "TODAY",
 pb_plan_main_title: "Access windows &amp; tides<sup>*</sup>",
 pb_plan_btn_calendar: "TIDE CALENDAR",
 pb_plan_info_box: "⚓ <strong>Port-Bail-sur-Mer</strong> — no physical gate.<br>Access possible <strong>± 2h around High Tide (HT)</strong>. Windows are calculated automatically.",
