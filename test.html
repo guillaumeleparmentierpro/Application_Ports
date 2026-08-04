@@ -92,21 +92,6 @@
             font-size: 0.7rem;
         }
 
-        .test-flag {
-            text-align: center;
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: #92400e;
-            background: #fef3c7;
-            border: 1px solid #fde68a;
-            border-radius: 6px;
-            padding: 4px 8px;
-            margin: 8px auto 0 auto;
-            display: table;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
         .tcv-legend {
             display: flex;
             gap: 8px;
@@ -194,13 +179,11 @@
     <div class="sticky-header">
         <div class="top-nav">
             <a href="index.html" class="btn-action">◀ RETOUR</a>
-            <a href="planning.html" class="btn-action">HORAIRES PORTE</a>
         </div>
-        <h1 class="main-title">Calendrier des marées<sup>*</sup></h1>
-        <div class="test-flag">⚠ Page de test — Carteret</div>
+        <h1 class="main-title">Calendrier des marées</h1>
         <div class="tcv-legend">
             <span><i style="background:#1e3a8a"></i>moyenne</span>
-            <span><i style="background:#ef4444"></i>vive-eau (coeff ≥ 90)</span>
+            <span><i style="background:#ef4444"></i>forte marée (coeff ≥ 90)</span>
             <span><i style="background:#94a3b8"></i>morte-eau (coeff ≤ 45)</span>
         </div>
     </div>
@@ -229,13 +212,13 @@
 
     // Mise en page verticale resserrée (en px réels du composant) pour faire tenir
     // environ une semaine à l'écran sur un téléphone, au lieu de 4 jours.
-    const ROW = 20;
+    const ROW = 24;
     const DAYGAP = 5;
-    const MONTHGAP = 44;
-    const BAND_OFFSET = 40;
+    const MONTHGAP = 48;
+    const BAND_OFFSET = 44;
     const TOP_MARGIN = 4;
-    const CIRCLE_R_PM = 8;
-    const CIRCLE_R_BM = 3.2;
+    const CIRCLE_R_PM = 10.5;
+    const CIRCLE_R_BM = 3.6;
 
     function parseNum(v){
         if (v === undefined || v === null) return null;
@@ -368,7 +351,7 @@
     function render(){
         const LOGICAL_W = Math.max(260, Math.round(wrap.clientWidth));
 
-        const dayColX = 4, dayColW = 60, bmColW = 40, pmColW = 40, moonColW = 20, gap = 4;
+        const dayColX = 4, dayColW = 72, bmColW = 40, pmColW = 40, moonColW = 20, gap = 4;
         const bmColX = dayColX + dayColW + gap;
         const laneLeft = bmColX + bmColW + gap;
         const moonColX = LOGICAL_W - moonColW - 4;
@@ -418,7 +401,7 @@
             const midY = day.startY + (day.ev.length * ROW) / 2 - ROW / 2;
             overlayHtml += '<div style="position:absolute;top:' + midY + 'px;left:' + dayColX + 'px;width:' + dayColW + 'px;z-index:1;">' +
                 '<div style="font-size:0.66rem;font-weight:600;color:var(--text-main);text-transform:capitalize;line-height:1.1;">' + day.j + '</div>' +
-                '<div style="font-size:0.58rem;color:#64748b;font-weight:600;">' + day.dLabel + '</div></div>';
+                '<div style="font-size:1.2rem;color:#64748b;font-weight:700;line-height:1.1;">' + day.dLabel + '</div></div>';
             if (day.moon) {
                 overlayHtml += '<div style="position:absolute;top:' + (midY - 2) + 'px;left:' + moonColX + 'px;font-size:15px;line-height:1;z-index:1;">' + day.moon + '</div>';
             }
@@ -431,7 +414,7 @@
                 overlayHtml += '<div style="position:absolute;top:' + (pt.y - 6) + 'px;left:' + labelX + 'px;width:' + (isPM ? pmColW : bmColW) + 'px;text-align:' + align + ';font-size:0.62rem;color:#334155;font-weight:600;white-space:nowrap;z-index:1;">' + e.t + '</div>';
                 if (isPM) {
                     pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_PM + '" fill="' + color + '" stroke="#ffffff" stroke-width="1.2"></circle>';
-                    pointsSvg += '<text x="' + pt.x.toFixed(1) + '" y="' + pt.y.toFixed(1) + '" text-anchor="middle" dominant-baseline="central" font-size="7.5" font-weight="700" fill="' + textColorFor(color) + '">' + e.c + '</text>';
+                    pointsSvg += '<text x="' + pt.x.toFixed(1) + '" y="' + pt.y.toFixed(1) + '" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="700" fill="' + textColorFor(color) + '">' + e.c + '</text>';
                 } else {
                     pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_BM + '" fill="' + color + '" stroke="#ffffff" stroke-width="1.2"></circle>';
                 }
