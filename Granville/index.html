@@ -99,7 +99,7 @@
         .tide-header-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; font-weight: 700; color: var(--marine-blue); }
         .tide-column { flex: 1; flex-basis: 33.33%; min-width: 0; }
         #tideCanvasLarge { width: 100%; height: 80px; cursor: pointer; }
-        .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75rem; color: var(--text-main); margin-top: 5px; }
+        .tide-footer-info { width: 100%; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.825rem; color: var(--text-main); margin-top: 5px; }
         .weather-iframe-box { border-radius: 10px; overflow: hidden; height: 270px; border: 1px solid #e2e8f0; }
         .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .reveal.active { opacity: 1; transform: translateY(0); }
@@ -231,7 +231,6 @@
         </div>
 
         <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 12px;">
-            <a href="planning.html" class="btn-action" data-i18n="btn_planning">HORAIRES PORTE & MARÉES</a>
             <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
             <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;" data-i18n="btn_install">📱 INSTALLER</button>
         </div>
@@ -251,6 +250,9 @@
     <div id="vigi-detail" style="font-size:0.60rem; font-weight:600; opacity:0.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
 </div>
     <div class="module">
+        <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 12px;">
+            <a href="planning.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_planning">HORAIRES PORTE & MARÉES</a>
+        </div>
         <div id="status-box" class="status-box closed">
             <span class="status-label" data-i18n="label_gate">Porte</span>
             <span class="status-value" id="status-text">--</span>
@@ -280,7 +282,10 @@
     </div>
 
     <div class="module reveal">
-        <div class="module-header" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;" data-i18n="tide_title">Informations marée</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="tide_title">Informations marée</div>
+            <a href="calendrier.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_calendar">CALENDRIER</a>
+        </div>
         <div class="tide-full-module">
             <div class="tide-header-info">
                 <div class="tide-column" style="text-align: left;"><div id="tide-left-label" style="text-transform: uppercase; font-size:0.7rem; font-weight:700;">--</div></div>
