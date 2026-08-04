@@ -163,13 +163,6 @@
         }
         #btn-today.visible { display: flex; }
         #btn-today:active { transform: scale(0.94); }
-        #btn-today .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #fbbf24;
-            flex-shrink: 0;
-        }
     </style>
 </head>
 <body>
@@ -183,8 +176,12 @@
         <h1 class="main-title">Calendrier des marées</h1>
         <div class="tcv-legend">
             <span><i style="background:#1e3a8a"></i>moyenne</span>
-            <span><i style="background:#ef4444"></i>forte marée (coeff ≥ 90)</span>
+            <span><i style="background:#ef4444"></i>forte marée (coeff ≥ 95)</span>
             <span><i style="background:#94a3b8"></i>morte-eau (coeff ≤ 45)</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:6px 5px 8px 5px;font-size:0.62rem;font-weight:700;color:var(--marine-blue);text-transform:uppercase;letter-spacing:0.5px;">
+            <span>⟵ Basse mer</span>
+            <span>Pleine mer ⟶</span>
         </div>
     </div>
 
@@ -194,7 +191,7 @@
 
 </div>
 
-<button id="btn-today"><span class="dot"></span>AUJOURD'HUI</button>
+<button id="btn-today">AUJOURD'HUI</button>
 
 <script>
 (function(){
@@ -230,7 +227,7 @@
 
     function dayColor(maxCoeff){
         if (maxCoeff === null) return '#1e3a8a';
-        if (maxCoeff >= 90) return '#ef4444';
+        if (maxCoeff >= 95) return '#ef4444';
         if (maxCoeff <= 45) return '#94a3b8';
         return '#1e3a8a';
     }
@@ -351,12 +348,16 @@
     function render(){
         const LOGICAL_W = Math.max(260, Math.round(wrap.clientWidth));
 
-        const dayColX = 4, dayColW = 72, bmColW = 40, pmColW = 40, moonColW = 20, gap = 4;
+        const dayColX = 4, dayColW = 60, bmColW = 42, pmColW = 42, moonColW = 20, gap = 4;
+        // Marge entre la courbe et les colonnes d'heures : doit être au moins aussi
+        // grande que le rayon du rond de coefficient, sinon les ronds des jours de
+        // forte marée (qui vont au maximum de l'amplitude) chevauchent le texte.
+        const circleClearance = CIRCLE_R_PM + 5;
         const bmColX = dayColX + dayColW + gap;
-        const laneLeft = bmColX + bmColW + gap;
+        const laneLeft = bmColX + bmColW + circleClearance;
         const moonColX = LOGICAL_W - moonColW - 4;
-        const pmColX = moonColX - pmColW - gap;
-        const laneWidth = Math.max(46, pmColX - gap - laneLeft);
+        const pmColX = moonColX - pmColW - circleClearance;
+        const laneWidth = Math.max(40, pmColX - circleClearance - laneLeft);
 
         let allPts = [];
         let y = TOP_MARGIN + BAND_OFFSET;
@@ -401,7 +402,7 @@
             const midY = day.startY + (day.ev.length * ROW) / 2 - ROW / 2;
             overlayHtml += '<div style="position:absolute;top:' + midY + 'px;left:' + dayColX + 'px;width:' + dayColW + 'px;z-index:1;">' +
                 '<div style="font-size:0.66rem;font-weight:600;color:var(--text-main);text-transform:capitalize;line-height:1.1;">' + day.j + '</div>' +
-                '<div style="font-size:1.2rem;color:#64748b;font-weight:700;line-height:1.1;">' + day.dLabel + '</div></div>';
+                '<div style="font-size:0.96rem;color:#64748b;font-weight:700;line-height:1.1;">' + day.dLabel + '</div></div>';
             if (day.moon) {
                 overlayHtml += '<div style="position:absolute;top:' + (midY - 2) + 'px;left:' + moonColX + 'px;font-size:15px;line-height:1;z-index:1;">' + day.moon + '</div>';
             }
