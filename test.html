@@ -20,8 +20,6 @@
             --today-bg: #fef9c3;
             --weekend-bg: #fef2f2;
             --day-alt-bg: #eff6ff;
-            --tide-high: #ef4444;
-            --tide-neap: #94a3b8;
         }
 
         body {
@@ -41,13 +39,19 @@
             box-sizing: border-box;
         }
 
+        /* Un seul bloc figé pour toute la page : nav + titre + légende.
+           Avant, la légende avait son propre "sticky" séparé avec un calcul de
+           décalage en JS — fragile, et source du bug où le bandeau de mois
+           passait au-dessus. Tout est maintenant dans le même bloc, donc plus
+           besoin de calcul, plus de conflit d'empilement possible. */
         .sticky-header {
             position: -webkit-sticky;
             position: sticky;
             top: 0;
             background: var(--primary-bg);
             z-index: 1000;
-            padding: 10px 5px 12px 5px;
+            padding: 10px 5px 0 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .top-nav {
@@ -103,31 +107,16 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- Module calendrier vertical --- */
-        .tcv-wrap {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-            border-top: 4px solid var(--marine-blue);
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-
-        /* Légende figée : reste visible sous le sticky-header pendant le scroll du calendrier */
         .tcv-legend {
-            position: -webkit-sticky;
-            position: sticky;
-            z-index: 200;
-            background: var(--card-bg);
             display: flex;
-            gap: 10px;
-            padding: 12px 10px 10px 10px;
-            font-size: 0.68rem;
+            gap: 8px;
+            padding: 8px 5px;
+            margin-top: 8px;
+            font-size: 0.62rem;
             font-weight: 600;
             color: #475569;
             flex-wrap: wrap;
-            border-bottom: 1px solid #e2e8f0;
+            border-top: 1px solid #e2e8f0;
         }
 
         .tcv-legend span {
@@ -138,14 +127,23 @@
         }
 
         .tcv-legend i {
-            width: 10px;
-            height: 10px;
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
             display: inline-block;
         }
 
-        .tcv-body {
-            padding: 4px 10px 15px 10px;
+        /* --- Module calendrier vertical --- */
+        .tcv-wrap {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid var(--marine-blue);
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         .tcv-empty {
@@ -154,6 +152,38 @@
             font-size: 0.75rem;
             color: #991b1b;
             font-weight: 600;
+        }
+
+        #btn-today {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 15px;
+            z-index: 9998;
+            background: var(--marine-blue);
+            color: white;
+            border: none;
+            border-radius: 22px;
+            padding: 0 14px;
+            height: 42px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.68rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(30,58,138,0.35);
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        #btn-today.visible { display: flex; }
+        #btn-today:active { transform: scale(0.94); }
+        #btn-today .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fbbf24;
+            flex-shrink: 0;
         }
     </style>
 </head>
@@ -168,25 +198,25 @@
         </div>
         <h1 class="main-title">Calendrier des marées<sup>*</sup></h1>
         <div class="test-flag">⚠ Page de test — Carteret</div>
-    </div>
-
-    <div class="tcv-wrap">
-        <div class="tcv-legend" id="tcv-legend">
+        <div class="tcv-legend">
             <span><i style="background:#1e3a8a"></i>moyenne</span>
             <span><i style="background:#ef4444"></i>vive-eau (coeff ≥ 90)</span>
             <span><i style="background:#94a3b8"></i>morte-eau (coeff ≤ 45)</span>
         </div>
-        <div class="tcv-body">
-            <div id="tcv-root" style="position:relative;width:100%;"></div>
-        </div>
+    </div>
+
+    <div class="tcv-wrap">
+        <div id="tcv-root" style="position:relative;width:100%;"></div>
     </div>
 
 </div>
 
+<button id="btn-today"><span class="dot"></span>AUJOURD'HUI</button>
+
 <script>
 (function(){
     const wrap = document.getElementById('tcv-root');
-    const legend = document.getElementById('tcv-legend');
+    const btnToday = document.getElementById('btn-today');
     if (!wrap) return;
 
     if (typeof data === 'undefined' || !Array.isArray(data) || data.length === 0) {
@@ -197,14 +227,15 @@
     const WEEKDAYS = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
     const MONTHS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
 
-    // Mise en page verticale (en px réels du composant)
-    const ROW = 36;              // hauteur entre deux événements de marée
-    const DAYGAP = 10;           // espace entre deux jours
-    const MONTHGAP = 56;         // espace ajouté avant le début d'un nouveau mois
-    const BAND_OFFSET = 52;      // distance entre le haut de la bande de mois et le 1er point du mois
-    const TOP_MARGIN = 6;
-    const CIRCLE_R_PM = 11;      // rayon des ronds "pleine mer" (coefficient affiché dedans)
-    const CIRCLE_R_BM = 4.5;     // rayon des points "basse mer"
+    // Mise en page verticale resserrée (en px réels du composant) pour faire tenir
+    // environ une semaine à l'écran sur un téléphone, au lieu de 4 jours.
+    const ROW = 20;
+    const DAYGAP = 5;
+    const MONTHGAP = 44;
+    const BAND_OFFSET = 40;
+    const TOP_MARGIN = 4;
+    const CIRCLE_R_PM = 8;
+    const CIRCLE_R_BM = 3.2;
 
     function parseNum(v){
         if (v === undefined || v === null) return null;
@@ -214,7 +245,6 @@
         return isNaN(n) ? null : n;
     }
 
-    // Couleurs et seuils identiques à planning.html (isHigh = coeff >= 90)
     function dayColor(maxCoeff){
         if (maxCoeff === null) return '#1e3a8a';
         if (maxCoeff >= 90) return '#ef4444';
@@ -232,11 +262,6 @@
     function isValidTime(t){
         return !!t && t !== '-' && t !== '--:--' && /^\d{1,2}:\d{2}$/.test(t);
     }
-    // Ordre chronologique correct : bm2 se cale sur bm1, pm2 se cale sur pm1 (sa
-    // "référence"), et ne bascule au jour suivant que si son horaire est plus petit
-    // que celui de sa référence — même règle que index.html. Sans ça, un pm2 du
-    // style "00:08" se retrouvait mal placé, ou au contraire un pm2 d'un jour à
-    // 3 marées finissait après bm2 alors qu'il doit rester entre bm1 et bm2.
     function buildDayEvents(jour){
         const raw = [
             { t: jour.bm1, h: parseNum(jour.bm1_h), c: null, ref: null },
@@ -257,10 +282,6 @@
         return valid;
     }
 
-    // Phase de lune : même algorithme que index.html (même référence de nouvelle lune),
-    // mais on ne marque que le jour le plus proche de chaque phase principale sur
-    // tout le cycle (minimum local), pour ne jamais avoir deux jours consécutifs
-    // marqués pour la même phase.
     function moonPhaseRaw(dateObj){
         const cycleLunaireMs = 2551442877;
         const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57);
@@ -282,7 +303,6 @@
     const tzoffset = now.getTimezoneOffset() * 60000;
     const todayStr = new Date(now - tzoffset).toISOString().split('T')[0];
 
-    // Échelle de hauteur FIXE sur tout donnees.js (pas seulement les jours affichés)
     let globalMin = Infinity, globalMax = -Infinity;
     data.forEach(function(jour){
         [jour.bm1_h, jour.pm1_h, jour.bm2_h, jour.pm2_h].forEach(function(v){
@@ -296,7 +316,6 @@
     if (!isFinite(globalMin) || !isFinite(globalMax)) { globalMin = 0; globalMax = 10; }
     const globalRange = (globalMax - globalMin) || 1;
 
-    // Construction du jeu de jours à partir de donnees.js
     const days = [];
     data.forEach(function(jour){
         const d = new Date(jour.date + 'T12:00:00');
@@ -324,7 +343,6 @@
         return;
     }
 
-    // Marquage des phases de lune (un seul jour par phase et par cycle)
     days.forEach((day, i) => {
         let best = null, bestDist = Infinity;
         MOON_TARGETS.forEach(target => {
@@ -339,20 +357,23 @@
         day.moon = best;
     });
 
+    const todayDay = days.find(d => d.isToday);
+    if (todayDay) {
+        btnToday.classList.add('visible');
+        btnToday.addEventListener('click', function(){
+            window.scrollTo({ top: wrap.getBoundingClientRect().top + window.scrollY + todayDay.startY - 130, behavior: 'smooth' });
+        });
+    }
+
     function render(){
-        // Largeur réellement disponible : mesurée sur #tcv-root lui-même (déjà à
-        // l'intérieur du padding de la carte), pas sur son parent — sinon le SVG
-        // était dessiné plus large que l'espace réel et débordait sur la droite
-        // (c'est ce qui faisait déborder la lune du cadre).
         const LOGICAL_W = Math.max(260, Math.round(wrap.clientWidth));
 
-        // Colonnes : jour | BM (gauche) | courbe | PM (droite) | lune
-        const dayColX = 4, dayColW = 66, bmColW = 44, pmColW = 44, moonColW = 22, gap = 5;
+        const dayColX = 4, dayColW = 60, bmColW = 40, pmColW = 40, moonColW = 20, gap = 4;
         const bmColX = dayColX + dayColW + gap;
         const laneLeft = bmColX + bmColW + gap;
         const moonColX = LOGICAL_W - moonColW - 4;
         const pmColX = moonColX - pmColW - gap;
-        const laneWidth = Math.max(50, pmColX - gap - laneLeft);
+        const laneWidth = Math.max(46, pmColX - gap - laneLeft);
 
         let allPts = [];
         let y = TOP_MARGIN + BAND_OFFSET;
@@ -369,42 +390,37 @@
 
         wrap.style.height = totalH + 'px';
 
-        // Aligne la légende figée sous le sticky-header principal du site
-        const headerEl = document.querySelector('.sticky-header');
-        legend.style.top = (headerEl ? headerEl.offsetHeight : 0) + 'px';
-
         let pathsSvg = '', pointsSvg = '', overlayHtml = '';
         let pointGlobalIdx = 0, lastMonthBand = null;
 
         days.forEach((day, di) => {
-            const dayIndex = di;
             const isFirstOfMonth = (day.m !== lastMonthBand);
             if (isFirstOfMonth) {
                 lastMonthBand = day.m;
-                overlayHtml += '<div style="position:absolute;top:' + (day.startY - BAND_OFFSET) + 'px;left:0;right:0;background:var(--marine-blue);color:#ffffff;font-weight:700;font-size:0.85rem;text-align:left;padding:8px 12px;text-transform:uppercase;letter-spacing:1px;border-radius:6px;">' + day.m + '</div>';
+                overlayHtml += '<div style="position:absolute;top:' + (day.startY - BAND_OFFSET) + 'px;left:0;right:0;background:var(--marine-blue);color:#ffffff;font-weight:700;font-size:0.76rem;text-align:left;padding:6px 10px;text-transform:uppercase;letter-spacing:1px;border-radius:6px;">' + day.m + '</div>';
             }
 
             const coeffs = day.ev.map(e => e.c).filter(c => c !== null);
             const color = dayColor(coeffs.length ? Math.max.apply(null, coeffs) : null);
             const startIdx = pointGlobalIdx, endIdxExcl = pointGlobalIdx + day.ev.length;
             const segStart = isFirstOfMonth ? startIdx : startIdx - 1;
-            pathsSvg += '<path d="' + straightRange(allPts, segStart, endIdxExcl - 1) + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>';
+            pathsSvg += '<path d="' + straightRange(allPts, segStart, endIdxExcl - 1) + '" fill="none" stroke="' + color + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>';
 
             const rowH = day.ev.length * ROW + 2;
             let bandColor = null;
             if (day.isToday) bandColor = 'var(--today-bg)';
             else if (day.isWeekend) bandColor = 'var(--weekend-bg)';
-            else if (dayIndex % 2 === 0) bandColor = 'var(--day-alt-bg)';
+            else if (di % 2 === 0) bandColor = 'var(--day-alt-bg)';
             if (bandColor) {
-                overlayHtml += '<div style="position:absolute;top:' + (day.startY - 4) + 'px;left:0;right:0;height:' + rowH + 'px;background:' + bandColor + ';z-index:0;border-radius:6px;"></div>';
+                overlayHtml += '<div style="position:absolute;top:' + (day.startY - 3) + 'px;left:0;right:0;height:' + rowH + 'px;background:' + bandColor + ';z-index:0;border-radius:4px;"></div>';
             }
 
             const midY = day.startY + (day.ev.length * ROW) / 2 - ROW / 2;
             overlayHtml += '<div style="position:absolute;top:' + midY + 'px;left:' + dayColX + 'px;width:' + dayColW + 'px;z-index:1;">' +
-                '<div style="font-size:0.78rem;font-weight:600;color:var(--text-main);text-transform:capitalize;line-height:1.15;">' + day.j + '</div>' +
-                '<div style="font-size:0.68rem;color:#64748b;font-weight:600;">' + day.dLabel + '</div></div>';
+                '<div style="font-size:0.66rem;font-weight:600;color:var(--text-main);text-transform:capitalize;line-height:1.1;">' + day.j + '</div>' +
+                '<div style="font-size:0.58rem;color:#64748b;font-weight:600;">' + day.dLabel + '</div></div>';
             if (day.moon) {
-                overlayHtml += '<div style="position:absolute;top:' + (midY - 2) + 'px;left:' + moonColX + 'px;font-size:18px;line-height:1;z-index:1;">' + day.moon + '</div>';
+                overlayHtml += '<div style="position:absolute;top:' + (midY - 2) + 'px;left:' + moonColX + 'px;font-size:15px;line-height:1;z-index:1;">' + day.moon + '</div>';
             }
 
             day.ev.forEach((e) => {
@@ -412,12 +428,12 @@
                 const isPM = e.c !== null;
                 const labelX = isPM ? pmColX : bmColX;
                 const align = isPM ? 'left' : 'right';
-                overlayHtml += '<div style="position:absolute;top:' + (pt.y - 7) + 'px;left:' + labelX + 'px;width:' + (isPM ? pmColW : bmColW) + 'px;text-align:' + align + ';font-size:0.75rem;color:#334155;font-weight:600;white-space:nowrap;z-index:1;">' + e.t + '</div>';
+                overlayHtml += '<div style="position:absolute;top:' + (pt.y - 6) + 'px;left:' + labelX + 'px;width:' + (isPM ? pmColW : bmColW) + 'px;text-align:' + align + ';font-size:0.62rem;color:#334155;font-weight:600;white-space:nowrap;z-index:1;">' + e.t + '</div>';
                 if (isPM) {
-                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_PM + '" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
-                    pointsSvg += '<text x="' + pt.x.toFixed(1) + '" y="' + pt.y.toFixed(1) + '" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="700" fill="' + textColorFor(color) + '">' + e.c + '</text>';
+                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_PM + '" fill="' + color + '" stroke="#ffffff" stroke-width="1.2"></circle>';
+                    pointsSvg += '<text x="' + pt.x.toFixed(1) + '" y="' + pt.y.toFixed(1) + '" text-anchor="middle" dominant-baseline="central" font-size="7.5" font-weight="700" fill="' + textColorFor(color) + '">' + e.c + '</text>';
                 } else {
-                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_BM + '" fill="' + color + '" stroke="#ffffff" stroke-width="1.5"></circle>';
+                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_BM + '" fill="' + color + '" stroke="#ffffff" stroke-width="1.2"></circle>';
                 }
                 pointGlobalIdx++;
             });
@@ -425,11 +441,10 @@
 
         wrap.innerHTML = overlayHtml + '<svg width="' + LOGICAL_W + '" height="' + totalH + '" style="position:absolute;top:0;left:0;z-index:0;" viewBox="0 0 ' + LOGICAL_W + ' ' + totalH + '">' + pathsSvg + pointsSvg + '</svg>';
 
-        const todayDay = days.find(d => d.isToday);
         if (todayDay && todayDay._scrolled !== true) {
             todayDay._scrolled = true;
             setTimeout(function(){
-                window.scrollTo({ top: wrap.getBoundingClientRect().top + window.scrollY + todayDay.startY - 140, behavior: 'smooth' });
+                window.scrollTo({ top: wrap.getBoundingClientRect().top + window.scrollY + todayDay.startY - 130, behavior: 'smooth' });
             }, 150);
         }
     }
