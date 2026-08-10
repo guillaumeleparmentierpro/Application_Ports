@@ -252,6 +252,32 @@
     /* Indication scrollable */
     .scroll-hint { font-size: 0.75rem; text-align: center; color: var(--marine-blue); padding: 5px 0; font-weight: 600; background: #e0e7ff; margin-bottom: 5px; flex-shrink: 0; }
 
+    /* --- Bouton flottant "aujourd'hui" (repris du calendrier) --- */
+    #btn-today {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 15px;
+        z-index: 9998;
+        background: var(--marine-blue);
+        color: white;
+        border: none;
+        border-radius: 22px;
+        padding: 0 16px;
+        height: 44px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 0.72rem;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(30,58,138,0.35);
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+    #btn-today.visible { display: flex; }
+    #btn-today:active { transform: scale(0.94); }
+
     /* --- NOUVEAU POP-UP D'AVERTISSEMENT --- */
     .warning-modal-overlay {
         display: none;
@@ -291,7 +317,6 @@
         box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
     }
 </style>
-    <link rel="canonical" href="https://portsducotentin.fr/dielette/planning.html" />
 </head>
 <body>
 
@@ -344,7 +369,9 @@
         </table>
     </div>
 
-    <script src="../lang.js"></script>
+    <button id="btn-today" data-i18n="cal_btn_today">AUJOURD'HUI</button>
+
+    <script src="lang.js"></script>
 
     <script>
     // --- NOUVELLE FONCTION : CHERCHER LES GRANDES MARÉES ---
@@ -477,14 +504,29 @@
 
         tbody.innerHTML = tableHTML;
 
-        setTimeout(() => {
-            const container = document.querySelector('.table-container');
-            const todayEl = document.getElementById('today-marker');
-            if (container && todayEl) {
-                const topPos = todayEl.offsetTop - 100;
-                container.scrollTo({ top: topPos, behavior: 'smooth' });
-            }
-        }, 100);
+        setupTodayButton();
+        setTimeout(scrollToToday, 100);
+    }
+
+    function scrollToToday() {
+        const container = document.querySelector('.table-container');
+        const todayEl = document.getElementById('today-marker');
+        if (container && todayEl) {
+            const topPos = todayEl.offsetTop - 100;
+            container.scrollTo({ top: topPos, behavior: 'smooth' });
+        }
+    }
+
+    function setupTodayButton() {
+        const btnToday = document.getElementById('btn-today');
+        const todayEl = document.getElementById('today-marker');
+        if (!btnToday) return;
+        if (todayEl) {
+            btnToday.classList.add('visible');
+            btnToday.onclick = scrollToToday;
+        } else {
+            btnToday.classList.remove('visible');
+        }
     }
     </script>
 
