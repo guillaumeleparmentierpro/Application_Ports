@@ -570,17 +570,19 @@
                 // limitée aux horaires texte — les couleurs de la courbe restent
                 // d'origine (cf. rollback demandé).
                 let labelColor = '#334155';
-                let labelExtra = 'box-sizing:border-box;';
+                let labelExtra = 'box-sizing:border-box;line-height:1.3;';
+                let labelTopOffset = 8;
                 if (e.isPast) {
                     labelColor = '#94a3b8';
                     labelExtra += 'font-weight:500;';
                 }
                 if (e.isNext) {
                     labelColor = '#92400e';
-                    labelExtra += 'font-weight:800;background:#fef3c7;border:2px solid #ca8a04;border-radius:8px;padding:2px 6px;box-shadow:0 0 0 3px rgba(202,138,4,0.18);animation:nextTidePulse 2s ease-in-out infinite;';
+                    labelExtra += 'font-weight:800;background:#fef3c7;border:2px solid #ca8a04;border-radius:8px;padding:4px 7px;box-shadow:0 0 0 3px rgba(202,138,4,0.18);animation:nextTidePulse 2s ease-in-out infinite;';
+                    labelTopOffset = 14;
                 }
 
-                overlayHtml += '<div style="position:absolute;top:' + (pt.y - 8) + 'px;left:' + labelX + 'px;width:' + (isPM ? pmColW : bmColW) + 'px;text-align:' + align + ';font-size:0.8rem;white-space:nowrap;z-index:2;color:' + labelColor + ';' + labelExtra + '">' + e.t + '</div>';
+                overlayHtml += '<div style="position:absolute;top:' + (pt.y - labelTopOffset) + 'px;left:' + labelX + 'px;width:' + (isPM ? pmColW : bmColW) + 'px;text-align:' + align + ';font-size:0.8rem;white-space:nowrap;z-index:2;color:' + labelColor + ';' + labelExtra + '">' + e.t + '</div>';
 
                 const circleFill = color, circleText = textColorFor(color);
 
