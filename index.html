@@ -924,18 +924,19 @@ document.addEventListener('DOMContentLoaded', () => {
     let markersLoaded = false;
     let allMapMarkers = []; 
     
-    // Type "eau" ou "echouage"
+    // Chemins (à adapter selon si tu es à la racine ou dans un sous-dossier)
     const portsList = [
-        { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "#", dataUrl: "donnees.js" },
-        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "dielette/index.html", dataUrl: "dielette/donnees.js" },
-        { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "Granville/index.html", dataUrl: "Granville/donnees.js" },
-        { id: "saintvaast", name: "Port de Saint-Vaast", type: "eau", lat: 49.5857, lng: -1.2619, url: "saintvaast/index.html", dataUrl: "saintvaast/donnees.js" },
-        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "portbail/index.html", dataUrl: "portbail/donnees.js" },
-        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "barfleur/index.html", dataUrl: "barfleur/donnees.js" }
+        { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "../index.html", dataUrl: "../donnees.js" },
+        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "../dielette/index.html", dataUrl: "../dielette/donnees.js" },
+        { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "../Granville/index.html", dataUrl: "../Granville/donnees.js" },
+        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js" },
+        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js" },
+        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "#", dataUrl: "donnees.js" }
     ];
 
     function getStatusColorFromData(portData) {
         if (!portData || !portData.length) return '#cbd5e1'; 
+        
         const now = new Date();
         const tzoffset = now.getTimezoneOffset() * 60000;
         const todayStr = (new Date(now - tzoffset)).toISOString().split('T')[0];
@@ -948,37 +949,61 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dData) {
                 let parts = ds.split('-');
                 let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
-                let portesArray = dData.portes || [];
-                if (!dData.portes) { 
-                    for(let i=1; i<=4; i++) { 
-                        if(dData["ouv"+i] && dData["ferm"+i]) portesArray.push({open: dData["ouv"+i], close: dData["ferm"+i]}); 
-                    } 
+                let portesArray = [];
+                
+                // 1. Cherche les données exactes (ouv1, acces1...)
+                for(let i=1; i<=4; i++) { 
+                    let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
+                    let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
+                    if(ouv && ferm) portesArray.push({open: ouv, close: ferm}); 
+                } 
+                
+                // 2. FALLBACK AUTOMATIQUE : Si aucune porte définie (ex: Barfleur), on calcule via la Pleine Mer !
+                if (portesArray.length === 0) {
+                    [1, 2].forEach(i => {
+                        let pmTime = parseTime(dData["pm"+i]);
+                        if (pmTime) {
+                            // On définit la zone de navigabilité (Pleine Mer - 2h30 à Pleine Mer + 2h30)
+                            // 2.5 heures = 2h30. Tu peux ajuster ce chiffre si besoin !
+                            let margeHeures = 2.5; 
+                            
+                            let pmDateObj = new Date(y, m, day, pmTime.h, pmTime.m, 0);
+                            let sO = new Date(pmDateObj.getTime() - (margeHeures * 3600000));
+                            let sC = new Date(pmDateObj.getTime() + (margeHeures * 3600000));
+                            
+                            allPortes.push({ sO, sC });
+                        }
+                    });
+                } else {
+                    // Sinon on utilise les heures définies manuellement
+                    portesArray.forEach(p => {
+                        let openTime = parseTime(p.open), closeTime = parseTime(p.close);
+                        if (openTime && closeTime) {
+                            let sO = new Date(y, m, day, openTime.h, openTime.m, 0), sC = new Date(y, m, day, closeTime.h, closeTime.m, 0);
+                            if (sC < sO) sC.setDate(sC.getDate() + 1);
+                            allPortes.push({ sO, sC });
+                        }
+                    });
                 }
-                portesArray.forEach(p => {
-                    let openTime = parseTime(p.open), closeTime = parseTime(p.close);
-                    if (openTime && closeTime) {
-                        let sO = new Date(y, m, day, openTime.h, openTime.m, 0), sC = new Date(y, m, day, closeTime.h, closeTime.m, 0);
-                        if (sC < sO) sC.setDate(sC.getDate() + 1);
-                        allPortes.push({ sO, sC });
-                    }
-                });
             }
         });
         
+        // Sécurité : Si toujours rien (fichier vide), on retourne Gris
+        if (allPortes.length === 0) return '#cbd5e1';
+
         let activePorte = allPortes.find(p => now >= p.sO && now < p.sC);
         if (activePorte) {
             const diffMs = activePorte.sC - now;
-            if (diffMs < 25 * 60 * 1000) return '#fbbf24'; 
-            return '#10b981'; 
+            if (diffMs < 25 * 60 * 1000) return '#fbbf24'; // Orange
+            return '#10b981'; // Vert
         } else {
-            return '#ef4444'; 
+            return '#ef4444'; // Rouge
         }
     }
 
-async function loadMapMarkers() {
+    async function loadMapMarkers() {
         const currentLang = localStorage.getItem('preferredLang') || 'fr';
         const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
-        // On utilise les traductions spécifiques à la carte (au masculin)
         const txtOpen = t.map_status_open || 'OUVERT';
         const txtClosed = t.map_status_closed || 'FERMÉ';
         const txtImminent = t.map_status_imminent || 'IMMINENT';
@@ -987,8 +1012,8 @@ async function loadMapMarkers() {
         for (let port of portsList) {
             let color = '#1e3a8a'; 
             
-            // Calcul de la couleur
-            if (port.id === "carteret" && typeof data !== 'undefined') {
+            // Calcul de la couleur (Fonctionne même si on est sur la page locale "#")
+            if (port.url === "#" && typeof data !== 'undefined') {
                 color = getStatusColorFromData(data);
             } else {
                 try {
@@ -1003,13 +1028,11 @@ async function loadMapMarkers() {
                 } catch (e) { console.log("Données inaccessibles pour " + port.name); }
             }
 
-            // --- NOUVEAU : TAILLE ET FORME DYNAMIQUES ---
-            // Si c'est un port en eau -> Gros rond (34px). Si échouage -> Petit carré (26px)
             let isEau = port.type === "eau";
             let size = isEau ? 34 : 26; 
             let fontSize = isEau ? 16 : 12;
             let shapeRadius = isEau ? "50%" : "6px"; 
-            let anchorPos = size / 2; // Pour centrer parfaitement l'icône sur le point GPS
+            let anchorPos = size / 2; 
             
             let statusText = color === '#10b981' ? `🟢 ${txtOpen}` : (color === '#ef4444' ? `🔴 ${txtClosed}` : (color === '#fbbf24' ? `🟠 ${txtImminent}` : '⚪ INCONNU'));
 
@@ -1021,7 +1044,7 @@ async function loadMapMarkers() {
             });
 
             let markerOptions = { icon: portIcon };
-            if (port.id === "carteret") markerOptions.zIndexOffset = 1000;
+            if (port.url === "#") markerOptions.zIndexOffset = 1000; // Force le port local au premier plan
 
             const marker = L.marker([port.lat, port.lng], markerOptions).addTo(map);
             
@@ -1035,27 +1058,21 @@ async function loadMapMarkers() {
                 </div>
             `);
 
-            // Ajout du marqueur dans notre tableau global pour les filtres
             allMapMarkers.push({ type: port.type, marker: marker });
         }
         markersLoaded = true;
     }
 
-    // --- CORRECTION DU BUG DES FILTRES ---
     function filterMap(filterType, btnElement) {
-        // Met à jour les boutons visuellement
         document.querySelectorAll('.map-filter-btn').forEach(btn => btn.classList.remove('active'));
         btnElement.classList.add('active');
 
-        // Ajoute ou supprime proprement de la carte
         allMapMarkers.forEach(item => {
             if (filterType === 'all' || item.type === filterType) {
-                // Si la condition est bonne et que le marqueur n'y est pas, on l'AJOUTE
                 if (!map.hasLayer(item.marker)) {
-                    item.marker.addTo(map); // C'est ici que ça bloquait !
+                    item.marker.addTo(map); 
                 }
             } else {
-                // Si la condition est fausse et que le marqueur y est, on le RETIRE
                 if (map.hasLayer(item.marker)) {
                     item.marker.remove();
                 }
