@@ -785,23 +785,25 @@
 </script>
 
 <!-- ✅ NOUVEAU SCRIPT LEAFLET (Adapté pour Diélette) -->
+<!-- ✅ SCRIPT LEAFLET (Adapté pour Diélette avec le correctif des règles de données) -->
 <script>
     let map = null;
     let markersLoaded = false;
     let allMapMarkers = []; 
     
-    // N'oublie pas d'adapter ceci pour tes sous-dossiers
+    // Chemins adaptés pour Diélette (Port local en "#")
     const portsList = [
-        { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "#", dataUrl: "donnees.js" },
-        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "dielette/index.html", dataUrl: "dielette/donnees.js" },
-        { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "Granville/index.html", dataUrl: "Granville/donnees.js" },
-        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "saintvaast/index.html", dataUrl: "saintvaast/donnees.js" },
-        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "portbail/index.html", dataUrl: "portbail/donnees.js" },
-        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "barfleur/index.html", dataUrl: "barfleur/donnees.js" }
+        { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "../index.html", dataUrl: "../donnees.js" },
+        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "#", dataUrl: "donnees.js" },
+        { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "../Granville/index.html", dataUrl: "../Granville/donnees.js" },
+        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js" },
+        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js" },
+        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js" }
     ];
 
-    function getStatusColorFromData(portData) {
-        if (!portData || !portData.length) return '#cbd5e1'; 
+    // ✅ REPRODUCTION EXACTE DE LA LOGIQUE DE L'APP
+    function getStatusFromData(portData) {
+        if (!portData || !portData.length) return { code: 'unknown', color: '#cbd5e1' }; 
         
         const now = new Date();
         const tzoffset = now.getTimezoneOffset() * 60000;
@@ -817,14 +819,21 @@
                 let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
                 let portesArray = [];
                 
-                // 1. Cherche les données exactes (ouv1, acces1...)
-                for(let i=1; i<=4; i++) { 
-                    let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
-                    let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
-                    if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") portesArray.push({open: ouv, close: ferm}); 
-                } 
+                // 1. On cherche en priorité le tableau "portes" déjà formaté (Ex: Diélette, Carteret)
+                if (dData.portes && Array.isArray(dData.portes)) {
+                    portesArray = dData.portes.filter(p => p.open && p.close && p.open !== "--:--" && p.close !== "--:--");
+                }
                 
-                // 2. FALLBACK AUTOMATIQUE : Si aucune porte définie, on calcule via la Pleine Mer !
+                // 2. Sinon on cherche les variables séparées ouv1/ferm1, acces1...
+                if (portesArray.length === 0) {
+                    for(let i=1; i<=4; i++) { 
+                        let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
+                        let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
+                        if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") portesArray.push({open: ouv, close: ferm}); 
+                    } 
+                }
+                
+                // 3. FALLBACK : Si toujours vide, on base sur la Pleine Mer (ex: Barfleur)
                 if (portesArray.length === 0) {
                     [1, 2].forEach(i => {
                         let pmTimeStr = dData["pm"+i];
@@ -852,18 +861,24 @@
             }
         });
         
-        if (allPortes.length === 0) return '#cbd5e1';
+        if (allPortes.length === 0) return { code: 'unknown', color: '#cbd5e1' };
 
-        // Recherche du créneau en cours
         let activePorte = allPortes.find(p => now >= p.sO && now < p.sC);
         
         if (activePorte) {
             const diffMs = activePorte.sC - now;
-            // Si la fermeture est dans moins de 25 minutes, on renvoie Orange
-            if (diffMs <= 25 * 60 * 1000 && diffMs > 0) return '#fbbf24'; 
-            return '#10b981'; // Vert
+            const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
+            
+            // Les règles de couleurs strictes comme ta jauge !
+            if (diffMs <= 25 * 60 * 1000 && diffMs > 0) {
+                return { code: 'imminent', color: '#ef4444' }; // Rouge (Imminent)
+            } else if (percent > 85) {
+                return { code: 'warning', color: '#fbbf24' }; // Orange (Prochaine fermeture)
+            } else {
+                return { code: 'open', color: '#10b981' }; // Vert (Ouvert)
+            }
         } else {
-            return '#ef4444'; // Rouge
+            return { code: 'closed', color: '#ef4444' }; // Rouge (Fermé)
         }
     }
 
@@ -873,13 +888,14 @@
         const txtOpen = t.map_status_open || 'OUVERT';
         const txtClosed = t.map_status_closed || 'FERMÉ';
         const txtImminent = t.map_status_imminent || 'IMMINENT';
+        const txtWarning = t.next_close || 'PROCHAINE FERMETURE';
         const txtGo = t.btn_access || 'Accéder';
 
         for (let port of portsList) {
-            let color = '#1e3a8a'; 
+            let statusObj = { code: 'unknown', color: '#1e3a8a' }; 
             
             if (port.url === "#" && typeof data !== 'undefined') {
-                color = getStatusColorFromData(data);
+                statusObj = getStatusFromData(data);
             } else {
                 try {
                     let res = await fetch(port.dataUrl);
@@ -888,7 +904,7 @@
                         let scriptBody = text.replace(/(const|let|var)\s+data\s*=/g, 'return ');
                         let fetchFunc = new Function(scriptBody);
                         let portData = fetchFunc();
-                        color = getStatusColorFromData(portData);
+                        statusObj = getStatusFromData(portData);
                     }
                 } catch (e) { console.log("Données inaccessibles pour " + port.name); }
             }
@@ -899,22 +915,28 @@
             let shapeRadius = isEau ? "50%" : "6px"; 
             let anchorPos = size / 2; 
             
-            let statusText = color === '#10b981' ? `🟢 ${txtOpen}` : (color === '#ef4444' ? `🔴 ${txtClosed}` : (color === '#fbbf24' ? `🟠 ${txtImminent}` : '⚪ INCONNU'));
+            let statusText = '';
+            if (statusObj.code === 'open') statusText = `🟢 ${txtOpen}`;
+            else if (statusObj.code === 'warning') statusText = `🟠 ${txtWarning}`;
+            else if (statusObj.code === 'imminent') statusText = `🔴 ${txtImminent}`;
+            else if (statusObj.code === 'closed') statusText = `🔴 ${txtClosed}`;
+            else statusText = `⚪ INCONNU`;
+
+            let finalColor = statusObj.code === 'unknown' ? '#1e3a8a' : statusObj.color;
 
             const portIcon = L.divIcon({
                 className: 'custom-port-marker',
-                html: `<div style="background:${color}; color:white; width:${size}px; height:${size}px; border-radius:${shapeRadius}; display:flex; align-items:center; justify-content:center; border:2px solid white; box-shadow:0 3px 6px rgba(0,0,0,0.3); font-size:${fontSize}px; transition: transform 0.2s;">⚓</div>`,
+                html: `<div style="background:${finalColor}; color:white; width:${size}px; height:${size}px; border-radius:${shapeRadius}; display:flex; align-items:center; justify-content:center; border:2px solid white; box-shadow:0 3px 6px rgba(0,0,0,0.3); font-size:${fontSize}px; transition: transform 0.2s;">⚓</div>`,
                 iconSize: [size, size],
                 iconAnchor: [anchorPos, anchorPos]
             });
 
-            // Retrait de markerOptions.zIndexOffset pour réparer le clic sur le bouton de Barfleur
             const marker = L.marker([port.lat, port.lng], { icon: portIcon }).addTo(map);
             
             marker.bindPopup(`
                 <div style="text-align:center; font-family:'Montserrat',sans-serif; min-width: 150px; padding:5px;">
                     <b style="color:var(--marine-blue); font-size:14px; display:block; margin-bottom:5px;">${port.name}</b>
-                    <div style="margin-bottom:12px; font-size:12px; font-weight:900; color:${color};">
+                    <div style="margin-bottom:12px; font-size:12px; font-weight:900; color:${finalColor};">
                         ${statusText}
                     </div>
                     <a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2); cursor:pointer;">${txtGo}</a>
@@ -956,6 +978,7 @@
         setTimeout(() => { map.invalidateSize(); }, 150);
     }
 </script>
+
 
     <button id="btn-top" title="Retour en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})"></button>
 <script>
