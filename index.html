@@ -924,14 +924,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let markersLoaded = false;
     let allMapMarkers = []; 
     
-    // Chemins (à adapter selon si tu es à la racine ou dans un sous-dossier)
+    // Chemins (Adapté pour la racine : Carteret)
     const portsList = [
-        { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "../index.html", dataUrl: "../donnees.js" },
-        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "../dielette/index.html", dataUrl: "../dielette/donnees.js" },
-        { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "../Granville/index.html", dataUrl: "../Granville/donnees.js" },
-        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js" },
-        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js" },
-        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "#", dataUrl: "donnees.js" }
+        { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "#", dataUrl: "donnees.js" },
+        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "dielette/index.html", dataUrl: "dielette/donnees.js" },
+        { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "Granville/index.html", dataUrl: "Granville/donnees.js" },
+        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "saintvaast/index.html", dataUrl: "saintvaast/donnees.js" },
+        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "portbail/index.html", dataUrl: "portbail/donnees.js" },
+        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "barfleur/index.html", dataUrl: "barfleur/donnees.js" }
     ];
 
     function getStatusColorFromData(portData) {
@@ -951,31 +951,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
                 let portesArray = [];
                 
-                // 1. Cherche les données exactes (ouv1, acces1...)
                 for(let i=1; i<=4; i++) { 
                     let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
                     let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
-                    if(ouv && ferm) portesArray.push({open: ouv, close: ferm}); 
+                    if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") portesArray.push({open: ouv, close: ferm}); 
                 } 
                 
-                // 2. FALLBACK AUTOMATIQUE : Si aucune porte définie (ex: Barfleur), on calcule via la Pleine Mer !
                 if (portesArray.length === 0) {
                     [1, 2].forEach(i => {
-                        let pmTime = parseTime(dData["pm"+i]);
-                        if (pmTime) {
-                            // On définit la zone de navigabilité (Pleine Mer - 2h30 à Pleine Mer + 2h30)
-                            // 2.5 heures = 2h30. Tu peux ajuster ce chiffre si besoin !
-                            let margeHeures = 2.5; 
-                            
-                            let pmDateObj = new Date(y, m, day, pmTime.h, pmTime.m, 0);
-                            let sO = new Date(pmDateObj.getTime() - (margeHeures * 3600000));
-                            let sC = new Date(pmDateObj.getTime() + (margeHeures * 3600000));
-                            
-                            allPortes.push({ sO, sC });
+                        let pmTimeStr = dData["pm"+i];
+                        if (pmTimeStr && pmTimeStr !== "--:--") {
+                            let pmTime = parseTime(pmTimeStr);
+                            if (pmTime) {
+                                let margeHeures = 2.5; 
+                                let pmDateObj = new Date(y, m, day, pmTime.h, pmTime.m, 0);
+                                let sO = new Date(pmDateObj.getTime() - (margeHeures * 3600000));
+                                let sC = new Date(pmDateObj.getTime() + (margeHeures * 3600000));
+                                allPortes.push({ sO, sC });
+                            }
                         }
                     });
                 } else {
-                    // Sinon on utilise les heures définies manuellement
                     portesArray.forEach(p => {
                         let openTime = parseTime(p.open), closeTime = parseTime(p.close);
                         if (openTime && closeTime) {
@@ -988,13 +984,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // Sécurité : Si toujours rien (fichier vide), on retourne Gris
         if (allPortes.length === 0) return '#cbd5e1';
 
         let activePorte = allPortes.find(p => now >= p.sO && now < p.sC);
         if (activePorte) {
             const diffMs = activePorte.sC - now;
-            if (diffMs < 25 * 60 * 1000) return '#fbbf24'; // Orange
+            const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
+            
+            // 🔥 CORRECTION ORANGE : Si moins de 25 min OU plus de 85% écoulé (comme ta barre de progression)
+            if (diffMs <= 25 * 60 * 1000 || percent >= 85) return '#fbbf24'; 
             return '#10b981'; // Vert
         } else {
             return '#ef4444'; // Rouge
@@ -1006,13 +1004,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
         const txtOpen = t.map_status_open || 'OUVERT';
         const txtClosed = t.map_status_closed || 'FERMÉ';
-        const txtImminent = t.map_status_imminent || 'IMMINENT';
+        const txtImminent = t.map_status_imminent || 'FIN PROCHE';
         const txtGo = t.btn_access || 'Accéder';
 
         for (let port of portsList) {
             let color = '#1e3a8a'; 
             
-            // Calcul de la couleur (Fonctionne même si on est sur la page locale "#")
             if (port.url === "#" && typeof data !== 'undefined') {
                 color = getStatusColorFromData(data);
             } else {
@@ -1020,8 +1017,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     let res = await fetch(port.dataUrl);
                     if (res.ok) {
                         let text = await res.text();
-                        let scriptBody = text.replace(/(const|let|var)\s+data\s*=/g, 'return ');
-                        let fetchFunc = new Function(scriptBody);
+                        // Technique ultra-robuste pour isoler les données externes
+                        let fetchFunc = new Function(text + "\nreturn data;");
                         let portData = fetchFunc();
                         color = getStatusColorFromData(portData);
                     }
@@ -1043,18 +1040,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 iconAnchor: [anchorPos, anchorPos]
             });
 
-            let markerOptions = { icon: portIcon };
-            if (port.url === "#") markerOptions.zIndexOffset = 1000; // Force le port local au premier plan
-
-            const marker = L.marker([port.lat, port.lng], markerOptions).addTo(map);
+            const marker = L.marker([port.lat, port.lng], { icon: portIcon }).addTo(map);
             
+            // 🔥 CORRECTION CLIC : On force la navigation au clic. Si on clique sur le port actuel, ça ferme la carte !
+            let btnAction = port.url === "#" 
+                ? "document.getElementById('port-selector-modal').style.display='none'; return false;" 
+                : `window.location.href='${port.url}'; return false;`;
+                
+            let btnText = port.url === "#" ? "📍 Vous y êtes (Fermer)" : txtGo;
+
             marker.bindPopup(`
-                <div style="text-align:center; font-family:'Montserrat',sans-serif; min-width: 150px;">
+                <div style="text-align:center; font-family:'Montserrat',sans-serif; min-width: 150px; padding:2px;">
                     <b style="color:var(--marine-blue); font-size:14px; display:block; margin-bottom:5px;">${port.name}</b>
                     <div style="margin-bottom:12px; font-size:12px; font-weight:900; color:${color};">
                         ${statusText}
                     </div>
-                    <a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2);">${txtGo}</a>
+                    <a href="#" onclick="${btnAction}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2);">${btnText}</a>
                 </div>
             `);
 
