@@ -790,10 +790,10 @@
     let markersLoaded = false;
     let allMapMarkers = []; 
     
-    // NOUVEAU : Chemins adaptés (Diélette est le port en local "#")
+    // NOUVEAU : Chemins adaptés (Modifier l'url "#" et le dataUrl "donnees.js" en fonction de la page où tu te trouves)
     const portsList = [
         { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "../index.html", dataUrl: "../donnees.js" },
-        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "#", dataUrl: "donnees.js" },
+        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "../dielette/index.html", dataUrl: "../dielette/donnees.js" },
         { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "../Granville/index.html", dataUrl: "../Granville/donnees.js" },
         { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js" },
         { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js" },
@@ -801,7 +801,8 @@
     ];
 
     function getStatusColorFromData(portData) {
-        if (!portData || !portData.length) return '#cbd5e1'; 
+        if (!portData || !portData.length) return '#cbd5e1'; // Gris si erreur de chargement
+        
         const now = new Date();
         const tzoffset = now.getTimezoneOffset() * 60000;
         const todayStr = (new Date(now - tzoffset)).toISOString().split('T')[0];
@@ -817,7 +818,10 @@
                 let portesArray = dData.portes || [];
                 if (!dData.portes) { 
                     for(let i=1; i<=4; i++) { 
-                        if(dData["ouv"+i] && dData["ferm"+i]) portesArray.push({open: dData["ouv"+i], close: dData["ferm"+i]}); 
+                        // 🔥 Gère 'ouv1', mais aussi 'acces1' ou 'debut1' pour les ports d'échouage
+                        let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
+                        let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
+                        if(ouv && ferm) portesArray.push({open: ouv, close: ferm}); 
                     } 
                 }
                 portesArray.forEach(p => {
@@ -831,13 +835,16 @@
             }
         });
         
+        // Si aucune donnée n'a été trouvée pour aujourd'hui, on retourne Gris (Inconnu) et pas Rouge (Fermé)
+        if (allPortes.length === 0) return '#cbd5e1'; 
+
         let activePorte = allPortes.find(p => now >= p.sO && now < p.sC);
         if (activePorte) {
             const diffMs = activePorte.sC - now;
-            if (diffMs < 25 * 60 * 1000) return '#fbbf24'; 
-            return '#10b981'; 
+            if (diffMs < 25 * 60 * 1000) return '#fbbf24'; // Orange
+            return '#10b981'; // Vert
         } else {
-            return '#ef4444'; 
+            return '#ef4444'; // Rouge
         }
     }
 
@@ -852,16 +859,16 @@
         for (let port of portsList) {
             let color = '#1e3a8a'; 
             
-            // On calcule la couleur localement si on est sur Diélette
-            if (port.id === "dielette" && typeof data !== 'undefined') {
+            // Si c'est le port sur lequel on est actuellement
+            if (port.url === "#" && typeof data !== 'undefined') {
                 color = getStatusColorFromData(data);
             } else {
                 try {
                     let res = await fetch(port.dataUrl);
                     if (res.ok) {
                         let text = await res.text();
-                        let scriptBody = text.replace(/(const|let|var)\s+data\s*=/g, 'return ');
-                        let fetchFunc = new Function(scriptBody);
+                        // 🔥 Technique ultra-robuste pour récupérer les données, peu importe si c'est const, let, ou var
+                        let fetchFunc = new Function(text + "\nreturn data;");
                         let portData = fetchFunc();
                         color = getStatusColorFromData(portData);
                     }
@@ -884,8 +891,7 @@
             });
 
             let markerOptions = { icon: portIcon };
-            // On met Diélette au premier plan
-            if (port.id === "dielette") markerOptions.zIndexOffset = 1000;
+            if (port.url === "#") markerOptions.zIndexOffset = 1000; // Le port actuel toujours au 1er plan
 
             const marker = L.marker([port.lat, port.lng], markerOptions).addTo(map);
             
