@@ -56,6 +56,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <style>
+        .map-filter-btn { background: #f1f5f9; color: var(--marine-blue); border: 1px solid #cbd5e1; border-radius: 20px; padding: 6px 12px; font-size: 0.65rem; font-weight: 800; font-family: 'Montserrat', sans-serif; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .map-filter-btn.active { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
         .top-sponsor-banner { background: #e0e7ff; color: var(--marine-blue); padding: 10px 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #c7d2fe; }
         .sponsor-label { background: var(--marine-blue); color: white; font-size: 0.52rem; border-radius: 4px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; flex-shrink: 0; align-self: center; display: inline-block; }
         .sponsor-text { font-size: 0.75rem; font-weight: 600; line-height: 1.3; flex-grow: 1; display: flex; align-items: center; justify-content: flex-end; text-align: right; }
@@ -195,16 +197,23 @@
     <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
 </div>
 
-<!-- ✅ MODALE CARTE INTERACTIVE LEAFLET -->
+<!-- ✅ MODALE CARTE INTERACTIVE AVEC FILTRES -->
 <div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.85); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 90%; max-width: 400px; border-radius: 16px; padding: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative;">
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold; z-index: 1000;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
         <h3 style="margin: 0 0 10px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1rem;" data-i18n="select_port_title">Choisir un port</h3>
         
-        <!-- Conteneur de la carte agrandi à 70vh -->
-        <div id="map-container" style="height: 70vh; min-height: 450px; max-height: 600px; width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid #cbd5e1;"></div>
+        <!-- Les boutons de filtre -->
+        <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap;">
+            <button onclick="filterMap('all', this)" class="map-filter-btn active">Tous</button>
+            <button onclick="filterMap('porte', this)" class="map-filter-btn">Bassin à flot (Porte)</button>
+            <button onclick="filterMap('echouage', this)" class="map-filter-btn">Échouage</button>
+        </div>
         
-        <p style="text-align: center; font-size: 0.65rem; color: #64748b; margin: 10px 0 0 0;">Touchez un marqueur pour y accéder</p>
+        <!-- Conteneur de la carte agrandi -->
+        <div id="map-container" style="height: 65vh; min-height: 400px; max-height: 550px; width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid #cbd5e1;"></div>
+        
+        <p style="text-align: center; font-size: 0.65rem; color: #64748b; margin: 10px 0 0 0;">Les ports d'échouage sont carrés, les bassins à flot sont ronds.</p>
     </div>
 </div>
 
@@ -913,21 +922,20 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
     let map = null;
     let markersLoaded = false;
+    let allMapMarkers = []; // Va stocker nos marqueurs pour pouvoir les filtrer
     
-    // Coordonnées, liens exacts et chemins vers les données de chaque port
+    // Ajout de l'attribut "type" pour chaque port
     const portsList = [
-        { id: "carteret", name: "Port de Carteret", lat: 49.3758, lng: -1.7964, url: "#", dataUrl: "donnees.js" },
-        { id: "dielette", name: "Port de Diélette", lat: 49.5517, lng: -1.8642, url: "dielette/index.html", dataUrl: "dielette/donnees.js" },
-        { id: "granville", name: "Port de Hérel (Granville)", lat: 48.8354, lng: -1.6053, url: "Granville/index.html", dataUrl: "Granville/donnees.js" },
-        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", lat: 49.5857, lng: -1.2619, url: "saintvaast/index.html", dataUrl: "saintvaast/donnees.js" },
-        { id: "portbail", name: "Port de Port-Bail sur mer", lat: 49.3323, lng: -1.7169, url: "portbail/index.html", dataUrl: "portbail/donnees.js" },
-        { id: "barfleur", name: "Port de Barfleur", lat: 49.6713, lng: -1.2612, url: "barfleur/index.html", dataUrl: "barfleur/donnees.js" }
+        { id: "carteret", name: "Port de Carteret", type: "porte", lat: 49.3758, lng: -1.7964, url: "#", dataUrl: "donnees.js" },
+        { id: "dielette", name: "Port de Diélette", type: "porte", lat: 49.5517, lng: -1.8642, url: "dielette/index.html", dataUrl: "dielette/donnees.js" },
+        { id: "granville", name: "Port de Hérel (Granville)", type: "porte", lat: 48.8354, lng: -1.6053, url: "Granville/index.html", dataUrl: "Granville/donnees.js" },
+        { id: "saintvaast", name: "Port de Saint-Vaast", type: "porte", lat: 49.5857, lng: -1.2619, url: "saintvaast/index.html", dataUrl: "saintvaast/donnees.js" },
+        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "portbail/index.html", dataUrl: "portbail/donnees.js" },
+        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "barfleur/index.html", dataUrl: "barfleur/donnees.js" }
     ];
 
-    // Fonction pour calculer la couleur en fonction des horaires du port
     function getStatusColorFromData(portData) {
-        if (!portData || !portData.length) return '#cbd5e1'; // Gris (inconnu)
-        
+        if (!portData || !portData.length) return '#cbd5e1'; 
         const now = new Date();
         const tzoffset = now.getTimezoneOffset() * 60000;
         const todayStr = (new Date(now - tzoffset)).toISOString().split('T')[0];
@@ -960,57 +968,55 @@ document.addEventListener('DOMContentLoaded', () => {
         let activePorte = allPortes.find(p => now >= p.sO && now < p.sC);
         if (activePorte) {
             const diffMs = activePorte.sC - now;
-            if (diffMs < 25 * 60 * 1000) return '#fbbf24'; // Orange (Fermeture imminente)
-            return '#10b981'; // Vert (Ouvert)
+            if (diffMs < 25 * 60 * 1000) return '#fbbf24'; 
+            return '#10b981'; 
         } else {
-            return '#ef4444'; // Rouge (Fermé)
+            return '#ef4444'; 
         }
     }
 
     async function loadMapMarkers() {
         for (let port of portsList) {
-            let color = '#1e3a8a'; // Bleu marine par défaut
+            let color = '#1e3a8a'; 
             
-            // Si c'est Carteret, on a déjà les données chargées sur la page
-            if (port.id === "carteret" && typeof data !== 'undefined') {
-                color = getStatusColorFromData(data);
-            } else {
-                // On va chercher discrètement les données des autres ports
-                try {
-                    let res = await fetch(port.dataUrl);
-                    if (res.ok) {
-                        let text = await res.text();
-                        // On isole le tableau JSON contenu dans le fichier donnees.js
-                        let scriptBody = text.replace(/(const|let|var)\s+data\s*=/g, 'return ');
-                        let fetchFunc = new Function(scriptBody);
-                        let portData = fetchFunc();
-                        color = getStatusColorFromData(portData);
-                    }
-                } catch (e) {
-                    console.log("Impossible de charger les données pour " + port.name);
+            // On calcule l'état seulement pour les ports à portes (Bassin à flot)
+            if (port.type === "porte") {
+                if (port.id === "carteret" && typeof data !== 'undefined') {
+                    color = getStatusColorFromData(data);
+                } else {
+                    try {
+                        let res = await fetch(port.dataUrl);
+                        if (res.ok) {
+                            let text = await res.text();
+                            let scriptBody = text.replace(/(const|let|var)\s+data\s*=/g, 'return ');
+                            let fetchFunc = new Function(scriptBody);
+                            let portData = fetchFunc();
+                            color = getStatusColorFromData(portData);
+                        }
+                    } catch (e) { console.log("Données inaccessibles pour " + port.name); }
                 }
+            } else {
+                // Les ports d'échouage n'ont pas de porte, on les laisse en Bleu marin pour l'instant
+                color = '#1e3a8a'; 
             }
 
-            // Textes pour la popup
-            let statusText = color === '#10b981' ? '🟢 OUVERT' : (color === '#ef4444' ? '🔴 FERMÉ' : (color === '#fbbf24' ? '🟠 IMMINENT' : '⚪ INCONNU'));
+            // Gestion de la forme géométrique (Idée 1)
+            let shapeRadius = port.type === "porte" ? "50%" : "8px"; // Rond pour porte, Carré arrondi pour échouage
+            let statusText = port.type === "echouage" ? '⚓ LIBRE (ÉCHOUAGE)' : (color === '#10b981' ? '🟢 OUVERT' : (color === '#ef4444' ? '🔴 FERMÉ' : (color === '#fbbf24' ? '🟠 IMMINENT' : '⚪ INCONNU')));
 
-            // Création de l'icône colorée
+            // Création de l'icône colorée et profilée
             const portIcon = L.divIcon({
                 className: 'custom-port-marker',
-                html: `<div style="background:${color}; color:white; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:3px solid white; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-size:16px; transition: transform 0.2s;">⚓</div>`,
+                html: `<div style="background:${color}; color:white; width:34px; height:34px; border-radius:${shapeRadius}; display:flex; align-items:center; justify-content:center; border:3px solid white; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-size:16px; transition: transform 0.2s;">⚓</div>`,
                 iconSize: [34, 34],
                 iconAnchor: [17, 17]
             });
 
-            // Options du marqueur (On force Carteret à passer au premier plan avec zIndexOffset)
             let markerOptions = { icon: portIcon };
-            if (port.id === "carteret") {
-                markerOptions.zIndexOffset = 1000;
-            }
+            if (port.id === "carteret") markerOptions.zIndexOffset = 1000;
 
             const marker = L.marker([port.lat, port.lng], markerOptions).addTo(map);
             
-            // Popup
             marker.bindPopup(`
                 <div style="text-align:center; font-family:'Montserrat',sans-serif; min-width: 150px;">
                     <b style="color:var(--marine-blue); font-size:14px; display:block; margin-bottom:5px;">${port.name}</b>
@@ -1020,32 +1026,46 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2);">Accéder</a>
                 </div>
             `);
+
+            // On stocke le marqueur pour pouvoir le filtrer ensuite
+            allMapMarkers.push({ type: port.type, marker: marker });
         }
         markersLoaded = true;
     }
 
-function openMapModal() {
+    // Fonction de filtrage appelée par les boutons
+    function filterMap(filterType, btnElement) {
+        // 1. Mettre à jour la couleur des boutons
+        document.querySelectorAll('.map-filter-btn').forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
+
+        // 2. Afficher/Masquer les marqueurs sur la carte
+        allMapMarkers.forEach(item => {
+            if (filterType === 'all' || item.type === filterType) {
+                // Si ça correspond, on l'ajoute à la carte (si ce n'est pas déjà fait)
+                if (!map.hasLayer(item.marker)) {
+                    item.marker.addTo(map);
+                }
+            } else {
+                // Si ça ne correspond pas, on le retire de la carte
+                if (map.hasLayer(item.marker)) {
+                    item.marker.remove();
+                }
+            }
+        });
+    }
+
+    function openMapModal() {
         document.getElementById('port-selector-modal').style.display = 'flex';
-        
         if (!map) {
-            // Initialisation avec "zoomSnap: 0.5" pour autoriser le zoom à virgule
-            map = L.map('map-container', {
-                zoomSnap: 0.5
-            }).setView([49.165, -1.550], 8.5); // On se cale sur 8.5 !
-            
+            map = L.map('map-container', { zoomSnap: 0.5 }).setView([49.165, -1.550], 8.5);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap',
                 maxZoom: 14
             }).addTo(map);
-
-            // Charger les marqueurs dynamiques
             loadMapMarkers();
         }
-        
-        // Corriger l'affichage de Leaflet dans une modale
-        setTimeout(() => {
-            map.invalidateSize();
-        }, 150);
+        setTimeout(() => { map.invalidateSize(); }, 150);
     }
 </script>
 
