@@ -976,7 +976,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function loadMapMarkers() {
-        // Préparation des traductions pour les popups
         const currentLang = localStorage.getItem('preferredLang') || 'fr';
         const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
         const txtOpen = t.status_open || 'OUVERT';
@@ -987,7 +986,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let port of portsList) {
             let color = '#1e3a8a'; 
             
-            // Calcul de la couleur pour TOUS les ports (eau et échouage)
+            // Calcul de la couleur
             if (port.id === "carteret" && typeof data !== 'undefined') {
                 color = getStatusColorFromData(data);
             } else {
@@ -1003,17 +1002,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch (e) { console.log("Données inaccessibles pour " + port.name); }
             }
 
-            // Gestion de la forme géométrique (Rond pour eau, Carré arrondi pour échouage)
-            let shapeRadius = port.type === "eau" ? "50%" : "8px"; 
+            // --- NOUVEAU : TAILLE ET FORME DYNAMIQUES ---
+            // Si c'est un port en eau -> Gros rond (34px). Si échouage -> Petit carré (26px)
+            let isEau = port.type === "eau";
+            let size = isEau ? 34 : 26; 
+            let fontSize = isEau ? 16 : 12;
+            let shapeRadius = isEau ? "50%" : "6px"; 
+            let anchorPos = size / 2; // Pour centrer parfaitement l'icône sur le point GPS
             
-            // Texte du statut géré avec les traductions
             let statusText = color === '#10b981' ? `🟢 ${txtOpen}` : (color === '#ef4444' ? `🔴 ${txtClosed}` : (color === '#fbbf24' ? `🟠 ${txtImminent}` : '⚪ INCONNU'));
 
             const portIcon = L.divIcon({
                 className: 'custom-port-marker',
-                html: `<div style="background:${color}; color:white; width:34px; height:34px; border-radius:${shapeRadius}; display:flex; align-items:center; justify-content:center; border:3px solid white; box-shadow:0 4px 8px rgba(0,0,0,0.3); font-size:16px; transition: transform 0.2s;">⚓</div>`,
-                iconSize: [34, 34],
-                iconAnchor: [17, 17]
+                html: `<div style="background:${color}; color:white; width:${size}px; height:${size}px; border-radius:${shapeRadius}; display:flex; align-items:center; justify-content:center; border:2px solid white; box-shadow:0 3px 6px rgba(0,0,0,0.3); font-size:${fontSize}px; transition: transform 0.2s;">⚓</div>`,
+                iconSize: [size, size],
+                iconAnchor: [anchorPos, anchorPos]
             });
 
             let markerOptions = { icon: portIcon };
@@ -1031,20 +1034,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `);
 
+            // Ajout du marqueur dans notre tableau global pour les filtres
             allMapMarkers.push({ type: port.type, marker: marker });
         }
         markersLoaded = true;
     }
 
+    // --- CORRECTION DU BUG DES FILTRES ---
     function filterMap(filterType, btnElement) {
+        // Met à jour les boutons visuellement
         document.querySelectorAll('.map-filter-btn').forEach(btn => btn.classList.remove('active'));
         btnElement.classList.add('active');
 
+        // Ajoute ou supprime proprement de la carte
         allMapMarkers.forEach(item => {
             if (filterType === 'all' || item.type === filterType) {
-                if (!map.hasLayer(item.marker)) map.addTo(map).addLayer(item.marker);
+                // Si la condition est bonne et que le marqueur n'y est pas, on l'AJOUTE
+                if (!map.hasLayer(item.marker)) {
+                    item.marker.addTo(map); // C'est ici que ça bloquait !
+                }
             } else {
-                if (map.hasLayer(item.marker)) map.removeLayer(item.marker);
+                // Si la condition est fausse et que le marqueur y est, on le RETIRE
+                if (map.hasLayer(item.marker)) {
+                    item.marker.remove();
+                }
             }
         });
     }
