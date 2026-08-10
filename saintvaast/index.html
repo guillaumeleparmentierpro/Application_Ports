@@ -868,13 +868,13 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <!-- ✅ NOUVEAU SCRIPT LEAFLET (Adapté pour Saint-Vaast) -->
+<!-- ✅ SCRIPT LEAFLET (Adapté pour Saint-Vaast-la-Hougue avec le correctif des règles de données) -->
 <script>
     let map = null;
     let markersLoaded = false;
     let allMapMarkers = []; 
     
-    // ✅ CHEMINS POUR SAINT-VAAST (Dans son sous-dossier)
-    // Saint-Vaast est "#" en local, tous les autres remontent avec "../"
+    // ✅ CHEMINS POUR SAINT-VAAST (Saint-Vaast en local "#", les autres en "../")
     const portsList = [
         { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "../index.html", dataUrl: "../donnees.js" },
         { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "../dielette/index.html", dataUrl: "../dielette/donnees.js" },
@@ -884,7 +884,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js" }
     ];
 
-    // ✅ REPRODUCTION EXACTE DE TES RÈGLES DE COULEURS
+    // ✅ REPRODUCTION EXACTE DE LA LOGIQUE DE L'APP
     function getStatusFromData(portData) {
         if (!portData || !portData.length) return { code: 'unknown', color: '#cbd5e1' }; 
         
@@ -902,14 +902,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
                 let portesArray = [];
                 
-                // Recherche manuelle
-                for(let i=1; i<=4; i++) { 
-                    let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
-                    let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
-                    if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") portesArray.push({open: ouv, close: ferm}); 
-                } 
+                // 1. On cherche en priorité le tableau "portes" déjà formaté (Ex: Diélette, Carteret)
+                if (dData.portes && Array.isArray(dData.portes)) {
+                    portesArray = dData.portes.filter(p => p.open && p.close && p.open !== "--:--" && p.close !== "--:--");
+                }
                 
-                // Fallback auto si pas de variables d'ouverture
+                // 2. Sinon on cherche les variables séparées ouv1/ferm1, acces1...
+                if (portesArray.length === 0) {
+                    for(let i=1; i<=4; i++) { 
+                        let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
+                        let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
+                        if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") portesArray.push({open: ouv, close: ferm}); 
+                    } 
+                }
+                
+                // 3. FALLBACK : Si toujours vide, on base sur la Pleine Mer (ex: Barfleur)
                 if (portesArray.length === 0) {
                     [1, 2].forEach(i => {
                         let pmTimeStr = dData["pm"+i];
@@ -945,7 +952,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const diffMs = activePorte.sC - now;
             const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
             
-            // Les règles exactes de ta barre de progression !
+            // Les règles de couleurs strictes comme ta jauge !
             if (diffMs <= 25 * 60 * 1000 && diffMs > 0) {
                 return { code: 'imminent', color: '#ef4444' }; // Rouge (Imminent)
             } else if (percent > 85) {
