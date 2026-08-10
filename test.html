@@ -975,12 +975,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    async function loadMapMarkers() {
+async function loadMapMarkers() {
         const currentLang = localStorage.getItem('preferredLang') || 'fr';
         const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
-        const txtOpen = t.status_open || 'OUVERT';
-        const txtClosed = t.status_closed || 'FERMÉ';
-        const txtImminent = t.status_imminent || 'IMMINENT';
+        // On utilise les traductions spécifiques à la carte (au masculin)
+        const txtOpen = t.map_status_open || 'OUVERT';
+        const txtClosed = t.map_status_closed || 'FERMÉ';
+        const txtImminent = t.map_status_imminent || 'IMMINENT';
         const txtGo = t.btn_access || 'Accéder';
 
         for (let port of portsList) {
