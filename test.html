@@ -1028,8 +1028,11 @@ function openMapModal() {
         document.getElementById('port-selector-modal').style.display = 'flex';
         
         if (!map) {
-            // Initialisation de la carte (Zoom avancé à 9, centrage parfait Jobourg <-> Mont St-Michel)
-            map = L.map('map-container').setView([49.165, -1.550], 9);
+            // Initialisation avec "zoomSnap: 0.5" pour autoriser le zoom à virgule
+            map = L.map('map-container', {
+                zoomSnap: 0.5
+            }).setView([49.165, -1.550], 8.5); // On se cale sur 8.5 !
+            
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap',
                 maxZoom: 14
