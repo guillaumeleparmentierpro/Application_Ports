@@ -1,10 +1,29 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light">
     <title>Calendrier des marées - Port de Portbail</title>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5LY18V5457');
+    </script>
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" href="icon-192.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 
     <!-- Données réelles du port : ce fichier doit être présent dans le même dossier que donnees.js -->
@@ -20,6 +39,7 @@
             --text-main: #1e293b;
             --today-bg: #fef9c3;
             --weekend-bg: #fef2f2;
+            --sunday-bg: #fee2e2;
             --day-alt-bg: #eff6ff;
         }
 
@@ -73,7 +93,7 @@
             padding: 6px 10px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             display: inline-flex;
             align-items: center;
             white-space: nowrap;
@@ -81,7 +101,7 @@
         }
 
         .main-title {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--marine-blue);
             text-align: center;
@@ -101,7 +121,7 @@
             gap: 8px;
             padding: 8px 5px;
             margin-top: 8px;
-            font-size: 0.62rem;
+            font-size: 0.68rem;
             font-weight: 600;
             color: #475569;
             flex-wrap: wrap;
@@ -116,10 +136,11 @@
         }
 
         .tcv-legend i {
-            width: 9px;
-            height: 9px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             display: inline-block;
+            flex-shrink: 0;
         }
 
         /* --- Module calendrier vertical --- */
@@ -143,6 +164,12 @@
             font-weight: 600;
         }
 
+        /* Pulsation douce de la bulle "prochaine marée" */
+        @keyframes nextTidePulse {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(202,138,4,0.18); }
+            50% { box-shadow: 0 0 0 7px rgba(202,138,4,0.05); }
+        }
+
         #btn-today {
             display: none;
             position: fixed;
@@ -153,11 +180,11 @@
             color: white;
             border: none;
             border-radius: 22px;
-            padding: 0 14px;
-            height: 42px;
+            padding: 0 16px;
+            height: 44px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             letter-spacing: 0.5px;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(30,58,138,0.35);
@@ -178,12 +205,14 @@
             <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
         </div>
         <h1 class="main-title" data-i18n="cal_title">Calendrier des marées</h1>
+
         <div class="tcv-legend">
             <span><i style="background:#1e3a8a"></i><span data-i18n="cal_legend_avg">moyenne</span></span>
             <span><i style="background:#ef4444"></i><span data-i18n="cal_legend_high">forte marée (coeff ≥ 95)</span></span>
             <span><i style="background:#94a3b8"></i><span data-i18n="cal_legend_neap">morte-eau (coeff ≤ 45)</span></span>
+            <span><i style="background:#ca8a04"></i><span data-i18n="cal_legend_next">prochaine marée</span></span>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:6px 5px 8px 5px;font-size:0.62rem;font-weight:700;color:var(--marine-blue);text-transform:uppercase;letter-spacing:0.5px;">
+        <div style="display:flex;justify-content:space-between;padding:6px 5px 8px 5px;font-size:0.68rem;font-weight:700;color:var(--marine-blue);text-transform:uppercase;letter-spacing:0.5px;">
             <span data-i18n="cal_low_tide_hint">⟵ Basse mer</span>
             <span data-i18n="cal_high_tide_hint">Pleine mer ⟶</span>
         </div>
@@ -201,6 +230,7 @@
 (function(){
     const wrap = document.getElementById('tcv-root');
     const btnToday = document.getElementById('btn-today');
+    const stickyHeaderEl = document.querySelector('.sticky-header');
     if (!wrap) return;
 
     if (typeof data === 'undefined' || !Array.isArray(data) || data.length === 0) {
@@ -221,15 +251,16 @@
         return (l === 'en') ? 'en' : 'fr';
     }
 
-    // Mise en page verticale resserrée (en px réels du composant) pour faire tenir
-    // environ une semaine à l'écran sur un téléphone, au lieu de 4 jours.
-    const ROW = 22;
-    const DAYGAP = 2;
-    const MONTHGAP = 42;
-    const BAND_OFFSET = 39;
+    // Mise en page verticale : tailles agrandies pour la lisibilité (heures, dates,
+    // coefficients). Colonnes resserrées au maximum pour rendre le plus de largeur
+    // possible à la courbe elle-même.
+    const ROW = 27;
+    const DAYGAP = 3;
+    const MONTHGAP = 46;
+    const BAND_OFFSET = 42;
     const TOP_MARGIN = 4;
-    const CIRCLE_R_PM = 10.5;
-    const CIRCLE_R_BM = 3.6;
+    const CIRCLE_R_PM = 13;
+    const CIRCLE_R_BM = 5;
 
     function parseNum(v){
         if (v === undefined || v === null) return null;
@@ -266,14 +297,25 @@
         const valid = raw.filter(e => isValidTime(e.t) && e.h !== null);
         valid.forEach(e => {
             let mins = timeToMinutes(e.t);
+            e.rolled = false;
             if (isValidTime(e.ref)) {
                 const refMins = timeToMinutes(e.ref);
-                if (mins < refMins) mins += 1440;
+                if (mins < refMins) { mins += 1440; e.rolled = true; }
             }
             e.sortKey = mins;
         });
         valid.sort((a, b) => a.sortKey - b.sortKey);
         return valid;
+    }
+
+    // Date/heure réelle d'un événement (tient compte du rollover minuit) — sert
+    // à comparer chaque marée à l'instant présent pour les états "passée" / "prochaine".
+    function eventFullDate(dateStr, timeStr, rolled){
+        const parts = dateStr.split('-').map(Number);
+        const hm = timeStr.split(':').map(Number);
+        const dt = new Date(parts[0], parts[1] - 1, parts[2], hm[0], hm[1], 0, 0);
+        if (rolled) dt.setDate(dt.getDate() + 1);
+        return dt;
     }
 
     function moonPhaseRaw(dateObj){
@@ -287,15 +329,41 @@
     const MOON_TARGETS = [ { p: 0, e: '🌑' }, { p: 0.25, e: '🌓' }, { p: 0.5, e: '🌕' }, { p: 0.75, e: '🌗' } ];
     const MAX_MOON_DIST = 0.08;
 
+    // Phase de lune détaillée (8 phases), utilisée pour forcer l'affichage
+    // précis sur la ligne du jour courant dans le calendrier.
+    function getMoonPhaseInfo(phase){
+        const p = ((phase % 1) + 1) % 1;
+        if (p < 0.0625 || p >= 0.9375) return { emoji: '🌑', fr: 'Nouvelle lune', en: 'New moon' };
+        if (p < 0.1875) return { emoji: '🌒', fr: 'Premier croissant', en: 'Waxing crescent' };
+        if (p < 0.3125) return { emoji: '🌓', fr: 'Premier quartier', en: 'First quarter' };
+        if (p < 0.4375) return { emoji: '🌔', fr: 'Lune gibbeuse croissante', en: 'Waxing gibbous' };
+        if (p < 0.5625) return { emoji: '🌕', fr: 'Pleine lune', en: 'Full moon' };
+        if (p < 0.6875) return { emoji: '🌖', fr: 'Lune gibbeuse décroissante', en: 'Waning gibbous' };
+        if (p < 0.8125) return { emoji: '🌗', fr: 'Dernier quartier', en: 'Last quarter' };
+        return { emoji: '🌘', fr: 'Dernier croissant', en: 'Waning crescent' };
+    }
+
     function straightRange(pts, s, e){
         let d = '';
         for (let i = s; i <= e; i++){ d += (i === s ? 'M' : 'L') + pts[i].x.toFixed(1) + ',' + pts[i].y.toFixed(1) + ' '; }
         return d;
     }
 
+    // Défilement vers une ligne donnée en tenant compte de la hauteur réelle du
+    // bandeau sticky (variable selon la langue et le contenu), pour que la ligne
+    // ciblée ne soit jamais partiellement cachée dessous.
+    function scrollToDay(day){
+        if (!day) return;
+        const headerH = stickyHeaderEl ? stickyHeaderEl.getBoundingClientRect().height : 130;
+        const targetY = wrap.getBoundingClientRect().top + window.scrollY + day.startY - headerH - 8;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+    }
+
     const now = new Date();
     const tzoffset = now.getTimezoneOffset() * 60000;
     const todayStr = new Date(now - tzoffset).toISOString().split('T')[0];
+
+    const todayMoonInfo = getMoonPhaseInfo(moonPhaseRaw(now));
 
     let globalMin = Infinity, globalMax = -Infinity;
     data.forEach(function(jour){
@@ -318,6 +386,11 @@
         const events = buildDayEvents(jour);
         if (events.length === 0) return;
 
+        events.forEach(e => {
+            e.fullDate = eventFullDate(jour.date, e.t, e.rolled);
+            e.isPast = e.fullDate.getTime() < now.getTime();
+        });
+
         days.push({
             dateObj: d,
             dateStr: jour.date,
@@ -334,6 +407,22 @@
         return;
     }
 
+    // Repérage de la toute prochaine marée à venir, toutes dates confondues.
+    let nextTideEvent = null;
+    let nextTideDiff = Infinity;
+    days.forEach(day => {
+        day.ev.forEach(e => {
+            const diff = e.fullDate.getTime() - now.getTime();
+            if (diff > 0 && diff < nextTideDiff) {
+                nextTideDiff = diff;
+                nextTideEvent = e;
+            }
+        });
+    });
+    if (nextTideEvent) nextTideEvent.isNext = true;
+
+    // Repères de phase lunaire ponctuels (nouvelle/premier quartier/pleine/dernier
+    // quartier), un seul marqueur par cycle grâce à la détection de minimum local.
     days.forEach((day, i) => {
         let best = null, bestDist = Infinity;
         MOON_TARGETS.forEach(target => {
@@ -349,11 +438,14 @@
     });
 
     const todayDay = days.find(d => d.isToday);
+    // La ligne du jour courant affiche toujours sa phase de lune précise, même
+    // si ce jour ne correspond à aucun des 4 repères ci-dessus. Cet affichage
+    // suit automatiquement la date du jour d'une exécution à l'autre.
+    if (todayDay) todayDay.moon = todayMoonInfo.emoji;
+
     if (todayDay) {
         btnToday.classList.add('visible');
-        btnToday.addEventListener('click', function(){
-            window.scrollTo({ top: wrap.getBoundingClientRect().top + window.scrollY + todayDay.startY - 130, behavior: 'smooth' });
-        });
+        btnToday.addEventListener('click', function(){ scrollToDay(todayDay); });
     }
 
     function render(){
@@ -368,11 +460,10 @@
 
         const LOGICAL_W = Math.max(260, Math.round(wrap.clientWidth));
 
-        const dayColX = 4, dayColW = 60, bmColW = 42, pmColW = 42, moonColW = 20, gap = 4;
-        // Marge entre la courbe et les colonnes d'heures : doit être au moins aussi
-        // grande que le rayon du rond de coefficient, sinon les ronds des jours de
-        // forte marée (qui vont au maximum de l'amplitude) chevauchent le texte.
-        const circleClearance = CIRCLE_R_PM + 5;
+        // Colonnes resserrées pour maximiser la largeur de la courbe tout en
+        // gardant les textes agrandis lisibles.
+        const dayColX = 4, dayColW = 58, bmColW = 40, pmColW = 40, moonColW = 18, gap = 3;
+        const circleClearance = CIRCLE_R_PM + 7;
         const bmColX = dayColX + dayColW + gap;
         const laneLeft = bmColX + bmColW + circleClearance;
         const moonColX = LOGICAL_W - moonColW - 4;
@@ -401,7 +492,7 @@
             const isFirstOfMonth = (day.m !== lastMonthBand);
             if (isFirstOfMonth) {
                 lastMonthBand = day.m;
-                overlayHtml += '<div style="position:absolute;top:' + (day.startY - BAND_OFFSET) + 'px;left:0;right:0;background:var(--marine-blue);color:#ffffff;font-weight:700;font-size:0.76rem;text-align:left;padding:6px 10px;text-transform:uppercase;letter-spacing:1px;border-radius:6px;">' + day.m + '</div>';
+                overlayHtml += '<div style="position:absolute;top:' + (day.startY - BAND_OFFSET) + 'px;left:0;right:0;background:var(--marine-blue);color:#ffffff;font-weight:700;font-size:0.82rem;text-align:left;padding:6px 10px;text-transform:uppercase;letter-spacing:1px;border-radius:6px;">' + day.m + '</div>';
             }
 
             const coeffs = day.ev.map(e => e.c).filter(c => c !== null);
@@ -411,9 +502,11 @@
             pathsSvg += '<path d="' + straightRange(allPts, segStart, endIdxExcl - 1) + '" fill="none" stroke="' + color + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>';
 
             const rowH = day.ev.length * ROW + 2;
+            const dow = day.dateObj.getDay();
             let bandColor = null;
             if (day.isToday) bandColor = 'var(--today-bg)';
-            else if (day.isWeekend) bandColor = 'var(--weekend-bg)';
+            else if (dow === 0) bandColor = 'var(--sunday-bg)';
+            else if (dow === 6) bandColor = 'var(--weekend-bg)';
             else if (di % 2 === 0) bandColor = 'var(--day-alt-bg)';
             if (bandColor) {
                 overlayHtml += '<div style="position:absolute;top:' + (day.startY - 3) + 'px;left:0;right:0;height:' + rowH + 'px;background:' + bandColor + ';z-index:0;border-radius:4px;"></div>';
@@ -421,10 +514,10 @@
 
             const midY = day.startY + (day.ev.length * ROW) / 2 - ROW / 2;
             overlayHtml += '<div style="position:absolute;top:' + midY + 'px;left:' + dayColX + 'px;width:' + dayColW + 'px;z-index:1;">' +
-                '<div style="font-size:0.66rem;font-weight:600;color:var(--text-main);text-transform:capitalize;line-height:1.1;">' + day.j + '</div>' +
-                '<div style="font-size:0.96rem;color:#64748b;font-weight:700;line-height:1.1;">' + day.dLabel + '</div></div>';
+                '<div style="font-size:0.72rem;font-weight:600;color:var(--text-main);text-transform:capitalize;line-height:1.1;">' + day.j + '</div>' +
+                '<div style="font-size:1.05rem;color:#64748b;font-weight:700;line-height:1.1;">' + day.dLabel + '</div></div>';
             if (day.moon) {
-                overlayHtml += '<div style="position:absolute;top:' + (midY - 2) + 'px;left:' + moonColX + 'px;font-size:15px;line-height:1;z-index:1;">' + day.moon + '</div>';
+                overlayHtml += '<div style="position:absolute;top:' + (midY - 2) + 'px;left:' + moonColX + 'px;font-size:16px;line-height:1;z-index:1;">' + day.moon + '</div>';
             }
 
             day.ev.forEach((e) => {
@@ -432,12 +525,47 @@
                 const isPM = e.c !== null;
                 const labelX = isPM ? pmColX : bmColX;
                 const align = isPM ? 'left' : 'right';
-                overlayHtml += '<div style="position:absolute;top:' + (pt.y - 6) + 'px;left:' + labelX + 'px;width:' + (isPM ? pmColW : bmColW) + 'px;text-align:' + align + ';font-size:0.62rem;color:#334155;font-weight:600;white-space:nowrap;z-index:1;">' + e.t + '</div>';
-                if (isPM) {
-                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_PM + '" fill="' + color + '" stroke="#ffffff" stroke-width="1.2"></circle>';
-                    pointsSvg += '<text x="' + pt.x.toFixed(1) + '" y="' + pt.y.toFixed(1) + '" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="700" fill="' + textColorFor(color) + '">' + e.c + '</text>';
+
+                // Style de l'heure : grisée si passée, mise en évidence si c'est la
+                // toute prochaine marée à venir. Différenciation passé/présent/futur
+                // limitée aux horaires texte — les couleurs de la courbe restent
+                // d'origine (cf. rollback demandé).
+                let labelColor = '#334155';
+                let labelExtra = 'box-sizing:border-box;line-height:1.3;';
+                if (e.isPast) {
+                    labelColor = '#94a3b8';
+                    labelExtra += 'font-weight:500;';
+                }
+
+                if (e.isNext) {
+                    // Hauteur fixe + flexbox : centrage vertical garanti. Horizontalement,
+                    // la boîte est élargie de façon SYMÉTRIQUE (INSET de chaque côté) :
+                    // comme la largeur de texte interne reste égale à colW (identique aux
+                    // horaires normaux), le chiffre retombe exactement à la même position
+                    // que sur les autres jours — seul le cadre déborde légèrement autour.
+                    const BADGE_H = 28;
+                    const INSET = 4;
+                    const colW = isPM ? pmColW : bmColW;
+                    const justify = isPM ? 'flex-start' : 'flex-end';
+                    overlayHtml += '<div style="position:absolute;top:' + (pt.y - BADGE_H / 2) + 'px;left:' + (labelX - INSET) + 'px;width:' + (colW + INSET * 2) + 'px;height:' + BADGE_H + 'px;box-sizing:border-box;display:flex;align-items:center;justify-content:' + justify + ';font-size:0.8rem;font-weight:800;white-space:nowrap;z-index:2;color:#92400e;background:#fef3c7;border:2px solid #ca8a04;border-radius:8px;padding:0 2px;box-shadow:0 0 0 3px rgba(202,138,4,0.18);animation:nextTidePulse 2s ease-in-out infinite;">' + e.t + '</div>';
                 } else {
-                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_BM + '" fill="' + color + '" stroke="#ffffff" stroke-width="1.2"></circle>';
+                    overlayHtml += '<div style="position:absolute;top:' + (pt.y - 8) + 'px;left:' + labelX + 'px;width:' + (isPM ? pmColW : bmColW) + 'px;text-align:' + align + ';font-size:0.8rem;white-space:nowrap;z-index:2;color:' + labelColor + ';' + labelExtra + '">' + e.t + '</div>';
+                }
+                const circleFill = color, circleText = textColorFor(color);
+
+                if (isPM) {
+                    if (e.isNext) {
+                        const ringR = CIRCLE_R_PM + 5;
+                        pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + ringR + '" fill="none" stroke="#ca8a04" stroke-width="2.5"><animate attributeName="r" values="' + ringR + ';' + (ringR+3) + ';' + ringR + '" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.35;1" dur="1.8s" repeatCount="indefinite"/></circle>';
+                    }
+                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_PM + '" fill="' + circleFill + '" stroke="#ffffff" stroke-width="1.4"></circle>';
+                    pointsSvg += '<text x="' + pt.x.toFixed(1) + '" y="' + pt.y.toFixed(1) + '" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="800" fill="' + circleText + '">' + e.c + '</text>';
+                } else {
+                    if (e.isNext) {
+                        const ringR = CIRCLE_R_BM + 5;
+                        pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + ringR + '" fill="none" stroke="#ca8a04" stroke-width="2.5"><animate attributeName="r" values="' + ringR + ';' + (ringR+3) + ';' + ringR + '" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.35;1" dur="1.8s" repeatCount="indefinite"/></circle>';
+                    }
+                    pointsSvg += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="' + CIRCLE_R_BM + '" fill="' + circleFill + '" stroke="#ffffff" stroke-width="1.4"></circle>';
                 }
                 pointGlobalIdx++;
             });
@@ -447,9 +575,7 @@
 
         if (todayDay && todayDay._scrolled !== true) {
             todayDay._scrolled = true;
-            setTimeout(function(){
-                window.scrollTo({ top: wrap.getBoundingClientRect().top + window.scrollY + todayDay.startY - 130, behavior: 'smooth' });
-            }, 150);
+            setTimeout(function(){ scrollToDay(todayDay); }, 150);
         }
     }
 
