@@ -201,8 +201,8 @@
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold; z-index: 1000;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
         <h3 style="margin: 0 0 10px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1rem;" data-i18n="select_port_title">Choisir un port</h3>
         
-        <!-- Conteneur de la carte -->
-        <div id="map-container" style="height: 380px; width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid #cbd5e1;"></div>
+        <!-- Conteneur de la carte agrandi à 70vh -->
+        <div id="map-container" style="height: 70vh; min-height: 450px; max-height: 600px; width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid #cbd5e1;"></div>
         
         <p style="text-align: center; font-size: 0.65rem; color: #64748b; margin: 10px 0 0 0;">Touchez un marqueur pour y accéder</p>
     </div>
@@ -1024,12 +1024,12 @@ document.addEventListener('DOMContentLoaded', () => {
         markersLoaded = true;
     }
 
-    function openMapModal() {
+function openMapModal() {
         document.getElementById('port-selector-modal').style.display = 'flex';
         
         if (!map) {
-            // Initialisation de la carte (Zoom reculé à 8, centrage plus au sud à 49.200)
-            map = L.map('map-container').setView([49.200, -1.500], 8);
+            // Initialisation de la carte (Zoom avancé à 9, centrage parfait Jobourg <-> Mont St-Michel)
+            map = L.map('map-container').setView([49.165, -1.550], 9);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap',
                 maxZoom: 14
