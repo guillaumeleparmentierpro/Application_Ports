@@ -151,20 +151,23 @@
     <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
 </div>
 
-<!-- PORT SELECTOR -->
-<div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
-    <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative;">
-        <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
-        <h3 style="margin: 0 0 15px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1.1rem;" data-i18n="select_port_title">⚓ Choix du port</h3>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-            <a href="../index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">Port de Carteret</a>
-            <a href="../dielette/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">Port de Diélette</a>
-            <a href="../Granville/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">Port de Hérel (Granville)</a>
-            <a href="../saintvaast/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">Port de Saint-Vaast-la-Hougue</a>
-            <a href="../portbail/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">Port-Bail sur mer</a>
-            <a href="../Barfleur/index.html" style="display: block; background: #f1f5f9; color: var(--marine-blue); text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #cbd5e1;">Barfleur</a>
-            <a href="#" onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="display: block; background: var(--marine-blue); color: white; text-decoration: none; padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 0.85rem;">📍 Carentan</a>
+<!-- ✅ MODALE CARTE INTERACTIVE AVEC FILTRES -->
+<div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.85); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
+    <div style="background: white; width: 90%; max-width: 400px; border-radius: 16px; padding: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative;">
+        <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold; z-index: 1000;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
+        <h3 style="margin: 0 0 10px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1rem;" data-i18n="select_port_title">Choisir un port</h3>
+        
+        <!-- Les boutons de filtre préparés pour la traduction -->
+        <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap;">
+            <button onclick="filterMap('all', this)" class="map-filter-btn active" data-i18n="filter_all">Tous</button>
+            <button onclick="filterMap('eau', this)" class="map-filter-btn" data-i18n="filter_water">Port en eau</button>
+            <button onclick="filterMap('echouage', this)" class="map-filter-btn" data-i18n="filter_grounding">Port d'échouage</button>
         </div>
+        
+        <!-- Conteneur de la carte agrandi -->
+        <div id="map-container" style="height: 65vh; min-height: 400px; max-height: 550px; width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid #cbd5e1;"></div>
+        
+        <p style="text-align: center; font-size: 0.65rem; color: #64748b; margin: 10px 0 0 0;" data-i18n="map_legend">Les ports d'échouage sont carrés, les ports en eau sont ronds.</p>
     </div>
 </div>
 
@@ -893,6 +896,269 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+
+<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Carentan dans son sous-dossier) -->
+<style>
+    /* Animation "Radar / Jeu vidéo" pour le port en cours d'affichage */
+    @keyframes radarPulse {
+        0% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 0 rgba(30, 58, 138, 0.7); }
+        70% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 12px rgba(30, 58, 138, 0); }
+        100% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 0 rgba(30, 58, 138, 0); }
+    }
+    .marker-pulse-animation {
+        animation: radarPulse 1.5s infinite;
+    }
+</style>
+
+<script>
+    let map = null;
+    let markersLoaded = false;
+    let allMapMarkers = []; 
+    let currentMapFilter = 'all'; 
+    
+    // ✅ CHEMINS POUR CARENTAN (Sous-dossier)
+    // Carentan est en local ("#"), les autres ports remontent avec "../"
+    const portsList = [
+        { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "../index.html", dataUrl: "../donnees.js", cachedData: null },
+        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "../dielette/index.html", dataUrl: "../dielette/donnees.js", cachedData: null },
+        { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "../Granville/index.html", dataUrl: "../Granville/donnees.js", cachedData: null },
+        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js", cachedData: null },
+        { id: "carentan", name: "Port de Carentan", type: "echouage", lat: 49.3070, lng: -1.2383, url: "#", dataUrl: "donnees.js", cachedData: null },
+        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js", cachedData: null },
+        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js", cachedData: null }
+    ];
+
+    function getStatusFromData(portData) {
+        if (!portData || !portData.length) return { code: 'unknown', color: '#cbd5e1' }; 
+        
+        const now = new Date();
+        const tzoffset = now.getTimezoneOffset() * 60000;
+        const todayStr = (new Date(now - tzoffset)).toISOString().split('T')[0];
+        const yesterdayStr = new Date(now.getTime() - 86400000 - tzoffset).toISOString().split('T')[0];
+        const tomorrowStr = new Date(now.getTime() + 86400000 - tzoffset).toISOString().split('T')[0];
+        
+        let allPortes = [];
+        [yesterdayStr, todayStr, tomorrowStr].forEach(ds => {
+            let dData = portData.find(d => d.date === ds);
+            if (dData) {
+                let parts = ds.split('-');
+                let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
+                let portesArray = [];
+                let hasExplicitData = false; 
+                
+                if (dData.portes && Array.isArray(dData.portes)) {
+                    hasExplicitData = true;
+                    portesArray = dData.portes.filter(p => p.open && p.close && p.open !== "--:--" && p.close !== "--:--");
+                } else {
+                    for(let i=1; i<=4; i++) { 
+                        if (dData["ouv"+i] !== undefined || dData["acces"+i] !== undefined || dData["debut"+i] !== undefined || dData["open"+i] !== undefined) {
+                            hasExplicitData = true;
+                        }
+                        
+                        let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
+                        let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
+                        
+                        if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") {
+                            portesArray.push({open: ouv, close: ferm}); 
+                        }
+                    } 
+                }
+                
+                if (!hasExplicitData) {
+                    [1, 2].forEach(i => {
+                        let pmTimeStr = dData["pm"+i];
+                        if (pmTimeStr && pmTimeStr !== "--:--") {
+                            let pmTime = parseTime(pmTimeStr);
+                            if (pmTime) {
+                                // Attention, Carentan a des horaires asymétriques (2h avant / 3h après)
+                                // Cette fonction fallback reste générale pour les ports sans accès définis
+                                let margeHeures = 2.5; 
+                                let pmDateObj = new Date(y, m, day, pmTime.h, pmTime.m, 0);
+                                let sO = new Date(pmDateObj.getTime() - (margeHeures * 3600000));
+                                let sC = new Date(pmDateObj.getTime() + (margeHeures * 3600000));
+                                allPortes.push({ sO, sC });
+                            }
+                        }
+                    });
+                } else {
+                    portesArray.forEach(p => {
+                        let openTime = parseTime(p.open), closeTime = parseTime(p.close);
+                        if (openTime && closeTime) {
+                            let sO = new Date(y, m, day, openTime.h, openTime.m, 0), sC = new Date(y, m, day, closeTime.h, closeTime.m, 0);
+                            if (sC < sO) sC.setDate(sC.getDate() + 1);
+                            allPortes.push({ sO, sC });
+                        }
+                    });
+                }
+            }
+        });
+        
+        if (allPortes.length === 0) return { code: 'closed', color: '#ef4444' }; 
+
+        let activePorte = allPortes.find(p => now >= p.sO && now < p.sC);
+        
+        if (activePorte) {
+            const diffMs = activePorte.sC - now;
+            const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
+            
+            if (diffMs <= 25 * 60 * 1000 && diffMs > 0) {
+                return { code: 'imminent', color: '#ef4444' }; 
+            } else if (percent > 85) {
+                return { code: 'warning', color: '#fbbf24' }; 
+            } else {
+                return { code: 'open', color: '#10b981' }; 
+            }
+        } else {
+            return { code: 'closed', color: '#ef4444' }; 
+        }
+    }
+
+    async function loadMapMarkers() {
+        const currentLang = localStorage.getItem('preferredLang') || 'fr';
+        const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
+        const txtOpen = t.map_status_open || 'OUVERT';
+        const txtClosed = t.map_status_closed || 'FERMÉ';
+        const txtImminent = t.map_status_imminent || 'IMMINENT';
+        const txtWarning = t.next_close || 'PROCHAINE FERMETURE';
+        const txtGo = t.btn_access || 'Accéder';
+        const txtCloseMap = currentLang === 'en' ? 'Close map' : 'Fermer la carte';
+
+        allMapMarkers.forEach(item => {
+            if (map.hasLayer(item.marker)) map.removeLayer(item.marker);
+        });
+        allMapMarkers = [];
+
+        for (let port of portsList) {
+            let statusObj = { code: 'unknown', color: '#cbd5e1' }; 
+            
+            if (!port.cachedData) {
+                if (port.url === "#" && typeof data !== 'undefined') {
+                    port.cachedData = data;
+                } else {
+                    try {
+                        let res = await fetch(port.dataUrl);
+                        if (res.ok) {
+                            let text = await res.text();
+                            let scriptBody = text.replace(/(const|let|var)\s+data\s*=/g, 'return ');
+                            let fetchFunc = new Function(scriptBody);
+                            port.cachedData = fetchFunc();
+                        }
+                    } catch (e) { console.log("Données inaccessibles pour " + port.name); }
+                }
+            }
+
+            if (port.cachedData) {
+                statusObj = getStatusFromData(port.cachedData);
+            }
+
+            let isEau = port.type === "eau";
+            let size = isEau ? 34 : 26; 
+            let fontSize = isEau ? 16 : 12;
+            let shapeRadius = isEau ? "50%" : "8px"; 
+            let anchorPos = size / 2; 
+            
+            let statusText = '';
+            if (statusObj.code === 'open') statusText = `🟢 ${txtOpen}`;
+            else if (statusObj.code === 'warning') statusText = `🟠 ${txtWarning}`;
+            else if (statusObj.code === 'imminent') statusText = `🔴 ${txtImminent}`;
+            else if (statusObj.code === 'closed') statusText = `🔴 ${txtClosed}`;
+            else statusText = `⚪ INCONNU`;
+
+            let finalColor = statusObj.color;
+            let isCurrentPort = (port.url === "#");
+
+            let pulseClass = isCurrentPort ? "marker-pulse-animation" : "";
+            let emojiColor = "#1e3a8a"; 
+            let anchorEmoji = "&#x2693;&#xFE0E;"; 
+
+            const portIcon = L.divIcon({
+                className: 'custom-port-marker',
+                html: `<div class="${pulseClass}" style="background:${finalColor}; color:${emojiColor}; width:${size}px; height:${size}px; border-radius:${shapeRadius}; display:flex; align-items:center; justify-content:center; border:1px solid var(--marine-blue); box-shadow:0 2px 4px rgba(0,0,0,0.3); font-size:${fontSize}px; transition: transform 0.2s;">${anchorEmoji}</div>`,
+                iconSize: [size, size],
+                iconAnchor: [anchorPos, anchorPos]
+            });
+
+            let markerOptions = { icon: portIcon };
+            let zOffset = 0;
+            if (port.id === "carteret") zOffset += 50; 
+            if (isCurrentPort) zOffset += 20; 
+            if (zOffset > 0) markerOptions.zIndexOffset = zOffset;
+
+            const marker = L.marker([port.lat, port.lng], markerOptions);
+            
+            if (currentMapFilter === 'all' || port.type === currentMapFilter) {
+                marker.addTo(map);
+            }
+            
+            let popupLink = isCurrentPort
+                ? `<a onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2); cursor:pointer;">${txtCloseMap}</a>`
+                : `<a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2); cursor:pointer;">${txtGo}</a>`;
+
+            marker.bindPopup(`
+                <div style="text-align:center; font-family:'Montserrat',sans-serif; min-width: 150px; padding:5px;">
+                    <b style="color:var(--marine-blue); font-size:14px; display:block; margin-bottom:5px;">${port.name}</b>
+                    <div style="margin-bottom:12px; font-size:12px; font-weight:900; color:${finalColor};">
+                        ${statusText}
+                    </div>
+                    ${popupLink}
+                </div>
+            `);
+
+            allMapMarkers.push({ type: port.type, marker: marker });
+        }
+        markersLoaded = true;
+    }
+
+    function filterMap(filterType, btnElement) {
+        currentMapFilter = filterType; 
+        
+        document.querySelectorAll('.map-filter-btn').forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
+
+        allMapMarkers.forEach(item => {
+            if (filterType === 'all' || item.type === filterType) {
+                if (!map.hasLayer(item.marker)) {
+                    item.marker.addTo(map); 
+                }
+            } else {
+                if (map.hasLayer(item.marker)) {
+                    item.marker.remove();
+                }
+            }
+        });
+    }
+
+    function openMapModal() {
+        document.getElementById('port-selector-modal').style.display = 'flex';
+        
+        if (!map) {
+            map = L.map('map-container', { zoomSnap: 0.5 }).setView([49.165, -1.550], 8.5);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap',
+                maxZoom: 14
+            }).addTo(map);
+        }
+        
+        loadMapMarkers();
+        
+        setTimeout(() => { map.invalidateSize(); }, 150);
+    }
+</script>
+
+<button id="btn-top" title="Retour en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})"></button>
+<script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btnTop.style.display = 'flex';
+            setTimeout(() => btnTop.classList.add('visible'), 10);
+        } else {
+            btnTop.classList.remove('visible');
+            setTimeout(() => { if (!btnTop.classList.contains('visible')) btnTop.style.display = 'none'; }, 400);
+        }
+    });
+</script>
+    
 <button id="btn-top" title="Retour en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})"></button>
 <script>
     const btnTop = document.getElementById('btn-top');
