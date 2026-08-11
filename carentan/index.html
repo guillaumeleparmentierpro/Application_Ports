@@ -924,7 +924,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 </script>
 
-<!-- ✅ NOUVEAU SCRIPT LEAFLET POUR CARENTAN -->
+<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Carentan dans son sous-dossier, en tant que Port en Eau) -->
+<style>
+    /* Animation "Radar / Jeu vidéo" pour le port en cours d'affichage */
+    @keyframes radarPulse {
+        0% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 0 rgba(30, 58, 138, 0.7); }
+        70% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 12px rgba(30, 58, 138, 0); }
+        100% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 0 rgba(30, 58, 138, 0); }
+    }
+    .marker-pulse-animation {
+        animation: radarPulse 1.5s infinite;
+    }
+</style>
+
 <script>
     let map = null;
     let markersLoaded = false;
@@ -937,7 +949,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "../dielette/index.html", dataUrl: "../dielette/donnees.js", cachedData: null },
         { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "../Granville/index.html", dataUrl: "../Granville/donnees.js", cachedData: null },
         { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js", cachedData: null },
-        { id: "carentan", name: "Port de Carentan", type: "echouage", lat: 49.3070, lng: -1.2383, url: "#", dataUrl: "donnees.js", cachedData: null },
+        // ✅ CORRECTION : Carentan est un port en "eau"
+        { id: "carentan", name: "Port de Carentan", type: "eau", lat: 49.3070, lng: -1.2383, url: "#", dataUrl: "donnees.js", cachedData: null },
         { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js", cachedData: null },
         { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js", cachedData: null }
     ];
@@ -984,6 +997,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (pmTimeStr && pmTimeStr !== "--:--") {
                             let pmTime = parseTime(pmTimeStr);
                             if (pmTime) {
+                                // Attention, Carentan a des horaires asymétriques (2h avant / 3h après)
+                                // Mais ce bloc sert de fallback général pour les autres ports sans données explicites
                                 let margeHeures = 2.5; 
                                 let pmDateObj = new Date(y, m, day, pmTime.h, pmTime.m, 0);
                                 let sO = new Date(pmDateObj.getTime() - (margeHeures * 3600000));
