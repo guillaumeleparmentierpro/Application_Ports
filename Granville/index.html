@@ -864,24 +864,36 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<!-- ✅ NOUVEAU SCRIPT LEAFLET (Adapté pour Granville) -->
-<!-- ✅ SCRIPT LEAFLET (Adapté pour Granville avec les règles de données corrigées) -->
+<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Granville dans son sous-dossier) -->
+<style>
+    /* Animation "Radar / Jeu vidéo" pour le port en cours d'affichage */
+    @keyframes radarPulse {
+        0% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 0 rgba(30, 58, 138, 0.7); }
+        70% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 12px rgba(30, 58, 138, 0); }
+        100% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 0 rgba(30, 58, 138, 0); }
+    }
+    .marker-pulse-animation {
+        animation: radarPulse 1.5s infinite;
+    }
+</style>
+
 <script>
     let map = null;
     let markersLoaded = false;
     let allMapMarkers = []; 
+    let currentMapFilter = 'all'; 
     
-    // ✅ CHEMINS POUR GRANVILLE (Granville en local "#", les autres en "../")
+    // ✅ CHEMINS POUR GRANVILLE (Sous-dossier)
+    // Granville est en local ("#"), les autres ports remontent avec "../"
     const portsList = [
-        { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "../index.html", dataUrl: "../donnees.js" },
-        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "../dielette/index.html", dataUrl: "../dielette/donnees.js" },
-        { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "#", dataUrl: "donnees.js" },
-        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js" },
-        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js" },
-        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js" }
+        { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "../index.html", dataUrl: "../donnees.js", cachedData: null },
+        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "../dielette/index.html", dataUrl: "../dielette/donnees.js", cachedData: null },
+        { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "#", dataUrl: "donnees.js", cachedData: null },
+        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js", cachedData: null },
+        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js", cachedData: null },
+        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js", cachedData: null }
     ];
 
-    // ✅ REPRODUCTION EXACTE DE LA LOGIQUE DE L'APP
     function getStatusFromData(portData) {
         if (!portData || !portData.length) return { code: 'unknown', color: '#cbd5e1' }; 
         
@@ -899,12 +911,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
                 let portesArray = [];
                 
-                // 1. On cherche en priorité le tableau "portes" déjà formaté (Ex: Diélette, Carteret)
                 if (dData.portes && Array.isArray(dData.portes)) {
                     portesArray = dData.portes.filter(p => p.open && p.close && p.open !== "--:--" && p.close !== "--:--");
                 }
                 
-                // 2. Sinon on cherche les variables séparées ouv1/ferm1, acces1...
                 if (portesArray.length === 0) {
                     for(let i=1; i<=4; i++) { 
                         let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
@@ -913,7 +923,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     } 
                 }
                 
-                // 3. FALLBACK : Si toujours vide, on base sur la Pleine Mer (ex: Barfleur)
                 if (portesArray.length === 0) {
                     [1, 2].forEach(i => {
                         let pmTimeStr = dData["pm"+i];
@@ -949,16 +958,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const diffMs = activePorte.sC - now;
             const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
             
-            // Les règles de couleurs strictes comme ta jauge !
             if (diffMs <= 25 * 60 * 1000 && diffMs > 0) {
-                return { code: 'imminent', color: '#ef4444' }; // Rouge (Imminent)
+                return { code: 'imminent', color: '#ef4444' }; 
             } else if (percent > 85) {
-                return { code: 'warning', color: '#fbbf24' }; // Orange (Prochaine fermeture)
+                return { code: 'warning', color: '#fbbf24' }; 
             } else {
-                return { code: 'open', color: '#10b981' }; // Vert (Ouvert)
+                return { code: 'open', color: '#10b981' }; 
             }
         } else {
-            return { code: 'closed', color: '#ef4444' }; // Rouge (Fermé)
+            return { code: 'closed', color: '#ef4444' }; 
         }
     }
 
@@ -970,29 +978,40 @@ document.addEventListener('DOMContentLoaded', () => {
         const txtImminent = t.map_status_imminent || 'IMMINENT';
         const txtWarning = t.next_close || 'PROCHAINE FERMETURE';
         const txtGo = t.btn_access || 'Accéder';
+        const txtCloseMap = currentLang === 'en' ? 'Close map' : 'Fermer la carte';
+
+        allMapMarkers.forEach(item => {
+            if (map.hasLayer(item.marker)) map.removeLayer(item.marker);
+        });
+        allMapMarkers = [];
 
         for (let port of portsList) {
-            let statusObj = { code: 'unknown', color: '#1e3a8a' }; 
+            let statusObj = { code: 'unknown', color: '#cbd5e1' }; 
             
-            if (port.url === "#" && typeof data !== 'undefined') {
-                statusObj = getStatusFromData(data);
-            } else {
-                try {
-                    let res = await fetch(port.dataUrl);
-                    if (res.ok) {
-                        let text = await res.text();
-                        let scriptBody = text.replace(/(const|let|var)\s+data\s*=/g, 'return ');
-                        let fetchFunc = new Function(scriptBody);
-                        let portData = fetchFunc();
-                        statusObj = getStatusFromData(portData);
-                    }
-                } catch (e) { console.log("Données inaccessibles pour " + port.name); }
+            if (!port.cachedData) {
+                if (port.url === "#" && typeof data !== 'undefined') {
+                    port.cachedData = data;
+                } else {
+                    try {
+                        let res = await fetch(port.dataUrl);
+                        if (res.ok) {
+                            let text = await res.text();
+                            let scriptBody = text.replace(/(const|let|var)\s+data\s*=/g, 'return ');
+                            let fetchFunc = new Function(scriptBody);
+                            port.cachedData = fetchFunc();
+                        }
+                    } catch (e) { console.log("Données inaccessibles pour " + port.name); }
+                }
+            }
+
+            if (port.cachedData) {
+                statusObj = getStatusFromData(port.cachedData);
             }
 
             let isEau = port.type === "eau";
             let size = isEau ? 34 : 26; 
             let fontSize = isEau ? 16 : 12;
-            let shapeRadius = isEau ? "50%" : "6px"; 
+            let shapeRadius = isEau ? "50%" : "8px"; 
             let anchorPos = size / 2; 
             
             let statusText = '';
@@ -1002,24 +1021,45 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (statusObj.code === 'closed') statusText = `🔴 ${txtClosed}`;
             else statusText = `⚪ INCONNU`;
 
-            let finalColor = statusObj.code === 'unknown' ? '#1e3a8a' : statusObj.color;
+            let finalColor = statusObj.color;
+            let isCurrentPort = (port.url === "#");
+
+            // ✅ NOUVEAU DESIGN : Contour fin bleu marine pour tous, animation radar pour le port en cours
+            let pulseClass = isCurrentPort ? "marker-pulse-animation" : "";
+            let emojiColor = "#1e3a8a"; 
+            let anchorEmoji = "&#x2693;&#xFE0E;"; 
 
             const portIcon = L.divIcon({
                 className: 'custom-port-marker',
-                html: `<div style="background:${finalColor}; color:white; width:${size}px; height:${size}px; border-radius:${shapeRadius}; display:flex; align-items:center; justify-content:center; border:2px solid white; box-shadow:0 3px 6px rgba(0,0,0,0.3); font-size:${fontSize}px; transition: transform 0.2s;">⚓</div>`,
+                html: `<div class="${pulseClass}" style="background:${finalColor}; color:${emojiColor}; width:${size}px; height:${size}px; border-radius:${shapeRadius}; display:flex; align-items:center; justify-content:center; border:1px solid var(--marine-blue); box-shadow:0 2px 4px rgba(0,0,0,0.3); font-size:${fontSize}px; transition: transform 0.2s;">${anchorEmoji}</div>`,
                 iconSize: [size, size],
                 iconAnchor: [anchorPos, anchorPos]
             });
 
-            const marker = L.marker([port.lat, port.lng], { icon: portIcon }).addTo(map);
+            // ✅ GESTION DU Z-INDEX INTELLIGENT
+            let markerOptions = { icon: portIcon };
+            let zOffset = 0;
+            if (port.id === "carteret") zOffset += 50; 
+            if (isCurrentPort) zOffset += 20; 
+            if (zOffset > 0) markerOptions.zIndexOffset = zOffset;
+
+            const marker = L.marker([port.lat, port.lng], markerOptions);
             
+            if (currentMapFilter === 'all' || port.type === currentMapFilter) {
+                marker.addTo(map);
+            }
+            
+            let popupLink = isCurrentPort
+                ? `<a onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2); cursor:pointer;">${txtCloseMap}</a>`
+                : `<a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2); cursor:pointer;">${txtGo}</a>`;
+
             marker.bindPopup(`
                 <div style="text-align:center; font-family:'Montserrat',sans-serif; min-width: 150px; padding:5px;">
                     <b style="color:var(--marine-blue); font-size:14px; display:block; margin-bottom:5px;">${port.name}</b>
                     <div style="margin-bottom:12px; font-size:12px; font-weight:900; color:${finalColor};">
                         ${statusText}
                     </div>
-                    <a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2); cursor:pointer;">${txtGo}</a>
+                    ${popupLink}
                 </div>
             `);
 
@@ -1029,6 +1069,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function filterMap(filterType, btnElement) {
+        currentMapFilter = filterType; 
+        
         document.querySelectorAll('.map-filter-btn').forEach(btn => btn.classList.remove('active'));
         btnElement.classList.add('active');
 
@@ -1047,14 +1089,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openMapModal() {
         document.getElementById('port-selector-modal').style.display = 'flex';
+        
         if (!map) {
             map = L.map('map-container', { zoomSnap: 0.5 }).setView([49.165, -1.550], 8.5);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap',
                 maxZoom: 14
             }).addTo(map);
-            loadMapMarkers();
         }
+        
+        // 🔄 EXÉCUTÉ À CHAQUE OUVERTURE DU MENU
+        loadMapMarkers();
+        
         setTimeout(() => { map.invalidateSize(); }, 150);
     }
 </script>
