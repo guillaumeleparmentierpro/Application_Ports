@@ -4,7 +4,8 @@ const translations = {
         btn_back_arrow: "◀ RETOUR",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
-
+car_plan_warning_text_bar: "<strong>* Attention :</strong> Le port de Carentan est équipé d'une <strong>écluse</strong>. Les créneaux indiqués correspondent à la fenêtre d'ouverture théorique (<strong>2h avant à 3h après la Pleine Mer</strong>), calculée à titre indicatif. Appelez l'éclusier au 02 33 71 10 85 (taper 1), 30 minutes avant d'arriver au pied de l'écluse. Le capitaine reste responsable de sa navigation.",
+car_plan_info_box_bar: "⚓ <strong>Carentan</strong> — écluse.<br>Passage possible de <strong>2h avant à 3h après la Pleine Mer (PM)</strong>. Les créneaux sont calculés automatiquement.",
 car_warning_modal_text: "<strong>* Attention :</strong> Le port de Carentan est équipé d'une écluse. Passage possible de 2h avant à 3h après la Pleine Mer (5h par marée). Appelez l'éclusier au <strong>02 33 71 10 85</strong> (taper 1), <strong>30 minutes avant</strong> d'arriver au pied de l'écluse. Le capitaine reste responsable de sa navigation.",
 car_no_gate_text_bar: "Carentan est équipé d'une <strong>écluse</strong>.<br>Passage possible de <strong>2h avant à 3h après la Pleine Mer</strong> (5h par marée).<br>☎ Éclusier à appeler <strong>30 min avant</strong> votre arrivée.",
 car_basin_info: "Bassin à flot : 1 450 m × 60 m · Tirant d'eau : 3 m",
@@ -320,6 +321,8 @@ pb_btn_top_title: "Retour en haut",
         btn_back_arrow: "◀ BACK",
         
         // --- NOUVEAUTÉS PAGE PARTAGE ---
+car_plan_warning_text_bar: "<strong>* Warning:</strong> The port of Carentan has a <strong>lock (écluse)</strong>. The slots shown correspond to the theoretical opening window (<strong>2h before to 3h after High Tide</strong>), given as a guide only. Call the lock keeper at 02 33 71 10 85 (press 1), 30 minutes before reaching the lock. The skipper remains responsible for their navigation.",
+car_plan_info_box_bar: "⚓ <strong>Carentan</strong> — lock (écluse).<br>Passage possible from <strong>2h before to 3h after High Tide (HT)</strong>. Slots are calculated automatically.",
 car_warning_modal_text: "<strong>* Warning:</strong> The port of Carentan has a lock (écluse). Passage is possible from 2h before to 3h after High Tide (5h per tide). Call the lock keeper at <strong>02 33 71 10 85</strong> (press 1), <strong>30 minutes before</strong> reaching the lock. The skipper remains responsible for their navigation.",
 car_no_gate_text_bar: "Carentan has a <strong>lock (écluse)</strong>.<br>Passage possible from <strong>2h before to 3h after High Tide</strong> (5h per tide).<br>☎ Call the lock keeper <strong>30 min before</strong> your arrival.",
 car_basin_info: "Marina basin: 1,450 m × 60 m · Draft: 3 m",
