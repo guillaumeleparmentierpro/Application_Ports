@@ -864,7 +864,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Granville dans son sous-dossier) -->
+<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Granville dans son sous-dossier, avec règles personnalisées par port) -->
 <style>
     /* Animation "Radar / Jeu vidéo" pour le port en cours d'affichage */
     @keyframes radarPulse {
@@ -894,7 +894,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js", cachedData: null }
     ];
 
-    function getStatusFromData(portData) {
+    function getStatusFromData(portData, portId) {
         if (!portData || !portData.length) return { code: 'unknown', color: '#cbd5e1' }; 
         
         const now = new Date();
@@ -936,10 +936,24 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (pmTimeStr && pmTimeStr !== "--:--") {
                             let pmTime = parseTime(pmTimeStr);
                             if (pmTime) {
-                                let margeHeures = 2.5; 
                                 let pmDateObj = new Date(y, m, day, pmTime.h, pmTime.m, 0);
-                                let sO = new Date(pmDateObj.getTime() - (margeHeures * 3600000));
-                                let sC = new Date(pmDateObj.getTime() + (margeHeures * 3600000));
+                                let sO, sC;
+
+                                // ✅ RÈGLES SPÉCIFIQUES PAR PORT
+                                if (portId === 'carentan') {
+                                    // Carentan : 2h avant à 3h après
+                                    sO = new Date(pmDateObj.getTime() - (2 * 3600000));
+                                    sC = new Date(pmDateObj.getTime() + (3 * 3600000));
+                                } else if (portId === 'portbail' || portId === 'barfleur') {
+                                    // Port-Bail et Barfleur : -2h à +2h
+                                    sO = new Date(pmDateObj.getTime() - (2 * 3600000));
+                                    sC = new Date(pmDateObj.getTime() + (2 * 3600000));
+                                } else {
+                                    // Fallback générique pour les autres si aucune donnée explicite trouvée (Marge classique de 2.5h)
+                                    sO = new Date(pmDateObj.getTime() - (2.5 * 3600000));
+                                    sC = new Date(pmDateObj.getTime() + (2.5 * 3600000));
+                                }
+                                
                                 allPortes.push({ sO, sC });
                             }
                         }
@@ -1012,7 +1026,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (port.cachedData) {
-                statusObj = getStatusFromData(port.cachedData);
+                // ✅ ON PASSE L'ID DU PORT À LA FONCTION POUR APPLIQUER LA BONNE RÈGLE
+                statusObj = getStatusFromData(port.cachedData, port.id);
             }
 
             let isEau = port.type === "eau";
