@@ -127,8 +127,8 @@
     <div id="warning-modal" class="warning-modal-overlay">
         <div class="warning-modal-box">
             <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
-            <div class="warning-modal-text" data-i18n="pb_plan_warning_text_bar">
-                <strong>* Attention :</strong> Barfleur n'a <strong>pas de porte physique</strong>. Les créneaux indiqués correspondent à la fenêtre PM ± 2h, calculée à titre indicatif. Les conditions réelles peuvent varier (+/- 30 min selon météo et marée). Le capitaine est responsable de sa navigation.
+            <div class="warning-modal-text" data-i18n="car_plan_warning_text_bar">
+                <strong>* Attention :</strong> Le port de Carentan est équipé d'une <strong>écluse</strong>. Les créneaux indiqués correspondent à la fenêtre d'ouverture théorique (<strong>2h avant à 3h après la Pleine Mer</strong>), calculée à titre indicatif. Appelez l'éclusier au 02 33 71 10 85 (taper 1), 30 minutes avant d'arriver au pied de l'écluse. Le capitaine reste responsable de sa navigation.
             </div>
             <button id="btn-close-warning" class="btn-warning-ok" data-i18n="pb_warning_understood">J'AI COMPRIS</button>
         </div>
@@ -141,10 +141,10 @@
         <h1 class="main-title" data-i18n="pb_plan_main_title">Fenêtres d'accès et marées</h1>
     </div>
 
-    <!-- INFO PORT-BAIL -->
-    <div class="portbail-info-box" data-i18n="pb_plan_info_box_bar">
-        ⚓ <strong>Barfleur</strong> — pas de porte physique.<br>
-        Accès possible <strong>± 2h autour de la Pleine Mer (PM)</strong>. Les créneaux sont calculés automatiquement.
+    <!-- INFO CARENTAN -->
+    <div class="portbail-info-box" data-i18n="car_plan_info_box_bar">
+        ⚓ <strong>Carentan</strong> — écluse.<br>
+        Passage possible de <strong>2h avant à 3h après la Pleine Mer (PM)</strong>. Les créneaux sont calculés automatiquement.
     </div>
 
     <!-- GRANDES MARÉES -->
@@ -204,12 +204,13 @@
         return h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0');
     }
 
+    // Écluse de Carentan : ouverture 2h avant la PM, fermeture 3h après (fenêtre asymétrique, 5h/marée)
     function calculerFenetreAcces(pmStr) {
         const pm = parseHHMM(pmStr);
         if (!pm) return null;
         const totalMinutes = pm.h * 60 + pm.m;
-        const debutMin = totalMinutes - 120;
-        const finMin   = totalMinutes + 120;
+        const debutMin = totalMinutes - 120; // 2h avant PM
+        const finMin   = totalMinutes + 180; // 3h après PM
         return {
             debut: formatHHMM(Math.floor(debutMin / 60), ((debutMin % 60) + 60) % 60),
             fin:   formatHHMM(Math.floor(finMin   / 60), ((finMin   % 60) + 60) % 60)
