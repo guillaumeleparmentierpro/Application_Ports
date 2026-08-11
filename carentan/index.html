@@ -318,7 +318,7 @@
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title">Conditions météo</div>
         </div>
         <div class="weather-iframe-box" style="border-radius:8px; overflow:hidden; height:270px;">
-            <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=6538&lang=fr" style="border: 0;" frameborder="0"></iframe>
+            <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1160&lang=fr" style="border: 0;" frameborder="0"></iframe>
         </div>
     </div>
 
@@ -694,7 +694,7 @@
         });
         localStorage.setItem('preferredLang', lang);
         const wisukiIframe = document.getElementById('wisuki-widget');
-        if (wisukiIframe) wisukiIframe.src = 'https://wisuki.com/widget-summary?spot=6538&lang=' + lang;
+        if (wisukiIframe) wisukiIframe.src = 'https://wisuki.com/widget-summary?spot=1160&lang=' + lang;
         const sponsorLabel = document.getElementById("sponsor-label-text");
         if (sponsorLabel) sponsorLabel.innerHTML = lang === "en" ? "OUR<br>LOCAL<br>PARTNERS" : "NOS<br>PARTENAIRES<br>LOCAUX";
 
