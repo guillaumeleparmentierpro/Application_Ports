@@ -919,16 +919,26 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<!-- ✅ SCRIPT LEAFLET (Adapté pour Carteret à la racine du site) -->
-<!-- ✅ SCRIPT LEAFLET (Adapté pour Carteret à la racine du site) -->
+<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Carteret à la racine) -->
+<style>
+    /* Animation "Radar / Jeu vidéo" pour le port en cours d'affichage */
+    @keyframes radarPulse {
+        0% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 0 rgba(30, 58, 138, 0.7); }
+        70% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 12px rgba(30, 58, 138, 0); }
+        100% { box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 0 0 rgba(30, 58, 138, 0); }
+    }
+    .marker-pulse-animation {
+        animation: radarPulse 1.5s infinite;
+    }
+</style>
+
 <script>
     let map = null;
     let markersLoaded = false;
     let allMapMarkers = []; 
-    let currentMapFilter = 'all'; // Mémorise le filtre actif lors d'un refresh
+    let currentMapFilter = 'all'; 
     
     // ✅ CHEMINS POUR CARTERET (À la racine du projet)
-    // Ajout d'une propriété "cachedData" pour mémoriser les horaires et éviter de retélécharger
     const portsList = [
         { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "#", dataUrl: "donnees.js", cachedData: null },
         { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "dielette/index.html", dataUrl: "dielette/donnees.js", cachedData: null },
@@ -1003,14 +1013,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
             
             if (diffMs <= 25 * 60 * 1000 && diffMs > 0) {
-                return { code: 'imminent', color: '#ef4444' }; // Rouge (Imminent)
+                return { code: 'imminent', color: '#ef4444' }; 
             } else if (percent > 85) {
-                return { code: 'warning', color: '#fbbf24' }; // Orange (Prochaine fermeture)
+                return { code: 'warning', color: '#fbbf24' }; 
             } else {
-                return { code: 'open', color: '#10b981' }; // Vert (Ouvert)
+                return { code: 'open', color: '#10b981' }; 
             }
         } else {
-            return { code: 'closed', color: '#ef4444' }; // Rouge (Fermé)
+            return { code: 'closed', color: '#ef4444' }; 
         }
     }
 
@@ -1024,7 +1034,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const txtGo = t.btn_access || 'Accéder';
         const txtCloseMap = currentLang === 'en' ? 'Close map' : 'Fermer la carte';
 
-        // 🔄 Nettoyage de la carte avant actualisation
         allMapMarkers.forEach(item => {
             if (map.hasLayer(item.marker)) map.removeLayer(item.marker);
         });
@@ -1033,7 +1042,6 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let port of portsList) {
             let statusObj = { code: 'unknown', color: '#cbd5e1' }; 
             
-            // 🔄 Utilisation du cache pour éviter de re-télécharger à chaque ouverture du menu
             if (!port.cachedData) {
                 if (port.url === "#" && typeof data !== 'undefined') {
                     port.cachedData = data;
@@ -1050,7 +1058,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Calcul du statut avec l'heure exacte actuelle
             if (port.cachedData) {
                 statusObj = getStatusFromData(port.cachedData);
             }
@@ -1058,7 +1065,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let isEau = port.type === "eau";
             let size = isEau ? 34 : 26; 
             let fontSize = isEau ? 16 : 12;
-            let shapeRadius = isEau ? "50%" : "6px"; 
+            let shapeRadius = isEau ? "50%" : "8px"; 
             let anchorPos = size / 2; 
             
             let statusText = '';
@@ -1069,34 +1076,33 @@ document.addEventListener('DOMContentLoaded', () => {
             else statusText = `⚪ INCONNU`;
 
             let finalColor = statusObj.color;
-
-            // 🎨 RÈGLES DE DESIGN DEMANDÉES :
             let isCurrentPort = (port.url === "#");
-            let emojiColor = "#1e3a8a"; // Ancre toujours bleu marine
-            let borderColor = isCurrentPort ? "#fbbf24" : "#1e3a8a"; // Doré pour le port actuel, Marine pour les autres
-            let borderWidth = isCurrentPort ? "3px" : "2px";
+
+            // ✅ NOUVEAU DESIGN : Contour fin bleu marine pour tous, animation radar pour le port en cours
+            let pulseClass = isCurrentPort ? "marker-pulse-animation" : "";
+            // Le &#xFE0E; force l'emoji à s'afficher en version "texte" pour qu'il prenne notre couleur CSS bleu marine
+            let anchorEmoji = "&#x2693;&#xFE0E;"; 
 
             const portIcon = L.divIcon({
                 className: 'custom-port-marker',
-                html: `<div style="background:${finalColor}; color:${emojiColor}; width:${size}px; height:${size}px; border-radius:${shapeRadius}; display:flex; align-items:center; justify-content:center; border:${borderWidth} solid ${borderColor}; box-shadow:0 3px 6px rgba(0,0,0,0.4); font-size:${fontSize}px; transition: transform 0.2s;">⚓</div>`,
+                html: `<div class="${pulseClass}" style="background:${finalColor}; color:var(--marine-blue); width:${size}px; height:${size}px; border-radius:${shapeRadius}; display:flex; align-items:center; justify-content:center; border:1px solid var(--marine-blue); box-shadow:0 2px 4px rgba(0,0,0,0.3); font-size:${fontSize}px; transition: transform 0.2s;">${anchorEmoji}</div>`,
                 iconSize: [size, size],
                 iconAnchor: [anchorPos, anchorPos]
             });
 
+            // ✅ GESTION DU Z-INDEX INTELLIGENT (Assez haut pour passer devant, assez bas pour ne pas bloquer les clics popup)
             let markerOptions = { icon: portIcon };
-            // 🥇 Carteret (et le port actuel) toujours devant Port-Bail
-            if (port.id === "carteret" || isCurrentPort) {
-                markerOptions.zIndexOffset = 1000;
-            }
+            let zOffset = 0;
+            if (port.id === "carteret") zOffset += 50; 
+            if (isCurrentPort) zOffset += 20; 
+            if (zOffset > 0) markerOptions.zIndexOffset = zOffset;
 
             const marker = L.marker([port.lat, port.lng], markerOptions);
             
-            // On l'ajoute à la carte uniquement si le filtre actif le permet
             if (currentMapFilter === 'all' || port.type === currentMapFilter) {
                 marker.addTo(map);
             }
             
-            // 🚪 Action du bouton dans la popup (Accéder VS Fermer)
             let popupLink = isCurrentPort
                 ? `<a onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2); cursor:pointer;">${txtCloseMap}</a>`
                 : `<a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2); cursor:pointer;">${txtGo}</a>`;
@@ -1117,7 +1123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function filterMap(filterType, btnElement) {
-        currentMapFilter = filterType; // Mémorise le filtre
+        currentMapFilter = filterType; 
         
         document.querySelectorAll('.map-filter-btn').forEach(btn => btn.classList.remove('active'));
         btnElement.classList.add('active');
@@ -1146,7 +1152,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }).addTo(map);
         }
         
-        // 🔄 EXÉCUTÉ À CHAQUE OUVERTURE DU MENU
         loadMapMarkers();
         
         setTimeout(() => { map.invalidateSize(); }, 150);
