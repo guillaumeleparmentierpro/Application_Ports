@@ -864,7 +864,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Granville dans son sous-dossier, avec règles personnalisées par port) -->
+<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Carteret à la racine, avec calcul de force pour les ports spécifiques) -->
 <style>
     /* Animation "Radar / Jeu vidéo" pour le port en cours d'affichage */
     @keyframes radarPulse {
@@ -883,15 +883,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let allMapMarkers = []; 
     let currentMapFilter = 'all'; 
     
-    // ✅ CHEMINS POUR GRANVILLE (Sous-dossier)
+    // ✅ CHEMINS POUR CARTERET (À la racine du projet)
     const portsList = [
-        { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "../index.html", dataUrl: "../donnees.js", cachedData: null },
-        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "../dielette/index.html", dataUrl: "../dielette/donnees.js", cachedData: null },
-        { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "#", dataUrl: "donnees.js", cachedData: null },
-        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js", cachedData: null },
-        { id: "carentan", name: "Port de Carentan", type: "eau", lat: 49.3070, lng: -1.2383, url: "../carentan/index.html", dataUrl: "../carentan/donnees.js", cachedData: null },
-        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js", cachedData: null },
-        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js", cachedData: null }
+        { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "#", dataUrl: "donnees.js", cachedData: null },
+        { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "dielette/index.html", dataUrl: "dielette/donnees.js", cachedData: null },
+        { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "Granville/index.html", dataUrl: "Granville/donnees.js", cachedData: null },
+        { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "saintvaast/index.html", dataUrl: "saintvaast/donnees.js", cachedData: null },
+        { id: "carentan", name: "Port de Carentan", type: "eau", lat: 49.3070, lng: -1.2383, url: "carentan/index.html", dataUrl: "carentan/donnees.js", cachedData: null },
+        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "portbail/index.html", dataUrl: "portbail/donnees.js", cachedData: null },
+        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "barfleur/index.html", dataUrl: "barfleur/donnees.js", cachedData: null }
     ];
 
     function getStatusFromData(portData, portId) {
@@ -910,27 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 let parts = ds.split('-');
                 let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
                 let portesArray = [];
-                let hasExplicitData = false; 
                 
-                if (dData.portes && Array.isArray(dData.portes)) {
-                    hasExplicitData = true;
-                    portesArray = dData.portes.filter(p => p.open && p.close && p.open !== "--:--" && p.close !== "--:--");
-                } else {
-                    for(let i=1; i<=4; i++) { 
-                        if (dData["ouv"+i] !== undefined || dData["acces"+i] !== undefined || dData["debut"+i] !== undefined || dData["open"+i] !== undefined) {
-                            hasExplicitData = true;
-                        }
-                        
-                        let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
-                        let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
-                        
-                        if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") {
-                            portesArray.push({open: ouv, close: ferm}); 
-                        }
-                    } 
+                // ✅ RÈGLE STRICTE : Pour ces 3 ports, on IGNORE le fichier d'ouverture et on force le calcul par rapport à la Pleine Mer
+                let forcePMCalculation = (portId === 'carentan' || portId === 'portbail' || portId === 'barfleur');
+                
+                if (!forcePMCalculation) {
+                    if (dData.portes && Array.isArray(dData.portes)) {
+                        portesArray = dData.portes.filter(p => p.open && p.close && p.open !== "--:--" && p.close !== "--:--");
+                    } else {
+                        for(let i=1; i<=4; i++) { 
+                            let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
+                            let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
+                            if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") {
+                                portesArray.push({open: ouv, close: ferm}); 
+                            }
+                        } 
+                    }
                 }
                 
-                if (!hasExplicitData) {
+                if (forcePMCalculation || portesArray.length === 0) {
                     [1, 2].forEach(i => {
                         let pmTimeStr = dData["pm"+i];
                         if (pmTimeStr && pmTimeStr !== "--:--") {
@@ -939,19 +937,16 @@ document.addEventListener('DOMContentLoaded', () => {
                                 let pmDateObj = new Date(y, m, day, pmTime.h, pmTime.m, 0);
                                 let sO, sC;
 
-                                // ✅ RÈGLES SPÉCIFIQUES PAR PORT
+                                // 🎯 VRAIES RÈGLES DE CALCUL SUR MESURE
                                 if (portId === 'carentan') {
-                                    // Carentan : 2h avant à 3h après
-                                    sO = new Date(pmDateObj.getTime() - (2 * 3600000));
-                                    sC = new Date(pmDateObj.getTime() + (3 * 3600000));
+                                    sO = new Date(pmDateObj.getTime() - (2 * 3600000)); // - 2h
+                                    sC = new Date(pmDateObj.getTime() + (3 * 3600000)); // + 3h
                                 } else if (portId === 'portbail' || portId === 'barfleur') {
-                                    // Port-Bail et Barfleur : -2h à +2h
-                                    sO = new Date(pmDateObj.getTime() - (2 * 3600000));
-                                    sC = new Date(pmDateObj.getTime() + (2 * 3600000));
+                                    sO = new Date(pmDateObj.getTime() - (2 * 3600000)); // - 2h
+                                    sC = new Date(pmDateObj.getTime() + (2 * 3600000)); // + 2h
                                 } else {
-                                    // Fallback générique pour les autres si aucune donnée explicite trouvée (Marge classique de 2.5h)
-                                    sO = new Date(pmDateObj.getTime() - (2.5 * 3600000));
-                                    sC = new Date(pmDateObj.getTime() + (2.5 * 3600000));
+                                    sO = new Date(pmDateObj.getTime() - (2.5 * 3600000)); // - 2h30 générique
+                                    sC = new Date(pmDateObj.getTime() + (2.5 * 3600000)); // + 2h30 générique
                                 }
                                 
                                 allPortes.push({ sO, sC });
@@ -1026,7 +1021,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (port.cachedData) {
-                // ✅ ON PASSE L'ID DU PORT À LA FONCTION POUR APPLIQUER LA BONNE RÈGLE
+                // ✅ Le portId est bien passé pour que le fallback fonctionne sur-mesure
                 statusObj = getStatusFromData(port.cachedData, port.id);
             }
 
