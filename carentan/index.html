@@ -322,6 +322,29 @@
         </div>
     </div>
 
+    <div class="module reveal">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title_HR">Conditions météo (2h)</div>
+            <div style="display: flex; gap: 6px;">
+        <a href="https://www.spots.guru/" target="_blank" rel="noreferrer" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_wind">VENT (Spotguru)</a>
+           </div>
+        </div>
+        <div style="border-radius:10px; overflow:hidden; height:300px; border: 1px solid #e2e8f0; position: relative;">
+<script id="wg_fwdg_305_52_1786459123372">
+(function (window, document) {
+  var loader = function () {
+    var arg = ["s=48401" ,"m=52","mw=46","uid=wg_fwdg_305_52_1786459123372" ,"wj=kmh" ,"tj=c" ,"waj=m" ,"tij=m" ,"odh=0" ,"doh=24" ,"fhours=48" ,"hrsm=2" ,"vt=forecasts" ,"lng=fr" ,"p=SMER,WINDSPD,GUST,DIRPW,HTSGW,PERPW,TCDC,TMP,RH"];
+    var script = document.createElement("script");
+    var tag = document.getElementsByTagName("script")[0];
+    script.src = "https://www.windguru.cz/js/widget.php?"+(arg.join("&"));
+    tag.parentNode.insertBefore(script, tag);
+  };
+  window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+})(window, document);
+</script>
+        </div>
+    </div>
+    
     <!-- COURANTS -->
     <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
