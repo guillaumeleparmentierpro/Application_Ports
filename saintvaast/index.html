@@ -887,12 +887,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentMapFilter = 'all'; 
     
     // ✅ CHEMINS POUR SAINT-VAAST (Sous-dossier)
-    // Saint-Vaast est en local ("#"), les autres ports remontent avec "../"
     const portsList = [
         { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "../index.html", dataUrl: "../donnees.js", cachedData: null },
         { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "../dielette/index.html", dataUrl: "../dielette/donnees.js", cachedData: null },
         { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "../Granville/index.html", dataUrl: "../Granville/donnees.js", cachedData: null },
         { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "#", dataUrl: "donnees.js", cachedData: null },
+        { id: "carentan", name: "Port de Carentan", type: "eau", lat: 49.3070, lng: -1.2383, url: "../carentan/index.html", dataUrl: "../carentan/donnees.js", cachedData: null },
         { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js", cachedData: null },
         { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js", cachedData: null }
     ];
@@ -913,20 +913,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 let parts = ds.split('-');
                 let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
                 let portesArray = [];
+                let hasExplicitData = false; 
                 
                 if (dData.portes && Array.isArray(dData.portes)) {
+                    hasExplicitData = true;
                     portesArray = dData.portes.filter(p => p.open && p.close && p.open !== "--:--" && p.close !== "--:--");
-                }
-                
-                if (portesArray.length === 0) {
+                } else {
                     for(let i=1; i<=4; i++) { 
+                        if (dData["ouv"+i] !== undefined || dData["acces"+i] !== undefined || dData["debut"+i] !== undefined || dData["open"+i] !== undefined) {
+                            hasExplicitData = true;
+                        }
+                        
                         let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
                         let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
-                        if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") portesArray.push({open: ouv, close: ferm}); 
+                        
+                        if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") {
+                            portesArray.push({open: ouv, close: ferm}); 
+                        }
                     } 
                 }
                 
-                if (portesArray.length === 0) {
+                if (!hasExplicitData) {
                     [1, 2].forEach(i => {
                         let pmTimeStr = dData["pm"+i];
                         if (pmTimeStr && pmTimeStr !== "--:--") {
@@ -953,7 +960,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        if (allPortes.length === 0) return { code: 'unknown', color: '#cbd5e1' };
+        if (allPortes.length === 0) return { code: 'closed', color: '#ef4444' }; 
 
         let activePorte = allPortes.find(p => now >= p.sO && now < p.sC);
         
@@ -1027,7 +1034,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let finalColor = statusObj.color;
             let isCurrentPort = (port.url === "#");
 
-            // ✅ NOUVEAU DESIGN : Contour fin bleu marine pour tous, animation radar pour le port en cours
             let pulseClass = isCurrentPort ? "marker-pulse-animation" : "";
             let emojiColor = "#1e3a8a"; 
             let anchorEmoji = "&#x2693;&#xFE0E;"; 
@@ -1039,7 +1045,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 iconAnchor: [anchorPos, anchorPos]
             });
 
-            // ✅ GESTION DU Z-INDEX INTELLIGENT
             let markerOptions = { icon: portIcon };
             let zOffset = 0;
             if (port.id === "carteret") zOffset += 50; 
@@ -1101,7 +1106,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }).addTo(map);
         }
         
-        // 🔄 EXÉCUTÉ À CHAQUE OUVERTURE DU MENU
         loadMapMarkers();
         
         setTimeout(() => { map.invalidateSize(); }, 150);
