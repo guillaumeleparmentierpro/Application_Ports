@@ -143,6 +143,44 @@
             border: none;
         }
 
+        /* --- BOUTON WEBCAM EXTERNE --- */
+        .webcam-link-card {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, #1e3a8a, #1e293b);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .webcam-link-card .webcam-icon {
+            font-size: 2rem;
+        }
+
+        .webcam-link-card .webcam-link-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .webcam-link-card .webcam-link-btn {
+            background: #ffffff;
+            color: var(--marine-blue) !important;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+
         .disclaimer {
             font-size: 0.65rem; color: #64748b; text-align: center; padding: 0 15px; margin-top: 10px;
         }
@@ -156,19 +194,21 @@
             <div class="top-nav" style="display: flex; margin-bottom: 5px;">
                 <a href="index.html" class="btn-action" data-i18n="btn_back_arrow">◀ RETOUR</a>
             </div>
-            <h1 class="main-title"><span>WEBCAM</span><sup>*</sup></h1>
+            <h1 class="main-title"><span data-i18n="webcam_main_title_care">WEBCAM</span><sup>*</sup></h1>
         </div>
 
         <div class="module">
             <h2 class="module-title" data-i18n="webcam_module_title_care">Vue Port de Grandcamp-Maisy</h2>
             <p class="module-text" data-i18n="webcam_desc__care">Observez les conditions à proximité du port de Carentan (Port de Grandcamp-Maisy), image actualisée toutes les 15 minutes.</p>
             
-<div class="webcam-container">
-    <iframe src="https://platforms5.joada.net/embeded/embeded.html?uuid=529d32d0-9dbc-49d7-3131-3730-6d61-63-91e0-ed6451da97c7d&type=vod&liveicon=0&vsheader=1&tz=Europe/Paris&tsp=1786526109&titletext=" allowfullscreen title="Webcam Carentan - Port de Grandcamp-Maisy"></iframe>
-</div>
+            <a href="https://viewsurf.com/univers/plage/vue/19422-france-basse-normandie-saint-pierre-du-mont-port-de-grandcamp-maisy" target="_blank" rel="noopener noreferrer" class="webcam-link-card">
+                <span class="webcam-icon">📷</span>
+                <span class="webcam-link-title" data-i18n="webcam_link_title_care">Voir la webcam sur Viewsurf</span>
+                <span class="webcam-link-btn" data-i18n="webcam_link_btn">Ouvrir ↗</span>
+            </a>
         </div>
 
-        <div class="disclaimer" data-i18n="webcam_disclaimer">
+        <div class="disclaimer" data-i18n="webcam_disclaimer_care">
             <strong style="color:#b03a2e;">* Attention :</strong> Cette image n'est pas un flux en direct, elle est actualisée automatiquement toutes les 15 minutes et peut subir des décalages.
         </div>
 
