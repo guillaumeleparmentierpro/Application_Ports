@@ -891,7 +891,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Port-Bail dans son sous-dossier, avec règles personnalisées par port) -->
+<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Barfleur dans son sous-dossier, avec règles personnalisées par port) -->
 <style>
     /* Animation "Radar / Jeu vidéo" pour le port en cours d'affichage */
     @keyframes radarPulse {
@@ -910,15 +910,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let allMapMarkers = []; 
     let currentMapFilter = 'all'; 
     
-    // ✅ CHEMINS POUR PORT-BAIL (Sous-dossier)
+    // ✅ CHEMINS POUR BARFLEUR (Sous-dossier)
     const portsList = [
         { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "../index.html", dataUrl: "../donnees.js", cachedData: null },
         { id: "dielette", name: "Port de Diélette", type: "eau", lat: 49.5517, lng: -1.8642, url: "../dielette/index.html", dataUrl: "../dielette/donnees.js", cachedData: null },
         { id: "granville", name: "Port de Hérel (Granville)", type: "eau", lat: 48.8354, lng: -1.6053, url: "../Granville/index.html", dataUrl: "../Granville/donnees.js", cachedData: null },
         { id: "saintvaast", name: "Port de Saint-Vaast-la-Hougue", type: "eau", lat: 49.5857, lng: -1.2619, url: "../saintvaast/index.html", dataUrl: "../saintvaast/donnees.js", cachedData: null },
         { id: "carentan", name: "Port de Carentan", type: "eau", lat: 49.3070, lng: -1.2383, url: "../carentan/index.html", dataUrl: "../carentan/donnees.js", cachedData: null },
-        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "#", dataUrl: "donnees.js", cachedData: null },
-        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js", cachedData: null }
+        { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "../portbail/index.html", dataUrl: "../portbail/donnees.js", cachedData: null },
+        { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "#", dataUrl: "donnees.js", cachedData: null }
     ];
 
     function getStatusFromData(portData, portId) {
@@ -1144,6 +1144,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => { map.invalidateSize(); }, 150);
     }
 </script>
+
+    
 <button id="btn-top" title="Retour en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})"></button>
 <script>
     const btnTop = document.getElementById('btn-top');
