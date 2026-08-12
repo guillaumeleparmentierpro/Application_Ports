@@ -867,7 +867,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Saint-Vaast-la-Hougue dans son sous-dossier) -->
+<!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Saint-Vaast dans son sous-dossier, avec calcul de force) -->
 <style>
     /* Animation "Radar / Jeu vidéo" pour le port en cours d'affichage */
     @keyframes radarPulse {
@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "../barfleur/index.html", dataUrl: "../barfleur/donnees.js", cachedData: null }
     ];
 
-    function getStatusFromData(portData) {
+    function getStatusFromData(portData, portId) {
         if (!portData || !portData.length) return { code: 'unknown', color: '#cbd5e1' }; 
         
         const now = new Date();
@@ -913,36 +913,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 let parts = ds.split('-');
                 let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
                 let portesArray = [];
-                let hasExplicitData = false; 
                 
-                if (dData.portes && Array.isArray(dData.portes)) {
-                    hasExplicitData = true;
-                    portesArray = dData.portes.filter(p => p.open && p.close && p.open !== "--:--" && p.close !== "--:--");
-                } else {
-                    for(let i=1; i<=4; i++) { 
-                        if (dData["ouv"+i] !== undefined || dData["acces"+i] !== undefined || dData["debut"+i] !== undefined || dData["open"+i] !== undefined) {
-                            hasExplicitData = true;
-                        }
-                        
-                        let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
-                        let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
-                        
-                        if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") {
-                            portesArray.push({open: ouv, close: ferm}); 
-                        }
-                    } 
+                // ✅ RÈGLE STRICTE : Pour ces 3 ports, on IGNORE le fichier d'ouverture et on force le calcul par rapport à la Pleine Mer
+                let forcePMCalculation = (portId === 'carentan' || portId === 'portbail' || portId === 'barfleur');
+                
+                if (!forcePMCalculation) {
+                    if (dData.portes && Array.isArray(dData.portes)) {
+                        portesArray = dData.portes.filter(p => p.open && p.close && p.open !== "--:--" && p.close !== "--:--");
+                    } else {
+                        for(let i=1; i<=4; i++) { 
+                            let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
+                            let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
+                            if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") {
+                                portesArray.push({open: ouv, close: ferm}); 
+                            }
+                        } 
+                    }
                 }
                 
-                if (!hasExplicitData) {
+                if (forcePMCalculation || portesArray.length === 0) {
                     [1, 2].forEach(i => {
                         let pmTimeStr = dData["pm"+i];
                         if (pmTimeStr && pmTimeStr !== "--:--") {
                             let pmTime = parseTime(pmTimeStr);
                             if (pmTime) {
-                                let margeHeures = 2.5; 
                                 let pmDateObj = new Date(y, m, day, pmTime.h, pmTime.m, 0);
-                                let sO = new Date(pmDateObj.getTime() - (margeHeures * 3600000));
-                                let sC = new Date(pmDateObj.getTime() + (margeHeures * 3600000));
+                                let sO, sC;
+
+                                // 🎯 VRAIES RÈGLES DE CALCUL SUR MESURE
+                                if (portId === 'carentan') {
+                                    sO = new Date(pmDateObj.getTime() - (2 * 3600000)); // - 2h
+                                    sC = new Date(pmDateObj.getTime() + (3 * 3600000)); // + 3h
+                                } else if (portId === 'portbail' || portId === 'barfleur') {
+                                    sO = new Date(pmDateObj.getTime() - (2 * 3600000)); // - 2h
+                                    sC = new Date(pmDateObj.getTime() + (2 * 3600000)); // + 2h
+                                } else {
+                                    sO = new Date(pmDateObj.getTime() - (2.5 * 3600000)); // - 2h30 générique
+                                    sC = new Date(pmDateObj.getTime() + (2.5 * 3600000)); // + 2h30 générique
+                                }
+                                
                                 allPortes.push({ sO, sC });
                             }
                         }
@@ -1015,7 +1024,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (port.cachedData) {
-                statusObj = getStatusFromData(port.cachedData);
+                statusObj = getStatusFromData(port.cachedData, port.id);
             }
 
             let isEau = port.type === "eau";
