@@ -59,7 +59,7 @@
         .sponsor-label { background: var(--marine-blue); color: white; font-size: 0.52rem; border-radius: 4px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; flex-shrink: 0; align-self: center; display: inline-block; }
         .sponsor-text { font-size: 0.75rem; font-weight: 600; line-height: 1.3; flex-grow: 1; display: flex; align-items: center; justify-content: flex-end; text-align: right; }
         :root { color-scheme: light; --primary-bg: #f1f5f9; --card-bg: #ffffff; --open-light: #10b981; --open-dark: #067a5c; --warning-color: #fbbf24; --warning-dark: #d97706; --danger-color: #ef4444; --danger-dark: #991b1b; --closed-color: #ef4444; --marine-blue: #1e3a8a; --text-main: #1e293b; --tide-light-blue: #eff6ff; }
-        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--primary-bg); margin: 0; padding: 10px; display: flex; justify-content: center; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
         .app-container { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; padding: 15px; box-sizing: border-box; padding-top: 0 !important; }
         .footer-module { margin-top: 15px; padding-top: 20px; border-top: 1px dashed #cbd5e1; text-align: center; }
         .footer-credits { margin-top: 35px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border-top: 1px solid #e2e8f0; padding-top: 20px; text-decoration: none; transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); cursor: pointer; }
@@ -202,22 +202,27 @@
         .wind-streak { position: fixed; height: 2px; background: linear-gradient(90deg, transparent, rgba(30,58,138,0.4), transparent); z-index: 9995; pointer-events: none; will-change: transform, opacity; }
 
         /* ===== EASTER EGG : LE FANTÔME DU PHARE ===== */
-        .lighthouse-dusk { position: fixed; inset: 0; z-index: 9993; pointer-events: none; background: rgba(8,15,35,0.55); opacity: 0; transition: opacity 0.5s ease; }
-        .lighthouse-dusk.on { opacity: 1; }
-        .lighthouse-glow { position: fixed; top: 6%; left: 5%; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: radial-gradient(circle, #fff9e0 0%, #ffe9a8 45%, rgba(255,233,168,0) 75%); box-shadow: 0 0 22px 10px rgba(255,233,168,0.75); z-index: 9995; pointer-events: none; opacity: 0; transition: opacity 0.5s ease; }
-        .lighthouse-glow.on { opacity: 1; }
-        .lighthouse-beam { position: fixed; top: -10vh; left: -10vw; width: 220vw; height: 220vh; pointer-events: none; z-index: 9994; opacity: 0; transform-origin: 9% 9%; mix-blend-mode: screen; background: conic-gradient(from 0deg at 9% 9%, rgba(255,244,214,0) 0deg, rgba(255,244,214,0.9) 5deg, rgba(255,244,214,0.35) 11deg, rgba(255,244,214,0) 20deg, rgba(255,244,214,0) 360deg); }
-        .lighthouse-beam.sweep { animation: lighthouseSweep 3.6s ease-in-out forwards; }
-        @keyframes lighthouseSweep { 0% { transform: rotate(-35deg); opacity: 0.95; } 55% { opacity: 1; } 100% { transform: rotate(55deg); opacity: 0; } }
+        .lighthouse-scene { position: fixed; inset: 0; z-index: 9993; pointer-events: none; background: radial-gradient(ellipse at 50% 45%, rgba(15,23,42,0.93) 0%, rgba(2,6,23,0.97) 70%); opacity: 0; transition: opacity 0.6s ease; overflow: hidden; }
+        .lighthouse-scene.on { opacity: 1; }
+        .lighthouse-beam-rotor { position: fixed; top: 50%; left: 50%; width: 300vmax; height: 300vmax; margin-left: -150vmax; margin-top: -150vmax; z-index: 9994; pointer-events: none; opacity: 0; mix-blend-mode: screen; transition: opacity 0.5s ease; background: conic-gradient(from 0deg, rgba(255,244,214,0) 0deg, rgba(255,244,214,0.6) 8deg, rgba(255,244,214,0) 20deg, rgba(255,244,214,0) 160deg, rgba(255,244,214,0.6) 168deg, rgba(255,244,214,0) 180deg, rgba(255,244,214,0) 360deg); }
+        .lighthouse-beam-rotor.on { opacity: 1; animation: lighthouseSpin 2.6s linear infinite; }
+        @keyframes lighthouseSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .lighthouse-graphic { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9995; pointer-events: none; display: flex; flex-direction: column; align-items: center; opacity: 0; transition: opacity 0.6s ease; }
+        .lighthouse-graphic.on { opacity: 1; }
+        .lighthouse-roof { width: 0; height: 0; border-left: 17px solid transparent; border-right: 17px solid transparent; border-bottom: 13px solid #7f1d1d; }
+        .lighthouse-lantern { width: 28px; height: 20px; background: #1e293b; position: relative; box-shadow: 0 0 26px 12px rgba(255,233,168,0.85); }
+        .lighthouse-lantern::after { content: ''; position: absolute; inset: 3px; background: radial-gradient(circle, #fff9e0 0%, #ffe9a8 60%, #ffcf6b 100%); border-radius: 2px; }
+        .lighthouse-tower { width: 44px; height: 92px; background: repeating-linear-gradient(0deg, #ef4444 0px, #ef4444 13px, #f8fafc 13px, #f8fafc 26px); clip-path: polygon(20% 0, 80% 0, 100% 100%, 0% 100%); box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        .lighthouse-base { width: 58px; height: 12px; background: #475569; clip-path: polygon(8% 0, 92% 0, 100% 100%, 0% 100%); margin-top: -1px; }
 
         /* ===== EASTER EGG : LE TRÉSOR DU CAPITAINE ===== */
-        .treasure-egg { position: fixed; font-size: 2.6rem; z-index: 9999; pointer-events: none; transform: translate(-50%, -50%) scale(0); opacity: 0; transition: transform 0.55s cubic-bezier(0.34,1.6,0.5,1), opacity 0.4s ease; }
+        .treasure-egg { position: fixed; font-size: 2.4rem; z-index: 9999; pointer-events: none; transform: translate(-50%, -50%) scale(0); opacity: 0; transition: transform 0.55s cubic-bezier(0.34,1.6,0.5,1), opacity 0.4s ease; }
         .treasure-egg.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        .treasure-coin { position: fixed; font-size: 1.4rem; z-index: 9998; pointer-events: none; will-change: transform, opacity; }
+        .treasure-coin { position: fixed; font-size: 1.3rem; z-index: 9998; pointer-events: none; will-change: transform, opacity; }
 
         /* ===== EASTER EGG : LA BALEINE QUI SOUFFLE ===== */
-        .whale-rig { position: fixed; bottom: 0; left: 22%; font-size: clamp(2.2rem, 9vw, 3rem); z-index: 9997; pointer-events: none; transform: translateY(140%); transition: transform 1s cubic-bezier(0.34,1.1,0.4,1); }
-        .whale-rig.up { transform: translateY(35%); }
+        .whale-rig { position: fixed; bottom: -15vh; left: 22%; font-size: clamp(2.2rem, 9vw, 3rem); z-index: 9997; pointer-events: none; transition: bottom 1s cubic-bezier(0.34,1.1,0.4,1); }
+        .whale-rig.up { bottom: 24vh; }
         .whale-spout { position: fixed; font-size: 1rem; z-index: 9997; pointer-events: none; will-change: transform, opacity; }
 
         /* ===== EASTER EGG : LE COMPAS AFFOLÉ ===== */
@@ -1032,59 +1037,52 @@
         function playFoghorn() {
             let ctx;
             try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
-            const osc = ctx.createOscillator();
-            const osc2 = ctx.createOscillator();
-            const filter = ctx.createBiquadFilter();
-            const tremolo = ctx.createOscillator();
-            const tremoloGain = ctx.createGain();
-            const gain = ctx.createGain();
-            osc.type = 'sawtooth';
-            osc2.type = 'sawtooth';
-            osc.frequency.setValueAtTime(110, ctx.currentTime);
-            osc2.frequency.setValueAtTime(112, ctx.currentTime);
-            filter.type = 'bandpass';
-            filter.frequency.setValueAtTime(220, ctx.currentTime);
-            filter.Q.value = 3.2;
-            tremolo.type = 'sine';
-            tremolo.frequency.value = 5;
-            tremoloGain.gain.value = 0.025;
-            gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.16, ctx.currentTime + 0.4);
-            gain.gain.linearRampToValueAtTime(0.16, ctx.currentTime + 2.0);
-            gain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 2.8);
-            tremolo.connect(tremoloGain).connect(gain.gain);
-            osc.connect(filter);
-            osc2.connect(filter);
-            filter.connect(gain).connect(ctx.destination);
-            osc.start(); osc2.start(); tremolo.start();
-            osc.stop(ctx.currentTime + 2.9);
-            osc2.stop(ctx.currentTime + 2.9);
-            tremolo.stop(ctx.currentTime + 2.9);
+            function blast(t0, duration, freq) {
+                const osc = ctx.createOscillator();
+                const filter = ctx.createBiquadFilter();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(freq, t0);
+                filter.type = 'lowpass';
+                filter.frequency.value = 260;
+                gain.gain.setValueAtTime(0.0001, t0);
+                gain.gain.linearRampToValueAtTime(0.15, t0 + 0.15);
+                gain.gain.setValueAtTime(0.15, t0 + duration - 0.3);
+                gain.gain.linearRampToValueAtTime(0.0001, t0 + duration);
+                osc.connect(filter).connect(gain).connect(ctx.destination);
+                osc.start(t0);
+                osc.stop(t0 + duration + 0.05);
+            }
+            blast(ctx.currentTime, 1.0, 110);
+            blast(ctx.currentTime + 1.3, 1.3, 98);
         }
         function launchLighthouse() {
-            if (document.getElementById('lighthouse-beam')) return;
+            if (document.getElementById('lighthouse-scene')) return;
             playFoghorn();
-            const dusk = document.createElement('div');
-            dusk.id = 'lighthouse-dusk';
-            dusk.className = 'lighthouse-dusk';
-            document.body.appendChild(dusk);
-            const glow = document.createElement('div');
-            glow.className = 'lighthouse-glow';
-            document.body.appendChild(glow);
-            const beam = document.createElement('div');
-            beam.id = 'lighthouse-beam';
-            beam.className = 'lighthouse-beam';
-            document.body.appendChild(beam);
+            const scene = document.createElement('div');
+            scene.id = 'lighthouse-scene';
+            scene.className = 'lighthouse-scene';
+            document.body.appendChild(scene);
+            const rotor = document.createElement('div');
+            rotor.id = 'lighthouse-rotor';
+            rotor.className = 'lighthouse-beam-rotor';
+            document.body.appendChild(rotor);
+            const graphic = document.createElement('div');
+            graphic.id = 'lighthouse-graphic';
+            graphic.className = 'lighthouse-graphic';
+            graphic.innerHTML = '<div class="lighthouse-roof"></div><div class="lighthouse-lantern"></div><div class="lighthouse-tower"></div><div class="lighthouse-base"></div>';
+            document.body.appendChild(graphic);
             requestAnimationFrame(() => {
-                dusk.classList.add('on');
-                glow.classList.add('on');
-                beam.classList.add('sweep');
+                scene.classList.add('on');
+                rotor.classList.add('on');
+                graphic.classList.add('on');
             });
             setTimeout(() => {
-                dusk.classList.remove('on');
-                glow.classList.remove('on');
-            }, 3600);
-            setTimeout(() => { dusk.remove(); glow.remove(); beam.remove(); }, 4200);
+                scene.classList.remove('on');
+                rotor.classList.remove('on');
+                graphic.classList.remove('on');
+            }, 4400);
+            setTimeout(() => { scene.remove(); rotor.remove(); graphic.remove(); }, 5100);
         }
         const dateBadge = document.getElementById('current-date');
         if (dateBadge) {
@@ -1121,8 +1119,19 @@
                 osc.stop(t + 0.5);
             });
         }
-        function launchTreasure(x, y) {
+        const statusBoxEl = document.getElementById('status-box');
+        const treasureModule = statusBoxEl ? statusBoxEl.closest('.module') : null;
+        function launchTreasure() {
             playTreasureChime();
+            let x, y;
+            if (treasureModule) {
+                const rect = treasureModule.getBoundingClientRect();
+                x = rect.right - 22;
+                y = rect.top + 22;
+            } else {
+                x = window.innerWidth - 40;
+                y = 70;
+            }
             const chest = document.createElement('div');
             chest.className = 'treasure-egg';
             chest.innerText = '🏴‍☠️💰';
@@ -1140,7 +1149,7 @@
                     coin.style.transition = 'transform 1.1s cubic-bezier(0.3,0.8,0.4,1), opacity 1.1s ease-in';
                     document.body.appendChild(coin);
                     requestAnimationFrame(() => {
-                        coin.style.transform = `translate(${Math.random()*160-80}px, ${Math.random()*120+60}px) rotate(${Math.random()*360}deg)`;
+                        coin.style.transform = `translate(${-(20 + Math.random()*140)}px, ${40 + Math.random()*100}px) rotate(${Math.random()*360}deg)`;
                         coin.style.opacity = '0';
                     });
                     setTimeout(() => coin.remove(), 1200);
@@ -1148,16 +1157,13 @@
             }
             setTimeout(() => { chest.classList.remove('show'); setTimeout(() => chest.remove(), 500); }, 1800);
         }
-        const statusBox = document.getElementById('status-box');
+        const statusBox = statusBoxEl;
         if (statusBox) {
-            const startPress = (e) => {
-                const point = (e.touches && e.touches[0]) ? e.touches[0] : e;
-                const x = point.clientX || window.innerWidth / 2;
-                const y = point.clientY || window.innerHeight / 3;
+            const startPress = () => {
                 clearTimeout(pressTimer);
                 pressTimer = setTimeout(() => {
                     window.__treasureLongPress = true;
-                    launchTreasure(x, y);
+                    launchTreasure();
                 }, 1800);
             };
             const cancelPress = () => { clearTimeout(pressTimer); };
@@ -1243,7 +1249,7 @@
     })();
 </script>
 <script>
-    // ✅ EASTER EGG : LE COMPAS AFFOLÉ (appui long sur "Changer de port")
+    // ✅ EASTER EGG : LE COMPAS AFFOLÉ (appui long ~1,6s sur "Changer de port", n'affecte pas le clic normal)
     (function() {
         let compassPressTimer = null;
         function playDing() {
@@ -1274,7 +1280,7 @@
         if (portBtn) {
             const startPress = () => {
                 clearTimeout(compassPressTimer);
-                compassPressTimer = setTimeout(launchCompass, 1200);
+                compassPressTimer = setTimeout(launchCompass, 1600);
             };
             const cancelPress = () => { clearTimeout(compassPressTimer); };
             portBtn.addEventListener('mousedown', startPress);
