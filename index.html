@@ -19,7 +19,7 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Ports du Cotentin">
     <link rel="canonical" href="https://portsducotentin.fr/" />
-    
+
     <script type="application/ld+json">
     {
       "@context" : "https://schema.org",
@@ -28,7 +28,6 @@
       "url" : "https://guillaumeleparmentierpro.github.io/Application_Ports/"
     }
     </script>
-
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LY18V5457"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -36,25 +35,23 @@
       gtag('js', new Date());
       gtag('config', 'G-5LY18V5457');
     </script>
-    
+
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="icon" href="icon-192.png" sizes="192x192">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    
+
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e3a8a">
     <link rel="apple-touch-icon" href="icon-192.png">
-
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script src="donnees.js"></script>
     <script src="lang.js"></script>
-
     <!-- Ajout de Leaflet pour la carte -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
+
     <style>
         .map-filter-btn { background: #f1f5f9; color: var(--marine-blue); border: 1px solid #cbd5e1; border-radius: 20px; padding: 6px 12px; font-size: 0.65rem; font-weight: 800; font-family: 'Montserrat', sans-serif; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
         .map-filter-btn.active { background: var(--marine-blue); color: white; border-color: var(--marine-blue); }
@@ -173,10 +170,38 @@
     transform: rotate(-45deg) translateY(2px) translateX(-2px);
     border-radius: 1px;
 }
+        /* ===== EASTER EGG : MODE NUIT ÉTOILÉE ===== */
+        .starry-overlay { position: fixed; inset: 0; z-index: 9997; pointer-events: none; background: radial-gradient(ellipse at 50% 30%, rgba(15,23,42,0.92) 0%, rgba(2,6,23,0.96) 70%); opacity: 0; transition: opacity 1s ease; overflow: hidden; }
+        .starry-overlay.visible { opacity: 1; }
+        .starry-star { position: absolute; background: #fff; border-radius: 50%; animation: starryTwinkle 2.4s ease-in-out infinite; }
+        @keyframes starryTwinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+        .starry-constellation-label { position: absolute; color: #93c5fd; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.5px; opacity: 0; transition: opacity 1s ease 0.5s; text-transform: uppercase; white-space: nowrap; }
+        .starry-overlay.visible .starry-constellation-label { opacity: 0.75; }
+        .starry-shooting { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; box-shadow: 0 0 6px 2px rgba(255,255,255,0.8); opacity: 0; }
+        .starry-shooting.go { animation: starryShoot 1.4s ease-out forwards; }
+        @keyframes starryShoot { 0% { opacity: 0; transform: translate(0,0); } 10% { opacity: 1; } 100% { opacity: 0; transform: translate(-220px,160px); } }
+        .starry-moon { position: absolute; top: 6%; right: 7%; font-size: 3.2rem; line-height: 1; filter: drop-shadow(0 0 14px rgba(255,255,255,0.55)); opacity: 0; transition: opacity 1.2s ease 0.2s; }
+        .starry-overlay.visible .starry-moon { opacity: 1; }
+        .starry-jupiter { position: absolute; left: 12%; top: 76%; width: 34px; height: 34px; border-radius: 50%; background: repeating-linear-gradient(0deg, #d9a066 0px, #d9a066 3px, #c98a52 3px, #c98a52 6px, #e8bd8a 6px, #e8bd8a 9px); box-shadow: 0 0 10px 2px rgba(217,160,102,0.45); opacity: 0; transition: opacity 1.2s ease 0.3s; }
+        .starry-overlay.visible .starry-jupiter { opacity: 1; }
+        .starry-jupiter::after { content: ''; position: absolute; width: 6px; height: 4px; background: #b5502f; border-radius: 50%; top: 40%; left: 58%; opacity: 0.8; }
+
+        /* ===== EASTER EGG : PÉRISCOPE ESPION ===== */
+        .periscope-rig { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(115%); z-index: 9997; pointer-events: none; transition: transform 0.7s cubic-bezier(0.34,1.2,0.4,1); display: flex; flex-direction: column; align-items: center; }
+        .periscope-rig.up { transform: translateX(-50%) translateY(-10px); }
+        .periscope-tube { width: 14px; height: 90px; background: linear-gradient(180deg,#334155,#1e293b); border-radius: 4px 4px 0 0; box-shadow: inset -3px 0 4px rgba(0,0,0,0.4); }
+        .periscope-head { width: 46px; height: 26px; background: linear-gradient(180deg,#475569,#1e293b); border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: -4px; box-shadow: 0 2px 4px rgba(0,0,0,0.35); position: relative; }
+        .periscope-eye { width: 20px; height: 20px; background: #f8fafc; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; border: 2px solid #0f172a; }
+        .periscope-pupil { width: 9px; height: 9px; background: #1e3a8a; border-radius: 50%; }
+        .periscope-eyelid { position: absolute; left: 0; right: 0; top: 0; height: 100%; background: #334155; transform: scaleY(0); transform-origin: top; transition: transform 0.12s ease; }
+        .periscope-rig.wink .periscope-eyelid { transform: scaleY(1); }
+
+        /* ===== EASTER EGG : TEMPÊTE DE MOUETTES ===== */
+        .gull { position: fixed; font-size: 1.8rem; z-index: 9996; pointer-events: none; will-change: transform, opacity; }
+        .wind-streak { position: fixed; height: 2px; background: linear-gradient(90deg, transparent, rgba(30,58,138,0.4), transparent); z-index: 9995; pointer-events: none; will-change: transform, opacity; }
     </style>
 </head>
 <body>
-
 <!-- POPUP AVERTISSEMENT QUOTIDIEN -->
 <div id="warning-modal">
     <div class="warning-modal-box">
@@ -190,33 +215,30 @@
         </div>
     </div>
 </div>
-
 <div id="ios-install-popup" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; border: 2px solid #fbbf24; padding: 15px 15px 20px 15px; border-radius: 12px; z-index: 9999; width: 85%; max-width: 350px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); text-align: center; color: white;">
     <span style="position: absolute; top: 2px; right: 12px; cursor: pointer; font-weight: bold; color: #94a3b8; font-size: 1.5rem;" onclick="document.getElementById('ios-install-popup').style.display='none'">×</span>
     <p style="font-size: 0.9rem; margin: 0; font-weight: 800; color: #fbbf24;">🍎 Installer sur iPhone / iPad</p>
     <p style="font-size: 0.75rem; margin: 10px 0 0 0; color: #f8fafc; line-height: 1.5;">Touchez l'icône <b style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">Partager</b> en bas de l'écran, puis choisissez <br><b style="color: #60a5fa;">"Sur l'écran d'accueil"</b>.</p>
 </div>
-
 <!-- ✅ MODALE CARTE INTERACTIVE AVEC FILTRES -->
 <div id="port-selector-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.85); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 90%; max-width: 400px; border-radius: 16px; padding: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative;">
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold; z-index: 1000;" onclick="document.getElementById('port-selector-modal').style.display='none'">×</span>
         <h3 style="margin: 0 0 10px 0; color: var(--marine-blue); text-align: center; font-weight: 800; font-size: 1rem;" data-i18n="select_port_title">Choisir un port</h3>
-        
+
         <!-- Les boutons de filtre préparés pour la traduction -->
         <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap;">
             <button onclick="filterMap('all', this)" class="map-filter-btn active" data-i18n="filter_all">Tous</button>
             <button onclick="filterMap('eau', this)" class="map-filter-btn" data-i18n="filter_water">Port en eau</button>
             <button onclick="filterMap('echouage', this)" class="map-filter-btn" data-i18n="filter_grounding">Port d'échouage</button>
         </div>
-        
+
         <!-- Conteneur de la carte agrandi -->
         <div id="map-container" style="height: 65vh; min-height: 400px; max-height: 550px; width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid #cbd5e1;"></div>
-        
+
         <p style="text-align: center; font-size: 0.65rem; color: #64748b; margin: 10px 0 0 0;" data-i18n="map_legend">Les ports d'échouage sont carrés, les ports en eau sont ronds.</p>
     </div>
 </div>
-
 <div id="holiday-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 41, 59, 0.8); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
     <div style="background: white; width: 85%; max-width: 350px; border-radius: 16px; padding: 25px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; text-align: center; border-top: 6px solid var(--marine-blue);">
         <span style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; font-weight: bold;" onclick="document.getElementById('holiday-modal').style.display='none'">×</span>
@@ -225,15 +247,12 @@
         <button onclick="document.getElementById('holiday-modal').style.display='none'" style="background: var(--marine-blue); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Merci, fermer</button>
     </div>
 </div>
-
 <div class="app-container">
-
     <div class="sticky-header">
         <div class="top-sponsor-banner" id="sponsor-banner">
             <a href="partenaires.html" class="sponsor-label" id="sponsor-label-text" style="text-decoration: none; color: white; text-align: center; line-height: 1.2; padding: 4px 8px;">NOS<br>PARTENAIRES<br>LOCAUX</a>
             <span class="sponsor-text" id="sponsor-text">Chargement...</span>
         </div>
-
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 5px;">
             <div class="date-badge" id="current-date">-- --</div>
             <div class="lang-switch" style="margin: 0; font-size: 1.6rem;">
@@ -242,28 +261,25 @@
                 <span onclick="setLanguage('en')" id="btn-en" class="lang-btn" title="English">🇬🇧</span>
             </div>
         </div>
-
         <div class="nav-buttons" style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 12px;">
             <a href="partage.html" class="btn-action" data-i18n="btn_share">PARTAGER</a>
             <button id="install-btn" class="btn-action" style="cursor: pointer; font-family: 'Montserrat', sans-serif;" data-i18n="btn_install">📱 INSTALLER</button>
         </div>
-
 <h1 class="main-title">PORT DE CARTERET<sup>*</sup></h1>
-
         <div style="text-align: center; margin: 8px 0 5px 0;">
             <button onclick="openMapModal()" style="display: inline-flex; align-items: center; gap: 5px; background: white; color: var(--marine-blue); border: 2px solid var(--marine-blue); padding: 6px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-family: 'Montserrat', sans-serif;">
                 ⚓ <span data-i18n="change_port">CHANGER DE PORT</span> ▾
             </button>
         </div>
     </div>
-    
+
 <!-- BANDEAU VIGILANCE MÉTÉO -->
 <div id="meteo-vigilance-banner" style="display:none; margin: 0 0 15px 0; border-radius: 8px; padding: 8px 30px 8px 12px; font-family: 'Montserrat', sans-serif; position: relative; cursor: pointer; text-align:center;" onclick="window.open('https://vigilance.meteofrance.fr/fr/manche','_blank')">
     <span onclick="event.stopPropagation(); this.parentElement.style.display='none';" style="position:absolute; top:6px; right:8px; font-size:1rem; opacity:0.6; cursor:pointer;">×</span>
     <div id="vigi-title" style="font-weight:900; font-size:0.72rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
     <div id="vigi-detail" style="font-size:0.60rem; font-weight:600; opacity:0.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
 </div>
-   
+
     <div class="module">
         <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 12px;">
             <a href="planning.html" class="btn-action" style="padding: 5px 8px; font-size: 0.6rem;" data-i18n="btn_planning">HORAIRES PORTE & MARÉES</a>
@@ -295,7 +311,6 @@
             </div>
         </div>
     </div>
-
     <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="tide_title">Informations marée</div>
@@ -327,7 +342,6 @@
             <div class="sun-badge"><span class="emoji">🌄</span><span id="sunset-time">--:--</span></div>
         </div>
     </div>
-
     <div class="module reveal">
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
     <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title_JR">Conditions météo (jour)</div>
@@ -339,7 +353,6 @@
             <iframe id="wisuki-widget" width="100%" height="270" src="https://wisuki.com/widget-summary?spot=1170&spotid=2434&lang=fr" style="border: 0;" frameborder="0"></iframe>
         </div>
     </div>
-
     <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="weather_title_HR">Conditions météo (2h)</div>
@@ -362,7 +375,7 @@
 </script>
         </div>
     </div>
-    
+
     <div class="module reveal">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div style="font-size: 0.85rem; font-weight: 700;" data-i18n="currents_title">Courants marins</div>
@@ -371,7 +384,6 @@
             <iframe width="100%" height="300" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricWind=kt&metricTemp=%C2%B0C&radarRange=-1&overlay=currents&product=copernicus&level=surface&lat=49.381&lon=-1.850&zoom=9&detailLat=49.381&detailLon=-1.785&marker=true" frameborder="0" style="border:0;"></iframe>
         </div>
     </div>
-
     <!-- ✅ MODULE RADAR PLUIE (harmonisé avec Diélette) -->
     <div class="module reveal" style="margin-top: 15px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -381,7 +393,6 @@
             <iframe src="https://www.rainviewer.com/map.html?loc=49.381,-1.85,7&oColor=0&tColor=3&s=1&m=1&d=1&v=0&w=1&p=1&oc=0&g=1" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
         </div>
     </div>
-
     <div class="footer-module">
         <span style="font-size: 0.8rem; font-weight: 700; color: var(--marine-blue); text-transform: uppercase;" data-i18n="footer_title">Plus d'informations</span>
         <div class="footer-buttons">
@@ -389,7 +400,6 @@
             <a href="liens.html" class="btn-action btn-footer" data-i18n="btn_links">LIENS UTILES</a>
             <a href="contact.html" class="btn-action btn-footer" data-i18n="btn_contact">✉️ NOUS CONTACTER</a>
         </div>
-
         <!-- MODULE AVERTISSEMENT sous "Nous contacter" -->
         <div class="reveal" style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 12px; text-align: center; margin-top: 20px; padding: 15px;">
             <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
@@ -398,7 +408,6 @@
             </div>
             <a href="securite.html" class="btn-action" style="background: #ef4444; color: white; width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; border-radius: 8px; box-sizing: border-box; box-shadow: 0 4px 6px rgba(239,68,68,0.3);" data-i18n="btn_security">🆘 SÉCURITÉ ET RAPPEL</a>
         </div>
-
         <div class="reveal" style="text-align: center; margin-top: 30px; padding: 0 20px;">
             <p style="font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;" data-i18n="pb_press_seen">Vu dans la presse</p>
             <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
@@ -417,7 +426,7 @@
                 </a>
             </div>
         </div>
-    
+
         <!-- ✅ FOOTER CREDITS harmonisé avec Diélette -->
         <a href="https://guillaumeleparmentierpro.github.io/CotentinWebStudio/" target="_blank" class="footer-credits" onclick="gtag('event', 'clic_studio', {'source': 'footer_index'});">
             <div class="footer-text-block">
@@ -428,14 +437,12 @@
         </a>
     </div>
 </div>
-
 <script>
     // ✅ POPUP AVERTISSEMENT QUOTIDIEN (harmonisé)
     function closeWarningModal() {
         document.getElementById('warning-modal').style.display = 'none';
         localStorage.setItem('warning_seen', new Date().toISOString().split('T')[0]);
     }
-
     function checkWarningPopup() {
         const today = new Date().toISOString().split('T')[0];
         if (localStorage.getItem('warning_seen') !== today) {
@@ -443,21 +450,17 @@
         }
     }
 </script>
-
 <script>
     let deferredPrompt;
     const installBtn = document.getElementById('install-btn');
     const iosPopup = document.getElementById('ios-install-popup');
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
     if (isStandalone) installBtn.style.display = 'none';
-
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
         if (!isStandalone) installBtn.style.display = 'inline-flex';
     });
-
     installBtn.addEventListener('click', async () => {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         if (isIOS) { iosPopup.style.display = 'block'; return; }
@@ -470,12 +473,10 @@
         }
     });
 </script>
-
 <script>
     window.onload = function() {
         if (typeof data !== 'undefined') { updateApp(); setInterval(updateApp, 1000); }
     };
-
     function updateSponsor() {
         const now = new Date();
         const hour = now.getHours();
@@ -485,17 +486,14 @@
         if (!sponsorText) return;
         const currentLang = localStorage.getItem('preferredLang') || (navigator.language.substring(0, 2) === 'en' ? 'en' : 'fr');
         const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
-
         function getPartnerHTML(anchorId, imgSrc, textContent) {
             return `<a href="partenaires.html#${anchorId}" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; text-decoration: none; color: inherit; width: 100%;">
                         <span style="text-align: right; line-height: 1.3; word-wrap: break-word; white-space: normal;">${textContent}</span>
                         <img src="${imgSrc}" style="height: 50px; width: 50px; object-fit: contain; border-radius: 8px; background: white; padding: 3px; border: 1px solid #cbd5e1; flex-shrink: 0;" alt="Logo">
                     </a>`;
         }
-
         const txtDefault = t.sponsor_default || "Votre publicité ici ! Cliquez pour nous contacter.";
         let finalHTML = `<a href="contact.html" style="text-decoration:none; color:inherit; display: flex; align-items: center; justify-content: flex-end; text-align: right; width:100%; white-space: normal;">${txtDefault}</a>`;
-
         if (hour === 7) { finalHTML = getPartnerHTML("maison-renard", "renard.png", t.sponsor_maison_renard_index || "Boulangerie Maison Renard"); }
         else if (hour === 8) { const rot = minute % 3; if (rot === 0) finalHTML = getPartnerHTML("utile", "utile.png", t.sponsor_utile || "UTILE Barneville-Carteret"); else if (rot === 1) finalHTML = getPartnerHTML("lestran", "lestran.png", t.sponsor_lestran_index || "L'Estran Carteret - Boulangerie"); else finalHTML = getPartnerHTML("comptoir", "comptoir.png", t.sponsor_comptoir_index || "Le Comptoir de Carteret"); }
         else if (hour === 9) { const rot = minute % 3; if (rot === 0) finalHTML = getPartnerHTML("or-coiffure", "lorcoiffure.jpg", t.sponsor_or_coiffure || "L'Or Coiffure"); else if (rot === 1) finalHTML = getPartnerHTML("century21", "century21.png", t.sponsor_century21 || "Century 21 Chevet Immobilier"); else finalHTML = getPartnerHTML("mille-marin", "millemar.webp", "Mille Marin Carteret"); }
@@ -519,10 +517,8 @@
         else if (hour === 16) { finalHTML = getPartnerHTML("lumieres-de-mer", "lumieresdemer.png", t.sponsor_lumieres || "Lumières de mer - Photographie"); }
         else if (hour === 17) { const rot = minute % 2; if (rot === 0) finalHTML = getPartnerHTML("epicerie-fine", "epiceriefine.jpg", t.sponsor_epicerie_fine || "L'Epicerie Fine - Cave à vin"); else finalHTML = getPartnerHTML("de-la-cave-au-cellier", "delacav.png", "De la Cave Au Cellier - Caviste"); }
         else if (hour === 18) { finalHTML = getPartnerHTML("lenbarquai", "lenbarqu.png", "L'En Bar Quai - Bistronomique"); }
-
         sponsorText.innerHTML = finalHTML;
     }
-
     function drawTideGraph(percent, isDescending) {
         const canvas = document.getElementById('tideCanvasLarge');
         if (!canvas) return;
@@ -544,7 +540,6 @@
         ctx.beginPath(); ctx.fillStyle = '#ef4444'; ctx.arc(dotX, dotY, 5, 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
     }
-
     function parseTime(tStr) {
         if (!tStr) return null;
         let s = String(tStr).trim().toLowerCase().replace('h', ':').replace('.', ':');
@@ -556,7 +551,6 @@
         }
         return null;
     }
-
     function updateApp() {
         const now = new Date();
         const tzoffset = now.getTimezoneOffset() * 60000;
@@ -565,7 +559,6 @@
         const currentLang = localStorage.getItem('preferredLang') || 'fr';
         const locale = currentLang === 'en' ? 'en-US' : 'fr-FR';
         document.getElementById('current-date').innerText = now.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
-
         try {
             const cycleLunaireMs = 2551442877;
             const referenceNouvelleLuneMs = Date.UTC(2024, 0, 11, 11, 57);
@@ -584,14 +577,11 @@
             const moonLabel = document.getElementById('moon-phase-label');
             if (moonLabel) moonLabel.innerText = moonName;
         } catch (error) { console.log("Erreur calcul lune :", error); }
-
         updateSponsor();
         if (typeof data === 'undefined' || data.length === 0) return;
-
         const yesterdayStr = new Date(now.getTime() - 86400000 - tzoffset).toISOString().split('T')[0];
         const tomorrowStr = new Date(now.getTime() + 86400000 - tzoffset).toISOString().split('T')[0];
         let allPortes = [], allTides = [];
-
         [yesterdayStr, dateStr, tomorrowStr].forEach(ds => {
             let dData = data.find(d => d.date === ds);
             if (dData) {
@@ -623,40 +613,33 @@
                 });
             }
         });
-
         allPortes.sort((a, b) => a.sO - b.sO);
         allTides.sort((a, b) => a.dateObj - b.dateObj);
-
         let futurePortes = allPortes.filter(p => p.sC > now);
         let pastPortes = allPortes.filter(p => p.sC <= now);
         let activePorte = null, nextPorte = null;
         let lastPorteClose = pastPortes.length > 0 ? pastPortes[pastPortes.length - 1].sC : new Date(now.getTime() - 7 * 3600000);
         if (futurePortes.length > 0) { if (now >= futurePortes[0].sO) activePorte = futurePortes[0]; else nextPorte = futurePortes[0]; }
-
         const wrapper = document.getElementById('progress-wrapper');
         const pbContainer = document.getElementById('progress-container');
         const pb = document.getElementById('progress-bar');
         wrapper.style.display = "block";
-
         const t = translations[currentLang] || {};
         document.getElementById('label-ouv').innerText = t.pill_open || "OUV.";
         document.getElementById('label-ferm').innerText = t.pill_close || "FERM.";
         document.getElementById('label-ouv-next').innerText = t.pill_open || "OUV.";
         document.getElementById('label-ferm-next').innerText = t.pill_close || "FERM.";
-
         function formatTitle(p, baseLabel) {
             if (!p) return baseLabel;
             if (p.sO.getDate() !== now.getDate()) return baseLabel + " (" + (t.tomorrow || "Demain") + ")";
             return baseLabel;
         }
-
         document.getElementById('title-slot-1').innerText = formatTitle(futurePortes[0], t.slot_current || "Créneaux officiels");
         document.getElementById('title-slot-2').innerText = formatTitle(futurePortes[1], t.slot_next || "Prochains créneaux");
         if (futurePortes[0]) { document.getElementById('open-time').innerText = futurePortes[0].openStr; document.getElementById('close-time').innerText = futurePortes[0].closeStr; }
         else { document.getElementById('open-time').innerText = "--:--"; document.getElementById('close-time').innerText = "--:--"; }
         if (futurePortes[1]) { document.getElementById('open-time-next').innerText = futurePortes[1].openStr; document.getElementById('close-time-next').innerText = futurePortes[1].closeStr; }
         else { document.getElementById('open-time-next').innerText = "--:--"; document.getElementById('close-time-next').innerText = "--:--"; }
-
         if (activePorte) {
             const diffMs = activePorte.sC - now;
             const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
@@ -681,7 +664,6 @@
             document.querySelector('.status-label').innerText = t.label_gate || "PORTE";
             document.getElementById('status-box').className = "status-box closed";
         }
-
         let prevTide = allTides[0], nextTide = allTides[1];
         for (let i = 0; i < allTides.length - 1; i++) {
             if (now >= allTides[i].dateObj && now <= allTides[i+1].dateObj) { prevTide = allTides[i]; nextTide = allTides[i+1]; break; }
@@ -700,7 +682,6 @@
         }
     }
 </script>
-
 <script>
     function setLanguage(lang) {
         document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
@@ -717,7 +698,6 @@
         if (sponsorLabel) sponsorLabel.innerHTML = lang === "en" ? "OUR<br>LOCAL<br>PARTNERS" : "NOS<br>PARTENAIRES<br>LOCAUX";
         if (typeof updateApp === "function") updateApp();
     }
-
     document.addEventListener('DOMContentLoaded', () => {
         const browserLang = navigator.language.substring(0, 2);
         const savedLang = localStorage.getItem('preferredLang') || (browserLang === 'en' ? 'en' : 'fr');
@@ -726,7 +706,6 @@
         fetchSunTimes();
     });
 </script>
-
 <script>
     // Easter eggs
     document.getElementById('status-box').addEventListener('click', function(e) {
@@ -740,7 +719,6 @@
             setTimeout(() => { particle.remove(); }, 2050);
         }
     });
-
     let titleClickCount = 0;
     const mainTitle = document.querySelector('.main-title');
     if (mainTitle) {
@@ -757,7 +735,6 @@
             setTimeout(() => { if (titleClickCount > 0 && titleClickCount < 5) titleClickCount = 0; }, 2000);
         });
     }
-
     const tideCanvas = document.getElementById('tideCanvasLarge');
     if (tideCanvas) {
         tideCanvas.addEventListener('click', function(e) {
@@ -777,13 +754,285 @@
         });
     }
 </script>
+<script>
+    // ✅ EASTER EGG : MODE NUIT ÉTOILÉE (3 clics sur l'émoji lune ou soleil)
+    (function() {
+        let starClickCount = 0;
+        let starClickTimer = null;
+        function bumpStarCounter() {
+            starClickCount++;
+            clearTimeout(starClickTimer);
+            starClickTimer = setTimeout(() => { starClickCount = 0; }, 900);
+            if (starClickCount >= 3) {
+                starClickCount = 0;
+                launchStarryNight();
+            }
+        }
+        const moonBadge = document.getElementById('moon-phase-badge');
+        if (moonBadge) moonBadge.addEventListener('click', bumpStarCounter);
+        document.querySelectorAll('.sun-badge .emoji').forEach(el => el.addEventListener('click', bumpStarCounter));
 
+        function launchStarryNight() {
+            if (document.getElementById('starry-overlay')) return;
+            const overlay = document.createElement('div');
+            overlay.id = 'starry-overlay';
+            overlay.className = 'starry-overlay';
+            document.body.appendChild(overlay);
+
+            // Lune (haut à droite, phase réelle du jour)
+            const moonPhaseEl = document.getElementById('moon-phase-badge');
+            const moonEmoji = (moonPhaseEl && moonPhaseEl.innerText) ? moonPhaseEl.innerText : '🌙';
+            const bigMoon = document.createElement('div');
+            bigMoon.className = 'starry-moon';
+            bigMoon.innerText = moonEmoji;
+            overlay.appendChild(bigMoon);
+
+            // Étoiles
+            for (let i = 0; i < 55; i++) {
+                const star = document.createElement('div');
+                star.className = 'starry-star';
+                const size = Math.random() * 2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 75 + '%';
+                star.style.animationDelay = (Math.random() * 2.4) + 's';
+                overlay.appendChild(star);
+            }
+
+            // Planète Jupiter (en bas à gauche)
+            const jupiter = document.createElement('div');
+            jupiter.className = 'starry-jupiter';
+            overlay.appendChild(jupiter);
+            const jupiterLabel = document.createElement('div');
+            jupiterLabel.className = 'starry-constellation-label';
+            jupiterLabel.innerText = 'Jupiter';
+            jupiterLabel.style.left = '10%';
+            jupiterLabel.style.top = '83%';
+            overlay.appendChild(jupiterLabel);
+
+            // Constellations : étoiles reliées par segments (plus fidèle qu'une simple ligne continue)
+            const constellations = [
+                {
+                    name: 'Grande Ourse',
+                    stars: [[12,18],[20,15],[28,17],[34,22],[34,30],[26,32],[20,28]],
+                    segments: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]]
+                },
+                {
+                    name: 'Le Voilier',
+                    stars: [[70,55],[70,35],[80,50],[70,55],[58,56],[84,56]],
+                    segments: [[0,1],[1,2],[2,3],[3,4]]
+                },
+                {
+                    name: 'Orion',
+                    // 0 Bételgeuse, 1 Bellatrix, 2 Mintaka, 3 Alnilam, 4 Alnitak (baudrier), 5 Rigel, 6 Saiph
+                    stars: [[42,58],[54,56],[47,66],[49.5,68],[52,70],[44,80],[57,82]],
+                    segments: [[0,2],[1,4],[2,3],[3,4],[2,5],[4,6]]
+                }
+            ];
+            const svgNS = "http://www.w3.org/2000/svg";
+            const svg = document.createElementNS(svgNS, "svg");
+            svg.setAttribute("style", "position:absolute; inset:0; width:100%; height:100%;");
+            overlay.appendChild(svg);
+            constellations.forEach(c => {
+                c.segments.forEach(seg => {
+                    const p1 = c.stars[seg[0]], p2 = c.stars[seg[1]];
+                    const line = document.createElementNS(svgNS, "line");
+                    line.setAttribute("x1", p1[0] + "%");
+                    line.setAttribute("y1", p1[1] + "%");
+                    line.setAttribute("x2", p2[0] + "%");
+                    line.setAttribute("y2", p2[1] + "%");
+                    line.setAttribute("stroke", "rgba(147,197,253,0.55)");
+                    line.setAttribute("stroke-width", "1");
+                    svg.appendChild(line);
+                });
+                c.stars.forEach(p => {
+                    const dot = document.createElementNS(svgNS, "circle");
+                    dot.setAttribute("cx", p[0] + "%");
+                    dot.setAttribute("cy", p[1] + "%");
+                    dot.setAttribute("r", "1.6");
+                    dot.setAttribute("fill", "#fff");
+                    svg.appendChild(dot);
+                });
+                const label = document.createElement('div');
+                label.className = 'starry-constellation-label';
+                label.innerText = c.name;
+                label.style.left = c.stars[0][0] + '%';
+                label.style.top = (c.stars[0][1] - 4) + '%';
+                overlay.appendChild(label);
+            });
+
+            // Étoile filante à 6 secondes
+            setTimeout(() => {
+                const shoot = document.createElement('div');
+                shoot.className = 'starry-shooting';
+                shoot.style.left = '75%';
+                shoot.style.top = '15%';
+                overlay.appendChild(shoot);
+                requestAnimationFrame(() => shoot.classList.add('go'));
+            }, 6000);
+
+            requestAnimationFrame(() => overlay.classList.add('visible'));
+            setTimeout(() => {
+                overlay.classList.remove('visible');
+                setTimeout(() => overlay.remove(), 1100);
+            }, 8500);
+        }
+    })();
+</script>
+<script>
+    // ✅ EASTER EGG : PÉRISCOPE ESPION (clic sur "Informations marée")
+    (function() {
+        let periscopeBusy = false;
+        let audioCtx = null;
+        function getAudioCtx() {
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { audioCtx = null; }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            return audioCtx;
+        }
+        function playMechanicalSound() {
+            const ctx = getAudioCtx();
+            if (!ctx) return;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(90, ctx.currentTime);
+            osc.frequency.linearRampToValueAtTime(160, ctx.currentTime + 0.6);
+            gain.gain.setValueAtTime(0.05, ctx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.65);
+            osc.connect(gain).connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.65);
+        }
+        function playBubbleSound() {
+            const ctx = getAudioCtx();
+            if (!ctx) return;
+            for (let i = 0; i < 4; i++) {
+                const t = ctx.currentTime + i * 0.09;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                const freq = 300 + Math.random() * 250;
+                osc.frequency.setValueAtTime(freq, t);
+                osc.frequency.exponentialRampToValueAtTime(freq * 0.5, t + 0.12);
+                gain.gain.setValueAtTime(0.06, t);
+                gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.13);
+                osc.connect(gain).connect(ctx.destination);
+                osc.start(t);
+                osc.stop(t + 0.14);
+            }
+        }
+        function launchPeriscope() {
+            if (periscopeBusy || document.getElementById('periscope-rig')) return;
+            periscopeBusy = true;
+            const rig = document.createElement('div');
+            rig.id = 'periscope-rig';
+            rig.className = 'periscope-rig';
+            rig.innerHTML = '<div class="periscope-head"><div class="periscope-eye"><div class="periscope-pupil"></div><div class="periscope-eyelid"></div></div></div><div class="periscope-tube"></div>';
+            document.body.appendChild(rig);
+            playMechanicalSound();
+            requestAnimationFrame(() => rig.classList.add('up'));
+            setTimeout(() => { rig.classList.add('wink'); }, 900);
+            setTimeout(() => { rig.classList.remove('wink'); }, 1100);
+            setTimeout(() => {
+                playBubbleSound();
+                rig.classList.remove('up');
+            }, 1700);
+            setTimeout(() => { rig.remove(); periscopeBusy = false; }, 2450);
+        }
+        const tideTitle = document.querySelector('[data-i18n="tide_title"]');
+        if (tideTitle) {
+            tideTitle.style.cursor = 'pointer';
+            tideTitle.addEventListener('click', launchPeriscope);
+        }
+    })();
+</script>
+<script>
+    // ✅ EASTER EGG : TEMPÊTE DE MOUETTES (tapotement frénétique sur "Conditions météo (2h)")
+    (function() {
+        let gullTapCount = 0;
+        let gullTapTimer = null;
+        function bumpGullCounter() {
+            gullTapCount++;
+            clearTimeout(gullTapTimer);
+            gullTapTimer = setTimeout(() => { gullTapCount = 0; }, 1500);
+            if (gullTapCount >= 5) {
+                gullTapCount = 0;
+                launchGullStorm();
+            }
+        }
+        const windTitle = document.querySelector('[data-i18n="weather_title_HR"]');
+        if (windTitle) {
+            windTitle.addEventListener('click', bumpGullCounter);
+        }
+        function playWhoosh() {
+            let ctx;
+            try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
+            const bufferSize = ctx.sampleRate * 0.8;
+            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const dataArr = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) dataArr[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+            const noise = ctx.createBufferSource();
+            noise.buffer = buffer;
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(500, ctx.currentTime);
+            filter.frequency.exponentialRampToValueAtTime(1800, ctx.currentTime + 0.8);
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(0.15, ctx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
+            noise.connect(filter).connect(gain).connect(ctx.destination);
+            noise.start();
+            noise.stop(ctx.currentTime + 0.8);
+        }
+        function launchGullStorm() {
+            playWhoosh();
+            const startY = 15 + Math.random() * 50;
+            for (let i = 0; i < 7; i++) {
+                setTimeout(() => {
+                    const gull = document.createElement('div');
+                    gull.className = 'gull';
+                    gull.innerText = '🕊️';
+                    const y = startY + (Math.random() * 40 - 20);
+                    gull.style.left = '-40px';
+                    gull.style.top = y + 'vh';
+                    gull.style.transform = 'scaleX(-1)';
+                    gull.style.transition = 'transform 1.6s linear, opacity 0.3s ease';
+                    document.body.appendChild(gull);
+                    requestAnimationFrame(() => {
+                        gull.style.transform = `translate(${window.innerWidth + 80}px, ${Math.random()*60-60}px) scaleX(-1) rotate(${Math.random()*10-5}deg)`;
+                    });
+                    setTimeout(() => { gull.style.opacity = '0'; }, 1400);
+                    setTimeout(() => gull.remove(), 1700);
+                }, i * 110);
+            }
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const streak = document.createElement('div');
+                    streak.className = 'wind-streak';
+                    streak.style.width = (60 + Math.random() * 80) + 'px';
+                    streak.style.left = '-100px';
+                    streak.style.top = (10 + Math.random() * 70) + 'vh';
+                    streak.style.opacity = '0.9';
+                    streak.style.transition = 'transform 1s ease-out, opacity 1s ease-out';
+                    document.body.appendChild(streak);
+                    requestAnimationFrame(() => {
+                        streak.style.transform = `translateX(${window.innerWidth + 200}px)`;
+                        streak.style.opacity = '0';
+                    });
+                    setTimeout(() => streak.remove(), 1100);
+                }, i * 140);
+            }
+        }
+    })();
+</script>
 <script>
     document.addEventListener("visibilitychange", function() {
         if (document.visibilityState === 'visible' && typeof updateApp === "function") updateApp();
     });
 </script>
-
 <script>
     const joursFeries = {
         "01-01": { titre: "🎉 Bonne Année !", message: "Toute l'équipe vous souhaite une excellente année pleine de belles navigations !" },
@@ -798,7 +1047,6 @@
         "11-11": { titre: "🏵️ 11 Novembre 1918", message: "Aujourd'hui, nous commémorons l'Armistice du 11 novembre 1918. Bonne journée à tous." },
         "12-25": { titre: "🎄 Joyeux Noël !", message: "L'équipe vous souhaite d'excellentes fêtes de fin d'année auprès de vos proches !" }
     };
-
     function checkHolidayPopup() {
         const now = new Date();
         const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -812,10 +1060,8 @@
             localStorage.setItem(storageKey, "true");
         }
     }
-
     document.addEventListener('DOMContentLoaded', checkHolidayPopup);
 </script>
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const observer = new IntersectionObserver((entries, obs) => {
@@ -824,7 +1070,6 @@
         document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
     });
 </script>
-
 <script>
     async function fetchSunTimes() {
         try {
@@ -838,7 +1083,6 @@
         } catch (error) { console.log("Erreur soleil :", error); }
     }
 </script>
-
 <script>
 const WORKER_URL = "https://meteovigilance.guillaume-leparmentier-pro.workers.dev/";
 const PHENOMENES_CARTE = {
@@ -846,7 +1090,6 @@ const PHENOMENES_CARTE = {
   "4":"Crues 🌊","5":"Neige-verglas ❄️","6":"Canicule 🌡️",
   "7":"Grand froid 🥶","8":"Avalanches ⛰️","9":"Vagues-submersion 🌊","10":"Pluies-inondations 🌧️"
 };
-
 async function checkVigilanceMeteo() {
   const banner  = document.getElementById('meteo-vigilance-banner');
   const titleEl = document.getElementById('vigi-title');
@@ -862,7 +1105,6 @@ async function checkVigilanceMeteo() {
     if (!dep50) { banner.style.display = "none"; return; }
     const maxColorId = parseInt(dep50.max_color_id || "1", 10);
     if (maxColorId < 2) { banner.style.display = "none"; return; }
-
     const phenomenesParNiveau = {};
     (dep50.phenomenon_items || []).forEach(ph => {
       const level = parseInt(ph.phenomenon_max_color_id || "1", 10);
@@ -871,7 +1113,6 @@ async function checkVigilanceMeteo() {
         phenomenesParNiveau[level].push(PHENOMENES_CARTE[ph.phenomenon_id] || "Phénomène ⚠️");
       }
     });
-
     let maxEndTime = periodJ.end_validity_time || null;
     (dep50.phenomenon_items || []).forEach(ph => {
       (ph.timelaps_items || []).forEach(ti => {
@@ -880,19 +1121,15 @@ async function checkVigilanceMeteo() {
         }
       });
     });
-
     let bgColor, borderColor, textColor, niveauLabel, niveauEmoji;
     if      (maxColorId === 2) { bgColor="#fef9c3"; borderColor="#ca8a04"; textColor="#713f12"; niveauLabel="JAUNE";  niveauEmoji="🟡"; }
     else if (maxColorId === 3) { bgColor="#fff7ed"; borderColor="#ea580c"; textColor="#7c2d12"; niveauLabel="ORANGE"; niveauEmoji="🟠"; }
     else                       { bgColor="#fef2f2"; borderColor="#dc2626"; textColor="#7f1d1d"; niveauLabel="ROUGE";  niveauEmoji="🔴"; }
-
     titleEl.innerHTML = niveauEmoji + " Vigilance Météo <strong>" + niveauLabel + "</strong> — Manche (50)";
-
 let parts = [];
 [4, 3, 2].forEach(n => {
   if (phenomenesParNiveau[n]) phenomenesParNiveau[n].forEach(nom => parts.push(nom));
 });
-
     let finTexte = "";
     if (maxEndTime) {
       const fin = new Date(maxEndTime);
@@ -900,25 +1137,21 @@ let parts = [];
         weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit', timeZone:'Europe/Paris'
       });
     }
-
     detailEl.innerHTML = (parts.length > 0 ? parts.join(" · ") : "Phénomènes dangereux prévus") + finTexte;
     banner.style.background = bgColor;
     banner.style.border     = "2px solid " + borderColor;
     banner.style.color      = textColor;
     banner.style.display    = "block";
-
   } catch (err) {
     banner.style.display = "none";
     console.log("Vigilance météo :", err);
   }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   checkVigilanceMeteo();
   setInterval(checkVigilanceMeteo, 5 * 60 * 1000);
 });
 </script>
-
 <!-- ✅ STYLE ET SCRIPT LEAFLET (Adapté pour Carteret à la racine, avec calcul de force pour les ports spécifiques) -->
 <style>
     /* Animation "Radar / Jeu vidéo" pour le port en cours d'affichage */
@@ -931,13 +1164,12 @@ document.addEventListener('DOMContentLoaded', () => {
         animation: radarPulse 1.5s infinite;
     }
 </style>
-
 <script>
     let map = null;
     let markersLoaded = false;
-    let allMapMarkers = []; 
-    let currentMapFilter = 'all'; 
-    
+    let allMapMarkers = [];
+    let currentMapFilter = 'all';
+
     // ✅ CHEMINS POUR CARTERET (À la racine du projet)
     const portsList = [
         { id: "carteret", name: "Port de Carteret", type: "eau", lat: 49.3758, lng: -1.7964, url: "#", dataUrl: "donnees.js", cachedData: null },
@@ -948,16 +1180,15 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: "portbail", name: "Port de Port-Bail sur mer", type: "echouage", lat: 49.3323, lng: -1.7169, url: "portbail/index.html", dataUrl: "portbail/donnees.js", cachedData: null },
         { id: "barfleur", name: "Port de Barfleur", type: "echouage", lat: 49.6713, lng: -1.2612, url: "barfleur/index.html", dataUrl: "barfleur/donnees.js", cachedData: null }
     ];
-
     function getStatusFromData(portData, portId) {
-        if (!portData || !portData.length) return { code: 'unknown', color: '#cbd5e1' }; 
-        
+        if (!portData || !portData.length) return { code: 'unknown', color: '#cbd5e1' };
+
         const now = new Date();
         const tzoffset = now.getTimezoneOffset() * 60000;
         const todayStr = (new Date(now - tzoffset)).toISOString().split('T')[0];
         const yesterdayStr = new Date(now.getTime() - 86400000 - tzoffset).toISOString().split('T')[0];
         const tomorrowStr = new Date(now.getTime() + 86400000 - tzoffset).toISOString().split('T')[0];
-        
+
         let allPortes = [];
         [yesterdayStr, todayStr, tomorrowStr].forEach(ds => {
             let dData = portData.find(d => d.date === ds);
@@ -965,24 +1196,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 let parts = ds.split('-');
                 let y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, day = parseInt(parts[2], 10);
                 let portesArray = [];
-                
+
                 // ✅ RÈGLE STRICTE : Pour ces 3 ports, on IGNORE le fichier d'ouverture et on force le calcul par rapport à la Pleine Mer
                 let forcePMCalculation = (portId === 'carentan' || portId === 'portbail' || portId === 'barfleur');
-                
+
                 if (!forcePMCalculation) {
                     if (dData.portes && Array.isArray(dData.portes)) {
                         portesArray = dData.portes.filter(p => p.open && p.close && p.open !== "--:--" && p.close !== "--:--");
                     } else {
-                        for(let i=1; i<=4; i++) { 
+                        for(let i=1; i<=4; i++) {
                             let ouv = dData["ouv"+i] || dData["acces"+i] || dData["debut"+i] || dData["open"+i];
                             let ferm = dData["ferm"+i] || dData["fin_acces"+i] || dData["fin"+i] || dData["close"+i];
                             if(ouv && ferm && ouv !== "--:--" && ferm !== "--:--") {
-                                portesArray.push({open: ouv, close: ferm}); 
+                                portesArray.push({open: ouv, close: ferm});
                             }
-                        } 
+                        }
                     }
                 }
-                
+
                 if (forcePMCalculation || portesArray.length === 0) {
                     [1, 2].forEach(i => {
                         let pmTimeStr = dData["pm"+i];
@@ -991,7 +1222,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (pmTime) {
                                 let pmDateObj = new Date(y, m, day, pmTime.h, pmTime.m, 0);
                                 let sO, sC;
-
                                 // 🎯 VRAIES RÈGLES DE CALCUL SUR MESURE
                                 if (portId === 'carentan') {
                                     sO = new Date(pmDateObj.getTime() - (2 * 3600000)); // - 2h
@@ -1003,7 +1233,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     sO = new Date(pmDateObj.getTime() - (2.5 * 3600000)); // - 2h30 générique
                                     sC = new Date(pmDateObj.getTime() + (2.5 * 3600000)); // + 2h30 générique
                                 }
-                                
+
                                 allPortes.push({ sO, sC });
                             }
                         }
@@ -1020,27 +1250,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-        
-        if (allPortes.length === 0) return { code: 'closed', color: '#ef4444' }; 
 
+        if (allPortes.length === 0) return { code: 'closed', color: '#ef4444' };
         let activePorte = allPortes.find(p => now >= p.sO && now < p.sC);
-        
+
         if (activePorte) {
             const diffMs = activePorte.sC - now;
             const percent = ((now - activePorte.sO) / (activePorte.sC - activePorte.sO)) * 100;
-            
+
             if (diffMs <= 25 * 60 * 1000 && diffMs > 0) {
-                return { code: 'imminent', color: '#ef4444' }; 
+                return { code: 'imminent', color: '#ef4444' };
             } else if (percent > 85) {
-                return { code: 'warning', color: '#fbbf24' }; 
+                return { code: 'warning', color: '#fbbf24' };
             } else {
-                return { code: 'open', color: '#10b981' }; 
+                return { code: 'open', color: '#10b981' };
             }
         } else {
-            return { code: 'closed', color: '#ef4444' }; 
+            return { code: 'closed', color: '#ef4444' };
         }
     }
-
     async function loadMapMarkers() {
         const currentLang = localStorage.getItem('preferredLang') || 'fr';
         const t = typeof translations !== 'undefined' && translations[currentLang] ? translations[currentLang] : {};
@@ -1050,15 +1278,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const txtWarning = t.next_close || 'PROCHAINE FERMETURE';
         const txtGo = t.btn_access || 'Accéder';
         const txtCloseMap = currentLang === 'en' ? 'Close map' : 'Fermer la carte';
-
         allMapMarkers.forEach(item => {
             if (map.hasLayer(item.marker)) map.removeLayer(item.marker);
         });
         allMapMarkers = [];
-
         for (let port of portsList) {
-            let statusObj = { code: 'unknown', color: '#cbd5e1' }; 
-            
+            let statusObj = { code: 'unknown', color: '#cbd5e1' };
+
             if (!port.cachedData) {
                 if (port.url === "#" && typeof data !== 'undefined') {
                     port.cachedData = data;
@@ -1074,55 +1300,47 @@ document.addEventListener('DOMContentLoaded', () => {
                     } catch (e) { console.log("Données inaccessibles pour " + port.name); }
                 }
             }
-
             if (port.cachedData) {
                 // ✅ Le portId est bien passé pour que le fallback fonctionne sur-mesure
                 statusObj = getStatusFromData(port.cachedData, port.id);
             }
-
             let isEau = port.type === "eau";
-            let size = isEau ? 34 : 26; 
+            let size = isEau ? 34 : 26;
             let fontSize = isEau ? 16 : 12;
-            let shapeRadius = isEau ? "50%" : "8px"; 
-            let anchorPos = size / 2; 
-            
+            let shapeRadius = isEau ? "50%" : "8px";
+            let anchorPos = size / 2;
+
             let statusText = '';
             if (statusObj.code === 'open') statusText = `🟢 ${txtOpen}`;
             else if (statusObj.code === 'warning') statusText = `🟠 ${txtWarning}`;
             else if (statusObj.code === 'imminent') statusText = `🔴 ${txtImminent}`;
             else if (statusObj.code === 'closed') statusText = `🔴 ${txtClosed}`;
             else statusText = `⚪ INCONNU`;
-
             let finalColor = statusObj.color;
             let isCurrentPort = (port.url === "#");
-
             let pulseClass = isCurrentPort ? "marker-pulse-animation" : "";
-            let emojiColor = "#1e3a8a"; 
-            let anchorEmoji = "&#x2693;&#xFE0E;"; 
-
+            let emojiColor = "#1e3a8a";
+            let anchorEmoji = "&#x2693;&#xFE0E;";
             const portIcon = L.divIcon({
                 className: 'custom-port-marker',
                 html: `<div class="${pulseClass}" style="background:${finalColor}; color:${emojiColor}; width:${size}px; height:${size}px; border-radius:${shapeRadius}; display:flex; align-items:center; justify-content:center; border:1px solid var(--marine-blue); box-shadow:0 2px 4px rgba(0,0,0,0.3); font-size:${fontSize}px; transition: transform 0.2s;">${anchorEmoji}</div>`,
                 iconSize: [size, size],
                 iconAnchor: [anchorPos, anchorPos]
             });
-
             let markerOptions = { icon: portIcon };
             let zOffset = 0;
-            if (port.id === "carteret") zOffset += 50; 
-            if (isCurrentPort) zOffset += 20; 
+            if (port.id === "carteret") zOffset += 50;
+            if (isCurrentPort) zOffset += 20;
             if (zOffset > 0) markerOptions.zIndexOffset = zOffset;
-
             const marker = L.marker([port.lat, port.lng], markerOptions);
-            
+
             if (currentMapFilter === 'all' || port.type === currentMapFilter) {
                 marker.addTo(map);
             }
-            
+
             let popupLink = isCurrentPort
                 ? `<a onclick="document.getElementById('port-selector-modal').style.display='none'; return false;" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2); cursor:pointer;">${txtCloseMap}</a>`
                 : `<a href="${port.url}" style="background:var(--marine-blue); color:white; text-decoration:none; padding:10px 15px; border-radius:8px; font-size:12px; font-weight:800; display:inline-block; width: 100%; box-sizing: border-box; box-shadow:0 2px 4px rgba(0,0,0,0.2); cursor:pointer;">${txtGo}</a>`;
-
             marker.bindPopup(`
                 <div style="text-align:center; font-family:'Montserrat',sans-serif; min-width: 150px; padding:5px;">
                     <b style="color:var(--marine-blue); font-size:14px; display:block; margin-bottom:5px;">${port.name}</b>
@@ -1132,22 +1350,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${popupLink}
                 </div>
             `);
-
             allMapMarkers.push({ type: port.type, marker: marker });
         }
         markersLoaded = true;
     }
-
     function filterMap(filterType, btnElement) {
-        currentMapFilter = filterType; 
-        
+        currentMapFilter = filterType;
+
         document.querySelectorAll('.map-filter-btn').forEach(btn => btn.classList.remove('active'));
         btnElement.classList.add('active');
-
         allMapMarkers.forEach(item => {
             if (filterType === 'all' || item.type === filterType) {
                 if (!map.hasLayer(item.marker)) {
-                    item.marker.addTo(map); 
+                    item.marker.addTo(map);
                 }
             } else {
                 if (map.hasLayer(item.marker)) {
@@ -1156,10 +1371,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
     function openMapModal() {
         document.getElementById('port-selector-modal').style.display = 'flex';
-        
+
         if (!map) {
             map = L.map('map-container', { zoomSnap: 0.5 }).setView([49.165, -1.550], 8.5);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -1167,13 +1381,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 maxZoom: 14
             }).addTo(map);
         }
-        
+
         loadMapMarkers();
-        
+
         setTimeout(() => { map.invalidateSize(); }, 150);
     }
 </script>
-
 <button id="btn-top" title="Retour en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})"></button>
 <script>
     const btnTop = document.getElementById('btn-top');
