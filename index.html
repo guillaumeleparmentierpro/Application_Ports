@@ -200,6 +200,44 @@
         @keyframes gullFlap { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.55); } }
         .gull.gull-emoji { width: auto; height: auto; font-size: 1.6rem; line-height: 1; }
         .wind-streak { position: fixed; height: 2px; background: linear-gradient(90deg, transparent, rgba(30,58,138,0.4), transparent); z-index: 9995; pointer-events: none; will-change: transform, opacity; }
+
+        /* ===== EASTER EGG : LE FANTÔME DU PHARE ===== */
+        .lighthouse-dusk { position: fixed; inset: 0; z-index: 9993; pointer-events: none; background: rgba(8,15,35,0.55); opacity: 0; transition: opacity 0.5s ease; }
+        .lighthouse-dusk.on { opacity: 1; }
+        .lighthouse-glow { position: fixed; top: 6%; left: 5%; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: radial-gradient(circle, #fff9e0 0%, #ffe9a8 45%, rgba(255,233,168,0) 75%); box-shadow: 0 0 22px 10px rgba(255,233,168,0.75); z-index: 9995; pointer-events: none; opacity: 0; transition: opacity 0.5s ease; }
+        .lighthouse-glow.on { opacity: 1; }
+        .lighthouse-beam { position: fixed; top: -10vh; left: -10vw; width: 220vw; height: 220vh; pointer-events: none; z-index: 9994; opacity: 0; transform-origin: 9% 9%; mix-blend-mode: screen; background: conic-gradient(from 0deg at 9% 9%, rgba(255,244,214,0) 0deg, rgba(255,244,214,0.9) 5deg, rgba(255,244,214,0.35) 11deg, rgba(255,244,214,0) 20deg, rgba(255,244,214,0) 360deg); }
+        .lighthouse-beam.sweep { animation: lighthouseSweep 3.6s ease-in-out forwards; }
+        @keyframes lighthouseSweep { 0% { transform: rotate(-35deg); opacity: 0.95; } 55% { opacity: 1; } 100% { transform: rotate(55deg); opacity: 0; } }
+
+        /* ===== EASTER EGG : LE TRÉSOR DU CAPITAINE ===== */
+        .treasure-egg { position: fixed; font-size: 2.6rem; z-index: 9999; pointer-events: none; transform: translate(-50%, -50%) scale(0); opacity: 0; transition: transform 0.55s cubic-bezier(0.34,1.6,0.5,1), opacity 0.4s ease; }
+        .treasure-egg.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .treasure-coin { position: fixed; font-size: 1.4rem; z-index: 9998; pointer-events: none; will-change: transform, opacity; }
+
+        /* ===== EASTER EGG : LA BALEINE QUI SOUFFLE ===== */
+        .whale-rig { position: fixed; bottom: 0; left: 22%; font-size: clamp(2.2rem, 9vw, 3rem); z-index: 9997; pointer-events: none; transform: translateY(140%); transition: transform 1s cubic-bezier(0.34,1.1,0.4,1); }
+        .whale-rig.up { transform: translateY(35%); }
+        .whale-spout { position: fixed; font-size: 1rem; z-index: 9997; pointer-events: none; will-change: transform, opacity; }
+
+        /* ===== EASTER EGG : LE COMPAS AFFOLÉ ===== */
+        .compass-egg { position: fixed; top: 50%; left: 50%; width: 90px; height: 90px; margin: -45px 0 0 -45px; font-size: 3.4rem; z-index: 10005; pointer-events: none; display: flex; align-items: center; justify-content: center; opacity: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.35); }
+        .compass-egg.show { animation: compassSpin 1.9s cubic-bezier(0.22,0.75,0.3,1) forwards; }
+        @keyframes compassSpin { 0% { transform: rotate(0deg) scale(0.5); opacity: 0; } 10% { opacity: 1; } 75% { transform: rotate(var(--final-rot, 1080deg)) scale(1.1); opacity: 1; } 100% { transform: rotate(var(--final-rot, 1080deg)) scale(1); opacity: 0; } }
+
+        /* ===== EASTER EGG : L'ORAGE QUI GRONDE ===== */
+        .thunder-flash { position: fixed; inset: 0; background: #fff; z-index: 10006; pointer-events: none; opacity: 0; }
+        .thunder-flash.flash { animation: thunderFlash 0.7s steps(1) both; }
+        @keyframes thunderFlash { 0% { opacity: 0; } 8% { opacity: 0.85; } 16% { opacity: 0.08; } 24% { opacity: 0.7; } 40% { opacity: 0; } 100% { opacity: 0; } }
+        .thunder-bolt { position: fixed; top: 0; z-index: 10007; pointer-events: none; opacity: 0; filter: drop-shadow(0 0 6px rgba(255,255,255,0.9)); }
+        .thunder-bolt.flash { animation: boltFlash 0.7s steps(1) both; }
+        @keyframes boltFlash { 0% { opacity: 0; } 8% { opacity: 1; } 20% { opacity: 0; } 26% { opacity: 1; } 40% { opacity: 0; } 100% { opacity: 0; } }
+
+        /* ===== EASTER EGG : LE MESSAGE À LA MER ===== */
+        .bottle-msg { position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%); font-size: 2.4rem; z-index: 9997; pointer-events: none; opacity: 0; transition: bottom 1.3s cubic-bezier(0.34,1.1,0.4,1), opacity 0.6s ease; }
+        .bottle-msg.show { bottom: 30%; opacity: 1; }
+        .bottle-note { position: fixed; bottom: -40px; left: 50%; transform: translateX(-50%); width: min(78vw, 240px); background: #fdf6e3; border: 1px solid #d6c79a; border-radius: 6px; padding: 8px 12px; font-size: 0.68rem; font-style: italic; color: #5c4a1e; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15); z-index: 9997; pointer-events: none; opacity: 0; box-sizing: border-box; transition: bottom 1.3s cubic-bezier(0.34,1.1,0.4,1) 0.25s, opacity 0.6s ease 0.25s; }
+        .bottle-note.show { bottom: calc(30% + 62px); opacity: 1; }
     </style>
 </head>
 <body>
@@ -710,6 +748,7 @@
 <script>
     // Easter eggs
     document.getElementById('status-box').addEventListener('click', function(e) {
+        if (window.__treasureLongPress) { window.__treasureLongPress = false; return; }
         const emojis = ['⛵', '🦀', '🐟', '🐙', '⚓', '🐋', '🐬', '☀️','🧜🏻‍♀️'];
         for(let i = 0; i < 8; i++) {
             let particle = document.createElement('div');
@@ -986,6 +1025,368 @@
     })();
 </script>
 <script>
+    // ✅ EASTER EGG : LE FANTÔME DU PHARE (triple-tap sur la date)
+    (function() {
+        let dateTapCount = 0;
+        let dateTapTimer = null;
+        function playFoghorn() {
+            let ctx;
+            try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
+            const osc = ctx.createOscillator();
+            const osc2 = ctx.createOscillator();
+            const filter = ctx.createBiquadFilter();
+            const tremolo = ctx.createOscillator();
+            const tremoloGain = ctx.createGain();
+            const gain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc2.type = 'sawtooth';
+            osc.frequency.setValueAtTime(110, ctx.currentTime);
+            osc2.frequency.setValueAtTime(112, ctx.currentTime);
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(220, ctx.currentTime);
+            filter.Q.value = 3.2;
+            tremolo.type = 'sine';
+            tremolo.frequency.value = 5;
+            tremoloGain.gain.value = 0.025;
+            gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.16, ctx.currentTime + 0.4);
+            gain.gain.linearRampToValueAtTime(0.16, ctx.currentTime + 2.0);
+            gain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 2.8);
+            tremolo.connect(tremoloGain).connect(gain.gain);
+            osc.connect(filter);
+            osc2.connect(filter);
+            filter.connect(gain).connect(ctx.destination);
+            osc.start(); osc2.start(); tremolo.start();
+            osc.stop(ctx.currentTime + 2.9);
+            osc2.stop(ctx.currentTime + 2.9);
+            tremolo.stop(ctx.currentTime + 2.9);
+        }
+        function launchLighthouse() {
+            if (document.getElementById('lighthouse-beam')) return;
+            playFoghorn();
+            const dusk = document.createElement('div');
+            dusk.id = 'lighthouse-dusk';
+            dusk.className = 'lighthouse-dusk';
+            document.body.appendChild(dusk);
+            const glow = document.createElement('div');
+            glow.className = 'lighthouse-glow';
+            document.body.appendChild(glow);
+            const beam = document.createElement('div');
+            beam.id = 'lighthouse-beam';
+            beam.className = 'lighthouse-beam';
+            document.body.appendChild(beam);
+            requestAnimationFrame(() => {
+                dusk.classList.add('on');
+                glow.classList.add('on');
+                beam.classList.add('sweep');
+            });
+            setTimeout(() => {
+                dusk.classList.remove('on');
+                glow.classList.remove('on');
+            }, 3600);
+            setTimeout(() => { dusk.remove(); glow.remove(); beam.remove(); }, 4200);
+        }
+        const dateBadge = document.getElementById('current-date');
+        if (dateBadge) {
+            dateBadge.addEventListener('click', function() {
+                dateTapCount++;
+                clearTimeout(dateTapTimer);
+                dateTapTimer = setTimeout(() => { dateTapCount = 0; }, 900);
+                if (dateTapCount >= 3) {
+                    dateTapCount = 0;
+                    launchLighthouse();
+                }
+            });
+        }
+    })();
+</script>
+<script>
+    // ✅ EASTER EGG : LE TRÉSOR DU CAPITAINE (appui long sur le rond de statut)
+    (function() {
+        let pressTimer = null;
+        function playTreasureChime() {
+            let ctx;
+            try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
+            [0, 0.09, 0.18].forEach((delay, idx) => {
+                const t = ctx.currentTime + delay;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(660 + idx * 220, t);
+                gain.gain.setValueAtTime(0.0001, t);
+                gain.gain.linearRampToValueAtTime(0.09, t + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.5);
+                osc.connect(gain).connect(ctx.destination);
+                osc.start(t);
+                osc.stop(t + 0.5);
+            });
+        }
+        function launchTreasure(x, y) {
+            playTreasureChime();
+            const chest = document.createElement('div');
+            chest.className = 'treasure-egg';
+            chest.innerText = '🏴‍☠️💰';
+            chest.style.left = x + 'px';
+            chest.style.top = y + 'px';
+            document.body.appendChild(chest);
+            requestAnimationFrame(() => chest.classList.add('show'));
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const coin = document.createElement('div');
+                    coin.className = 'treasure-coin';
+                    coin.innerText = '🪙';
+                    coin.style.left = (x - 10 + Math.random() * 20) + 'px';
+                    coin.style.top = (y - 10) + 'px';
+                    coin.style.transition = 'transform 1.1s cubic-bezier(0.3,0.8,0.4,1), opacity 1.1s ease-in';
+                    document.body.appendChild(coin);
+                    requestAnimationFrame(() => {
+                        coin.style.transform = `translate(${Math.random()*160-80}px, ${Math.random()*120+60}px) rotate(${Math.random()*360}deg)`;
+                        coin.style.opacity = '0';
+                    });
+                    setTimeout(() => coin.remove(), 1200);
+                }, i * 60);
+            }
+            setTimeout(() => { chest.classList.remove('show'); setTimeout(() => chest.remove(), 500); }, 1800);
+        }
+        const statusBox = document.getElementById('status-box');
+        if (statusBox) {
+            const startPress = (e) => {
+                const point = (e.touches && e.touches[0]) ? e.touches[0] : e;
+                const x = point.clientX || window.innerWidth / 2;
+                const y = point.clientY || window.innerHeight / 3;
+                clearTimeout(pressTimer);
+                pressTimer = setTimeout(() => {
+                    window.__treasureLongPress = true;
+                    launchTreasure(x, y);
+                }, 1800);
+            };
+            const cancelPress = () => { clearTimeout(pressTimer); };
+            statusBox.addEventListener('mousedown', startPress);
+            statusBox.addEventListener('touchstart', startPress, { passive: true });
+            statusBox.addEventListener('mouseup', cancelPress);
+            statusBox.addEventListener('mouseleave', cancelPress);
+            statusBox.addEventListener('touchend', cancelPress);
+            statusBox.addEventListener('touchcancel', cancelPress);
+        }
+    })();
+</script>
+<script>
+    // ✅ EASTER EGG : LA BALEINE QUI SOUFFLE (clic sur "Radar de pluie en direct")
+    (function() {
+        let whaleBusy = false;
+        function playWhaleSong() {
+            let ctx;
+            try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
+            const osc = ctx.createOscillator();
+            const lfo = ctx.createOscillator();
+            const lfoGain = ctx.createGain();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            lfo.type = 'sine';
+            lfo.frequency.value = 4;
+            lfoGain.gain.value = 8;
+            lfo.connect(lfoGain).connect(osc.frequency);
+            osc.frequency.setValueAtTime(150, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(85, ctx.currentTime + 1.8);
+            gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.11, ctx.currentTime + 0.3);
+            gain.gain.linearRampToValueAtTime(0.11, ctx.currentTime + 1.3);
+            gain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 2.0);
+            osc.connect(gain).connect(ctx.destination);
+            lfo.start();
+            osc.start();
+            lfo.stop(ctx.currentTime + 2.0);
+            osc.stop(ctx.currentTime + 2.0);
+        }
+        function launchWhaleBlow() {
+            if (whaleBusy || document.getElementById('whale-rig')) return;
+            whaleBusy = true;
+            playWhaleSong();
+            const rig = document.createElement('div');
+            rig.id = 'whale-rig';
+            rig.className = 'whale-rig';
+            rig.innerText = '🐳';
+            document.body.appendChild(rig);
+            requestAnimationFrame(() => rig.classList.add('up'));
+            setTimeout(() => {
+                const rect = rig.getBoundingClientRect();
+                for (let i = 0; i < 6; i++) {
+                    setTimeout(() => {
+                        const drop = document.createElement('div');
+                        drop.className = 'whale-spout';
+                        drop.innerText = '💧';
+                        drop.style.left = (rect.left + rect.width * 0.55) + 'px';
+                        drop.style.top = rect.top + 'px';
+                        drop.style.transition = 'transform 1s ease-out, opacity 1s ease-in';
+                        document.body.appendChild(drop);
+                        requestAnimationFrame(() => {
+                            drop.style.transform = `translate(${Math.random()*40-20}px, -${60 + Math.random()*40}px)`;
+                            drop.style.opacity = '0.9';
+                        });
+                        setTimeout(() => {
+                            drop.style.transition = 'transform 0.6s ease-in, opacity 0.6s ease-in';
+                            drop.style.transform += ' translateY(70px)';
+                            drop.style.opacity = '0';
+                        }, 550);
+                        setTimeout(() => drop.remove(), 1200);
+                    }, i * 90);
+                }
+            }, 500);
+            setTimeout(() => { rig.classList.remove('up'); }, 2600);
+            setTimeout(() => { rig.remove(); whaleBusy = false; }, 3600);
+        }
+        const radarTitle = document.querySelector('[data-i18n="radar_title"]');
+        if (radarTitle) {
+            radarTitle.style.cursor = 'pointer';
+            radarTitle.addEventListener('click', launchWhaleBlow);
+        }
+    })();
+</script>
+<script>
+    // ✅ EASTER EGG : LE COMPAS AFFOLÉ (appui long sur "Changer de port")
+    (function() {
+        let compassPressTimer = null;
+        function playDing() {
+            let ctx;
+            try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(1200, ctx.currentTime);
+            gain.gain.setValueAtTime(0.001, ctx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.9);
+            osc.connect(gain).connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.9);
+        }
+        function launchCompass() {
+            playDing();
+            const compass = document.createElement('div');
+            compass.className = 'compass-egg';
+            compass.innerText = '🧭';
+            compass.style.setProperty('--final-rot', (1080 + Math.random() * 360) + 'deg');
+            document.body.appendChild(compass);
+            requestAnimationFrame(() => compass.classList.add('show'));
+            setTimeout(() => compass.remove(), 2000);
+        }
+        const portBtn = document.querySelector('button[onclick="openMapModal()"]');
+        if (portBtn) {
+            const startPress = () => {
+                clearTimeout(compassPressTimer);
+                compassPressTimer = setTimeout(launchCompass, 1200);
+            };
+            const cancelPress = () => { clearTimeout(compassPressTimer); };
+            portBtn.addEventListener('mousedown', startPress);
+            portBtn.addEventListener('touchstart', startPress, { passive: true });
+            portBtn.addEventListener('mouseup', cancelPress);
+            portBtn.addEventListener('mouseleave', cancelPress);
+            portBtn.addEventListener('touchend', cancelPress);
+            portBtn.addEventListener('touchcancel', cancelPress);
+        }
+    })();
+</script>
+<script>
+    // ✅ EASTER EGG : L'ORAGE QUI GRONDE (appui long sur la bannière de vigilance météo, quand active)
+    (function() {
+        let thunderTimer = null;
+        function playThunder() {
+            let ctx;
+            try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
+            const bufferSize = ctx.sampleRate * 1.8;
+            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const dataArr = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) dataArr[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 1.5);
+            const noise = ctx.createBufferSource();
+            noise.buffer = buffer;
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(400, ctx.currentTime);
+            filter.frequency.exponentialRampToValueAtTime(90, ctx.currentTime + 1.8);
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(0.18, ctx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 1.8);
+            noise.connect(filter).connect(gain).connect(ctx.destination);
+            noise.start();
+            noise.stop(ctx.currentTime + 1.8);
+        }
+        function launchThunder() {
+            playThunder();
+            const flash = document.createElement('div');
+            flash.className = 'thunder-flash flash';
+            document.body.appendChild(flash);
+            const bolt = document.createElement('div');
+            bolt.className = 'thunder-bolt flash';
+            bolt.innerHTML = '<svg width="60" height="220" viewBox="0 0 60 220" xmlns="http://www.w3.org/2000/svg"><polygon points="32,0 10,110 26,110 4,220 50,90 30,90 52,0" fill="#fef9c3"/></svg>';
+            bolt.style.left = (15 + Math.random() * 60) + '%';
+            document.body.appendChild(bolt);
+            setTimeout(() => { flash.remove(); bolt.remove(); }, 750);
+        }
+        const banner = document.getElementById('meteo-vigilance-banner');
+        if (banner) {
+            const startPress = () => {
+                clearTimeout(thunderTimer);
+                thunderTimer = setTimeout(launchThunder, 1200);
+            };
+            const cancelPress = () => { clearTimeout(thunderTimer); };
+            banner.addEventListener('mousedown', startPress);
+            banner.addEventListener('touchstart', startPress, { passive: true });
+            banner.addEventListener('mouseup', cancelPress);
+            banner.addEventListener('mouseleave', cancelPress);
+            banner.addEventListener('touchend', cancelPress);
+            banner.addEventListener('touchcancel', cancelPress);
+        }
+    })();
+</script>
+<script>
+    // ✅ EASTER EGG : LE MESSAGE À LA MER (appui long sur le coefficient de marée)
+    (function() {
+        let bottleTimer = null;
+        const PROVERBES = [
+            "Il n'y a pas de bon vent pour celui qui ne sait où il va.",
+            "On ne connaît pas un marin par temps calme.",
+            "La mer efface tout, sauf le souvenir des marins.",
+            "Un bon marin se reconnaît dans la tempête.",
+            "Le port est en sécurité, mais ce n'est pas fait pour les bateaux."
+        ];
+        function launchBottleMessage() {
+            if (document.getElementById('bottle-msg')) return;
+            const bottle = document.createElement('div');
+            bottle.id = 'bottle-msg';
+            bottle.className = 'bottle-msg';
+            bottle.innerText = '🍾';
+            document.body.appendChild(bottle);
+            const note = document.createElement('div');
+            note.className = 'bottle-note';
+            note.innerText = PROVERBES[Math.floor(Math.random() * PROVERBES.length)];
+            document.body.appendChild(note);
+            requestAnimationFrame(() => {
+                bottle.classList.add('show');
+                note.classList.add('show');
+            });
+            setTimeout(() => {
+                bottle.classList.remove('show');
+                note.classList.remove('show');
+                setTimeout(() => { bottle.remove(); note.remove(); }, 1400);
+            }, 4200);
+        }
+        const coeffDisplay = document.getElementById('coeff-display');
+        if (coeffDisplay) {
+            const startPress = () => {
+                clearTimeout(bottleTimer);
+                bottleTimer = setTimeout(launchBottleMessage, 1200);
+            };
+            const cancelPress = () => { clearTimeout(bottleTimer); };
+            coeffDisplay.addEventListener('mousedown', startPress);
+            coeffDisplay.addEventListener('touchstart', startPress, { passive: true });
+            coeffDisplay.addEventListener('mouseup', cancelPress);
+            coeffDisplay.addEventListener('mouseleave', cancelPress);
+            coeffDisplay.addEventListener('touchend', cancelPress);
+            coeffDisplay.addEventListener('touchcancel', cancelPress);
+        }
+    })();
+</script>
+<script>
     document.addEventListener("visibilitychange", function() {
         if (document.visibilityState === 'visible' && typeof updateApp === "function") updateApp();
     });
@@ -993,6 +1394,7 @@
 <script>
     const joursFeries = {
         "01-01": { titre: "🎉 Bonne Année !", message: "Toute l'équipe vous souhaite une excellente année pleine de belles navigations !" },
+        "04-01": { titre: "🐟 Poisson d'Avril !", message: "Attention aux blagues aujourd'hui... et gare au poisson qu'on vous aura peut-être accroché dans le dos ! 🎣" },
         "04-06": { titre: "🍫 Joyeuses Pâques !", message: "Bon Lundi de Pâques à tous ! Ne mangez pas trop de chocolat avant de prendre la mer." },
         "05-01": { titre: "🌿 Bon 1er Mai !", message: "Joyeuse Fête du Travail. Profitez bien de ce jour férié (et de votre brin de muguet) !" },
         "05-08": { titre: "🕊️ 8 Mai 1945", message: "Aujourd'hui, nous commémorons la Victoire du 8 mai 1945. Bonne journée à tous." },
