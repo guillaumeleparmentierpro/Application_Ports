@@ -175,16 +175,14 @@
         .starry-overlay.visible { opacity: 1; }
         .starry-star { position: absolute; background: #fff; border-radius: 50%; animation: starryTwinkle 2.4s ease-in-out infinite; }
         @keyframes starryTwinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
-        .starry-constellation-label { position: absolute; color: #93c5fd; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.5px; opacity: 0; transition: opacity 1s ease 0.5s; text-transform: uppercase; white-space: nowrap; }
-        .starry-overlay.visible .starry-constellation-label { opacity: 0.75; }
         .starry-shooting { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; box-shadow: 0 0 6px 2px rgba(255,255,255,0.8); opacity: 0; }
-        .starry-shooting.go { animation: starryShoot 1.4s ease-out forwards; }
-        @keyframes starryShoot { 0% { opacity: 0; transform: translate(0,0); } 10% { opacity: 1; } 100% { opacity: 0; transform: translate(-220px,160px); } }
-        .starry-moon { position: absolute; top: 6%; right: 7%; font-size: 3.2rem; line-height: 1; filter: drop-shadow(0 0 14px rgba(255,255,255,0.55)); opacity: 0; transition: opacity 1.2s ease 0.2s; }
+        .starry-shooting.go { animation: starryShoot 2.2s ease-out forwards; }
+        @keyframes starryShoot { 0% { opacity: 0; transform: translate(0,0); } 8% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; transform: translate(-62vw,42vh); } }
+        .starry-moon { position: absolute; top: 5%; left: 50%; transform: translateX(-50%); font-size: clamp(2.4rem, 10vw, 3.4rem); line-height: 1; filter: drop-shadow(0 0 14px rgba(255,255,255,0.55)); opacity: 0; transition: opacity 1.2s ease 0.2s; }
         .starry-overlay.visible .starry-moon { opacity: 1; }
-        .starry-jupiter { position: absolute; left: 12%; top: 76%; width: 34px; height: 34px; border-radius: 50%; background: repeating-linear-gradient(0deg, #d9a066 0px, #d9a066 3px, #c98a52 3px, #c98a52 6px, #e8bd8a 6px, #e8bd8a 9px); box-shadow: 0 0 10px 2px rgba(217,160,102,0.45); opacity: 0; transition: opacity 1.2s ease 0.3s; }
+        .starry-jupiter { position: absolute; left: 12%; top: 76%; width: clamp(26px, 8vw, 36px); height: clamp(26px, 8vw, 36px); border-radius: 50%; background: repeating-linear-gradient(0deg, #d9a066 0px, #d9a066 3px, #c98a52 3px, #c98a52 6px, #e8bd8a 6px, #e8bd8a 9px); box-shadow: 0 0 10px 2px rgba(217,160,102,0.45); opacity: 0; transition: opacity 1.2s ease 0.3s; }
         .starry-overlay.visible .starry-jupiter { opacity: 1; }
-        .starry-jupiter::after { content: ''; position: absolute; width: 6px; height: 4px; background: #b5502f; border-radius: 50%; top: 40%; left: 58%; opacity: 0.8; }
+        .starry-jupiter::after { content: ''; position: absolute; width: 18%; height: 12%; background: #b5502f; border-radius: 50%; top: 40%; left: 58%; opacity: 0.8; }
 
         /* ===== EASTER EGG : PÉRISCOPE ESPION ===== */
         .periscope-rig { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(115%); z-index: 9997; pointer-events: none; transition: transform 0.7s cubic-bezier(0.34,1.2,0.4,1); display: flex; flex-direction: column; align-items: center; }
@@ -197,7 +195,10 @@
         .periscope-rig.wink .periscope-eyelid { transform: scaleY(1); }
 
         /* ===== EASTER EGG : TEMPÊTE DE MOUETTES ===== */
-        .gull { position: fixed; font-size: 1.8rem; z-index: 9996; pointer-events: none; will-change: transform, opacity; }
+        .gull { position: fixed; width: 38px; height: 18px; z-index: 9996; pointer-events: none; will-change: transform, opacity; }
+        .gull svg { width: 100%; height: 100%; display: block; animation: gullFlap 0.45s ease-in-out infinite; }
+        @keyframes gullFlap { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.55); } }
+        .gull.gull-emoji { width: auto; height: auto; font-size: 1.6rem; line-height: 1; }
         .wind-streak { position: fixed; height: 2px; background: linear-gradient(90deg, transparent, rgba(30,58,138,0.4), transparent); z-index: 9995; pointer-events: none; will-change: transform, opacity; }
     </style>
 </head>
@@ -779,7 +780,7 @@
             overlay.className = 'starry-overlay';
             document.body.appendChild(overlay);
 
-            // Lune (haut à droite, phase réelle du jour)
+            // Lune (centrée en haut, phase réelle du jour)
             const moonPhaseEl = document.getElementById('moon-phase-badge');
             const moonEmoji = (moonPhaseEl && moonPhaseEl.innerText) ? moonPhaseEl.innerText : '🌙';
             const bigMoon = document.createElement('div');
@@ -800,77 +801,20 @@
                 overlay.appendChild(star);
             }
 
-            // Planète Jupiter (en bas à gauche)
+            // Planète Jupiter (en bas à gauche, sans étiquette)
             const jupiter = document.createElement('div');
             jupiter.className = 'starry-jupiter';
             overlay.appendChild(jupiter);
-            const jupiterLabel = document.createElement('div');
-            jupiterLabel.className = 'starry-constellation-label';
-            jupiterLabel.innerText = 'Jupiter';
-            jupiterLabel.style.left = '10%';
-            jupiterLabel.style.top = '83%';
-            overlay.appendChild(jupiterLabel);
 
-            // Constellations : étoiles reliées par segments (plus fidèle qu'une simple ligne continue)
-            const constellations = [
-                {
-                    name: 'Grande Ourse',
-                    stars: [[12,18],[20,15],[28,17],[34,22],[34,30],[26,32],[20,28]],
-                    segments: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]]
-                },
-                {
-                    name: 'Le Voilier',
-                    stars: [[70,55],[70,35],[80,50],[70,55],[58,56],[84,56]],
-                    segments: [[0,1],[1,2],[2,3],[3,4]]
-                },
-                {
-                    name: 'Orion',
-                    // 0 Bételgeuse, 1 Bellatrix, 2 Mintaka, 3 Alnilam, 4 Alnitak (baudrier), 5 Rigel, 6 Saiph
-                    stars: [[42,58],[54,56],[47,66],[49.5,68],[52,70],[44,80],[57,82]],
-                    segments: [[0,2],[1,4],[2,3],[3,4],[2,5],[4,6]]
-                }
-            ];
-            const svgNS = "http://www.w3.org/2000/svg";
-            const svg = document.createElementNS(svgNS, "svg");
-            svg.setAttribute("style", "position:absolute; inset:0; width:100%; height:100%;");
-            overlay.appendChild(svg);
-            constellations.forEach(c => {
-                c.segments.forEach(seg => {
-                    const p1 = c.stars[seg[0]], p2 = c.stars[seg[1]];
-                    const line = document.createElementNS(svgNS, "line");
-                    line.setAttribute("x1", p1[0] + "%");
-                    line.setAttribute("y1", p1[1] + "%");
-                    line.setAttribute("x2", p2[0] + "%");
-                    line.setAttribute("y2", p2[1] + "%");
-                    line.setAttribute("stroke", "rgba(147,197,253,0.55)");
-                    line.setAttribute("stroke-width", "1");
-                    svg.appendChild(line);
-                });
-                c.stars.forEach(p => {
-                    const dot = document.createElementNS(svgNS, "circle");
-                    dot.setAttribute("cx", p[0] + "%");
-                    dot.setAttribute("cy", p[1] + "%");
-                    dot.setAttribute("r", "1.6");
-                    dot.setAttribute("fill", "#fff");
-                    svg.appendChild(dot);
-                });
-                const label = document.createElement('div');
-                label.className = 'starry-constellation-label';
-                label.innerText = c.name;
-                label.style.left = c.stars[0][0] + '%';
-                label.style.top = (c.stars[0][1] - 4) + '%';
-                overlay.appendChild(label);
-            });
-
-            // Étoile filante à 6 secondes
+            // Étoile filante : apparaît un peu plus tôt et reste visible plus longtemps
             setTimeout(() => {
                 const shoot = document.createElement('div');
                 shoot.className = 'starry-shooting';
-                shoot.style.left = '75%';
-                shoot.style.top = '15%';
+                shoot.style.left = '80%';
+                shoot.style.top = '12%';
                 overlay.appendChild(shoot);
                 requestAnimationFrame(() => shoot.classList.add('go'));
-            }, 6000);
+            }, 4200);
 
             requestAnimationFrame(() => overlay.classList.add('visible'));
             setTimeout(() => {
@@ -881,7 +825,7 @@
     })();
 </script>
 <script>
-    // ✅ EASTER EGG : PÉRISCOPE ESPION (clic sur "Informations marée")
+    // ✅ EASTER EGG : PÉRISCOPE ESPION (clic sur "Courants marins")
     (function() {
         let periscopeBusy = false;
         let audioCtx = null;
@@ -942,10 +886,10 @@
             }, 1700);
             setTimeout(() => { rig.remove(); periscopeBusy = false; }, 2450);
         }
-        const tideTitle = document.querySelector('[data-i18n="tide_title"]');
-        if (tideTitle) {
-            tideTitle.style.cursor = 'pointer';
-            tideTitle.addEventListener('click', launchPeriscope);
+        const currentsTitle = document.querySelector('[data-i18n="currents_title"]');
+        if (currentsTitle) {
+            currentsTitle.style.cursor = 'pointer';
+            currentsTitle.addEventListener('click', launchPeriscope);
         }
     })();
 </script>
@@ -967,34 +911,47 @@
         if (windTitle) {
             windTitle.addEventListener('click', bumpGullCounter);
         }
-        function playWhoosh() {
+        function playGullCry() {
             let ctx;
             try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
-            const bufferSize = ctx.sampleRate * 0.8;
-            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-            const dataArr = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) dataArr[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
-            const noise = ctx.createBufferSource();
-            noise.buffer = buffer;
-            const filter = ctx.createBiquadFilter();
-            filter.type = 'bandpass';
-            filter.frequency.setValueAtTime(500, ctx.currentTime);
-            filter.frequency.exponentialRampToValueAtTime(1800, ctx.currentTime + 0.8);
-            const gain = ctx.createGain();
-            gain.gain.setValueAtTime(0.15, ctx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
-            noise.connect(filter).connect(gain).connect(ctx.destination);
-            noise.start();
-            noise.stop(ctx.currentTime + 0.8);
+            const burstCount = 4;
+            for (let i = 0; i < burstCount; i++) {
+                const t0 = ctx.currentTime + i * 0.22 + Math.random() * 0.05;
+                const osc = ctx.createOscillator();
+                const lfo = ctx.createOscillator();
+                const lfoGain = ctx.createGain();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                lfo.type = 'sine';
+                lfo.frequency.setValueAtTime(26 + Math.random() * 10, t0);
+                lfoGain.gain.setValueAtTime(110, t0);
+                lfo.connect(lfoGain).connect(osc.frequency);
+                const startFreq = 1500 + Math.random() * 350;
+                const endFreq = 700 + Math.random() * 150;
+                osc.frequency.setValueAtTime(startFreq, t0);
+                osc.frequency.exponentialRampToValueAtTime(endFreq, t0 + 0.18);
+                gain.gain.setValueAtTime(0.0001, t0);
+                gain.gain.linearRampToValueAtTime(0.09, t0 + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.2);
+                osc.connect(gain).connect(ctx.destination);
+                lfo.start(t0); osc.start(t0);
+                lfo.stop(t0 + 0.22); osc.stop(t0 + 0.22);
+            }
         }
+        const GULL_SVG = '<svg viewBox="0 0 34 16" xmlns="http://www.w3.org/2000/svg"><path d="M1 12 C 7 1, 10 10, 17 3 C 24 10, 27 1, 33 12" stroke="#334155" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         function launchGullStorm() {
-            playWhoosh();
+            playGullCry();
             const startY = 15 + Math.random() * 50;
             for (let i = 0; i < 7; i++) {
                 setTimeout(() => {
                     const gull = document.createElement('div');
                     gull.className = 'gull';
-                    gull.innerText = '🕊️';
+                    if (Math.random() < 0.5) {
+                        gull.innerHTML = GULL_SVG;
+                    } else {
+                        gull.classList.add('gull-emoji');
+                        gull.innerText = '🕊️';
+                    }
                     const y = startY + (Math.random() * 40 - 20);
                     gull.style.left = '-40px';
                     gull.style.top = y + 'vh';
